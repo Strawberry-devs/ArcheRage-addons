@@ -15,8 +15,12 @@ ADDON:ImportObject(OBJECT_TYPE.DRAWABLE)
 ADDON:ImportObject(OBJECT_TYPE.NINE_PART_DRAWABLE)
 ADDON:ImportObject(OBJECT_TYPE.COLOR_DRAWABLE)
 ADDON:ImportObject(OBJECT_TYPE.WINDOW)
+ADDON:ImportObject(OBJECT_TYPE.LABEL)
 ADDON:ImportObject(OBJECT_TYPE.ICON_DRAWABLE)
 ADDON:ImportObject(OBJECT_TYPE.IMAGE_DRAWABLE)
+ADDON:ImportObject(OBJECT_TYPE.EDITBOX)
+ADDON:ImportObject(OBJECT_TYPE.EDITBOX_MULTILINE)
+ADDON:ImportObject(OBJECT_TYPE.X2_EDITBOX)
 ADDON:ImportObject(OBJECT_TYPE.MODEL_VIEW)
 
 ADDON:ImportAPI(API_TYPE.CHAT.id)
@@ -110,6 +114,449 @@ local function CreateButton(parent, name, anchor, xOffset, yOffset, text, onMous
 end
 
 local showCostume = false
+
+local function TrimText(text)
+	return tostring(text or ""):match("^%s*(.-)%s*$") or ""
+end
+
+local function LowerText(text)
+	return string.lower(tostring(text or ""))
+end
+
+local function EquipBaseItem(itemId)
+	if itemId == nil then
+		return
+	end
+
+	dressUpWindow:Show(true)
+	modelViewer:Init("player", true)
+	modelViewer:EquipItem(tonumber(itemId))
+	modelViewer:PlayAnimation(RELAX_ANIMATION_NAME, true)
+end
+
+local itemBrowserWindow = nil
+local itemBrowserRows = {}
+local itemBrowserData = {}
+local itemBrowserFiltered = {}
+local itemBrowserLoaded = {}
+local itemBrowserCategory = "armors"
+local itemBrowserSearchText = ""
+local itemBrowserSortKey = "name"
+local itemBrowserSortAsc = true
+local itemBrowserPage = 1
+local itemBrowserVisible = false
+local ITEM_BROWSER_ROWS = 11
+local ITEM_BROWSER_FILES = {
+	armors = "armors.txt",
+	weapons = "weapons.txt",
+	costumes = "costumes.txt",
+}
+
+local function ApplyDressupLabelStyle(label, fontSize, align, r, g, b)
+	if label == nil or label.style == nil then
+		return
+	end
+
+	label.style:SetAlign(align or ALIGN_LEFT)
+	label.style:SetColor(r or 1, g or 1, b or 1, 1)
+	label.style:SetFontSize(fontSize or 12)
+	if label.style.SetOutline ~= nil then
+		label.style:SetOutline(true)
+	end
+end
+
+local function ApplyDressupButtonStyle(button)
+	if button == nil then
+		return
+	end
+
+	button:SetStyle("text_default")
+	if button.SetAutoResize ~= nil then
+		button:SetAutoResize(false)
+	end
+	if button.style ~= nil and button.style.SetAlign ~= nil then
+		button.style:SetAlign(ALIGN_CENTER)
+	end
+end
+
+local function CreateDressupEditBox(parent, id, width)
+	local edit = parent:CreateChildWidgetByType(UOT_X2_EDITBOX, id, 0, true)
+	edit:SetHeight(26)
+	edit:SetWidth(width)
+	edit:SetInset(5, 5, 5, 5)
+	edit:EnableFocus(true)
+	edit:UseSelectAllWhenFocused(true)
+	edit.style:SetAlign(ALIGN_LEFT)
+	edit.style:SetColorByKey("title")
+
+	local bg = edit:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
+	if bg ~= nil then
+		bg:AddAnchor("TOPLEFT", edit, 0, 0)
+		bg:AddAnchor("BOTTOMRIGHT", edit, 0, 0)
+	end
+	return edit
+end
+
+local function SetDrawableVisible(drawable, visible)
+	if drawable ~= nil and drawable.SetVisible ~= nil then
+		drawable:SetVisible(visible)
+	end
+end
+
+local function ToClientIconPath(iconPath)
+	local path = tostring(iconPath or ""):gsub("%.png$", "")
+	return path:gsub("^icons/", "ui/icon/")
+end
+
+local function ReadItemBrowserFile(category)
+	if itemBrowserLoaded[category] == true then
+		return itemBrowserData[category] or {}
+	end
+
+	local data = {}
+	local filename = ITEM_BROWSER_FILES[category]
+	local paths = {
+		"dressup/resources/" .. filename,
+		"resources/" .. filename,
+		"../Documents/Addon/dressup/resources/" .. filename,
+	}
+	local file = nil
+	for i = 1, #paths do
+		file = io.open(paths[i], "r")
+		if file ~= nil then
+			break
+		end
+	end
+
+	if file == nil then
+		X2Chat:DispatchChatMessage(CMF_SYSTEM, "Dressup: could not open resources/" .. filename)
+		itemBrowserData[category] = data
+		itemBrowserLoaded[category] = true
+		return data
+	end
+
+	for line in file:lines() do
+		local itemId, name, icon, itemCategory = line:match("^([^;]*);([^;]*);([^;]*);(.*)$")
+		if itemId ~= nil and itemId ~= "" then
+			data[#data + 1] = {
+				id = tonumber(itemId) or 0,
+				name = name or "",
+				icon = icon or "",
+				category = itemCategory or "",
+				search = LowerText((itemId or "") .. " " .. (name or "") .. " " .. (itemCategory or "")),
+			}
+		end
+	end
+	file:close()
+
+	itemBrowserData[category] = data
+	itemBrowserLoaded[category] = true
+	return data
+end
+
+local function SortItemBrowserData(data)
+	table.sort(data, function(a, b)
+		local av = a[itemBrowserSortKey] or ""
+		local bv = b[itemBrowserSortKey] or ""
+		if itemBrowserSortKey == "id" then
+			av = tonumber(av) or 0
+			bv = tonumber(bv) or 0
+		else
+			av = LowerText(av)
+			bv = LowerText(bv)
+		end
+		if av == bv then
+			return (a.id or 0) < (b.id or 0)
+		end
+		if itemBrowserSortAsc then
+			return av < bv
+		end
+		return av > bv
+	end)
+end
+
+local function RefreshItemBrowser()
+	if itemBrowserWindow == nil then
+		return
+	end
+
+	local source = ReadItemBrowserFile(itemBrowserCategory)
+	local query = LowerText(TrimText(itemBrowserSearchText))
+	itemBrowserFiltered = {}
+	for i = 1, #source do
+		local item = source[i]
+		if item.category ~= "Synthesis Materials" and (query == "" or string.find(item.search, query, 1, true) ~= nil) then
+			itemBrowserFiltered[#itemBrowserFiltered + 1] = item
+		end
+	end
+	SortItemBrowserData(itemBrowserFiltered)
+
+	local maxPage = math.max(1, math.ceil(#itemBrowserFiltered / ITEM_BROWSER_ROWS))
+	if itemBrowserPage > maxPage then
+		itemBrowserPage = maxPage
+	end
+	if itemBrowserPage < 1 then
+		itemBrowserPage = 1
+	end
+
+	for rowIndex = 1, ITEM_BROWSER_ROWS do
+		local row = itemBrowserRows[rowIndex]
+		local item = itemBrowserFiltered[((itemBrowserPage - 1) * ITEM_BROWSER_ROWS) + rowIndex]
+		row.item = item
+		if item ~= nil then
+			row.button:Show(true)
+			row.nameLabel:Show(true)
+			row.categoryLabel:Show(true)
+			row.idLabel:Show(true)
+			SetDrawableVisible(row.iconBg, true)
+			SetDrawableVisible(row.icon, true)
+			row.nameLabel:SetText(item.name)
+			row.categoryLabel:SetText(item.category)
+			row.idLabel:SetText(tostring(item.id))
+			if item.icon ~= "" and row.icon.SetTexture ~= nil then
+				pcall(function()
+					row.icon:SetTexture(ToClientIconPath(item.icon))
+					if row.icon.SetCoords ~= nil then
+						row.icon:SetCoords(0, 0, 32, 32)
+					end
+				end)
+			end
+		else
+			row.button:Show(false)
+			row.nameLabel:Show(false)
+			row.categoryLabel:Show(false)
+			row.idLabel:Show(false)
+			SetDrawableVisible(row.iconBg, false)
+			SetDrawableVisible(row.icon, false)
+		end
+	end
+
+	itemBrowserWindow.pageLabel:SetText(string.format("%d/%d  %d items", itemBrowserPage, maxPage, #itemBrowserFiltered))
+	itemBrowserWindow.sortLabel:SetText(
+		string.format("Sort: %s %s", itemBrowserSortKey, itemBrowserSortAsc and "asc" or "desc")
+	)
+end
+
+local function SetItemBrowserCategory(category)
+	itemBrowserCategory = category
+	itemBrowserPage = 1
+	RefreshItemBrowser()
+end
+
+local function SetItemBrowserSort(sortKey)
+	if itemBrowserSortKey == sortKey then
+		itemBrowserSortAsc = not itemBrowserSortAsc
+	else
+		itemBrowserSortKey = sortKey
+		itemBrowserSortAsc = true
+	end
+	itemBrowserPage = 1
+	RefreshItemBrowser()
+end
+
+local function CreateItemBrowserWindow()
+	if itemBrowserWindow ~= nil then
+		return itemBrowserWindow
+	end
+
+	itemBrowserWindow = CreateEmptyWindow("dressupItemBrowserWindow", "UIParent")
+	itemBrowserWindow:AddAnchor("CENTER", "UIParent", 0, 0)
+	itemBrowserWindow:SetExtent(590, 480)
+	itemBrowserWindow:EnableDrag(true)
+	itemBrowserWindow:Clickable(true)
+	itemBrowserWindow:SetCloseOnEscape(true)
+	itemBrowserWindow:Show(false)
+
+	local bg = itemBrowserWindow:CreateColorDrawable(0.04, 0.04, 0.04, 0.92, "background")
+	bg:AddAnchor("TOPLEFT", itemBrowserWindow, 0, 0)
+	bg:AddAnchor("BOTTOMRIGHT", itemBrowserWindow, 0, 0)
+
+	local title = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserTitle", 0, true)
+	title:AddAnchor("TOPLEFT", itemBrowserWindow, 16, 12)
+	title:SetExtent(260, 24)
+	title:SetText("Dressup Items")
+	ApplyDressupLabelStyle(title, 18, ALIGN_LEFT, 1, 0.95, 0.78)
+
+	local closeButton = itemBrowserWindow:CreateChildWidget("button", "dressupItemBrowserClose", 0, true)
+	closeButton:AddAnchor("TOPRIGHT", itemBrowserWindow, -12, 10)
+	closeButton:SetExtent(28, 24)
+	closeButton:SetText("X")
+	ApplyDressupButtonStyle(closeButton)
+	closeButton:SetHandler("OnClick", function()
+		itemBrowserVisible = false
+		itemBrowserWindow:Show(false)
+	end)
+
+	local searchEdit = CreateDressupEditBox(itemBrowserWindow, "dressupItemBrowserSearch", 390)
+	searchEdit:AddAnchor("TOPLEFT", itemBrowserWindow, 16, 46)
+	searchEdit:SetGuideText("Search name, id, category")
+	itemBrowserWindow.searchEdit = searchEdit
+
+	local function updateSearch()
+		itemBrowserSearchText = searchEdit:GetText()
+		itemBrowserPage = 1
+		RefreshItemBrowser()
+	end
+	searchEdit:SetHandler("OnTextChanged", updateSearch)
+	searchEdit:SetHandler("OnEnterPressed", updateSearch)
+
+	local clearButton = itemBrowserWindow:CreateChildWidget("button", "dressupItemBrowserClearButton", 0, true)
+	clearButton:AddAnchor("TOPLEFT", itemBrowserWindow, 416, 45)
+	clearButton:SetExtent(76, 28)
+	clearButton:SetWidth(76)
+	clearButton:SetText("Clear")
+	ApplyDressupButtonStyle(clearButton)
+	clearButton:SetHandler("OnClick", function()
+		searchEdit:SetText("")
+		itemBrowserSearchText = ""
+		itemBrowserPage = 1
+		RefreshItemBrowser()
+	end)
+
+	local function createTopButton(name, text, x, width, onClick)
+		local button = itemBrowserWindow:CreateChildWidget("button", name, 0, true)
+		button:AddAnchor("TOPLEFT", itemBrowserWindow, x, 82)
+		button:SetExtent(width, 28)
+		button:SetWidth(width)
+		button:SetText(text)
+		ApplyDressupButtonStyle(button)
+		button:SetHandler("OnClick", onClick)
+		return button
+	end
+
+	createTopButton("dressupBrowserArmors", "Armor", 16, 86, function()
+		SetItemBrowserCategory("armors")
+	end)
+	createTopButton("dressupBrowserWeapons", "Weapons", 110, 86, function()
+		SetItemBrowserCategory("weapons")
+	end)
+	createTopButton("dressupBrowserCostumes", "Costumes", 204, 86, function()
+		SetItemBrowserCategory("costumes")
+	end)
+	createTopButton("dressupBrowserSortName", "Sort Name", 298, 86, function()
+		SetItemBrowserSort("name")
+	end)
+	createTopButton("dressupBrowserSortCategory", "Sort Cat", 392, 86, function()
+		SetItemBrowserSort("category")
+	end)
+	createTopButton("dressupBrowserSortId", "Sort ID", 486, 88, function()
+		SetItemBrowserSort("id")
+	end)
+
+	itemBrowserWindow.sortLabel = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserSortLabel", 0, true)
+	itemBrowserWindow.sortLabel:AddAnchor("TOPLEFT", itemBrowserWindow, 16, 116)
+	itemBrowserWindow.sortLabel:SetExtent(260, 18)
+	ApplyDressupLabelStyle(itemBrowserWindow.sortLabel, 11, ALIGN_LEFT, 0.80, 0.80, 0.80)
+
+	local header = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserHeader", 0, true)
+	header:AddAnchor("TOPLEFT", itemBrowserWindow, 58, 138)
+	header:SetExtent(500, 18)
+	header:SetText("Name                                                Category")
+	ApplyDressupLabelStyle(header, 12, ALIGN_LEFT, 0.95, 0.90, 0.70)
+
+	for rowIndex = 1, ITEM_BROWSER_ROWS do
+		local y = 160 + ((rowIndex - 1) * 24)
+		local row = {}
+		row.bg = itemBrowserWindow:CreateColorDrawable(0.11, 0.11, 0.11, rowIndex % 2 == 0 and 0.74 or 0.62, "background")
+		row.bg:AddAnchor("TOPLEFT", itemBrowserWindow, 16, y)
+		row.bg:SetExtent(558, 22)
+
+		row.button = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserRowButton" .. rowIndex, rowIndex, true)
+		row.button:AddAnchor("TOPLEFT", itemBrowserWindow, 16, y)
+		row.button:SetExtent(558, 22)
+		row.button:SetText("")
+		row.button:EnablePick(true)
+		row.button:SetHandler("OnClick", function()
+			if row.item ~= nil then
+				EquipBaseItem(row.item.id)
+			end
+		end)
+
+		row.iconBg = itemBrowserWindow:CreateColorDrawable(0, 0, 0, 0.45, "overlay")
+		row.iconBg:AddAnchor("TOPLEFT", itemBrowserWindow, 20, y + 2)
+		row.iconBg:SetExtent(18, 18)
+
+		row.icon = itemBrowserWindow:CreateImageDrawable("icons/icon_unknown_item.dds", "overlay")
+		row.icon:AddAnchor("TOPLEFT", itemBrowserWindow, 21, y + 3)
+		row.icon:SetExtent(16, 16)
+
+		row.nameLabel = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserName" .. rowIndex, rowIndex, true)
+		row.nameLabel:AddAnchor("TOPLEFT", itemBrowserWindow, 44, y + 3)
+		row.nameLabel:SetExtent(300, 18)
+		row.nameLabel:EnablePick(false)
+		ApplyDressupLabelStyle(row.nameLabel, 12, ALIGN_LEFT, 1, 1, 1)
+
+		row.categoryLabel = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserCategory" .. rowIndex, rowIndex, true)
+		row.categoryLabel:AddAnchor("TOPLEFT", itemBrowserWindow, 354, y + 3)
+		row.categoryLabel:SetExtent(130, 18)
+		row.categoryLabel:EnablePick(false)
+		ApplyDressupLabelStyle(row.categoryLabel, 12, ALIGN_LEFT, 0.82, 0.90, 1)
+
+		row.idLabel = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserId" .. rowIndex, rowIndex, true)
+		row.idLabel:AddAnchor("TOPRIGHT", itemBrowserWindow, -22, y + 3)
+		row.idLabel:SetExtent(70, 18)
+		row.idLabel:EnablePick(false)
+		ApplyDressupLabelStyle(row.idLabel, 11, ALIGN_RIGHT, 0.72, 0.72, 0.72)
+
+		itemBrowserRows[rowIndex] = row
+	end
+
+	local prevButton = itemBrowserWindow:CreateChildWidget("button", "dressupItemBrowserPrev", 0, true)
+	prevButton:AddAnchor("BOTTOMLEFT", itemBrowserWindow, 16, -18)
+	prevButton:SetExtent(70, 28)
+	prevButton:SetWidth(70)
+	prevButton:SetText("Prev")
+	ApplyDressupButtonStyle(prevButton)
+	prevButton:SetHandler("OnClick", function()
+		if itemBrowserPage > 1 then
+			itemBrowserPage = itemBrowserPage - 1
+			RefreshItemBrowser()
+		end
+	end)
+
+	local nextButton = itemBrowserWindow:CreateChildWidget("button", "dressupItemBrowserNext", 0, true)
+	nextButton:AddAnchor("BOTTOMLEFT", itemBrowserWindow, 94, -18)
+	nextButton:SetExtent(70, 28)
+	nextButton:SetWidth(70)
+	nextButton:SetText("Next")
+	ApplyDressupButtonStyle(nextButton)
+	nextButton:SetHandler("OnClick", function()
+		local maxPage = math.max(1, math.ceil(#itemBrowserFiltered / ITEM_BROWSER_ROWS))
+		if itemBrowserPage < maxPage then
+			itemBrowserPage = itemBrowserPage + 1
+			RefreshItemBrowser()
+		end
+	end)
+
+	itemBrowserWindow.pageLabel = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserPage", 0, true)
+	itemBrowserWindow.pageLabel:AddAnchor("BOTTOMRIGHT", itemBrowserWindow, -36, -22)
+	itemBrowserWindow.pageLabel:SetExtent(220, 20)
+	ApplyDressupLabelStyle(itemBrowserWindow.pageLabel, 12, ALIGN_RIGHT, 1, 1, 1)
+
+	itemBrowserWindow:SetHandler("OnDragStart", function(self)
+		self:StartMoving()
+		return true
+	end)
+	itemBrowserWindow:SetHandler("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+	end)
+
+	itemBrowserWindow:SetHandler("OnShow", function()
+		itemBrowserVisible = true
+		RefreshItemBrowser()
+	end)
+	itemBrowserWindow:SetHandler("OnHide", function()
+		itemBrowserVisible = false
+	end)
+
+	return itemBrowserWindow
+end
+
+local function ToggleItemBrowser()
+	local browser = CreateItemBrowserWindow()
+	itemBrowserVisible = not itemBrowserVisible
+	browser:Show(itemBrowserVisible)
+end
 
 local rotateRight = CreateButton(modelViewer, "rotateRight", "LEFT", 5, controlBarYOffset, "L", function()
 	turnRight = true
@@ -298,6 +745,23 @@ local costume = CreateButton(
 	end
 )
 
+local itemBrowserButton = CreateButton(
+	modelViewer,
+	"itemBrowser",
+	"TOPLEFT",
+	5,
+	controlBarYOffset + 160,
+	"items",
+	nil,
+	nil,
+	nil,
+	function()
+		ToggleItemBrowser()
+	end
+)
+itemBrowserButton:SetExtent(55, 35)
+itemBrowserButton:SetWidth(55)
+
 local dressUpModelViewerX = 800
 local dressUpModelViewerY = 800
 local thenumber = 4096
@@ -355,10 +819,7 @@ local chatAggroEventListenerEvents = {
 					if secondWord:sub(1, 1) == "|" then
 						equipThisItem = secondWord:match("i(%d+),")
 					end
-					dressUpWindow:Show(true)
-					modelViewer:Init("player", true)
-					modelViewer:EquipItem(tonumber(equipThisItem))
-					modelViewer:PlayAnimation(RELAX_ANIMATION_NAME, true)
+					EquipBaseItem(equipThisItem)
 				else
 					X2Chat:DispatchChatMessage(CMF_SYSTEM, "/equipbase <itemid>")
 				end
