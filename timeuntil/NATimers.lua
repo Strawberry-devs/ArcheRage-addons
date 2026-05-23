@@ -109,7 +109,7 @@ naServerEvents = {
 	[eventsName[locale].Scramble] = {
 		{ times = { { hour = 9, minute = 0, duration = 60 }, { hour = 21, minute = 0, duration = 60 } }, days = { 1, 3 } },
 	},
-	[eventsName[locale].SjinderSon] = {
+	[eventsName[locale].GM_Dragon] = {
 		{ times = { { hour = 14, minute = 0, duration = 30 } }, days = { 7 } },
 	},
 	[eventsName[locale].Maintenance] = {
