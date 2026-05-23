@@ -3,4 +3,7 @@
 ../globals/button.lua
 ../globals/windowcommon.lua
 ../globals/window.lua
+EventNames.lua
+RuTimers.lua
+NATimers.lua
 timeuntil.lua
