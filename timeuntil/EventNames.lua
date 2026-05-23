@@ -27,7 +27,7 @@ eventsName = {
 		Prairie = "Луг",
 		Wonderland = "Чудесариум",
 		Scramble = "Scramble",
-		SjinderSon = "SjinderSon",
+		GM_Dragon = "GM Dragon",
 		Maintenance = "Maintenance",
 	},
 	["en_us"] = {
@@ -50,7 +50,7 @@ eventsName = {
 		Prairie = "Prairie",
 		Wonderland = "Wonderland",
 		Scramble = "Scramble",
-		SjinderSon = "SjinderSon",
+		GM_Dragon = "GM Dragon",
 		Maintenance = "Maintenance",
 	},
 	["zh_cn"] = {
@@ -73,7 +73,7 @@ eventsName = {
 		Prairie = "大草原",
 		Wonderland = "Wonderland",
 		Scramble = "Scramble",
-		SjinderSon = "SjinderSon",
+		GM_Dragon = "GM Dragon",
 		Maintenance = "Maintenance",
 	},
 }
