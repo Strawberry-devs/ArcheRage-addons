@@ -23,6 +23,13 @@ function aaprintConditional(condition, text)
 	end
 end
 
+function playerIsOnRuServer()
+	local serverTimeTable = UIParent:GetServerTimeTable()
+	local utcTimeTable = os.date("!*t")
+	local offsetHours = (serverTimeTable.hour - utcTimeTable.hour) % 24
+	return offsetHours == 3
+end
+
 API_TYPE = {
 	ADDON = { id = 0, apiname = "ADDON" }, -- does not need to import manually, always autoimported
 	UI = { id = 1, apiname = "UI" }, -- does not need to import manually, always autoimported
