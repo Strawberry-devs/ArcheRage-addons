@@ -25,7 +25,7 @@ ADDON:ImportAPI(API_TYPE.UNIT.id)
 ADDON:ImportAPI(API_TYPE.LOCALE.id)
 ADDON:ImportAPI(API_TYPE.TEAM.id)
 
-local classnumber = {
+local classnumberRu = {
 	["Mage"] = 0,
 	["Tank"] = 1,
 	["Songer"] = 1,
@@ -37,6 +37,24 @@ local classnumber = {
 	["Swiftblade"] = 3,
 	["unknown"] = 0,
 }
+
+local classnumberNa = {
+	["Mage"] = 4,
+	["Tank"] = 1,
+	["Songer"] = 1,
+	["Dancer"] = 3,
+	["Healer"] = 2,
+	["Gunner"] = 1,
+	["Archer"] = 1,
+	["Melee"] = 1,
+	["Swiftblade"] = 1,
+	["unknown"] = 0,
+}
+
+local classnumber = classnumberRu
+if playerIsOnRuServer ~= nil and playerIsOnRuServer() ~= true then
+	classnumber = classnumberNa
+end
 local spellDanceNames = {
 	["[Dance] Dance of Sacrifice"] = true,
 	["[舞蹈]牺牲之舞"] = true,
