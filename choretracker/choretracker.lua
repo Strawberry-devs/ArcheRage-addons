@@ -71,16 +71,23 @@ local selectedGroupIndexByMode = {
 }
 
 local choreTrackerButton, choreTrackerWindow
-local summaryLabel, groupTitleEdit, makeGroupButton, dailiesButton, weekliesButton
+local summaryLabel, groupTitleEdit, makeGroupButton, dailiesButton, weekliesButton, popoutButton, lockPopButton
 local activeQuestWindow, activeQuestTitleLabel, activeQuestSummaryLabel, activeQuestCloseButton
 local activeQuestIdEdit, activeQuestIdAddButton
 local choreTrackerCloseButton
 local titleLabel, background, activeQuestBackground
 local removeConfirmWindow, removeConfirmLabel, removeConfirmYesButton, removeConfirmNoButton
 local removeConfirmAction = nil
+local popoutWindow, popoutBackground
+local popoutLabels = {}
+local popoutVisible = false
+local popoutLocked = false
+local popoutPosX = 460
+local popoutPosY = 0
 
 local RefreshMain
 local RefreshActiveQuests
+local RefreshPopout
 
 local function GetGroupsForMode(mode)
 	if mode == MODE_WEEKLIES then
@@ -228,6 +235,12 @@ local function SaveData()
 		weekliesGroups = GROUPS_WEEKLIES,
 		ungrouped = UNGROUPED_QUESTS,
 		ungroupedExpanded = UNGROUPED_EXPANDED,
+		popout = {
+			visible = popoutVisible,
+			locked = popoutLocked,
+			x = popoutPosX,
+			y = popoutPosY,
+		},
 	})
 end
 
@@ -292,6 +305,12 @@ local function LoadData()
 		end
 		UNGROUPED_QUESTS = NormalizeQuestArray(saved.ungrouped)
 		UNGROUPED_EXPANDED = saved.ungroupedExpanded ~= false
+		if type(saved.popout) == "table" then
+			popoutVisible = saved.popout.visible == true
+			popoutLocked = saved.popout.locked == true
+			popoutPosX = tonumber(saved.popout.x) or popoutPosX
+			popoutPosY = tonumber(saved.popout.y) or popoutPosY
+		end
 		return
 	end
 
@@ -373,6 +392,45 @@ local function GetGroupCompletionCount(group)
 		end
 	end
 	return completedCount, #group.quests
+end
+
+local function SetPopoutLockState(locked)
+	popoutLocked = locked == true
+	if lockPopButton ~= nil then
+		lockPopButton:SetText(popoutLocked and "Lock pop [ON]" or "Lock pop [OFF]")
+	end
+	if popoutWindow ~= nil then
+		popoutWindow:EnableDrag(not popoutLocked)
+		if popoutWindow.EnablePick ~= nil then
+			popoutWindow:EnablePick(not popoutLocked)
+		end
+		popoutWindow:Clickable(not popoutLocked)
+	end
+	if popoutBackground ~= nil and popoutBackground.SetColor ~= nil then
+		if popoutLocked then
+			popoutBackground:SetColor(0.15, 0.15, 0.15, 0.0)
+		else
+			popoutBackground:SetColor(0.15, 0.15, 0.15, 0.75)
+		end
+	end
+	for _, label in ipairs(popoutLabels) do
+		if label ~= nil and label.EnablePick ~= nil then
+			label:EnablePick(false)
+		end
+	end
+end
+
+local function EnsurePopoutRows(count)
+	for index = 1, count do
+		if popoutLabels[index] == nil then
+			local label = popoutWindow:CreateChildWidget("label", "popoutLabel" .. tostring(index), index, true)
+			label:SetExtent(260, 22)
+			label.style:SetAlign(ALIGN_LEFT)
+			label.style:SetFontSize(14)
+			label:EnablePick(false)
+			popoutLabels[index] = label
+		end
+	end
 end
 
 local function CreateLocalEditBox(parent, id, width)
@@ -854,8 +912,17 @@ RefreshMain = function()
 			#groups
 		)
 	)
-	local height = y + WINDOW_PADDING
+	popoutButton:RemoveAllAnchors()
+	popoutButton:AddAnchor("TOPLEFT", choreTrackerWindow, WINDOW_PADDING, y)
+	popoutButton:Show(true)
+
+	lockPopButton:RemoveAllAnchors()
+	lockPopButton:AddAnchor("TOPLEFT", choreTrackerWindow, WINDOW_PADDING + 116, y)
+	lockPopButton:Show(true)
+
+	local height = y + ROW_HEIGHT + WINDOW_PADDING
 	choreTrackerWindow:SetExtent(WINDOW_WIDTH, height)
+	RefreshPopout()
 end
 
 local function MakeGroup()
@@ -959,6 +1026,18 @@ weekliesButton:SetExtent(78, 22)
 weekliesButton:AddAnchor("TOPRIGHT", choreTrackerWindow, -20, 44)
 weekliesButton:SetText("Weeklies")
 
+popoutButton = choreTrackerWindow:CreateChildWidget("button", "popoutButton", 0, true)
+popoutButton:SetStyle("text_default")
+popoutButton:SetAutoResize(false)
+popoutButton:SetExtent(110, 26)
+popoutButton:SetText("Popout")
+
+lockPopButton = choreTrackerWindow:CreateChildWidget("button", "lockPopButton", 0, true)
+lockPopButton:SetStyle("text_default")
+lockPopButton:SetAutoResize(false)
+lockPopButton:SetExtent(110, 26)
+lockPopButton:SetText("Lock pop [OFF]")
+
 choreTrackerCloseButton = choreTrackerWindow:CreateChildWidget("button", "choreTrackerCloseButton", 0, true)
 choreTrackerCloseButton:SetStyle("text_default")
 choreTrackerCloseButton:SetAutoResize(false)
@@ -1041,6 +1120,41 @@ activeQuestIdAddButton:SetAutoResize(false)
 activeQuestIdAddButton:SetExtent(70, 26)
 activeQuestIdAddButton:AddAnchor("TOPLEFT", activeQuestWindow, WINDOW_PADDING + 96, 68)
 activeQuestIdAddButton:SetText("Add ID")
+
+popoutWindow = CreateEmptyWindow("choreTrackerPopoutWindow", "UIParent")
+popoutWindow:SetCloseOnEscape(false)
+popoutWindow:SetExtent(280, 140)
+popoutWindow:AddAnchor("TOPLEFT", "UIParent", popoutPosX, popoutPosY)
+popoutWindow:Show(popoutVisible)
+popoutWindow:Enable(true)
+popoutWindow:Clickable(true)
+popoutWindow:EnableDrag(true)
+popoutWindow:SetUILayer("system")
+
+popoutBackground = popoutWindow:CreateColorDrawable(0.15, 0.15, 0.15, 0.75, "background")
+popoutBackground:AddAnchor("TOPLEFT", popoutWindow, 0, 0)
+popoutBackground:AddAnchor("BOTTOMRIGHT", popoutWindow, 0, 0)
+
+function popoutWindow:OnDragStart()
+	if popoutLocked then
+		return
+	end
+	self:StartMoving()
+	return true
+end
+popoutWindow:SetHandler("OnDragStart", popoutWindow.OnDragStart)
+
+function popoutWindow:OnDragStop()
+	if popoutLocked then
+		return
+	end
+	self:StopMovingOrSizing()
+	local x, y = self:GetOffset()
+	popoutPosX = tonumber(x) or popoutPosX
+	popoutPosY = tonumber(y) or popoutPosY
+	SaveData()
+end
+popoutWindow:SetHandler("OnDragStop", popoutWindow.OnDragStop)
 
 removeConfirmWindow = CreateEmptyWindow("choreTrackerRemoveConfirmWindow", "UIParent")
 removeConfirmWindow:SetCloseOnEscape(true)
@@ -1140,6 +1254,26 @@ function weekliesButton:OnClick(arg)
 	end
 end
 weekliesButton:SetHandler("OnClick", weekliesButton.OnClick)
+
+function popoutButton:OnClick(arg)
+	if arg == "RightButton" then
+		return
+	end
+	popoutVisible = not popoutVisible
+	popoutWindow:Show(popoutVisible)
+	SaveData()
+	RefreshPopout()
+end
+popoutButton:SetHandler("OnClick", popoutButton.OnClick)
+
+function lockPopButton:OnClick(arg)
+	if arg == "RightButton" then
+		return
+	end
+	SetPopoutLockState(not popoutLocked)
+	SaveData()
+end
+lockPopButton:SetHandler("OnClick", lockPopButton.OnClick)
 
 function activeQuestCloseButton:OnClick(arg)
 	if arg == "RightButton" then
@@ -1242,6 +1376,55 @@ function choreTrackerWindow:OnUpdate(dt)
 end
 choreTrackerWindow:SetHandler("OnUpdate", choreTrackerWindow.OnUpdate)
 
+RefreshPopout = function()
+	if popoutWindow == nil then
+		return
+	end
+
+	popoutButton:SetText(popoutVisible and "Popout [ON]" or "Popout [OFF]")
+	SetPopoutLockState(popoutLocked)
+
+	if popoutVisible ~= true then
+		popoutWindow:Show(false)
+		return
+	end
+
+	popoutWindow:Show(true)
+	local groups = GROUPS_DAILIES
+	local count = #groups
+	EnsurePopoutRows(count)
+
+	local y = 10
+	for index, group in ipairs(groups) do
+		local label = popoutLabels[index]
+		local status = GetGroupStatus(group)
+		local color = STATUS_COLORS.notStarted
+		local prefix = "[ ]"
+		if status == "complete" then
+			color = STATUS_COLORS.complete
+			prefix = "[x]"
+		elseif status == "in_progress" then
+			color = STATUS_COLORS.inProgress
+			prefix = "[~]"
+		end
+
+		local completedCount, totalCount = GetGroupCompletionCount(group)
+		local open = group.expanded ~= false and "+" or "-"
+		label:RemoveAllAnchors()
+		label:AddAnchor("TOPLEFT", popoutWindow, 12, y)
+		label:SetText(string.format("%s %s (%d/%d) [%s]", prefix, tostring(group.title), completedCount, totalCount, open))
+		SetWidgetTextColor(label, color)
+		label:Show(true)
+		y = y + 24
+	end
+
+	for index = count + 1, #popoutLabels do
+		popoutLabels[index]:Show(false)
+	end
+
+	popoutWindow:SetExtent(280, math.max(36, y + 10))
+end
+
 function choreTrackerButton:OnClick()
 	choreTrackerWindow:Show(not choreTrackerWindow:IsVisible())
 	RefreshMain()
@@ -1252,4 +1435,5 @@ end
 choreTrackerButton:SetHandler("OnClick", choreTrackerButton.OnClick)
 
 LoadData()
+SetPopoutLockState(popoutLocked)
 RefreshMain()
