@@ -101,7 +101,7 @@ naServerEvents = {
 		{ times = { { hour = 15, minute = 59, duration = 60 }, { hour = 20, minute = 29, duration = 60 } }, days = { 3, 5, 7 } },
 	},
 	[eventsName[locale].Hasla] = {
-		{ times = { { hour = 13, minute = 0, duration = 30 }, { hour = 19, minute = 0, duration = 30 }, { hour = 20, minute = 0, duration = 30 } }, days = { 1, 2, 3, 4, 5, 6, 7 } },
+		{ times = { { hour = 19, minute = 0, duration = 30 }, { hour = 21, minute = 0, duration = 30 } }, days = { 1, 2, 3, 4, 5, 6, 7 } },
 	},
 	[eventsName[locale].Akasch] = {
 		{ times = { { hour = 8, minute = 30, duration = 41 }, { hour = 16, minute = 30, duration = 41 }, { hour = 21, minute = 30, duration = 41 } }, days = { 7, 2 } },
