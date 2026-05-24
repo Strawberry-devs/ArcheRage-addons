@@ -27,6 +27,7 @@ ADDON:ImportAPI(API_TYPE.TEAM.id)
 
 local classnumberRu = {
 	["Mage"] = 0,
+	["Malediction"] = 0,
 	["Tank"] = 1,
 	["Songer"] = 1,
 	["Dancer"] = 1,
@@ -40,6 +41,7 @@ local classnumberRu = {
 
 local classnumberNa = {
 	["Mage"] = 4,
+	["Malediction"] = 4,
 	["Tank"] = 1,
 	["Songer"] = 1,
 	["Dancer"] = 3,
