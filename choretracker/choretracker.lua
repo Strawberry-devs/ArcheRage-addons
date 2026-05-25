@@ -24,6 +24,7 @@ ADDON:ImportAPI(API_TYPE.QUEST.id)
 local SAVE_KEY = "choretracker_groups_v2"
 local LEGACY_GROUP_KEY = "choretracker_groups"
 local LEGACY_CHORES_KEY = "choretracker_chores"
+local POPOUT_COORD_SPACE_EFFECTIVE = "effective"
 
 local RACE_QUESTS = CHORETRACKER_RACE_QUESTS or {}
 local DAILY_QUESTS = CHORETRACKER_DAILY_QUESTS or {}
@@ -84,6 +85,8 @@ local popoutVisible = false
 local popoutLocked = false
 local popoutPosX = 460
 local popoutPosY = 0
+local popoutElapsed = 0
+local POPOUT_REFRESH_INTERVAL_MS = 10000
 
 local RefreshMain
 local RefreshActiveQuests
@@ -240,8 +243,27 @@ local function SaveData()
 			locked = popoutLocked,
 			x = popoutPosX,
 			y = popoutPosY,
+			coordSpace = POPOUT_COORD_SPACE_EFFECTIVE,
 		},
 	})
+end
+
+local function GetUiScale()
+	if UIParent ~= nil and UIParent.GetUIScale ~= nil then
+		return UIParent:GetUIScale()
+	end
+	return 1
+end
+
+local function EffectiveToAnchorOffset(value)
+	if F_LAYOUT ~= nil and F_LAYOUT.CalcDontApplyUIScale ~= nil then
+		return F_LAYOUT.CalcDontApplyUIScale(value)
+	end
+	return value / GetUiScale()
+end
+
+local function AnchorOffsetToEffective(value)
+	return value * GetUiScale()
 end
 
 local function NormalizeQuestArray(values)
@@ -308,8 +330,15 @@ local function LoadData()
 		if type(saved.popout) == "table" then
 			popoutVisible = saved.popout.visible == true
 			popoutLocked = saved.popout.locked == true
-			popoutPosX = tonumber(saved.popout.x) or popoutPosX
-			popoutPosY = tonumber(saved.popout.y) or popoutPosY
+			local savedX = tonumber(saved.popout.x)
+			local savedY = tonumber(saved.popout.y)
+			if saved.popout.coordSpace == POPOUT_COORD_SPACE_EFFECTIVE then
+				popoutPosX = savedX or popoutPosX
+				popoutPosY = savedY or popoutPosY
+			else
+				popoutPosX = savedX ~= nil and AnchorOffsetToEffective(savedX) or popoutPosX
+				popoutPosY = savedY ~= nil and AnchorOffsetToEffective(savedY) or popoutPosY
+			end
 		end
 		return
 	end
@@ -941,6 +970,8 @@ local function MakeGroup()
 	RefreshMain()
 end
 
+LoadData()
+
 choreTrackerButton = CreateSimpleButton("chores", 700, -380)
 choreTrackerWindow = CreateEmptyWindow("choreTrackerWindow", "UIParent")
 choreTrackerWindow:SetCloseOnEscape(true)
@@ -1124,7 +1155,7 @@ activeQuestIdAddButton:SetText("Add ID")
 popoutWindow = CreateEmptyWindow("choreTrackerPopoutWindow", "UIParent")
 popoutWindow:SetCloseOnEscape(false)
 popoutWindow:SetExtent(280, 140)
-popoutWindow:AddAnchor("TOPLEFT", "UIParent", popoutPosX, popoutPosY)
+popoutWindow:AddAnchor("TOPLEFT", "UIParent", EffectiveToAnchorOffset(popoutPosX), EffectiveToAnchorOffset(popoutPosY))
 popoutWindow:Show(popoutVisible)
 popoutWindow:Enable(true)
 popoutWindow:Clickable(true)
@@ -1149,12 +1180,27 @@ function popoutWindow:OnDragStop()
 		return
 	end
 	self:StopMovingOrSizing()
-	local x, y = self:GetOffset()
+	local x, y = self:GetEffectiveOffset()
 	popoutPosX = tonumber(x) or popoutPosX
 	popoutPosY = tonumber(y) or popoutPosY
+	self:RemoveAllAnchors()
+	self:AddAnchor("TOPLEFT", "UIParent", EffectiveToAnchorOffset(popoutPosX), EffectiveToAnchorOffset(popoutPosY))
 	SaveData()
 end
 popoutWindow:SetHandler("OnDragStop", popoutWindow.OnDragStop)
+
+function popoutWindow:OnUpdate(dt)
+	if popoutVisible ~= true then
+		return
+	end
+	popoutElapsed = popoutElapsed + dt
+	if popoutElapsed < POPOUT_REFRESH_INTERVAL_MS then
+		return
+	end
+	popoutElapsed = 0
+	RefreshPopout()
+end
+popoutWindow:SetHandler("OnUpdate", popoutWindow.OnUpdate)
 
 removeConfirmWindow = CreateEmptyWindow("choreTrackerRemoveConfirmWindow", "UIParent")
 removeConfirmWindow:SetCloseOnEscape(true)
@@ -1434,6 +1480,5 @@ function choreTrackerButton:OnClick()
 end
 choreTrackerButton:SetHandler("OnClick", choreTrackerButton.OnClick)
 
-LoadData()
 SetPopoutLockState(popoutLocked)
 RefreshMain()
