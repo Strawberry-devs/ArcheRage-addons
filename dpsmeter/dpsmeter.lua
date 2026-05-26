@@ -43,7 +43,7 @@ local MODE_RATE_LABEL = {
 	HealT = "htps"
 }
 local SETTINGS_FILE = "dpsmeter_settings.txt"
-local TITLE_PAD_RIGHT = 80
+local TITLE_PAD_RIGHT = 140
 local DETAIL_TITLE_PAD_RIGHT = 80
 local DETAIL_VIEW_ORDER = { "Spell", "Target" }
 local NAME_COL_RATIO = 0.50
@@ -77,6 +77,9 @@ local lastHitTime = nil
 local fightDone   = false
 local fightElapsed = 0
 local saveCurrentSettings -- forward declaration; assigned after windows are created
+local miniButton -- forward declaration; assigned after main window buttons are created
+local detailFrame -- forward declaration; assigned when the detail window is created
+local positionMiniButtonNearHide -- forward declaration; assigned after mini button is created
 
 local function findIndex(list, value, fallback)
 	for i = 1, #list do
@@ -105,7 +108,10 @@ local function loadSettings()
 		detail_w = 320,
 		detail_h = HEADER_H + MAX_DETAIL_ROWS * ROW_H + PAD * 2,
 		active_mode = MODE_ORDER[1],
-		detail_view = DETAIL_VIEW_ORDER[1]
+		detail_view = DETAIL_VIEW_ORDER[1],
+		is_hidden = 0,
+		mini_x = DEFAULT_MAIN_X,
+		mini_y = DEFAULT_MAIN_Y
 	}
 
 	local file = io.open(SETTINGS_FILE, "r")
@@ -140,6 +146,7 @@ activeModeIndex = findIndex(MODE_ORDER, loadedSettings.active_mode, 1)
 activeMode = MODE_ORDER[activeModeIndex]
 detailViewIndex = findIndex(DETAIL_VIEW_ORDER, loadedSettings.detail_view, 1)
 detailViewMode = DETAIL_VIEW_ORDER[detailViewIndex]
+local isMeterHidden = loadedSettings.is_hidden == 1
 
 local function resetFight()
 	statsByMode.Damage  = {}
@@ -202,7 +209,7 @@ local TOTAL_H = HEADER_H + MAX_ROWS * ROW_H + PAD * 2
 local mainFrame = CreateEmptyWindow("dpsMeterWindow", "UIParent")
 mainFrame:SetExtent(loadedSettings.main_w, loadedSettings.main_h)
 mainFrame:AddAnchor("TOPLEFT", "UIParent", loadedSettings.main_x, loadedSettings.main_y)
-mainFrame:Show(true)
+mainFrame:Show(not isMeterHidden)
 mainFrame:EnableDrag(true)
 
 mainFrame:SetHandler("OnDragStart", function(self)
@@ -246,6 +253,69 @@ resetBtn:Show(true)
 resetBtn:SetHandler("OnClick", function()
 	resetFight()
 end)
+
+local hideBtn = mainFrame:CreateChildWidget("button", "dpsHideBtn", 1, true)
+hideBtn:SetText("Hide")
+hideBtn:SetStyle("text_default")
+hideBtn:SetExtent(58, HEADER_H - 8)
+hideBtn:AddAnchor("TOPRIGHT", resetBtn, "TOPLEFT", -2, 0)
+hideBtn:Show(true)
+hideBtn:SetHandler("OnClick", function()
+	isMeterHidden = true
+	if positionMiniButtonNearHide then
+		positionMiniButtonNearHide()
+	end
+	mainFrame:Show(false)
+	detailFrame:Show(false)
+	if miniButton ~= nil then
+		miniButton:Show(true)
+	end
+	if saveCurrentSettings then
+		saveCurrentSettings()
+	end
+end)
+
+miniButton = UIParent:CreateWidget("button", "dpsMeterMiniButton", "UIParent", "")
+miniButton:SetText("dpsmeter")
+miniButton:SetStyle("text_default")
+miniButton:SetHeight(25)
+miniButton:SetWidth(80)
+miniButton:AddAnchor("TOPLEFT", "UIParent", loadedSettings.mini_x, loadedSettings.mini_y)
+miniButton:Show(isMeterHidden)
+miniButton:EnableDrag(true)
+miniButton:SetHandler("OnDragStart", function(self)
+	self:StartMoving()
+	self.moving = true
+end)
+miniButton:SetHandler("OnDragStop", function(self)
+	self:StopMovingOrSizing()
+	self.moving = false
+	if saveCurrentSettings then
+		saveCurrentSettings()
+	end
+end)
+miniButton:SetHandler("OnClick", function()
+	isMeterHidden = false
+	mainFrame:Show(true)
+	miniButton:Show(false)
+	if saveCurrentSettings then
+		saveCurrentSettings()
+	end
+end)
+
+positionMiniButtonNearHide = function()
+	if miniButton == nil then
+		return
+	end
+
+	local mainX, mainY = mainFrame:GetOffset()
+	local mainW = mainFrame:GetWidth() or WINDOW_W
+	local x = (mainX or 0) + mainW - 120
+	local y = (mainY or 0) + 4
+
+	miniButton:RemoveAllAnchors()
+	miniButton:AddAnchor("TOPLEFT", "UIParent", x, y)
+end
 
 -- ============================================================
 -- Main window rows (pre-created, shown/hidden per update)
@@ -339,7 +409,7 @@ local DETAIL_W     = 320
 local DETAIL_H     = HEADER_H + MAX_DETAIL_ROWS * ROW_H + PAD * 2
 local detailPlayer = nil
 
-local detailFrame = CreateEmptyWindow("dpsMeterDetailWindow", "UIParent")
+detailFrame = CreateEmptyWindow("dpsMeterDetailWindow", "UIParent")
 detailFrame:SetExtent(loadedSettings.detail_w, loadedSettings.detail_h)
 detailFrame:AddAnchor("TOPLEFT", "UIParent", loadedSettings.detail_x, loadedSettings.detail_y)
 detailFrame:Show(false)
@@ -464,6 +534,7 @@ end
 saveCurrentSettings = function()
 	local mainX, mainY = mainFrame:GetOffset()
 	local detailX, detailY = detailFrame:GetOffset()
+	local miniX, miniY = miniButton:GetOffset()
 	local uiScale = getUIScaleFactor()
 
 	-- Save normalized offsets so positions remain stable with UI scale changes.
@@ -471,6 +542,8 @@ saveCurrentSettings = function()
 	mainY = math.floor((mainY or 0) / uiScale)
 	detailX = math.floor((detailX or 0) / uiScale)
 	detailY = math.floor((detailY or 0) / uiScale)
+	miniX = math.floor((miniX or 0) / uiScale)
+	miniY = math.floor((miniY or 0) / uiScale)
 
 	local file = io.open(SETTINGS_FILE, "w")
 	if not file then
@@ -487,6 +560,9 @@ saveCurrentSettings = function()
 	file:write(string.format("detail_h=%d\n", math.floor(detailFrame:GetHeight() or DETAIL_H)))
 	file:write(string.format("active_mode=%s\n", activeMode))
 	file:write(string.format("detail_view=%s\n", detailViewMode))
+	file:write(string.format("is_hidden=%d\n", isMeterHidden and 1 or 0))
+	file:write(string.format("mini_x=%d\n", miniX))
+	file:write(string.format("mini_y=%d\n", miniY))
 	file:close()
 end
 
