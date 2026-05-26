@@ -26,6 +26,7 @@ ADDON:ImportAPI(API_TYPE.LOCALE.id) --add to localization
 
 --window length saved
 local countFilePath = "TimeUntilWindowCount.txt"
+local filterFilePath = "TimeUntilEventFilters.txt"
 
 local function SaveTimerCount(count)
 	local file = io.open(countFilePath, "w")
@@ -46,6 +47,34 @@ local function LoadTimerCount()
 	else
 		return 10
 	end
+end
+
+local function SaveEventFilters(filters)
+	local file = io.open(filterFilePath, "w")
+	if not file then
+		return
+	end
+	for name, isFiltered in pairs(filters) do
+		if isFiltered then
+			file:write(name .. "\n")
+		end
+	end
+	file:close()
+end
+
+local function LoadEventFilters()
+	local filters = {}
+	local file = io.open(filterFilePath, "r")
+	if not file then
+		return filters
+	end
+	for line in file:lines() do
+		if line ~= nil and line ~= "" then
+			filters[line] = true
+		end
+	end
+	file:close()
+	return filters
 end
 
 ---
@@ -174,6 +203,13 @@ timerAnchor:AddAnchor("TOPLEFT", "UIParent", tonumber(savedWindowX), tonumber(sa
 local whaleConflict = false
 local aegConflict = true
 local dynamicEvents = {}
+local filteredEvents = LoadEventFilters()
+local filterWindow = nil
+local filterButtons = {}
+local filterColumnCount = 3
+local filterButtonWidth = 88
+local filterButtonHeight = 25
+local filterButtonGap = 4
 
 local locale = timeUntilLocale or "en_us"
 local serverEvents = naServerEvents or {}
@@ -181,6 +217,117 @@ local serverEvents = naServerEvents or {}
 if playerIsOnRuServer ~= nil and playerIsOnRuServer() and ruServerEvents ~= nil then
 	serverEvents = ruServerEvents
 end
+
+local function setFilterButtonColor(button, isFiltered)
+	if button == nil or button.style == nil then
+		return
+	end
+	if isFiltered then
+		SetButtonFontOneColor(button, { 0.9, 0.333, 0.333, 1 })
+	else
+		SetButtonFontOneColor(button, { 0.348, 0.609, 0.370, 1 })
+	end
+end
+
+local function getVisibleFilterNames()
+	local names = {}
+	for name, _ in pairs(serverEvents) do
+		table.insert(names, name)
+	end
+	table.sort(names)
+	return names
+end
+
+local function refreshFilterWindow()
+	if filterWindow == nil then
+		return
+	end
+
+	local names = getVisibleFilterNames()
+	local rowCount = math.ceil(#names / filterColumnCount)
+	local windowWidth = (filterColumnCount * filterButtonWidth) + ((filterColumnCount + 1) * filterButtonGap)
+	local windowHeight = (rowCount * (filterButtonHeight + filterButtonGap)) + filterButtonGap
+	filterWindow:SetExtent(windowWidth, windowHeight)
+
+	for i = 1, #names do
+		if filterButtons[i] == nil then
+			local row = math.floor((i - 1) / filterColumnCount)
+			local col = (i - 1) % filterColumnCount
+			local button = filterWindow:CreateChildWidget("button", "timeUntilFilterEvent" .. i, 0, true)
+			button:AddAnchor(
+				"TOPLEFT",
+				filterWindow,
+				filterButtonGap + (col * (filterButtonWidth + filterButtonGap)),
+				filterButtonGap + (row * (filterButtonHeight + filterButtonGap))
+			)
+			button:SetStyle("text_default")
+			button:SetExtent(filterButtonWidth, filterButtonHeight)
+			button.style:SetFontSize(12)
+			button.style:SetAlign(ALIGN_CENTER)
+			function button:OnClick(arg)
+				if self.eventName == nil then
+					return
+				end
+				filteredEvents[self.eventName] = not filteredEvents[self.eventName]
+				SaveEventFilters(filteredEvents)
+				refreshFilterWindow()
+			end
+			button:SetHandler("OnClick", button.OnClick)
+			filterButtons[i] = button
+		end
+
+		local button = filterButtons[i]
+		local name = names[i]
+		button.eventName = name
+		button:SetText(name)
+		button:Show(true)
+		setFilterButtonColor(button, filteredEvents[name])
+	end
+
+	for i = #names + 1, #filterButtons do
+		filterButtons[i].eventName = nil
+		filterButtons[i]:SetText("")
+		filterButtons[i]:Show(false)
+	end
+end
+
+local function toggleFilterWindow()
+	if filterWindow == nil then
+		filterWindow = CreateEmptyWindow("timeUntilFilterWindow", "UIParent")
+		filterWindow:AddAnchor("CENTER", "UIParent", 0, 0)
+		filterWindow:SetExtent(280, 90)
+		filterWindow:SetCloseOnEscape(true)
+		filterWindow:EnableDrag(true)
+		filterWindow:Show(false)
+
+		function filterWindow:OnDragStart()
+			self:StartMoving()
+			self.moving = true
+		end
+		filterWindow:SetHandler("OnDragStart", filterWindow.OnDragStart)
+
+		function filterWindow:OnDragStop()
+			self:StopMovingOrSizing()
+			self.moving = false
+		end
+		filterWindow:SetHandler("OnDragStop", filterWindow.OnDragStop)
+
+		local filterBackground = filterWindow:CreateColorDrawable(0, 0, 0, 0.75, "background")
+		filterBackground:AddAnchor("TOPLEFT", filterWindow, 0, 0)
+		filterBackground:AddAnchor("BOTTOMRIGHT", filterWindow, 0, 0)
+	end
+
+	filterWindow:Show(not filterWindow:IsVisible())
+	refreshFilterWindow()
+end
+
+local filterEntries = timerAnchor:CreateChildWidget("button", "filterEntries", 0, true)
+filterEntries:AddAnchor("TOPLEFT", timerAnchor, 45, -25)
+filterEntries:SetStyle("text_default")
+filterEntries:SetExtent(35, 25)
+filterEntries:SetText("?")
+filterEntries:SetWidth(25)
+filterEntries:SetHandler("OnClick", toggleFilterWindow)
 
 local function calculateDayOfWeek(year, month, day)
 	if month < 3 then
@@ -278,43 +425,53 @@ function timerAnchor:OnUpdate(dt)
 		table.sort(sortedEvents, function(a, b)
 			return a.minutes < b.minutes
 		end)
-		local skipCounter = 0
+
+		if filterWindow ~= nil and filterWindow:IsVisible() then
+			refreshFilterWindow()
+		end
+
+		for i = 1, amountOfTimers do
+			if eventLabels[i] ~= nil then
+				eventLabels[i]:SetText("")
+				timerLabels[i]:SetText("")
+			end
+		end
+
+		local displayIndex = 0
 		for i, event in ipairs(sortedEvents) do
 			--X2Chat:DispatchChatMessage(CMF_SYSTEM, tostring(event.minutes))
-			if (event.minutes + event.duration) > 0 then
-				local iWithSkip = i - skipCounter
-				if eventLabels[iWithSkip] then
-					eventLabels[iWithSkip]:SetText(event.name)
+			if (event.minutes + event.duration) > 0 and not filteredEvents[event.name] then
+				displayIndex = displayIndex + 1
+				if eventLabels[displayIndex] then
+					eventLabels[displayIndex]:SetText(event.name)
 					local hours = math.floor(event.minutes / 60)
 					local minutes = event.minutes % 60
 					if event.minutes <= 0 then
-						eventLabels[iWithSkip].style:SetColor(255, 0, 0, 255)
-						timerLabels[iWithSkip].style:SetColor(255, 0, 0, 255)
+						eventLabels[displayIndex].style:SetColor(255, 0, 0, 255)
+						timerLabels[displayIndex].style:SetColor(255, 0, 0, 255)
 						local timeEventIsActive = event.duration + event.minutes
-						timerLabels[iWithSkip]:SetText(string.format("Ends %02d", timeEventIsActive))
+						timerLabels[displayIndex]:SetText(string.format("Ends %02d", timeEventIsActive))
 					else
-						eventLabels[iWithSkip].style:SetColor(255, 255, 255, 255)
-						timerLabels[iWithSkip].style:SetColor(255, 255, 255, 255)
+						eventLabels[displayIndex].style:SetColor(255, 255, 255, 255)
+						timerLabels[displayIndex].style:SetColor(255, 255, 255, 255)
 						if event.name == "Big Titan" or event.name == "Small Titan" then
-							eventLabels[iWithSkip].style:SetColor(0.3, 0.7, 1, 255)
-							timerLabels[iWithSkip].style:SetColor(0.3, 0.7, 1, 255)
+							eventLabels[displayIndex].style:SetColor(0.3, 0.7, 1, 255)
+							timerLabels[displayIndex].style:SetColor(0.3, 0.7, 1, 255)
 						end
 						if
 							event.name == dynamicEventsName[locale].whalesong
 							or event.name == dynamicEventsName[locale].aegis
 						then
-							eventLabels[iWithSkip].style:SetColor(1, 0.6, 0.1, 255)
-							timerLabels[iWithSkip].style:SetColor(1, 0.6, 0.1, 255)
+							eventLabels[displayIndex].style:SetColor(1, 0.6, 0.1, 255)
+							timerLabels[displayIndex].style:SetColor(1, 0.6, 0.1, 255)
 						end
 						if hours == 0 then
-							timerLabels[iWithSkip]:SetText(string.format("%02d", minutes))
+							timerLabels[displayIndex]:SetText(string.format("%02d", minutes))
 						else
-							timerLabels[iWithSkip]:SetText(string.format("%02d:%02d", hours, minutes))
+							timerLabels[displayIndex]:SetText(string.format("%02d:%02d", hours, minutes))
 						end
 					end
 				end
-			else
-				skipCounter = skipCounter + 1
 			end
 		end
 	end
