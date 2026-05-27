@@ -1,16 +1,29 @@
-function dump(o)
+function dumpValue(o)
 	if type(o) == "table" then
 		local s = "{ "
 		for k, v in pairs(o) do
 			if type(k) ~= "number" then
 				k = '"' .. k .. '"'
 			end
-			s = s .. "[" .. k .. "] = " .. dump(v) .. ","
+			s = s .. "[" .. k .. "] = " .. dumpValue(v) .. ","
 		end
 		return s .. "} "
 	else
 		return tostring(o)
 	end
+end
+
+function dump(...)
+	local count = select("#", ...)
+	if count <= 1 then
+		return dumpValue(...)
+	end
+
+	local s = "{ "
+	for i = 1, count do
+		s = s .. "[" .. i .. "] = " .. dumpValue(select(i, ...)) .. ","
+	end
+	return s .. "} "
 end
 
 function aaprint(text)
