@@ -107,6 +107,29 @@ ruServerEvents = {
 			days = { 1, 2, 4, 6 },
 		},
 	},
+	["Small Titan"] = {
+		{
+			times = {
+				{ hour = 4, minute = 0, duration = 15 },
+				{ hour = 7, minute = 0, duration = 15 },
+				{ hour = 10, minute = 0, duration = 15 },
+				{ hour = 13, minute = 0, duration = 15 },
+				{ hour = 16, minute = 0, duration = 15 },
+				{ hour = 19, minute = 0, duration = 15 },
+				{ hour = 22, minute = 0, duration = 15 },
+			},
+			days = { 3, 6 },
+		},
+	},
+	["Big Titan"] = {
+		{
+			times = {
+				{ hour = 14, minute = 0, duration = 15 },
+				{ hour = 21, minute = 0, duration = 15 },
+			},
+			days = { 4, 7 },
+		},
+	},
 	[eventsName[locale].Abyssal_Atk] = {
 		{
 			times = { { hour = 12, minute = 0, duration = 30 }, { hour = 22, minute = 30, duration = 30 } },
