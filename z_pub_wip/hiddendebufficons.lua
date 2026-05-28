@@ -32,21 +32,7 @@ local lastdeBuffString = ""
 local drawableNmyIcons = {} -- Table to store drawn icons, must be global
 local drawableNmyLabels = {} -- Table to store drawn counters, must be global
 local drawableNmyLabels_stacks = {} -- stacks
--- helped function for array dumping --
-local function dump(o)
-	if type(o) == "table" then
-		local s = "{ "
-		for k, v in pairs(o) do
-			if type(k) ~= "number" then
-				k = '"' .. k .. '"'
-			end
-			s = s .. "[" .. k .. "] = " .. dump(v) .. ","
-		end
-		return s .. "} "
-	else
-		return tostring(o)
-	end
-end
+
 
 ------------------------ Icon drawing function ------------------------
 local function drawIcon(w, iconPath, id, xOffset, yOffset, duration, stacks)

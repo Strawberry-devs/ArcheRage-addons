@@ -1,18 +1,3 @@
-function dump(o)
-	if type(o) == "table" then
-		local s = "{ "
-		for k, v in pairs(o) do
-			if type(k) ~= "number" then
-				k = '"' .. k .. '"'
-			end
-			s = s .. "[" .. k .. "] = " .. dump(v) .. ","
-		end
-		return s .. "} "
-	else
-		return tostring(o)
-	end
-end
--------------------------------------------------------------------------------------------
 function SetButtonFontOneColor(button, color)
 	button:SetTextColor(color[1], color[2], color[3], color[4])
 	button:SetPushedTextColor(color[1], color[2], color[3], color[4])

@@ -3,21 +3,6 @@
 --------------- Additions by Strawberry ----------------
 ----------------- Discord: exec.noir -------------------
 
-function dump(o)
-	if type(o) == "table" then
-		local s = "{ "
-		for k, v in pairs(o) do
-			if type(k) ~= "number" then
-				k = '"' .. k .. '"'
-			end
-			s = s .. "[" .. k .. "] = " .. dump(v) .. ","
-		end
-		return s .. "} "
-	else
-		return tostring(o)
-	end
-end
-
 local buttonSkinInset = { left = 11, right = 11, top = 0, bottom = 0 }
 
 local color = {
