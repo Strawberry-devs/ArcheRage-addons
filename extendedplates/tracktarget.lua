@@ -31,6 +31,22 @@ ADDON:ImportAPI(API_TYPE.EQUIPMENT.id)
 
 local shared = TargetDebuffTrackerShared
 local AA_DEBUG = false
+local SIMPLE_BUTTON_WIDTH = 80
+local SIMPLE_BUTTON_HEIGHT = 25
+local SECONDARY_BUTTON_WIDTH = 64
+local LEFT_BUTTON_X = 20
+local SECONDARY_BUTTON_X = 160
+local LEFT_BUTTON_START_Y = 88
+local LEFT_BUTTON_ROW_SPACING = 33
+local LEFT_BUTTON_GROUP_GAP = 10
+
+local function LeftButtonY(index)
+	return LEFT_BUTTON_START_Y + ((index - 1) * LEFT_BUTTON_ROW_SPACING)
+end
+
+local function LowerLeftButtonY(index)
+	return LeftButtonY(index) + LEFT_BUTTON_GROUP_GAP
+end
 
 local function DebugPrint(message)
 	if AA_DEBUG ~= true then
@@ -76,17 +92,6 @@ local function ApplyLocalButtonStyle(button)
 
 	if button.SetInset ~= nil then
 		button:SetInset(8, 0, 8, 0)
-	end
-
-	if SetButtonFontColor ~= nil then
-		local black = { 0.08, 0.06, 0.03, 1 }
-		local color = {
-			normal = black,
-			highlight = black,
-			pushed = black,
-			disabled = { 0.22, 0.18, 0.12, 1 },
-		}
-		SetButtonFontColor(button, color)
 	end
 end
 
@@ -1067,9 +1072,9 @@ importButton:SetText("Import")
 
 positionButton = managerWindow:CreateChildWidget("button", "positionButton", 0, true)
 ApplyLocalButtonStyle(positionButton)
-positionButton:SetExtent(198, 32)
-	positionButton:AddAnchor("TOPLEFT", managerWindow, 20, 352)
-	positionButton:SetText("Position")
+positionButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+positionButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, LowerLeftButtonY(7))
+positionButton:SetText("Position")
 end)
 
 if not initOk then
@@ -1080,19 +1085,19 @@ end
 DebugPrint("init: manager base widgets complete")
 
 local function createCategoryRow(index, scope, effectType)
-	local y = 88 + ((index - 1) * 42)
+	local y = LeftButtonY(index)
 	local key = scope .. "_" .. effectType
 
 	local selectButton = managerWindow:CreateChildWidget("button", "categoryButton", index, true)
 	ApplyLocalButtonStyle(selectButton)
-	selectButton:SetExtent(132, 30)
-	selectButton:AddAnchor("TOPLEFT", managerWindow, 20, y)
+	selectButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+	selectButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, y)
 	categoryButtons[key] = selectButton
 
 	local toggleButton = managerWindow:CreateChildWidget("button", "toggleButton", index, true)
 	ApplyLocalButtonStyle(toggleButton)
-	toggleButton:SetExtent(58, 30)
-	toggleButton:AddAnchor("TOPLEFT", managerWindow, 160, y)
+	toggleButton:SetExtent(SECONDARY_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+	toggleButton:AddAnchor("TOPLEFT", managerWindow, SECONDARY_BUTTON_X, y)
 	toggleButtons[key] = toggleButton
 
 	selectButton:SetHandler("OnClick", function()
@@ -1118,8 +1123,8 @@ createCategoryRow(6, "self", "hidden")
 
 local filterButton = managerWindow:CreateChildWidget("button", "filterButton", 0, true)
 ApplyLocalButtonStyle(filterButton)
-filterButton:SetExtent(198, 32)
-filterButton:AddAnchor("TOPLEFT", managerWindow, 20, 394)
+filterButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+filterButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, LowerLeftButtonY(8))
 filterButton:SetHandler("OnClick", function()
 	uiState.filterTrackedOnly = not uiState.filterTrackedOnly
 	shared.SaveUiState()
@@ -1127,8 +1132,8 @@ end)
 
 showGearButton = managerWindow:CreateChildWidget("button", "showGearButton", 0, true)
 ApplyLocalButtonStyle(showGearButton)
-showGearButton:SetExtent(132, 32)
-showGearButton:AddAnchor("TOPLEFT", managerWindow, 20, 436)
+showGearButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showGearButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, LowerLeftButtonY(9))
 showGearButton:SetHandler("OnClick", function()
 	uiState.showGear = not uiState.showGear
 	shared.SaveUiState()
@@ -1136,8 +1141,8 @@ end)
 
 showGearSettingsButton = managerWindow:CreateChildWidget("button", "showGearSettingsButton", 0, true)
 ApplyLocalButtonStyle(showGearSettingsButton)
-showGearSettingsButton:SetExtent(58, 32)
-showGearSettingsButton:AddAnchor("TOPLEFT", managerWindow, 160, 436)
+showGearSettingsButton:SetExtent(SECONDARY_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showGearSettingsButton:AddAnchor("TOPLEFT", managerWindow, SECONDARY_BUTTON_X, LowerLeftButtonY(9))
 showGearSettingsButton:SetText("...")
 showGearSettingsButton:SetHandler("OnClick", function()
 	infoSettingsMode = "gear"
@@ -1148,8 +1153,8 @@ end)
 
 showClassButton = managerWindow:CreateChildWidget("button", "showClassButton", 0, true)
 ApplyLocalButtonStyle(showClassButton)
-showClassButton:SetExtent(132, 32)
-showClassButton:AddAnchor("TOPLEFT", managerWindow, 20, 478)
+showClassButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showClassButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, LowerLeftButtonY(10))
 showClassButton:SetHandler("OnClick", function()
 	uiState.showClass = not uiState.showClass
 	shared.SaveUiState()
@@ -1157,8 +1162,8 @@ end)
 
 showClassSettingsButton = managerWindow:CreateChildWidget("button", "showClassSettingsButton", 0, true)
 ApplyLocalButtonStyle(showClassSettingsButton)
-showClassSettingsButton:SetExtent(58, 32)
-showClassSettingsButton:AddAnchor("TOPLEFT", managerWindow, 160, 478)
+showClassSettingsButton:SetExtent(SECONDARY_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showClassSettingsButton:AddAnchor("TOPLEFT", managerWindow, SECONDARY_BUTTON_X, LowerLeftButtonY(10))
 showClassSettingsButton:SetText("...")
 showClassSettingsButton:SetHandler("OnClick", function()
 	infoSettingsMode = "class"
@@ -1169,8 +1174,8 @@ end)
 
 showDistanceButton = managerWindow:CreateChildWidget("button", "showDistanceButton", 0, true)
 ApplyLocalButtonStyle(showDistanceButton)
-showDistanceButton:SetExtent(132, 32)
-showDistanceButton:AddAnchor("TOPLEFT", managerWindow, 20, 520)
+showDistanceButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showDistanceButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, LowerLeftButtonY(11))
 showDistanceButton:SetHandler("OnClick", function()
 	uiState.showDistance = not uiState.showDistance
 	shared.SaveUiState()
@@ -1178,8 +1183,8 @@ end)
 
 showDistanceSettingsButton = managerWindow:CreateChildWidget("button", "showDistanceSettingsButton", 0, true)
 ApplyLocalButtonStyle(showDistanceSettingsButton)
-showDistanceSettingsButton:SetExtent(58, 32)
-showDistanceSettingsButton:AddAnchor("TOPLEFT", managerWindow, 160, 520)
+showDistanceSettingsButton:SetExtent(SECONDARY_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showDistanceSettingsButton:AddAnchor("TOPLEFT", managerWindow, SECONDARY_BUTTON_X, LowerLeftButtonY(11))
 showDistanceSettingsButton:SetText("...")
 showDistanceSettingsButton:SetHandler("OnClick", function()
 	infoSettingsMode = "distance"
@@ -1190,8 +1195,8 @@ end)
 
 showCastbarButton = managerWindow:CreateChildWidget("button", "showCastbarButton", 0, true)
 ApplyLocalButtonStyle(showCastbarButton)
-showCastbarButton:SetExtent(132, 32)
-showCastbarButton:AddAnchor("TOPLEFT", managerWindow, 20, 562)
+showCastbarButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showCastbarButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, LowerLeftButtonY(12))
 showCastbarButton:SetHandler("OnClick", function()
 	uiState.showCastbar = not uiState.showCastbar
 	shared.SaveUiState()
@@ -1199,8 +1204,8 @@ end)
 
 showCastbarSettingsButton = managerWindow:CreateChildWidget("button", "showCastbarSettingsButton", 0, true)
 ApplyLocalButtonStyle(showCastbarSettingsButton)
-showCastbarSettingsButton:SetExtent(58, 32)
-showCastbarSettingsButton:AddAnchor("TOPLEFT", managerWindow, 160, 562)
+showCastbarSettingsButton:SetExtent(SECONDARY_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showCastbarSettingsButton:AddAnchor("TOPLEFT", managerWindow, SECONDARY_BUTTON_X, LowerLeftButtonY(12))
 showCastbarSettingsButton:SetText("...")
 showCastbarSettingsButton:SetHandler("OnClick", function()
 	infoSettingsMode = "castbar"
@@ -1214,8 +1219,8 @@ end)
 
 showEquipmentButton = managerWindow:CreateChildWidget("button", "showEquipmentButton", 0, true)
 ApplyLocalButtonStyle(showEquipmentButton)
-showEquipmentButton:SetExtent(132, 32)
-showEquipmentButton:AddAnchor("TOPLEFT", managerWindow, 20, 604)
+showEquipmentButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showEquipmentButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, LowerLeftButtonY(13))
 showEquipmentButton:SetHandler("OnClick", function()
 	uiState.showEquipment = not uiState.showEquipment
 	shared.SaveUiState()
@@ -1223,8 +1228,8 @@ end)
 
 showEquipmentSettingsButton = managerWindow:CreateChildWidget("button", "showEquipmentSettingsButton", 0, true)
 ApplyLocalButtonStyle(showEquipmentSettingsButton)
-showEquipmentSettingsButton:SetExtent(58, 32)
-showEquipmentSettingsButton:AddAnchor("TOPLEFT", managerWindow, 160, 604)
+showEquipmentSettingsButton:SetExtent(SECONDARY_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+showEquipmentSettingsButton:AddAnchor("TOPLEFT", managerWindow, SECONDARY_BUTTON_X, LowerLeftButtonY(13))
 showEquipmentSettingsButton:SetText("...")
 showEquipmentSettingsButton:SetHandler("OnClick", function()
 	infoSettingsMode = "equipment"
@@ -1235,8 +1240,8 @@ end)
 
 drawLinesButton = managerWindow:CreateChildWidget("button", "drawLinesButton", 0, true)
 ApplyLocalButtonStyle(drawLinesButton)
-drawLinesButton:SetExtent(132, 32)
-drawLinesButton:AddAnchor("TOPLEFT", managerWindow, 20, 646)
+drawLinesButton:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+drawLinesButton:AddAnchor("TOPLEFT", managerWindow, LEFT_BUTTON_X, LowerLeftButtonY(14))
 drawLinesButton:SetHandler("OnClick", function()
 	drawLinesEnabled = not drawLinesEnabled
 	SaveDrawLinesSettings()
@@ -1244,8 +1249,8 @@ end)
 
 drawLinesSettingsButton = managerWindow:CreateChildWidget("button", "drawLinesSettingsButton", 0, true)
 ApplyLocalButtonStyle(drawLinesSettingsButton)
-drawLinesSettingsButton:SetExtent(58, 32)
-drawLinesSettingsButton:AddAnchor("TOPLEFT", managerWindow, 160, 646)
+drawLinesSettingsButton:SetExtent(SECONDARY_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
+drawLinesSettingsButton:AddAnchor("TOPLEFT", managerWindow, SECONDARY_BUTTON_X, LowerLeftButtonY(14))
 drawLinesSettingsButton:SetText("...")
 drawLinesSettingsButton:SetHandler("OnClick", function()
 	if drawLinesSettingsWindow ~= nil then
@@ -2657,7 +2662,7 @@ do
 	local function makePositionModeButton(index, scope, effectType, text)
 		local button = positionWindow:CreateChildWidget("button", "modeButton", index, true)
 		ApplyLocalButtonStyle(button)
-		button:SetExtent(108, 28)
+		button:SetExtent(SIMPLE_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
 		local col = (index - 1) % 2
 		local row = math.floor((index - 1) / 2)
 		button:AddAnchor("TOPLEFT", positionWindow, 16 + (col * 116), 48 + (row * 34))
