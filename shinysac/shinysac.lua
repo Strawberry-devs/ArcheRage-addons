@@ -33,8 +33,13 @@ local drawableNmyIcons = {}
 local drawableNmyBars = {}
 local castTimers = {}
 local counter = 0
+local DANCER_SCAN_INTERVAL_MS = 10000
 
 local function isDancer(templates)
+	if templates == nil or templates[1] == nil or templates[2] == nil or templates[3] == nil then
+		return false
+	end
+
 	--local templates = X2Unit:GetTargetAbilityTemplates("player")
 	local indices = {
 		templates[1].index,
@@ -42,7 +47,6 @@ local function isDancer(templates)
 		templates[3].index,
 	}
 	table.sort(indices)
-	local keyStr = string.format("name_%d_%d_%d", indices[1], indices[2], indices[3])
 	--X2Chat:DispatchChatMessage(CMF_SYSTEM, keyStr)
 	-- if person has dancer class
 	if indices[1] == 14 or indices[2] == 14 or indices[3] == 14 then
@@ -51,7 +55,20 @@ local function isDancer(templates)
 	return false
 end
 
+local function hideDanceIcon(id)
+	if drawableNmyIcons[id] ~= nil then
+		drawableNmyIcons[id]:SetVisible(false)
+	end
+	if drawableNmyBars[id] ~= nil then
+		drawableNmyBars[id]:Show(false)
+	end
+	castTimers[id] = 10000
+	drawableNmyIcons[id] = nil
+	drawableNmyBars[id] = nil
+end
+
 local function updateDancers()
+	local currentDancers = {}
 	local hasCoRaid = false
 	local amountOfRaids = 1
 	if X2Unit:UnitName("team_1_1") == nil and X2Unit:UnitName("team1") == nil then
@@ -64,7 +81,7 @@ local function updateDancers()
 	end
 	for team = 1, amountOfRaids do
 		for member = 1, 50 do
-			local teamId = ""
+			local teamId
 			if hasCoRaid then
 				teamId = string.format("team_%02d_%02d", team, member)
 			else
@@ -73,15 +90,27 @@ local function updateDancers()
 			local playerName = X2Unit:UnitName(teamId)
 			local templates = X2Unit:GetTargetAbilityTemplates(teamId)
 			--X2Chat:DispatchChatMessage(CMF_SYSTEM, "Checking " .. playerName)
-			if templates ~= nil then
-				local isThisADancer = isDancer(templates)
-				if isThisADancer then
-					--X2Chat:DispatchChatMessage(CMF_SYSTEM, "This is a dancer: " .. playerName .. " " .. teamId)
-					dancers[playerName] = teamId
-				end
+			if playerName ~= nil and isDancer(templates) then
+				--X2Chat:DispatchChatMessage(CMF_SYSTEM, "This is a dancer: " .. playerName .. " " .. teamId)
+				currentDancers[playerName] = teamId
 			end
 		end
 	end
+
+	for _, oldTeamId in pairs(dancers) do
+		local stillTracked = false
+		for _, currentTeamId in pairs(currentDancers) do
+			if currentTeamId == oldTeamId then
+				stillTracked = true
+				break
+			end
+		end
+		if not stillTracked then
+			hideDanceIcon(oldTeamId)
+		end
+	end
+
+	dancers = currentDancers
 end
 -- id = dancer name?
 local function drawDanceIcon(id, xOffset, yOffset, dt)
@@ -145,7 +174,8 @@ function refreshForcer:OnUpdate(dt)
 					local nScrX_Tar, nScrY_Tar, nScrZ_Tar = X2Unit:GetUnitScreenPosition(teamId)
 					if nScrX_Tar == nil or nScrY_Tar == nil or nScrZ_Tar == nil then
 						--X2Chat:DispatchChatMessage(CMF_SYSTEM, "dancing off screen")
-						return
+						hideDanceIcon(teamId)
+						break
 					end
 					drawDanceIcon(teamId, nScrX_Tar, nScrY_Tar, dt)
 					--X2Chat:DispatchChatMessage(CMF_SYSTEM, playerName .. " is dancing ++++++++++")
@@ -153,18 +183,14 @@ function refreshForcer:OnUpdate(dt)
 			end
 			if stillDancing == false and drawableNmyIcons[teamId] ~= nil then
 				--X2Chat:DispatchChatMessage(CMF_SYSTEM, "Dancing has stopped. Setting all to zero & invisible.")
-				drawableNmyIcons[teamId]:SetVisible(false)
-				drawableNmyBars[teamId]:Show(false)
-				castTimers[teamId] = 10000
-				drawableNmyIcons[teamId] = nil
-				drawableNmyBars[teamId] = nil
+				hideDanceIcon(teamId)
 			end
 			--if stillDancing == false then
 			--    X2Chat:DispatchChatMessage(CMF_SYSTEM, playerName .. "is not dancing ----------")
 			--end
 		end
 	end
-	if counter > 1000 then
+	if counter > DANCER_SCAN_INTERVAL_MS then
 		--X2Chat:DispatchChatMessage(CMF_SYSTEM, "Checking dancers.")
 		updateDancers()
 		counter = 0
@@ -178,6 +204,9 @@ local function RosterChanged(reason)
 		updateDancers()
 	elseif reason == "leaved_by_self" or reason == "kicked_by_self" or reason == "dismissed" then
 		--empty out dancer, go dormant
+		for _, teamId in pairs(dancers) do
+			hideDanceIcon(teamId)
+		end
 		dancers = {}
 	end
 end
