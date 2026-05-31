@@ -25,27 +25,9 @@ ADDON:ImportAPI(API_TYPE.UNIT.id)
 --ADDON:ImportAPI(API_TYPE.UI.id)
 
 local castDuration = 0
-local newCast = false
-local startTime = 0
-local iStoppedCasting = true
 local currentSpellName = ""
-local endingcast = false
 
-local statueBuffIds = {
-	["30768"] = true,
-	["30766"] = true,
-	["30767"] = true,
-	["30771"] = true,
-	["30773"] = true,
-	["30760"] = true,
-	["30764"] = true,
-	["30765"] = true,
-	["30770"] = true,
-	["30772"] = true,
-}
-local statueBuffPos = 1
 local hudTexture = "ui/common/hud.dds"
-local waitingForStatueBuff = false
 
 W_BAR = {}
 local SetViewOfCastingBar = function(id, parent)
@@ -64,10 +46,11 @@ local SetViewOfCastingBar = function(id, parent)
 	statusBar:SetOrientation("HORIZONTAL")
 	statusBar:Show(true)
 	frame.statusBar = statusBar
-	local lightDeco = statusBar:CreateEffectDrawableByKey(hudTexture, "casting_bar_light_deco", "background")
+	local lightDeco = statusBar:CreateEffectDrawableByKey(hudTexture, "casting_bar_light_deco", "artwork")
 	lightDeco:SetRepeatCount(1)
 	frame.lightDeco = lightDeco
 	statusBar:AddAnchorChildToBar(lightDeco, "TOPLEFT", "TOPRIGHT", -15, -2)
+	statusBar:AddAnchorChildToBar(lightDeco, "BOTTOMLEFT", "BOTTOMRIGHT", -15, 2)
 	frame.startAnim_condition = false
 	frame.endAnim_condition = false
 	function frame:StartAnmation(time)
@@ -128,12 +111,9 @@ function W_BAR.CreateCastingBar(id, parent, unit)
 		frame:Show(true)
 	end
 	function frame:HideAll(force, isSucceed)
-		local fadeOutTime = 200
+		local fadeOutTime = 0
 		if force == true then
 			fadeOutTime = 0
-		end
-		if isSucceed then
-			fadeOutTime = 2000
 		end
 		frame.statusBar:Show(false, fadeOutTime)
 		frame.text:Show(false, fadeOutTime)
@@ -141,73 +121,84 @@ function W_BAR.CreateCastingBar(id, parent, unit)
 		frame.startAnim_condition = false
 		frame.endAnim_condition = false
 		frame.prev_curtime = nil
+		frame.anim_direction = nil
 	end
 	function frame:OnUpdate()
-		if iStoppedCasting then
+		local info = X2Unit:UnitCastingInfo(self.unit)
+		if info == nil or info.showTargetCastingTime == false or info.spellName == nil then
 			frame.text:SetCastingText("")
-			frame.statusBar:Show(false)
+			frame:HideAll(true)
 			frame:AddAnchor("CENTER", "UIParent", 0, 5000)
+			frame.spellName = nil
+			frame.prev_curtime = nil
 			return
-		else
-			frame.statusBar:Show(true)
-			frame:AddAnchor("CENTER", "UIParent", 0, 300)
-		end
-		local UBuffCounter = X2Unit:UnitBuffCount("player")
-		if UBuffCounter < statueBuffPos then
-			statueBuffPos = 1
-			return
-		end
-		local buffCurrent = X2Unit:UnitBuffTooltip("player", statueBuffPos)
-		if buffCurrent["timeLeft"] == nil then
-			local UBuffCount = X2Unit:UnitBuffCount("player")
-			for i = 1, UBuffCount do
-				local buffExtra = X2Unit:UnitBuff("player", i)
-				strBuffId = tostring(buffExtra["buff_id"])
-				if statueBuffIds[strBuffId] then
-					statueBuffPos = i
-					waitingForStatueBuff = false
-				end
-				if statueBuffPos ~= i and i == UBuffCount then
-					if waitingForStatueBuff == false then
-						X2Chat:DispatchChatMessage(CMF_SYSTEM, "Statue buff not found, big cast bars won't work.")
-						waitingForStatueBuff = true
-					end
-				end
-			end
-			return
-		end
-		if newCast == true then
-			frame.statusBar:SetMinMaxValues(0, castDuration)
-			local buff = X2Unit:UnitBuffTooltip("player", statueBuffPos)
-			startTime = buff["timeLeft"]
-			newCast = false
-			endingcast = false
 		end
 
-		------------------------------------------------------------
-		frame.statusBar:SetValue(startTime - buffCurrent["timeLeft"])
-		frame:StartAnmation(1)
-		roundedCastingTime = string.format("%.1f", ((startTime - buffCurrent["timeLeft"]) / 1000))
-		roundedTotalCastingTime = string.format("%.1f", (castDuration / 1000))
+		frame.statusBar:Show(true)
+		frame:AddAnchor("CENTER", "UIParent", 0, 300)
+		frame:ShowAll()
+		frame:ChangeBarTexture(info.castingUseable)
+		frame.spellName = info.spellName
+		currentSpellName = info.spellName
+		castDuration = tonumber(info.castingTime) or 0
+		local currCastingTime = tonumber(info.currCastingTime) or 0
+
+		frame.statusBar:SetMinMaxValues(0, castDuration)
+		frame.statusBar:SetValue(currCastingTime)
+
+		local roundedCastingTime = string.format("%.1f", (currCastingTime / 1000))
+		local roundedTotalCastingTime = string.format("%.1f", (castDuration / 1000))
 		frame.text:SetCastingText(
 			string.format("%s %s / %s", currentSpellName, roundedCastingTime, roundedTotalCastingTime)
 		)
-		if (castDuration * 0.9) < (startTime - buffCurrent["timeLeft"]) and endingcast ~= true then
-			frame:EndAnmation(1)
-			endingcast = true
+
+		if frame.prev_curtime == nil then
+			frame.prev_curtime = currCastingTime
 		end
+
+		if not frame.startAnim_condition then
+			if frame.prev_curtime > currCastingTime and currCastingTime <= castDuration * 0.99 then
+				frame.startAnim_condition = true
+				frame.anim_direction = "down"
+				frame:StartAnmation(castDuration * 0.99 / 1000)
+			elseif frame.prev_curtime < currCastingTime and currCastingTime >= castDuration * 0.01 then
+				frame.startAnim_condition = true
+				frame.anim_direction = "up"
+				frame:StartAnmation((currCastingTime - castDuration * 0.01) / 1000)
+			end
+		end
+
+		if frame.startAnim_condition and not frame.endAnim_condition then
+			if frame.prev_curtime > currCastingTime and currCastingTime <= castDuration * 0.08 then
+				frame.endAnim_condition = true
+				frame:EndAnmation(currCastingTime / 1000)
+			elseif frame.prev_curtime < currCastingTime and currCastingTime >= castDuration * 0.9 then
+				frame.endAnim_condition = true
+				frame:EndAnmation((castDuration - currCastingTime) / 1000)
+			end
+		end
+
+		frame.prev_curtime = currCastingTime
 	end
 	function frame:Refresh()
 		if frame.unit == "none" then
+			frame:HideAll(true)
 			return
 		end
-		frame.text:SetCastingText("test cast")
-		frame:ShowAll()
+		local info = X2Unit:UnitCastingInfo(self.unit)
+		if info ~= nil and info.spellName ~= nil and info.showTargetCastingTime == true then
+			frame.text:SetCastingText(info.spellName)
+			frame:ChangeBarTexture(info.castingUseable)
+			frame:ShowAll()
+		else
+			frame:HideAll()
+		end
 	end
 	function frame:ChangeBarTexture(castingUseable)
 		if self.castingUseable == castingUseable then
 			return
 		end
+		frame.lightDeco:RemoveAllAnchors()
 		if castingUseable then
 			frame.statusBar:AddAnchor("TOPLEFT", frame, 6, 2)
 			frame.statusBar:SetBarTextureByKey("charge_bar")
@@ -217,62 +208,47 @@ function W_BAR.CreateCastingBar(id, parent, unit)
 			frame.statusBar:SetBarTextureByKey("casting_status_bar")
 			frame.lightDeco:SetTextureInfo("casting_bar_light_deco")
 		end
+		frame.statusBar:AddAnchorChildToBar(frame.lightDeco, "TOPLEFT", "TOPRIGHT", -15, -2)
+		frame.statusBar:AddAnchorChildToBar(frame.lightDeco, "BOTTOMLEFT", "BOTTOMRIGHT", -15, 2)
 		self.castingUseable = castingUseable
 	end
 	local castingBarEvents = {
 		SPELLCAST_START = function(spellName, castTime, caster, castingUseable)
-			-- X2Chat:DispatchChatMessage(CMF_SYSTEM, "SPELLCAST_START: " ..
-			--         tostring(spellName) .. ", " ..
-			--         tostring(castingTime) .. ", " ..
-			--         tostring(caster) .. ", " ..
-			--         tostring(castingUseable)
-			--     )
-			if caster == "player" then
-				currentSpellName = spellName
-				newCast = true
-				castDuration = castTime
-				iStoppedCasting = false
-			end
 			if caster ~= frame.unit then
 				return
 			end
 			if frame.spellName ~= nil then
 				frame.spellName = ""
 			end
-			--frame:ChangeBarTexture(castingUseable)
+			currentSpellName = spellName
+			castDuration = tonumber(castTime) or 0
+			frame.prev_curtime = nil
+			frame.startAnim_condition = false
+			frame.endAnim_condition = false
+			frame.anim_direction = nil
+			frame:ChangeBarTexture(castingUseable)
+			frame.statusBar:SetMinMaxValues(0, castDuration)
+			frame.statusBar:SetValue(0)
 			frame.spellName = spellName
 			frame.text:SetCastingText(string.format("%s %s", spellName, castTime))
-			frame.ShowAll()
+			frame:ShowAll()
 		end,
 		SPELLCAST_STOP = function(caster)
-			if caster == "player" then
-				iStoppedCasting = true
-			end
 			if caster ~= frame.unit then
 				return
 			end
-			if frame.spellName == nil then
-				frame.spellName = ""
-			end
-			frame.text:SetCastingText(string.format("%s %s", frame.spellName, locale.castingBar.stop))
-			frame.HideAll()
+			frame.spellName = nil
+			frame.statusBar:SetValue(0)
+			frame.text:SetCastingText("")
+			frame:HideAll(true)
 		end,
 		SPELLCAST_SUCCEEDED = function(caster)
-			if caster == "player" then
-				iStoppedCasting = true
-			end
 			if caster ~= frame.unit then
 				return
 			end
-			frame.statusBar:SetMinMaxValues(0, 1)
-			frame.statusBar:SetValue(1)
 			frame.spellName = nil
-			if frame.anim_direction ~= "down" then
-				frame:flashAnmation()
-				frame:HideAll(false, true)
-			else
-				frame.HideAll()
-			end
+			frame.statusBar:SetValue(0)
+			frame:HideAll(true)
 		end,
 	}
 	frame:RegisterEvent("SPELLCAST_START")
@@ -299,7 +275,7 @@ function W_BAR.CreateCastingBar(id, parent, unit)
 		else
 			frame:ReleaseHandler("OnEvent")
 			frame:ReleaseHandler("OnUpdate")
-			frame.HideAll()
+			frame:HideAll()
 		end
 	end
 	--X2Chat:DispatchChatMessage(CMF_SYSTEM, "Showing cast bar.")
@@ -354,5 +330,5 @@ function W_BAR.CreateDoubleGauge(id, parent)
 	return widget
 end
 
-local castBar = W_BAR:CreateCastingBar("frame", "UIParent", "")
+local castBar = W_BAR.CreateCastingBar("frame", "UIParent", "player")
 castBar:ShowAll()
