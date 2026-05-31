@@ -79,6 +79,7 @@ function refreshForcer:OnUpdate(dt)
 		end
 		if danceEnded then
 			X2Team:SetRole(defaultRole)
+			danceEnded = false
 		end
 		counter = 0
 	end
@@ -96,7 +97,7 @@ local function getCurrentRole()
 	table.sort(indices)
 	local keyStr = string.format("name_%d_%d_%d", indices[1], indices[2], indices[3])
 	--X2Chat:DispatchChatMessage(CMF_SYSTEM, keyStr)
-	fakeClassName = nameMappings[keyStr] or "unknown"
+	local fakeClassName = nameMappings[keyStr] or "unknown"
 	if fakeClassName == "unknown" then
 		X2Chat:DispatchChatMessage(
 			CMF_SYSTEM,
@@ -111,6 +112,7 @@ local function StartCast(spellName, castingTime, caster, castingUseable)
 	if spellDanceNames[spellName] and caster == "player" then
 		--X2Chat:DispatchChatMessage(CMF_SYSTEM, "Dancing " .. spellName .. tostring(castingTime) .. caster)
 		isDancing = true
+		danceEnded = false
 	end
 
 	--isDancing = true
