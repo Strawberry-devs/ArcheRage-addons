@@ -28,7 +28,7 @@ local buffAnchor = CreateEmptyWindow("buffAnchor", "UIParent")
 buffAnchor:Show(true)
 buffAnchor:AddAnchor("TOPLEFT", "UIParent", 10, -100)
 local lblCapReached = buffAnchor:CreateChildWidget("label", "lblCapReached", 10, true)
-lblCapReached:Show(true)
+lblCapReached:Show(false)
 lblCapReached:EnablePick(false)
 lblCapReached.style:SetColor(1, 0, 0, 1.0)
 lblCapReached.style:SetFontSize(30)
@@ -37,7 +37,16 @@ lblCapReached.style:SetAlign(ALIGN_LEFT)
 lblCapReached:AddAnchor("LEFT", buffAnchor, (UIParent:GetScreenWidth() / 2) - 115, (UIParent:GetScreenHeight() / 3))
 lblCapReached:SetText("BUFF CAPPED")
 
+local UPDATE_INTERVAL_MS = 500
+local elapsedSinceCheck = UPDATE_INTERVAL_MS
+
 function buffAnchor:OnUpdate(dt)
+	elapsedSinceCheck = elapsedSinceCheck + dt
+	if elapsedSinceCheck < UPDATE_INTERVAL_MS then
+		return
+	end
+	elapsedSinceCheck = 0
+
 	local UBuffCount = X2Unit:UnitBuffCount("player")
 	if UBuffCount == 32 then
 		lblCapReached:Show(true)
