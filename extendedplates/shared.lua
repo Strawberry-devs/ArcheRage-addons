@@ -170,7 +170,7 @@ local function ensureUiState()
 		target = {
 			buff = true,
 			debuff = true,
-			hidden = true,
+			hidden = false,
 		},
 		self = {
 			buff = true,
@@ -186,6 +186,9 @@ local function ensureUiState()
 		end
 		if saved.activeEffect == "buff" or saved.activeEffect == "debuff" or saved.activeEffect == "hidden" then
 			shared.uiState.activeEffect = saved.activeEffect
+		end
+		if shared.uiState.activeScope == "target" and shared.uiState.activeEffect == "hidden" then
+			shared.uiState.activeEffect = "buff"
 		end
 		if saved.showGear ~= nil then
 			shared.uiState.showGear = saved.showGear == true
@@ -269,6 +272,7 @@ local function ensureUiState()
 				end
 			end
 		end
+		shared.uiState.target.hidden = false
 	end
 
 	return shared.uiState

@@ -7,7 +7,6 @@
 shared.lua
 enemy.lua
 self.lua
-enemyhidden.lua
 selfhidden.lua
 castbar.lua
 tracktarget.lua
