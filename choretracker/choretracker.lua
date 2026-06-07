@@ -141,6 +141,24 @@ local function SetWidgetTextColor(widget, color)
 	end
 end
 
+local function SetWidgetTextColorByKey(widget, colorKey)
+	if widget == nil or colorKey == nil then
+		return
+	end
+
+	if widget.style ~= nil and widget.style.SetColorByKey ~= nil then
+		widget.style:SetColorByKey(colorKey)
+	end
+end
+
+local function SetWidgetStyleColor(widget, color)
+	if widget == nil or color == nil or widget.style == nil or widget.style.SetColor == nil then
+		return
+	end
+
+	widget.style:SetColor(color[1] or 1, color[2] or 1, color[3] or 1, color[4] or 1)
+end
+
 local function ShowRemoveConfirm(message, onConfirm)
 	removeConfirmAction = onConfirm
 	removeConfirmLabel:SetText(tostring(message or "Remove?"))
@@ -153,11 +171,11 @@ local function RefreshModeButtons()
 		return
 	end
 	if activeMode == MODE_DAILIES then
-		SetWidgetTextColor(dailiesButton, STATUS_COLORS.complete)
-		SetWidgetTextColor(weekliesButton, ACTIVE_QUEST_TEXT_COLOR)
+		dailiesButton:SetText("> Dailies")
+		weekliesButton:SetText("Weeklies")
 	else
-		SetWidgetTextColor(dailiesButton, ACTIVE_QUEST_TEXT_COLOR)
-		SetWidgetTextColor(weekliesButton, STATUS_COLORS.complete)
+		dailiesButton:SetText("Dailies")
+		weekliesButton:SetText("> Weeklies")
 	end
 end
 
@@ -479,6 +497,21 @@ local function CreateLocalEditBox(parent, id, width)
 	return edit
 end
 
+local function CreateWindowBackground(window)
+	local bg = window:CreateDrawable("ui/common/default.dds", "main_bg", "background")
+	bg:AddAnchor("TOPLEFT", window, -5, -5)
+	bg:AddAnchor("BOTTOMRIGHT", window, 5, 5)
+	return bg
+end
+
+local function CreateCloseButton(parent, id, onClick)
+	local button = parent:CreateChildWidget("button", id, 0, true)
+	button:AddAnchor("TOPRIGHT", parent, 3, -3)
+	button:SetStyle("btn_close_default")
+	button:SetHandler("OnClick", onClick)
+	return button
+end
+
 local function EnsureMainRows(count)
 	for index = 1, count do
 		if mainRows[index] == nil then
@@ -733,14 +766,14 @@ local function EnsureActiveQuestRows(count)
 				if self.isTracked == true then
 					if RemoveQuestFromList(list, self.questId) then
 						self.isTracked = false
-						SetWidgetTextColor(self, ACTIVE_QUEST_TEXT_COLOR)
+						SetWidgetTextColorByKey(self, "default")
 						SaveData()
 						RefreshMain()
 					end
 				elseif not HasQuestInList(list, self.questId) then
 					list[#list + 1] = self.questId
 					self.isTracked = true
-					SetWidgetTextColor(self, STATUS_COLORS.complete)
+					SetWidgetStyleColor(self, STATUS_COLORS.complete)
 					SaveData()
 					RefreshMain()
 				end
@@ -781,9 +814,9 @@ RefreshActiveQuests = function()
 			row.isTracked = tracked
 			row:SetText(GetShortQuestTitle(title))
 			if tracked then
-				SetWidgetTextColor(row, STATUS_COLORS.complete)
+				SetWidgetStyleColor(row, STATUS_COLORS.complete)
 			else
-				SetWidgetTextColor(row, ACTIVE_QUEST_TEXT_COLOR)
+				SetWidgetTextColorByKey(row, "default")
 			end
 			row:Show(true)
 		end
@@ -983,28 +1016,7 @@ choreTrackerWindow:Clickable(true)
 choreTrackerWindow:EnableDrag(true)
 choreTrackerWindow:SetUILayer("system")
 
-background = choreTrackerWindow:CreateColorDrawable(0.05, 0.05, 0.05, 0.90, "background")
-background:AddAnchor("TOPLEFT", choreTrackerWindow, 0, 0)
-background:AddAnchor("BOTTOMRIGHT", choreTrackerWindow, 0, 0)
-
-local mainBorderTop = choreTrackerWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-mainBorderTop:AddAnchor("TOPLEFT", choreTrackerWindow, 0, 0)
-mainBorderTop:SetExtent(WINDOW_WIDTH, 2)
-local mainBorderBottom = choreTrackerWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-mainBorderBottom:AddAnchor("BOTTOMLEFT", choreTrackerWindow, 0, 0)
-mainBorderBottom:SetExtent(WINDOW_WIDTH, 2)
-local mainBorderLeft = choreTrackerWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-mainBorderLeft:AddAnchor("TOPLEFT", choreTrackerWindow, 0, 0)
-mainBorderLeft:AddAnchor("BOTTOMLEFT", choreTrackerWindow, 0, 0)
-mainBorderLeft:SetExtent(2, 0)
-local mainBorderRight = choreTrackerWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-mainBorderRight:AddAnchor("TOPRIGHT", choreTrackerWindow, 0, 0)
-mainBorderRight:AddAnchor("BOTTOMRIGHT", choreTrackerWindow, 0, 0)
-mainBorderRight:SetExtent(2, 0)
-
-local mainTitleBar = choreTrackerWindow:CreateColorDrawable(0.16, 0.10, 0.05, 0.95, "artwork")
-mainTitleBar:AddAnchor("TOPLEFT", choreTrackerWindow, 2, 2)
-mainTitleBar:SetExtent(WINDOW_WIDTH - 4, 34)
+background = CreateWindowBackground(choreTrackerWindow)
 
 function choreTrackerWindow:OnDragStart()
 	self:StartMoving()
@@ -1022,7 +1034,7 @@ titleLabel:SetExtent(WINDOW_WIDTH - (WINDOW_PADDING * 2), 22)
 titleLabel:AddAnchor("TOPLEFT", choreTrackerWindow, WINDOW_PADDING, 10)
 titleLabel.style:SetAlign(ALIGN_LEFT)
 titleLabel.style:SetFontSize(16)
-titleLabel.style:SetColor(1, 1, 1, 1)
+titleLabel.style:SetColorByKey("brown")
 titleLabel:SetText("ChoreTracker")
 
 summaryLabel = choreTrackerWindow:CreateChildWidget("label", "summaryLabel", 0, true)
@@ -1030,7 +1042,7 @@ summaryLabel:SetExtent(WINDOW_WIDTH - (WINDOW_PADDING * 2), 20)
 summaryLabel:AddAnchor("TOPLEFT", choreTrackerWindow, WINDOW_PADDING, 45)
 summaryLabel.style:SetAlign(ALIGN_LEFT)
 summaryLabel.style:SetFontSize(14)
-summaryLabel.style:SetColor(1, 1, 1, 1)
+summaryLabel.style:SetColorByKey("brown")
 
 groupTitleEdit = CreateLocalEditBox(choreTrackerWindow, "groupTitleEdit", 215)
 groupTitleEdit:AddAnchor("TOPLEFT", choreTrackerWindow, WINDOW_PADDING, 70)
@@ -1069,12 +1081,9 @@ lockPopButton:SetAutoResize(false)
 lockPopButton:SetExtent(110, 26)
 lockPopButton:SetText("Lock pop [OFF]")
 
-choreTrackerCloseButton = choreTrackerWindow:CreateChildWidget("button", "choreTrackerCloseButton", 0, true)
-choreTrackerCloseButton:SetStyle("text_default")
-choreTrackerCloseButton:SetAutoResize(false)
-choreTrackerCloseButton:SetExtent(30, 24)
-choreTrackerCloseButton:AddAnchor("TOPRIGHT", choreTrackerWindow, -12, 7)
-choreTrackerCloseButton:SetText("X")
+choreTrackerCloseButton = CreateCloseButton(choreTrackerWindow, "choreTrackerCloseButton", function()
+	choreTrackerWindow:Show(false)
+end)
 
 activeQuestWindow = CreateEmptyWindow("choreTrackerActiveQuestWindow", "UIParent")
 activeQuestWindow:SetCloseOnEscape(true)
@@ -1086,27 +1095,7 @@ activeQuestWindow:Clickable(true)
 activeQuestWindow:EnableDrag(true)
 activeQuestWindow:SetUILayer("system")
 
-activeQuestBackground = activeQuestWindow:CreateColorDrawable(0.05, 0.05, 0.05, 0.92, "background")
-activeQuestBackground:AddAnchor("TOPLEFT", activeQuestWindow, 0, 0)
-activeQuestBackground:AddAnchor("BOTTOMRIGHT", activeQuestWindow, 0, 0)
-
-local activeBorderTop = activeQuestWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-activeBorderTop:AddAnchor("TOPLEFT", activeQuestWindow, 0, 0)
-activeBorderTop:SetExtent(ACTIVE_WINDOW_WIDTH, 2)
-local activeBorderBottom = activeQuestWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-activeBorderBottom:AddAnchor("BOTTOMLEFT", activeQuestWindow, 0, 0)
-activeBorderBottom:SetExtent(ACTIVE_WINDOW_WIDTH, 2)
-local activeBorderLeft = activeQuestWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-activeBorderLeft:AddAnchor("TOPLEFT", activeQuestWindow, 0, 0)
-activeBorderLeft:AddAnchor("BOTTOMLEFT", activeQuestWindow, 0, 0)
-activeBorderLeft:SetExtent(2, 0)
-local activeBorderRight = activeQuestWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-activeBorderRight:AddAnchor("TOPRIGHT", activeQuestWindow, 0, 0)
-activeBorderRight:AddAnchor("BOTTOMRIGHT", activeQuestWindow, 0, 0)
-activeBorderRight:SetExtent(2, 0)
-local activeTitleBar = activeQuestWindow:CreateColorDrawable(0.16, 0.10, 0.05, 0.95, "artwork")
-activeTitleBar:AddAnchor("TOPLEFT", activeQuestWindow, 2, 2)
-activeTitleBar:SetExtent(ACTIVE_WINDOW_WIDTH - 4, 34)
+activeQuestBackground = CreateWindowBackground(activeQuestWindow)
 
 function activeQuestWindow:OnDragStart()
 	self:StartMoving()
@@ -1124,22 +1113,19 @@ activeQuestTitleLabel:SetExtent(ACTIVE_WINDOW_WIDTH - 80, 22)
 activeQuestTitleLabel:AddAnchor("TOPLEFT", activeQuestWindow, WINDOW_PADDING, 15)
 activeQuestTitleLabel.style:SetAlign(ALIGN_LEFT)
 activeQuestTitleLabel.style:SetFontSize(16)
-activeQuestTitleLabel.style:SetColor(1, 1, 1, 1)
+activeQuestTitleLabel.style:SetColorByKey("brown")
 activeQuestTitleLabel:SetText("Active Quests")
 
-activeQuestCloseButton = activeQuestWindow:CreateChildWidget("button", "activeQuestCloseButton", 0, true)
-activeQuestCloseButton:SetStyle("text_default")
-activeQuestCloseButton:SetAutoResize(false)
-activeQuestCloseButton:SetExtent(24, 22)
-activeQuestCloseButton:AddAnchor("TOPRIGHT", activeQuestWindow, -WINDOW_PADDING, 14)
-activeQuestCloseButton:SetText("X")
+activeQuestCloseButton = CreateCloseButton(activeQuestWindow, "activeQuestCloseButton", function()
+	activeQuestWindow:Show(false)
+end)
 
 activeQuestSummaryLabel = activeQuestWindow:CreateChildWidget("label", "activeQuestSummaryLabel", 0, true)
 activeQuestSummaryLabel:SetExtent(ACTIVE_WINDOW_WIDTH - (WINDOW_PADDING * 2), 20)
 activeQuestSummaryLabel:AddAnchor("TOPLEFT", activeQuestWindow, WINDOW_PADDING, 45)
 activeQuestSummaryLabel.style:SetAlign(ALIGN_LEFT)
 activeQuestSummaryLabel.style:SetFontSize(13)
-activeQuestSummaryLabel.style:SetColor(1, 1, 1, 1)
+activeQuestSummaryLabel.style:SetColorByKey("brown")
 
 activeQuestIdEdit = CreateLocalEditBox(activeQuestWindow, "activeQuestIdEdit", 90)
 activeQuestIdEdit:AddAnchor("TOPLEFT", activeQuestWindow, WINDOW_PADDING, 68)
@@ -1162,9 +1148,7 @@ popoutWindow:Clickable(true)
 popoutWindow:EnableDrag(true)
 popoutWindow:SetUILayer("system")
 
-popoutBackground = popoutWindow:CreateColorDrawable(0.15, 0.15, 0.15, 0.75, "background")
-popoutBackground:AddAnchor("TOPLEFT", popoutWindow, 0, 0)
-popoutBackground:AddAnchor("BOTTOMRIGHT", popoutWindow, 0, 0)
+popoutBackground = CreateWindowBackground(popoutWindow)
 
 function popoutWindow:OnDragStart()
 	if popoutLocked then
@@ -1211,25 +1195,7 @@ removeConfirmWindow:Enable(true)
 removeConfirmWindow:Clickable(true)
 removeConfirmWindow:SetUILayer("system")
 
-local removeConfirmBackground = removeConfirmWindow:CreateColorDrawable(0.05, 0.05, 0.05, 0.95, "background")
-removeConfirmBackground:AddAnchor("TOPLEFT", removeConfirmWindow, 0, 0)
-removeConfirmBackground:AddAnchor("BOTTOMRIGHT", removeConfirmWindow, 0, 0)
-
-local removeBorderTop = removeConfirmWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-removeBorderTop:AddAnchor("TOPLEFT", removeConfirmWindow, 0, 0)
-removeBorderTop:SetExtent(280, 2)
-local removeBorderBottom = removeConfirmWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-removeBorderBottom:AddAnchor("BOTTOMLEFT", removeConfirmWindow, 0, 0)
-removeBorderBottom:SetExtent(280, 2)
-local removeBorderLeft = removeConfirmWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-removeBorderLeft:AddAnchor("TOPLEFT", removeConfirmWindow, 0, 0)
-removeBorderLeft:SetExtent(2, 112)
-local removeBorderRight = removeConfirmWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-removeBorderRight:AddAnchor("TOPRIGHT", removeConfirmWindow, 0, 0)
-removeBorderRight:SetExtent(2, 112)
-local removeTitleBar = removeConfirmWindow:CreateColorDrawable(0.16, 0.10, 0.05, 0.95, "artwork")
-removeTitleBar:AddAnchor("TOPLEFT", removeConfirmWindow, 2, 2)
-removeTitleBar:SetExtent(276, 30)
+local removeConfirmBackground = CreateWindowBackground(removeConfirmWindow)
 
 removeConfirmLabel = removeConfirmWindow:CreateChildWidget("label", "removeConfirmLabel", 0, true)
 removeConfirmLabel:SetExtent(248, 40)
