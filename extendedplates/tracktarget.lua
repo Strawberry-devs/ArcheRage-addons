@@ -95,6 +95,21 @@ local function ApplyLocalButtonStyle(button)
 	end
 end
 
+local function CreateWindowBackground(window)
+	local bg = window:CreateDrawable("ui/common/default.dds", "main_bg", "background")
+	bg:AddAnchor("TOPLEFT", window, -5, -5)
+	bg:AddAnchor("BOTTOMRIGHT", window, 5, 5)
+	return bg
+end
+
+local function CreateCloseButton(parent, id, onClick)
+	local button = parent:CreateChildWidget("button", id, 0, true)
+	button:AddAnchor("TOPRIGHT", parent, 3, -3)
+	button:SetStyle("btn_close_default")
+	button:SetHandler("OnClick", onClick)
+	return button
+end
+
 local function SetSecondaryButtonExtent(button)
 	button:SetExtent(SECONDARY_BUTTON_WIDTH, SIMPLE_BUTTON_HEIGHT)
 	button:SetWidth(SECONDARY_BUTTON_WIDTH)
@@ -109,15 +124,20 @@ local function ApplyLocalLabelStyle(widget, fontSize, align, red, green, blue)
 		widget.style:SetFontSize(fontSize)
 	end
 
-	if widget.style.SetOutline ~= nil then
-		widget.style:SetOutline(true)
-	end
 	if widget.style.SetAlign ~= nil then
 		widget.style:SetAlign(align or ALIGN_LEFT)
 	end
 	if widget.style.SetColor ~= nil then
 		widget.style:SetColor(red or 1, green or 1, blue or 1, 1)
 	end
+end
+
+local function SetWidgetTextColorByKey(widget, colorKey)
+	if widget == nil or colorKey == nil or widget.style == nil or widget.style.SetColorByKey == nil then
+		return
+	end
+
+	widget.style:SetColorByKey(colorKey)
 end
 
 local function CreateLocalEditBox(parent, id, width)
@@ -951,43 +971,22 @@ DebugPrint("init: after window extent")
 	managerWindow:Show(false)
 	DebugPrint("init: after window hide")
 
-	local background = managerWindow:CreateColorDrawable(0.08, 0.06, 0.04, 0.92, "background")
-	background:AddAnchor("TOPLEFT", managerWindow, 0, 0)
-	background:AddAnchor("BOTTOMRIGHT", managerWindow, 0, 0)
+	local background = CreateWindowBackground(managerWindow)
 	DebugPrint("init: after background")
 
-	local border = managerWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	border:AddAnchor("TOPLEFT", managerWindow, 0, 0)
-	border:SetExtent(720, 2)
-	local borderBottom = managerWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	borderBottom:AddAnchor("BOTTOMLEFT", managerWindow, 0, 0)
-	borderBottom:SetExtent(720, 2)
-	local borderLeft = managerWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	borderLeft:AddAnchor("TOPLEFT", managerWindow, 0, 0)
-	borderLeft:SetExtent(2, 684)
-	local borderRight = managerWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	borderRight:AddAnchor("TOPRIGHT", managerWindow, 0, 0)
-	borderRight:SetExtent(2, 684)
 	DebugPrint("init: after borders")
 
-	local titleBar = managerWindow:CreateColorDrawable(0.16, 0.10, 0.05, 0.95, "artwork")
-	titleBar:AddAnchor("TOPLEFT", managerWindow, 2, 2)
-	titleBar:SetExtent(716, 42)
 	DebugPrint("init: after titleBar")
 
 	local titleLabel = managerWindow:CreateChildWidget("label", "windowTitle", 0, true)
 	titleLabel:AddAnchor("TOPLEFT", managerWindow, 20, 12)
 	titleLabel:SetExtent(300, 24)
-	ApplyLocalLabelStyle(titleLabel, 20, ALIGN_LEFT, 1, 0.97, 0.92)
+	ApplyLocalLabelStyle(titleLabel, 16, ALIGN_LEFT, 1, 0.97, 0.92)
+	SetWidgetTextColorByKey(titleLabel, "brown")
 	titleLabel:SetText("Extended Plates")
 	DebugPrint("init: after titleLabel")
 
-	local closeButton = managerWindow:CreateChildWidget("button", "closeButton", 0, true)
-	closeButton:SetText("X")
-	ApplyLocalButtonStyle(closeButton)
-	closeButton:SetExtent(30, 24)
-	closeButton:AddAnchor("TOPRIGHT", managerWindow, -14, 10)
-	closeButton:SetHandler("OnClick", function()
+	local closeButton = CreateCloseButton(managerWindow, "closeButton", function()
 		managerWindow:Show(false)
 		DebugPrint("closeButton clicked")
 	end)
@@ -1007,31 +1006,36 @@ DebugPrint("init: after window extent")
 	DebugPrint("init: after headerLabel")
 	headerLabel:AddAnchor("TOPLEFT", managerWindow, 245, 54)
 	headerLabel:SetExtent(390, 28)
-	ApplyLocalLabelStyle(headerLabel, 20, ALIGN_LEFT, 1, 0.97, 0.92)
+	ApplyLocalLabelStyle(headerLabel, 16, ALIGN_LEFT, 1, 0.97, 0.92)
+	SetWidgetTextColorByKey(headerLabel, "brown")
 
 	trackedTitle = managerWindow:CreateChildWidget("label", "trackedTitle", 0, true)
 	DebugPrint("init: after trackedTitle")
 	trackedTitle:AddAnchor("TOPLEFT", managerWindow, 245, 90)
 	trackedTitle:SetExtent(300, 22)
-	ApplyLocalLabelStyle(trackedTitle, 16, ALIGN_LEFT, 0.96, 0.90, 0.78)
+	ApplyLocalLabelStyle(trackedTitle, 14, ALIGN_LEFT, 0.96, 0.90, 0.78)
+	SetWidgetTextColorByKey(trackedTitle, "brown")
 
 	availableTitle = managerWindow:CreateChildWidget("label", "availableTitle", 0, true)
 	DebugPrint("init: after availableTitle")
 	availableTitle:AddAnchor("TOPLEFT", managerWindow, 245, 304)
 	availableTitle:SetExtent(300, 22)
-	ApplyLocalLabelStyle(availableTitle, 16, ALIGN_LEFT, 0.96, 0.90, 0.78)
+	ApplyLocalLabelStyle(availableTitle, 14, ALIGN_LEFT, 0.96, 0.90, 0.78)
+	SetWidgetTextColorByKey(availableTitle, "brown")
 
 	trackedPageLabel = managerWindow:CreateChildWidget("label", "trackedPageLabel", 0, true)
 	DebugPrint("init: after trackedPageLabel")
 	trackedPageLabel:AddAnchor("TOPRIGHT", managerWindow, -72, 92)
 	trackedPageLabel:SetExtent(60, 20)
 	ApplyLocalLabelStyle(trackedPageLabel, 14, ALIGN_RIGHT, 1, 1, 1)
+	SetWidgetTextColorByKey(trackedPageLabel, "default")
 
 	availablePageLabel = managerWindow:CreateChildWidget("label", "availablePageLabel", 0, true)
 	DebugPrint("init: after availablePageLabel")
 	availablePageLabel:AddAnchor("TOPRIGHT", managerWindow, -72, 306)
 	availablePageLabel:SetExtent(60, 20)
 	ApplyLocalLabelStyle(availablePageLabel, 14, ALIGN_RIGHT, 1, 1, 1)
+	SetWidgetTextColorByKey(availablePageLabel, "default")
 
 	trackedPrevButton = managerWindow:CreateChildWidget("button", "trackedPrevButton", 0, true)
 	DebugPrint("init: after trackedPrevButton")
@@ -1357,35 +1361,16 @@ tracktargetDistanceLabel:EnablePick(false)
 ApplyTracktargetDistanceLockState()
 
 do
-	local bg = addByIdWindow:CreateColorDrawable(0.08, 0.06, 0.04, 0.96, "background")
-	bg:AddAnchor("TOPLEFT", addByIdWindow, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", addByIdWindow, 0, 0)
-
-	local top = addByIdWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	top:AddAnchor("TOPLEFT", addByIdWindow, 0, 0)
-	top:SetExtent(260, 2)
-	local bottom = addByIdWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	bottom:AddAnchor("BOTTOMLEFT", addByIdWindow, 0, 0)
-	bottom:SetExtent(260, 2)
-	local left = addByIdWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	left:AddAnchor("TOPLEFT", addByIdWindow, 0, 0)
-	left:SetExtent(2, 170)
-	local right = addByIdWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	right:AddAnchor("TOPRIGHT", addByIdWindow, 0, 0)
-	right:SetExtent(2, 170)
+	CreateWindowBackground(addByIdWindow)
 
 	local title = addByIdWindow:CreateChildWidget("label", "title", 0, true)
 	title:AddAnchor("TOPLEFT", addByIdWindow, 16, 12)
 	title:SetExtent(160, 24)
 	ApplyLocalLabelStyle(title, 18, ALIGN_LEFT, 1, 0.97, 0.92)
+	SetWidgetTextColorByKey(title, "brown")
 	title:SetText("Add by ID")
 
-	local closeButton = addByIdWindow:CreateChildWidget("button", "closeButton", 0, true)
-	ApplyLocalButtonStyle(closeButton)
-	closeButton:SetExtent(30, 24)
-	closeButton:AddAnchor("TOPRIGHT", addByIdWindow, -12, 8)
-	closeButton:SetText("X")
-	closeButton:SetHandler("OnClick", function()
+	CreateCloseButton(addByIdWindow, "closeButton", function()
 		addByIdWindow:Show(false)
 	end)
 
@@ -1402,6 +1387,7 @@ do
 	nameLabel:AddAnchor("TOPLEFT", addByIdWindow, 16, 48)
 	nameLabel:SetExtent(80, 20)
 	ApplyLocalLabelStyle(nameLabel, 13, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(nameLabel, "default")
 	nameLabel:SetText("Name")
 
 	addByIdNameEdit = CreateLocalEditBox(addByIdWindow, "addByIdNameEdit", 148)
@@ -1411,6 +1397,7 @@ do
 	idLabel:AddAnchor("TOPLEFT", addByIdWindow, 16, 86)
 	idLabel:SetExtent(80, 20)
 	ApplyLocalLabelStyle(idLabel, 13, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(idLabel, "default")
 	idLabel:SetText("ID")
 
 	addByIdIdEdit = CreateLocalEditBox(addByIdWindow, "addByIdIdEdit", 148)
@@ -1453,34 +1440,15 @@ end
 do
 	local baseImportExportHeight = 340
 	local baseImportExportEditHeight = 210
-	local bg = importExportWindow:CreateColorDrawable(0.08, 0.06, 0.04, 0.96, "background")
-	bg:AddAnchor("TOPLEFT", importExportWindow, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", importExportWindow, 0, 0)
-
-	local top = importExportWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	top:AddAnchor("TOPLEFT", importExportWindow, 0, 0)
-	top:SetExtent(470, 2)
-	local bottom = importExportWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	bottom:AddAnchor("BOTTOMLEFT", importExportWindow, 0, 0)
-	bottom:SetExtent(470, 2)
-	local left = importExportWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	left:AddAnchor("TOPLEFT", importExportWindow, 0, 0)
-	left:SetExtent(2, 340)
-	local right = importExportWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	right:AddAnchor("TOPRIGHT", importExportWindow, 0, 0)
-	right:SetExtent(2, 340)
+	CreateWindowBackground(importExportWindow)
 
 	importExportTitle = importExportWindow:CreateChildWidget("label", "title", 0, true)
 	importExportTitle:AddAnchor("TOPLEFT", importExportWindow, 16, 12)
 	importExportTitle:SetExtent(220, 24)
 	ApplyLocalLabelStyle(importExportTitle, 18, ALIGN_LEFT, 1, 0.97, 0.92)
+	SetWidgetTextColorByKey(importExportTitle, "brown")
 
-	local closeButton = importExportWindow:CreateChildWidget("button", "closeButton", 0, true)
-	ApplyLocalButtonStyle(closeButton)
-	closeButton:SetExtent(30, 24)
-	closeButton:AddAnchor("TOPRIGHT", importExportWindow, -12, 8)
-	closeButton:SetText("X")
-	closeButton:SetHandler("OnClick", function()
+	CreateCloseButton(importExportWindow, "closeButton", function()
 		importExportWindow:Show(false)
 	end)
 
@@ -1514,15 +1482,12 @@ do
 	importExportMessage:AddAnchor("TOPLEFT", importExportWindow, 16, 44)
 	importExportMessage:SetExtent(438, 36)
 	ApplyLocalLabelStyle(importExportMessage, 13, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(importExportMessage, "default")
 
 	importExportEdit = CreateLocalMultiLineEdit(importExportWindow, "importExportEdit", 438, 210)
 	importExportEdit:AddAnchor("TOPLEFT", importExportWindow, 16, 84)
 
 	local function ApplyImportExportLayout(height)
-		top:SetExtent(470, 2)
-		bottom:SetExtent(470, 2)
-		left:SetExtent(2, height)
-		right:SetExtent(2, height)
 		importExportEdit:SetHeight(baseImportExportEditHeight + (height - baseImportExportHeight))
 	end
 
@@ -1781,35 +1746,16 @@ do
 end
 
 do
-	local bg = infoSettingsWindow:CreateColorDrawable(0.08, 0.06, 0.04, 0.96, "background")
-	bg:AddAnchor("TOPLEFT", infoSettingsWindow, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", infoSettingsWindow, 0, 0)
-
-	local top = infoSettingsWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	top:AddAnchor("TOPLEFT", infoSettingsWindow, 0, 0)
-	top:SetExtent(320, 2)
-	local bottom = infoSettingsWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	bottom:AddAnchor("BOTTOMLEFT", infoSettingsWindow, 0, 0)
-	bottom:SetExtent(320, 2)
-	local left = infoSettingsWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	left:AddAnchor("TOPLEFT", infoSettingsWindow, 0, 0)
-	left:SetExtent(2, 470)
-	local right = infoSettingsWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	right:AddAnchor("TOPRIGHT", infoSettingsWindow, 0, 0)
-	right:SetExtent(2, 470)
+	CreateWindowBackground(infoSettingsWindow)
 
 	infoSettingsTitle = infoSettingsWindow:CreateChildWidget("label", "title", 0, true)
 	infoSettingsTitle:AddAnchor("TOPLEFT", infoSettingsWindow, 16, 12)
 	infoSettingsTitle:SetExtent(230, 24)
 	ApplyLocalLabelStyle(infoSettingsTitle, 18, ALIGN_LEFT, 1, 0.97, 0.92)
+	SetWidgetTextColorByKey(infoSettingsTitle, "brown")
 	infoSettingsTitle:SetText("Distance Settings")
 
-	local closeButton = infoSettingsWindow:CreateChildWidget("button", "closeButton", 0, true)
-	ApplyLocalButtonStyle(closeButton)
-	closeButton:SetExtent(30, 24)
-	closeButton:AddAnchor("TOPRIGHT", infoSettingsWindow, -12, 8)
-	closeButton:SetText("X")
-	closeButton:SetHandler("OnClick", function()
+	CreateCloseButton(infoSettingsWindow, "closeButton", function()
 		infoSettingsWindow:Show(false)
 	end)
 
@@ -1826,11 +1772,13 @@ do
 	infoSettingsStatus:AddAnchor("TOPLEFT", infoSettingsWindow, 16, 46)
 	infoSettingsStatus:SetExtent(288, 110)
 	ApplyLocalLabelStyle(infoSettingsStatus, 14, ALIGN_LEFT, 0.96, 0.90, 0.78)
+	SetWidgetTextColorByKey(infoSettingsStatus, "brown")
 
 	infoSettingsMessage = infoSettingsWindow:CreateChildWidget("label", "message", 0, true)
 	infoSettingsMessage:AddAnchor("TOPLEFT", infoSettingsWindow, 16, 156)
 	infoSettingsMessage:SetExtent(288, 36)
 	ApplyLocalLabelStyle(infoSettingsMessage, 13, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(infoSettingsMessage, "default")
 	infoSettingsMessage:SetText("")
 
 	local previewBg = infoSettingsWindow:CreateColorDrawable(0.12, 0.10, 0.08, 0.65, "background")
@@ -2121,6 +2069,7 @@ do
 	widthLabel:AddAnchor("TOPLEFT", infoSettingsWindow, 16, 318)
 	widthLabel:SetExtent(54, 24)
 	ApplyLocalLabelStyle(widthLabel, 13, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(widthLabel, "default")
 	widthLabel:SetText("Width")
 	castbarControls[#castbarControls + 1] = widthLabel
 
@@ -2132,6 +2081,7 @@ do
 	heightLabel:AddAnchor("TOPLEFT", infoSettingsWindow, 160, 318)
 	heightLabel:SetExtent(54, 24)
 	ApplyLocalLabelStyle(heightLabel, 13, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(heightLabel, "default")
 	heightLabel:SetText("Height")
 	castbarControls[#castbarControls + 1] = heightLabel
 
@@ -2343,22 +2293,16 @@ do
 end
 
 do
-	local bg = drawLinesSettingsWindow:CreateColorDrawable(0.08, 0.06, 0.04, 0.96, "background")
-	bg:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", drawLinesSettingsWindow, 0, 0)
+	CreateWindowBackground(drawLinesSettingsWindow)
 
 	local title = drawLinesSettingsWindow:CreateChildWidget("label", "title", 0, true)
 	title:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 16, 12)
 	title:SetExtent(220, 24)
 	ApplyLocalLabelStyle(title, 18, ALIGN_LEFT, 1, 0.97, 0.92)
+	SetWidgetTextColorByKey(title, "brown")
 	title:SetText("Draw Lines")
 
-	local closeButton = drawLinesSettingsWindow:CreateChildWidget("button", "closeButton", 0, true)
-	ApplyLocalButtonStyle(closeButton)
-	closeButton:SetExtent(30, 24)
-	closeButton:AddAnchor("TOPRIGHT", drawLinesSettingsWindow, -12, 8)
-	closeButton:SetText("X")
-	closeButton:SetHandler("OnClick", function()
+	CreateCloseButton(drawLinesSettingsWindow, "closeButton", function()
 		drawLinesSettingsWindow:Show(false)
 	end)
 
@@ -2411,18 +2355,21 @@ do
 	densityTitle:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 16, 248)
 	densityTitle:SetExtent(200, 22)
 	ApplyLocalLabelStyle(densityTitle, 14, ALIGN_LEFT, 0.96, 0.90, 0.78)
+	SetWidgetTextColorByKey(densityTitle, "brown")
 	densityTitle:SetText("Line density")
 
 	local minText = drawLinesSettingsWindow:CreateChildWidget("label", "minText", 0, true)
 	minText:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 16, 278)
 	minText:SetExtent(50, 22)
 	ApplyLocalLabelStyle(minText, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(minText, "default")
 	minText:SetText("Min:")
 
 	drawLinesMinLabel = drawLinesSettingsWindow:CreateChildWidget("label", "minValue", 0, true)
 	drawLinesMinLabel:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 62, 278)
 	drawLinesMinLabel:SetExtent(60, 22)
 	ApplyLocalLabelStyle(drawLinesMinLabel, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(drawLinesMinLabel, "default")
 
 	local minMinus = drawLinesSettingsWindow:CreateChildWidget("button", "minMinus", 0, true)
 	ApplyLocalButtonStyle(minMinus)
@@ -2454,12 +2401,14 @@ do
 	maxText:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 16, 312)
 	maxText:SetExtent(50, 22)
 	ApplyLocalLabelStyle(maxText, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(maxText, "default")
 	maxText:SetText("Max:")
 
 	drawLinesMaxLabel = drawLinesSettingsWindow:CreateChildWidget("label", "maxValue", 0, true)
 	drawLinesMaxLabel:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 62, 312)
 	drawLinesMaxLabel:SetExtent(60, 22)
 	ApplyLocalLabelStyle(drawLinesMaxLabel, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(drawLinesMaxLabel, "default")
 
 	local maxMinus = drawLinesSettingsWindow:CreateChildWidget("button", "maxMinus", 0, true)
 	ApplyLocalButtonStyle(maxMinus)
@@ -2485,12 +2434,14 @@ do
 	dotSizeText:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 16, 338)
 	dotSizeText:SetExtent(70, 22)
 	ApplyLocalLabelStyle(dotSizeText, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(dotSizeText, "default")
 	dotSizeText:SetText("Dot size:")
 
 	drawLinesDotSizeLabel = drawLinesSettingsWindow:CreateChildWidget("label", "dotSizeValue", 0, true)
 	drawLinesDotSizeLabel:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 88, 338)
 	drawLinesDotSizeLabel:SetExtent(60, 22)
 	ApplyLocalLabelStyle(drawLinesDotSizeLabel, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(drawLinesDotSizeLabel, "default")
 
 	local dotSizeMinus = drawLinesSettingsWindow:CreateChildWidget("button", "dotSizeMinus", 0, true)
 	ApplyLocalButtonStyle(dotSizeMinus)
@@ -2516,12 +2467,14 @@ do
 	dotAlphaText:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 16, 372)
 	dotAlphaText:SetExtent(80, 22)
 	ApplyLocalLabelStyle(dotAlphaText, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(dotAlphaText, "default")
 	dotAlphaText:SetText("Transp:")
 
 	drawLinesDotAlphaLabel = drawLinesSettingsWindow:CreateChildWidget("label", "dotAlphaValue", 0, true)
 	drawLinesDotAlphaLabel:AddAnchor("TOPLEFT", drawLinesSettingsWindow, 88, 372)
 	drawLinesDotAlphaLabel:SetExtent(60, 22)
 	ApplyLocalLabelStyle(drawLinesDotAlphaLabel, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(drawLinesDotAlphaLabel, "default")
 
 	local dotAlphaMinus = drawLinesSettingsWindow:CreateChildWidget("button", "dotAlphaMinus", 0, true)
 	ApplyLocalButtonStyle(dotAlphaMinus)
@@ -2626,35 +2579,16 @@ do
 end
 
 do
-	local bg = positionWindow:CreateColorDrawable(0.08, 0.06, 0.04, 0.96, "background")
-	bg:AddAnchor("TOPLEFT", positionWindow, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", positionWindow, 0, 0)
-
-	local top = positionWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	top:AddAnchor("TOPLEFT", positionWindow, 0, 0)
-	top:SetExtent(260, 2)
-	local bottom = positionWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	bottom:AddAnchor("BOTTOMLEFT", positionWindow, 0, 0)
-	bottom:SetExtent(260, 2)
-	local left = positionWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	left:AddAnchor("TOPLEFT", positionWindow, 0, 0)
-	left:SetExtent(2, 430)
-	local right = positionWindow:CreateColorDrawable(0.65, 0.55, 0.35, 0.9, "artwork")
-	right:AddAnchor("TOPRIGHT", positionWindow, 0, 0)
-	right:SetExtent(2, 430)
+	CreateWindowBackground(positionWindow)
 
 	local title = positionWindow:CreateChildWidget("label", "title", 0, true)
 	title:AddAnchor("TOPLEFT", positionWindow, 16, 12)
 	title:SetExtent(150, 24)
 	ApplyLocalLabelStyle(title, 18, ALIGN_LEFT, 1, 0.97, 0.92)
+	SetWidgetTextColorByKey(title, "brown")
 	title:SetText("Position")
 
-	local closeButton = positionWindow:CreateChildWidget("button", "closeButton", 0, true)
-	ApplyLocalButtonStyle(closeButton)
-	closeButton:SetExtent(30, 24)
-	closeButton:AddAnchor("TOPRIGHT", positionWindow, -12, 8)
-	closeButton:SetText("X")
-	closeButton:SetHandler("OnClick", function()
+	CreateCloseButton(positionWindow, "closeButton", function()
 		positionWindow:Show(false)
 	end)
 
@@ -2697,6 +2631,7 @@ do
 	positionStatusLabel:AddAnchor("TOPLEFT", positionWindow, 16, 156)
 	positionStatusLabel:SetExtent(228, 24)
 	ApplyLocalLabelStyle(positionStatusLabel, 14, ALIGN_LEFT, 0.96, 0.90, 0.78)
+	SetWidgetTextColorByKey(positionStatusLabel, "brown")
 
 	positionGrowthButton = positionWindow:CreateChildWidget("button", "growthButton", 0, true)
 	ApplyLocalButtonStyle(positionGrowthButton)
@@ -2824,13 +2759,6 @@ do
 			local entry = positionModeButtons[i]
 			local active = entry.scope == positionModeScope and entry.effectType == positionModeEffect
 			entry.button:SetText((active and "> " or "") .. entry.baseText)
-			if entry.button.style ~= nil and entry.button.style.SetColor ~= nil then
-				if active then
-					entry.button.style:SetColor(0.10, 0.60, 0.10, 1)
-				else
-					entry.button.style:SetColor(0.08, 0.06, 0.03, 1)
-				end
-			end
 		end
 	end
 
@@ -2848,6 +2776,7 @@ for i = 1, 8 do
 	label:AddAnchor("TOPLEFT", managerWindow, 269, rowY)
 	label:SetExtent(350, 20)
 	ApplyLocalLabelStyle(label, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(label, "default")
 
 	local button = managerWindow:CreateChildWidget("button", "trackedRowButton", i, true)
 	button:SetText("-")
@@ -2874,6 +2803,7 @@ for i = 1, 10 do
 	label:AddAnchor("TOPLEFT", managerWindow, 269, rowY)
 	label:SetExtent(350, 20)
 	ApplyLocalLabelStyle(label, 14, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(label, "default")
 
 	local button = managerWindow:CreateChildWidget("button", "availableRowButton", i, true)
 	ApplyLocalButtonStyle(button)
@@ -2961,7 +2891,7 @@ function refreshWindow()
 			row.entry = entry
 			row.label:SetText(formatEntry(entry))
 			SetRowIcon(row.icon, entry.iconPath ~= "" and entry.iconPath or (liveEntry and liveEntry.iconPath or nil))
-			row.label.style:SetColor(0.55, 0.95, 0.55, 1)
+			row.label.style:SetColor(0.20, 0.75, 0.20, 1)
 			row.button:Show(true)
 			row.button:SetText("Remove")
 			row.button:SetHandler("OnClick", function()
@@ -2983,14 +2913,14 @@ function refreshWindow()
 			row.label:SetText(formatEntry(entry))
 			SetRowIcon(row.icon, entry.iconPath)
 			if tracked then
-				row.label.style:SetColor(0.55, 0.95, 0.55, 1)
+				row.label.style:SetColor(0.20, 0.75, 0.20, 1)
 				row.button:SetText("Remove")
 				row.button:SetHandler("OnClick", function()
 					shared.RemoveTracked(scope, effectType, entry.id)
 					refreshWindow()
 				end)
 			else
-				row.label.style:SetColor(1, 1, 1, 1)
+				SetWidgetTextColorByKey(row.label, "default")
 				row.button:SetText("Track")
 				row.button:SetHandler("OnClick", function()
 					shared.AddTracked(scope, effectType, entry.id, entry.name, entry.iconPath)
@@ -3003,13 +2933,13 @@ function refreshWindow()
 
 	if #trackedEntries == 0 then
 		trackedRows[1].label:SetText("No tracked entries yet.")
-		trackedRows[1].label.style:SetColor(1, 1, 1, 1)
+		SetWidgetTextColorByKey(trackedRows[1].label, "default")
 		SetRowIcon(trackedRows[1].icon, nil)
 	end
 
 	if #liveEntries == 0 then
 		availableRows[1].label:SetText(scope == "target" and "No target effects available." or "No self effects available.")
-		availableRows[1].label.style:SetColor(1, 1, 1, 1)
+		SetWidgetTextColorByKey(availableRows[1].label, "default")
 		SetRowIcon(availableRows[1].icon, nil)
 	end
 

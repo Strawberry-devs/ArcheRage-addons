@@ -8,7 +8,7 @@ If someone could make a video showcasing the features that would be cool.
 
 ## Features
 
-- Target/self buff, debuff, and hidden buff tracking.
+- Target/self buff and debuff tracking, plus self hidden buff tracking.
 - Easy setup with a window that already tracks everything (+ manual adding), or import/export
 - Optional gear score, equipment, class, distance, castbar, and draw-line displays
 - Per-feature positioning and sizing menus.
