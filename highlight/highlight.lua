@@ -97,6 +97,29 @@ local function ApplyStateToCVars()
 	SetCVar("r_silhouetteQuality", state.silhouetteQuality)
 end
 
+local function CreateWindowBackground(window)
+	local bg = window:CreateDrawable("ui/common/default.dds", "main_bg", "background")
+	bg:AddAnchor("TOPLEFT", window, -5, -5)
+	bg:AddAnchor("BOTTOMRIGHT", window, 5, 5)
+	return bg
+end
+
+local function SetWidgetTextColorByKey(widget, colorKey)
+	if widget == nil or colorKey == nil or widget.style == nil or widget.style.SetColorByKey == nil then
+		return
+	end
+
+	widget.style:SetColorByKey(colorKey)
+end
+
+local function CreateCloseButton(parent, id, onClick)
+	local button = parent:CreateChildWidget("button", id, 0, true)
+	button:AddAnchor("TOPRIGHT", parent, 3, -3)
+	button:SetStyle("btn_close_default")
+	button:SetHandler("OnClick", onClick)
+	return button
+end
+
 LoadSettings()
 ApplyStateToCVars()
 
@@ -110,9 +133,7 @@ menuWindow:Clickable(true)
 menuWindow:EnableDrag(true)
 menuWindow:SetUILayer("system")
 
-local menuBackground = menuWindow:CreateColorDrawable(0.08, 0.06, 0.04, 0.90, "background")
-menuBackground:AddAnchor("TOPLEFT", menuWindow, 0, 0)
-menuBackground:AddAnchor("BOTTOMRIGHT", menuWindow, 0, 0)
+local menuBackground = CreateWindowBackground(menuWindow)
 
 function menuWindow:OnDragStart()
 	self:StartMoving()
@@ -128,9 +149,14 @@ menuWindow:SetHandler("OnDragStop", menuWindow.OnDragStop)
 local titleLabel = menuWindow:CreateChildWidget("label", "titleLabel", 0, true)
 titleLabel:Show(true)
 titleLabel.style:SetAlign(ALIGN_LEFT)
-titleLabel.style:SetColor(1, 1, 1, 1)
+titleLabel.style:SetFontSize(16)
+SetWidgetTextColorByKey(titleLabel, "brown")
 titleLabel:AddAnchor("TOPLEFT", menuWindow, 15, 15)
 titleLabel:SetText("Highlight Settings")
+
+CreateCloseButton(menuWindow, "highlightCloseButton", function()
+	menuWindow:Show(false)
+end)
 
 local LABEL_X = 20
 local CONTROL_X = 185
@@ -146,7 +172,8 @@ local function CreateRowLabel(id, text, rowY)
 	local label = menuWindow:CreateChildWidget("label", id, 0, true)
 	label:Show(true)
 	label.style:SetAlign(ALIGN_LEFT)
-	label.style:SetColor(1, 1, 1, 1)
+	label.style:SetFontSize(14)
+	SetWidgetTextColorByKey(label, "default")
 	label:SetHeight(24)
 	label:AddAnchor("TOPLEFT", menuWindow, LABEL_X, rowY + 2)
 	label:SetText(text)
@@ -178,7 +205,8 @@ local function CreateValueLabel(id, rowY)
 	local label = menuWindow:CreateChildWidget("label", id, 0, true)
 	label:Show(true)
 	label.style:SetAlign(ALIGN_CENTER)
-	label.style:SetColor(1, 1, 1, 1)
+	label.style:SetFontSize(14)
+	SetWidgetTextColorByKey(label, "default")
 	label:SetWidth(42)
 	label:SetHeight(24)
 	label:AddAnchor("TOPLEFT", menuWindow, VALUE_X, rowY)
