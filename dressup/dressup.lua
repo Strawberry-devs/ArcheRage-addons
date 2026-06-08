@@ -160,9 +160,29 @@ local function ApplyDressupLabelStyle(label, fontSize, align, r, g, b)
 	label.style:SetAlign(align or ALIGN_LEFT)
 	label.style:SetColor(r or 1, g or 1, b or 1, 1)
 	label.style:SetFontSize(fontSize or 12)
-	if label.style.SetOutline ~= nil then
-		label.style:SetOutline(true)
+end
+
+local function SetWidgetTextColorByKey(widget, colorKey)
+	if widget == nil or colorKey == nil or widget.style == nil or widget.style.SetColorByKey == nil then
+		return
 	end
+
+	widget.style:SetColorByKey(colorKey)
+end
+
+local function CreateWindowBackground(window)
+	local bg = window:CreateDrawable("ui/common/default.dds", "main_bg", "background")
+	bg:AddAnchor("TOPLEFT", window, -5, -5)
+	bg:AddAnchor("BOTTOMRIGHT", window, 5, 5)
+	return bg
+end
+
+local function CreateCloseButton(parent, id, onClick)
+	local button = parent:CreateChildWidget("button", id, 0, true)
+	button:AddAnchor("TOPRIGHT", parent, 3, -3)
+	button:SetStyle("btn_close_default")
+	button:SetHandler("OnClick", onClick)
+	return button
 end
 
 local function ApplyDressupButtonStyle(button)
@@ -367,22 +387,16 @@ local function CreateItemBrowserWindow()
 	itemBrowserWindow:SetCloseOnEscape(true)
 	itemBrowserWindow:Show(false)
 
-	local bg = itemBrowserWindow:CreateColorDrawable(0.04, 0.04, 0.04, 0.92, "background")
-	bg:AddAnchor("TOPLEFT", itemBrowserWindow, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", itemBrowserWindow, 0, 0)
+	local bg = CreateWindowBackground(itemBrowserWindow)
 
 	local title = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserTitle", 0, true)
 	title:AddAnchor("TOPLEFT", itemBrowserWindow, 16, 12)
 	title:SetExtent(260, 24)
 	title:SetText("Dressup Items")
-	ApplyDressupLabelStyle(title, 18, ALIGN_LEFT, 1, 0.95, 0.78)
+	ApplyDressupLabelStyle(title, 16, ALIGN_LEFT, 1, 0.95, 0.78)
+	SetWidgetTextColorByKey(title, "brown")
 
-	local closeButton = itemBrowserWindow:CreateChildWidget("button", "dressupItemBrowserClose", 0, true)
-	closeButton:AddAnchor("TOPRIGHT", itemBrowserWindow, -12, 10)
-	closeButton:SetExtent(28, 24)
-	closeButton:SetText("X")
-	ApplyDressupButtonStyle(closeButton)
-	closeButton:SetHandler("OnClick", function()
+	CreateCloseButton(itemBrowserWindow, "dressupItemBrowserClose", function()
 		itemBrowserVisible = false
 		itemBrowserWindow:Show(false)
 	end)
@@ -447,17 +461,19 @@ local function CreateItemBrowserWindow()
 	itemBrowserWindow.sortLabel:AddAnchor("TOPLEFT", itemBrowserWindow, 16, 116)
 	itemBrowserWindow.sortLabel:SetExtent(260, 18)
 	ApplyDressupLabelStyle(itemBrowserWindow.sortLabel, 11, ALIGN_LEFT, 0.80, 0.80, 0.80)
+	SetWidgetTextColorByKey(itemBrowserWindow.sortLabel, "default")
 
 	local header = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserHeader", 0, true)
 	header:AddAnchor("TOPLEFT", itemBrowserWindow, 58, 138)
 	header:SetExtent(500, 18)
 	header:SetText("Name                                                Category")
 	ApplyDressupLabelStyle(header, 12, ALIGN_LEFT, 0.95, 0.90, 0.70)
+	SetWidgetTextColorByKey(header, "brown")
 
 	for rowIndex = 1, ITEM_BROWSER_ROWS do
 		local y = 160 + ((rowIndex - 1) * 24)
 		local row = {}
-		row.bg = itemBrowserWindow:CreateColorDrawable(0.11, 0.11, 0.11, rowIndex % 2 == 0 and 0.74 or 0.62, "background")
+		row.bg = itemBrowserWindow:CreateColorDrawable(0.45, 0.33, 0.16, rowIndex % 2 == 0 and 0.12 or 0.07, "background")
 		row.bg:AddAnchor("TOPLEFT", itemBrowserWindow, 16, y)
 		row.bg:SetExtent(558, 22)
 
@@ -485,18 +501,21 @@ local function CreateItemBrowserWindow()
 		row.nameLabel:SetExtent(300, 18)
 		row.nameLabel:EnablePick(false)
 		ApplyDressupLabelStyle(row.nameLabel, 12, ALIGN_LEFT, 1, 1, 1)
+		SetWidgetTextColorByKey(row.nameLabel, "default")
 
 		row.categoryLabel = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserCategory" .. rowIndex, rowIndex, true)
 		row.categoryLabel:AddAnchor("TOPLEFT", itemBrowserWindow, 354, y + 3)
 		row.categoryLabel:SetExtent(130, 18)
 		row.categoryLabel:EnablePick(false)
 		ApplyDressupLabelStyle(row.categoryLabel, 12, ALIGN_LEFT, 0.82, 0.90, 1)
+		SetWidgetTextColorByKey(row.categoryLabel, "default")
 
 		row.idLabel = itemBrowserWindow:CreateChildWidget("label", "dressupItemBrowserId" .. rowIndex, rowIndex, true)
 		row.idLabel:AddAnchor("TOPRIGHT", itemBrowserWindow, -22, y + 3)
 		row.idLabel:SetExtent(70, 18)
 		row.idLabel:EnablePick(false)
 		ApplyDressupLabelStyle(row.idLabel, 11, ALIGN_RIGHT, 0.72, 0.72, 0.72)
+		SetWidgetTextColorByKey(row.idLabel, "default")
 
 		itemBrowserRows[rowIndex] = row
 	end
@@ -532,6 +551,7 @@ local function CreateItemBrowserWindow()
 	itemBrowserWindow.pageLabel:AddAnchor("BOTTOMRIGHT", itemBrowserWindow, -36, -22)
 	itemBrowserWindow.pageLabel:SetExtent(220, 20)
 	ApplyDressupLabelStyle(itemBrowserWindow.pageLabel, 12, ALIGN_RIGHT, 1, 1, 1)
+	SetWidgetTextColorByKey(itemBrowserWindow.pageLabel, "default")
 
 	itemBrowserWindow:SetHandler("OnDragStart", function(self)
 		self:StartMoving()
