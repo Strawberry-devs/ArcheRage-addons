@@ -378,17 +378,10 @@ local function ResolveRecipe(name)
 	return LoadLiveRecipe(craftType)
 end
 
+local CopperToParts
+
 local function FormatMoney(copper)
-	copper = math.floor(tonumber(copper) or 0)
-	local prefix = ""
-	if copper < 0 then
-		prefix = "-"
-		copper = math.abs(copper)
-	end
-	local gold = math.floor(copper / 10000)
-	copper = copper - (gold * 10000)
-	local silver = math.floor(copper / 100)
-	copper = copper - (silver * 100)
+	local prefix, gold, silver = CopperToParts(copper)
 	local out = {}
 	if gold > 0 then
 		out[#out + 1] = tostring(gold) .. "g"
@@ -396,13 +389,13 @@ local function FormatMoney(copper)
 	if silver > 0 then
 		out[#out + 1] = tostring(silver) .. "s"
 	end
-	if copper > 0 or #out == 0 then
-		out[#out + 1] = tostring(copper) .. "c"
+	if #out == 0 then
+		out[#out + 1] = "0s"
 	end
 	return prefix .. table.concat(out, " ")
 end
 
-local function CopperToParts(copper)
+CopperToParts = function(copper)
 	copper = math.floor(tonumber(copper) or 0)
 	local sign = ""
 	if copper < 0 then
@@ -413,14 +406,21 @@ local function CopperToParts(copper)
 	copper = copper - (gold * 10000)
 	local silver = math.floor(copper / 100)
 	copper = copper - (silver * 100)
-	return sign, gold, silver, copper
+	if copper >= 50 then
+		silver = silver + 1
+		if silver >= 100 then
+			gold = gold + 1
+			silver = silver - 100
+		end
+	end
+	return sign, gold, silver
 end
 
 local function MeasureMoneyClusterWidth(copper)
 	if copper == nil then
 		return 0
 	end
-	local sign, gold, silver, copperPart = CopperToParts(copper)
+	local sign, gold, silver = CopperToParts(copper)
 	local width = 0
 	local parts = {}
 	if sign ~= "" then
@@ -429,11 +429,8 @@ local function MeasureMoneyClusterWidth(copper)
 	if gold > 0 then
 		parts[#parts + 1] = gold
 	end
-	if silver > 0 then
+	if silver > 0 or #parts == 0 then
 		parts[#parts + 1] = silver
-	end
-	if copperPart > 0 or #parts == 0 then
-		parts[#parts + 1] = copperPart
 	end
 	for index, value in ipairs(parts) do
 		width = width + ((#tostring(value) * MONEY_DIGIT_W) + 1) + MONEY_ICON_GAP + MONEY_ICON_SIZE
@@ -692,16 +689,13 @@ ShowMoneyCluster = function(cluster, copper, x, y, color)
 	HideMoneyCluster(cluster)
 	SetMoneyClusterColor(cluster, color or { 0.45, 0.25, 0.02, 1 })
 
-	local sign, gold, silver, copperPart = CopperToParts(copper)
+	local sign, gold, silver = CopperToParts(copper)
 	local parts = {}
 	if gold > 0 then
 		parts[#parts + 1] = { label = cluster.gl, icon = cluster.gi, value = gold }
 	end
-	if silver > 0 then
+	if silver > 0 or #parts == 0 then
 		parts[#parts + 1] = { label = cluster.sl, icon = cluster.si, value = silver }
-	end
-	if copperPart > 0 or #parts == 0 then
-		parts[#parts + 1] = { label = cluster.cl, icon = cluster.ci, value = copperPart }
 	end
 
 	local curX = x
@@ -1102,14 +1096,11 @@ local function CalculateEconomy()
 	end
 
 	local finalUnitPrice = GetAuctionUnitPrice(selectedRecipe)
-	if finalUnitPrice == nil or finalUnitPrice <= 0 then
-		return nil
-	end
-
-	local outrightCost = finalUnitPrice * math.max(1, plan.finalUnits or craftCount)
 	local visible = BuildVisiblePlan()
 	local piecingCost = visible.craftFee or 0
 	local missingPrices = {}
+	local hasFinalPrice = finalUnitPrice ~= nil and finalUnitPrice > 0
+	local outrightCost = hasFinalPrice and (finalUnitPrice * math.max(1, plan.finalUnits or craftCount)) or nil
 	DebugPrice(
 		string.format(
 			"economy final=%s unit=%s units=%s craftFee=%s",
@@ -1164,9 +1155,12 @@ local function CalculateEconomy()
 		return { missing = missingPrices }
 	end
 
-	local difference = outrightCost - piecingCost
 	local labor = math.max(1, visible.totalLabor or 0)
-	if #(visible.shop or {}) > 0 and piecingCost <= (visible.craftFee or 0) then
+	local difference = nil
+	if outrightCost ~= nil then
+		difference = outrightCost - piecingCost
+	end
+	if outrightCost ~= nil and #(visible.shop or {}) > 0 and piecingCost <= (visible.craftFee or 0) then
 		DebugBad(
 			string.format(
 				"piece cost suspicious: piece=%s craftFee=%s shopItems=%s",
@@ -1189,8 +1183,9 @@ local function CalculateEconomy()
 		outright = outrightCost,
 		piecing = piecingCost,
 		difference = difference,
-		perLabor = difference / labor,
+		perLabor = difference ~= nil and (difference / labor) or nil,
 		labor = visible.totalLabor or 0,
+		noOutright = outrightCost == nil,
 	}
 end
 
@@ -1211,21 +1206,33 @@ local function UpdateEconomyLabel()
 		economyLabel:SetText("")
 		SetTextColorByKey(economyLabel, "default")
 		if economyMoney ~= nil then
+			for _, label in ipairs(economyMoney.labels or {}) do
+				SetTextColorByKey(label, "default")
+				label:Show(true)
+			end
 			economyMoney.outrightText:SetText("Outright")
 			economyMoney.pieceText:SetText("| Piece")
 			economyMoney.diffText:SetText("| Diff")
 			economyMoney.laborText:SetText("|")
 			economyMoney.perLaborText:SetText("/labor")
-			for _, label in ipairs(economyMoney.labels or {}) do
-				SetTextColorByKey(label, "default")
-				label:Show(true)
+			if economy.noOutright == true then
+				economyMoney.outrightText:Show(false)
+				HideMoneyCluster(economyMoney.outright)
+				economyMoney.diffText:Show(false)
+				HideMoneyCluster(economyMoney.diff)
+				economyMoney.laborText:Show(false)
+				economyMoney.perLaborText:Show(false)
+				HideMoneyCluster(economyMoney.perLabor)
+				economyMoney.pieceText:Show(true)
+				ShowMoneyCluster(economyMoney.piece, economy.piecing, 76, 184, nil)
+			else
+				ShowMoneyCluster(economyMoney.outright, economy.outright, 76, 184, nil)
+				ShowMoneyCluster(economyMoney.piece, economy.piecing, 302, 184, nil)
+				ShowMoneyCluster(economyMoney.diff, economy.difference, 52, 204, nil)
+				local perLaborWidth = ShowMoneyCluster(economyMoney.perLabor, economy.perLabor, 280, 204, nil)
+				economyMoney.perLaborText:RemoveAllAnchors()
+				economyMoney.perLaborText:AddAnchor("TOPLEFT", mainWindow, 282 + perLaborWidth, 204)
 			end
-			ShowMoneyCluster(economyMoney.outright, economy.outright, 76, 184, nil)
-			ShowMoneyCluster(economyMoney.piece, economy.piecing, 302, 184, nil)
-			ShowMoneyCluster(economyMoney.diff, economy.difference, 52, 204, nil)
-			local perLaborWidth = ShowMoneyCluster(economyMoney.perLabor, economy.perLabor, 280, 204, nil)
-			economyMoney.perLaborText:RemoveAllAnchors()
-			economyMoney.perLaborText:AddAnchor("TOPLEFT", mainWindow, 282 + perLaborWidth, 204)
 		end
 	end
 end
