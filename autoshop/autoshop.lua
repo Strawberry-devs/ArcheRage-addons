@@ -1,5 +1,6 @@
 -------------- Original Author: Strawberry --------------
 ----------------- Discord: exec_noir --------------------
+------- Extra credit: Ash (slugfanclubchairwoman) -------
 
 if API_TYPE == nil then
 	ADDON:ImportAPI(8)
@@ -32,7 +33,7 @@ local MIN_WINDOW_HEIGHT = 330
 local MAX_ROW_COUNT = 24
 local ROW_HEIGHT = 22
 local ROW_TOP = 248
-local FOOTER_HEIGHT = 58
+local FOOTER_HEIGHT = 20
 local SAVE_KEY = "autoshop_last_recipe"
 local GOLD_ICON = "Addon/autoshop/icons/gold.dds"
 local SILVER_ICON = "Addon/autoshop/icons/silver.dds"
@@ -47,6 +48,8 @@ local ROW_NAME_WIDTH = 274
 local ROW_QTY_WIDTH = 60
 local ROW_UNIT_RIGHT = 445
 local ROW_TOTAL_RIGHT = WINDOW_WIDTH - 20
+local CRAFTLABELHEIGHT1 = 164
+local CRAFTLABELHEIGHT2 = 184
 
 local COMPLETE_GREEN = { 0.04, 0.50, 0.08, 1 }
 local WARN_ORANGE = { 0.85, 0.40, 0.05, 1 }
@@ -92,8 +95,8 @@ local recipeCacheByName = {}
 local expandedStages = {}
 local rowActions = {}
 local DEBUG_PLAN = false
-local DEBUG_PRICE = true
-local DEBUG_BAD = true
+local DEBUG_PRICE = false
+local DEBUG_BAD = false
 
 local function Chat(message)
 	pcall(function()
@@ -1197,24 +1200,24 @@ local function UpdateEconomyLabel()
 
 	local economy = CalculateEconomy()
 	if economy == nil then
-		economyLabel:SetText("Economy: click Check Prices after opening the Auction House.")
+		--economyLabel:SetText("Economy: click Check Prices after opening the Auction House.")
 		SetTextColorByKey(economyLabel, "default")
 	elseif economy.missing ~= nil then
-		economyLabel:SetText("Economy: missing prices for " .. tostring(#economy.missing) .. " material(s).")
+		--economyLabel:SetText("Economy: missing prices for " .. tostring(#economy.missing) .. " material(s).")
 		SetTextColorByKey(economyLabel, "default")
 	else
-		economyLabel:SetText("")
+		--economyLabel:SetText("")
 		SetTextColorByKey(economyLabel, "default")
 		if economyMoney ~= nil then
 			for _, label in ipairs(economyMoney.labels or {}) do
 				SetTextColorByKey(label, "default")
 				label:Show(true)
 			end
-			economyMoney.outrightText:SetText("Outright")
-			economyMoney.pieceText:SetText("| Piece")
-			economyMoney.diffText:SetText("| Diff")
-			economyMoney.laborText:SetText("|")
-			economyMoney.perLaborText:SetText("/labor")
+			economyMoney.outrightText:SetText("Outright: ")
+			economyMoney.pieceText:SetText("Piece: ")
+			economyMoney.diffText:SetText("Diff: ")
+			economyMoney.laborText:SetText("")
+			economyMoney.perLaborText:SetText("/L")
 			if economy.noOutright == true then
 				economyMoney.outrightText:Show(false)
 				HideMoneyCluster(economyMoney.outright)
@@ -1224,14 +1227,14 @@ local function UpdateEconomyLabel()
 				economyMoney.perLaborText:Show(false)
 				HideMoneyCluster(economyMoney.perLabor)
 				economyMoney.pieceText:Show(true)
-				ShowMoneyCluster(economyMoney.piece, economy.piecing, 76, 184, nil)
+				ShowMoneyCluster(economyMoney.piece, economy.piecing, 76, CRAFTLABELHEIGHT1, nil)
 			else
-				ShowMoneyCluster(economyMoney.outright, economy.outright, 76, 184, nil)
-				ShowMoneyCluster(economyMoney.piece, economy.piecing, 302, 184, nil)
-				ShowMoneyCluster(economyMoney.diff, economy.difference, 52, 204, nil)
-				local perLaborWidth = ShowMoneyCluster(economyMoney.perLabor, economy.perLabor, 280, 204, nil)
+				ShowMoneyCluster(economyMoney.outright, economy.outright, 76, CRAFTLABELHEIGHT1, nil)
+				ShowMoneyCluster(economyMoney.piece, economy.piecing, 302, CRAFTLABELHEIGHT1, nil)
+				ShowMoneyCluster(economyMoney.diff, economy.difference, 52, CRAFTLABELHEIGHT2, nil)
+				local perLaborWidth = ShowMoneyCluster(economyMoney.perLabor, economy.perLabor, 280, CRAFTLABELHEIGHT2, nil)
 				economyMoney.perLaborText:RemoveAllAnchors()
-				economyMoney.perLaborText:AddAnchor("TOPLEFT", mainWindow, 282 + perLaborWidth, 204)
+				economyMoney.perLaborText:AddAnchor("TOPLEFT", mainWindow, 282 + perLaborWidth, CRAFTLABELHEIGHT2)
 			end
 		end
 	end
@@ -1240,13 +1243,13 @@ end
 local function RenderPlan()
 	ClearRows()
 	if plan == nil or selectedRecipe == nil then
-		targetLabel:SetText("Target: none")
+		--targetLabel:SetText("Target: none")
 		craftLabel:SetText("Crafts: -")
 		HideMoneyCluster(craftFeeMoney)
-		economyLabel:SetText("Economy: -")
+		--economyLabel:SetText("Economy: -")
 		HideEconomyMoney()
-		shoppingLabel:SetText("Shopping: -")
-		stepLabel:SetText("No shopping run active.")
+		--shoppingLabel:SetText("Shopping: -")
+		--stepLabel:SetText("No shopping run active.")
 		ResizeWindowForRows(1)
 		return
 	end
@@ -1262,7 +1265,7 @@ local function RenderPlan()
 		)
 	)
 	if craftFeeMoney ~= nil then
-		ShowMoneyCluster(craftFeeMoney, visible.craftFee or 0, 345, 162, { 0.45, 0.25, 0.02, 1 })
+		ShowMoneyCluster(craftFeeMoney, visible.craftFee or 0, 345, 134, { 0.45, 0.25, 0.02, 1 })
 	end
 	UpdateEconomyLabel()
 
@@ -1272,7 +1275,7 @@ local function RenderPlan()
 			missing = missing + 1
 		end
 	end
-	shoppingLabel:SetText(string.format("Auction items still needed: %d", missing))
+	--shoppingLabel:SetText(string.format("Auction items still needed: %d", missing))
 
 	local rowIndex = 1
 
@@ -1373,7 +1376,7 @@ local function LoadRecipeFromInput()
 		selectedRecipe = nil
 		plan = nil
 		RenderPlan()
-		SetStatus("Craft not found. Type an exact or partial craft name, item id, or craft id.", MISSING_RED)
+		SetStatus("Craft not found.", MISSING_RED)
 		return false
 	end
 
@@ -1383,12 +1386,12 @@ local function LoadRecipeFromInput()
 	currentBuyIndex = 0
 	waitingForAuction = false
 	RecomputePlan()
-	SetStatus(
-		inventoryOK and "Craft loaded. Review the list, then click Go to Buy."
-			or "Craft loaded. Inventory scan unavailable.",
-		inventoryOK and nil or WARN_ORANGE
-	)
-	stepLabel:SetText("No shopping run active.")
+	--SetStatus(
+	--	inventoryOK and "Craft loaded. Review the list, then click Go to Buy."
+	--		or "Craft loaded. Inventory scan unavailable.",
+	--	inventoryOK and nil or WARN_ORANGE
+	--)
+	--stepLabel:SetText("No shopping run active.")
 	return true
 end
 
@@ -1415,19 +1418,19 @@ end
 
 local function SearchCurrentEntry(entry)
 	X2Auction:SearchAuctionArticle(1, 0, 999, 1, 0, false, entry.search or entry.item, "0", "0")
-	SetStatus("Searching: " .. tostring(entry.item) .. ". Buy what you need, then click Next.", nil)
-	stepLabel:SetText(string.format("Step %d/%d: buy %d x %s", currentBuyIndex, #buyQueue, entry.buy or 0, entry.item))
+	--SetStatus("Searching: " .. tostring(entry.item) .. ". Buy what you need, then click Next.", nil)
+	--stepLabel:SetText(string.format("Step %d/%d: buy %d x %s", currentBuyIndex, #buyQueue, entry.buy or 0, entry.item))
 end
 
 local function StartShopping()
 	if not EnsureInputRecipeLoaded() then
-		SetStatus("Load a craft first.", MISSING_RED)
+		--SetStatus("Load a craft first.", MISSING_RED)
 		return
 	end
 	RecomputePlan()
 	if #buyQueue == 0 then
-		SetStatus("All Auction House materials are already covered.", COMPLETE_GREEN)
-		stepLabel:SetText("Nothing to buy.")
+		--SetStatus("All Auction House materials are already covered.", COMPLETE_GREEN)
+		--stepLabel:SetText("Nothing to buy.")
 		return
 	end
 	waitingForAuction = false
@@ -1462,7 +1465,7 @@ local function SearchNextPrice()
 		priceCheckBusy = false
 		currentPriceRequest = nil
 		UpdateEconomyLabel()
-		SetStatus("Price check complete.", COMPLETE_GREEN)
+		--SetStatus("Price check complete.", COMPLETE_GREEN)
 		return
 	end
 
@@ -1470,37 +1473,37 @@ local function SearchNextPrice()
 	priceCheckBusy = true
 	X2Auction:SearchAuctionArticle(1, 0, 999, 1, 0, false, currentPriceRequest.search, "0", "0")
 	priceCheckStart = os.time()
-	SetStatus(
-		"Checking price: " .. tostring(currentPriceRequest.item) .. " (" .. tostring(#priceCheckQueue) .. " left)",
-		nil
-	)
-	stepLabel:SetText("Price check: " .. tostring(currentPriceRequest.item))
+	--SetStatus(
+	--	"Checking price: " .. tostring(currentPriceRequest.item) .. " (" .. tostring(#priceCheckQueue) .. " left)",
+	--	nil
+	--)
+	--stepLabel:SetText("Price check: " .. tostring(currentPriceRequest.item))
 end
 
 local function StartPriceCheck()
 	if not EnsureInputRecipeLoaded() then
-		SetStatus("Load a craft first.", MISSING_RED)
+		--SetStatus("Load a craft first.", MISSING_RED)
 		return
 	end
 	RecomputePlan()
 	BuildPriceCheckQueue()
 	if #priceCheckQueue == 0 then
-		SetStatus("Nothing needs an Auction House price check.", WARN_ORANGE)
+		--SetStatus("Nothing needs an Auction House price check.", WARN_ORANGE)
 		UpdateEconomyLabel()
 		return
 	end
 	auctionPrices = {}
 	if economyLabel ~= nil then
-		economyLabel:SetText("Economy: checking Auction House prices...")
+		--economyLabel:SetText("Economy: checking Auction House prices...")
 		SetTextColorByKey(economyLabel, "default")
 	end
-	SetStatus("Checking Auction House prices...", nil)
+	--SetStatus("Checking Auction House prices...", nil)
 	SearchNextPrice()
 end
 
 local function NextShoppingStep()
 	if selectedRecipe == nil then
-		SetStatus("Load a craft first.", MISSING_RED)
+		--SetStatus("Load a craft first.", MISSING_RED)
 		return
 	end
 	if waitingForAuction then
@@ -1510,7 +1513,7 @@ local function NextShoppingStep()
 	end
 
 	if #buyQueue == 0 then
-		SetStatus("Shopping list complete.", COMPLETE_GREEN)
+		--SetStatus("Shopping list complete.", COMPLETE_GREEN)
 		stepLabel:SetText("Done.")
 		return
 	end
@@ -1522,7 +1525,7 @@ local function NextShoppingStep()
 
 	local entry = buyQueue[currentBuyIndex]
 	if entry == nil then
-		SetStatus("Shopping list complete.", COMPLETE_GREEN)
+		--SetStatus("Shopping list complete.", COMPLETE_GREEN)
 		stepLabel:SetText("Done.")
 		return
 	end
@@ -1542,8 +1545,8 @@ local function CreateMainWindow()
 	mainWindow:Show(false)
 
 	CreateWindowBackground(mainWindow)
-	CreateQuestStylePanel(mainWindow, "autoShopBodyPanel", 112, -54, 0.20)
-	CreateQuestStyleStrip(mainWindow, "autoShopSummaryPanel", 18, 146, WINDOW_WIDTH - 36, 68, 0.13)
+	CreateQuestStylePanel(mainWindow, "autoShopBodyPanel", 105, -25, 0.20)
+	--CreateQuestStyleStrip(mainWindow, "autoShopSummaryPanel", 18, 146, WINDOW_WIDTH - 36, 68, 0.13)
 
 	mainWindow:SetHandler("OnDragStart", function(self)
 		self:StartMoving()
@@ -1599,7 +1602,7 @@ local function CreateMainWindow()
 	end)
 	CreateButton(mainWindow, "autoShopRefresh", "Refresh Bag", 312, 80, 84, function()
 		RecomputePlan()
-		SetStatus("Inventory refreshed.", nil)
+		--SetStatus("Inventory refreshed.", nil)
 	end)
 	CreateButton(mainWindow, "autoShopGoBuy", "Go to Buy", 404, 80, 76, StartShopping)
 	CreateButton(mainWindow, "autoShopNext", "Next", 488, 80, 54, NextShoppingStep)
@@ -1610,29 +1613,29 @@ local function CreateMainWindow()
 	statusLabel:SetExtent(WINDOW_WIDTH - 36, 22)
 	statusLabel:AddAnchor("TOPLEFT", mainWindow, 18, 114)
 	StyleLabel(statusLabel, 13, ALIGN_LEFT, "default")
-	statusLabel:SetText("Load a craft to start.")
+	--statusLabel:SetText("Load a craft to start.")
 
 	targetLabel = mainWindow:CreateChildWidget("label", "autoShopTarget", 0, true)
 	targetLabel:SetExtent(WINDOW_WIDTH - 36, 22)
-	targetLabel:AddAnchor("TOPLEFT", mainWindow, 18, 140)
+	targetLabel:AddAnchor("TOPLEFT", mainWindow, 18, 114)
 	StyleLabel(targetLabel, 13, ALIGN_LEFT, "brown")
 
 	craftLabel = mainWindow:CreateChildWidget("label", "autoShopCrafts", 0, true)
 	craftLabel:SetExtent(WINDOW_WIDTH - 36, 22)
-	craftLabel:AddAnchor("TOPLEFT", mainWindow, 18, 162)
+	craftLabel:AddAnchor("TOPLEFT", mainWindow, 18, 134)
 	StyleLabel(craftLabel, 13, ALIGN_LEFT, "default")
 	craftFeeMoney = CreateMoneyCluster(mainWindow, "autoShopCraftFeeMoney")
 
 	economyLabel = mainWindow:CreateChildWidget("label", "autoShopEconomy", 0, true)
 	economyLabel:SetExtent(WINDOW_WIDTH - 36, 22)
-	economyLabel:AddAnchor("TOPLEFT", mainWindow, 18, 184)
+	economyLabel:AddAnchor("TOPLEFT", mainWindow, 18, 154)
 	StyleLabel(economyLabel, 13, ALIGN_LEFT, "default")
 	economyMoney = {
-		outrightText = CreateMoneyText(mainWindow, "autoShopOutrightText", "Outright", 18, 184, 62),
-		pieceText = CreateMoneyText(mainWindow, "autoShopPieceText", "| Piece", 250, 184, 48),
-		diffText = CreateMoneyText(mainWindow, "autoShopDiffText", "Diff", 18, 204, 34),
-		laborText = CreateMoneyText(mainWindow, "autoShopLaborText", "|", 264, 204, 10),
-		perLaborText = CreateMoneyText(mainWindow, "autoShopPerLaborText", "/labor", 360, 204, 40),
+		outrightText = CreateMoneyText(mainWindow, "autoShopOutrightText", "Outright", 18, CRAFTLABELHEIGHT1, 62),
+		pieceText = CreateMoneyText(mainWindow, "autoShopPieceText", "| Piece", 250, CRAFTLABELHEIGHT1, 48),
+		diffText = CreateMoneyText(mainWindow, "autoShopDiffText", "Diff", 18, CRAFTLABELHEIGHT2, 34),
+		laborText = CreateMoneyText(mainWindow, "autoShopLaborText", "|", 264, CRAFTLABELHEIGHT2, 10),
+		perLaborText = CreateMoneyText(mainWindow, "autoShopPerLaborText", "/labor", 360, CRAFTLABELHEIGHT2, 40),
 		outright = CreateMoneyCluster(mainWindow, "autoShopOutrightMoney"),
 		piece = CreateMoneyCluster(mainWindow, "autoShopPieceMoney"),
 		diff = CreateMoneyCluster(mainWindow, "autoShopDiffMoney"),
@@ -1815,17 +1818,17 @@ local function OnAuctionSearched()
 				auctionPrices[currentPriceRequest.item] = foundPrice
 				auctionPrices[key] = foundPrice
 				auctionPrices[key:lower()] = foundPrice
-				SetStatus("Price found: " .. tostring(currentPriceRequest.item) .. " = " .. FormatMoney(foundPrice), COMPLETE_GREEN)
+				--SetStatus("Price found: " .. tostring(currentPriceRequest.item) .. " = " .. FormatMoney(foundPrice), COMPLETE_GREEN)
 				if mainWindow ~= nil and mainWindow:IsVisible() then
 					RenderPlan()
 				end
 			else
 				DebugBad("no exact auction price for " .. tostring(currentPriceRequest.item))
-				SetStatus("No exact price found for " .. tostring(currentPriceRequest.item) .. ".", WARN_ORANGE)
+				--SetStatus("No exact price found for " .. tostring(currentPriceRequest.item) .. ".", WARN_ORANGE)
 			end
 		else
 			DebugBad("no auction listings for " .. tostring(currentPriceRequest.item))
-			SetStatus("No auction listings found for " .. tostring(currentPriceRequest.item) .. ".", WARN_ORANGE)
+			--SetStatus("No auction listings found for " .. tostring(currentPriceRequest.item) .. ".", WARN_ORANGE)
 		end
 		currentPriceRequest = nil
 		if #priceCheckQueue == 0 then
@@ -1834,9 +1837,9 @@ local function OnAuctionSearched()
 			if mainWindow ~= nil and mainWindow:IsVisible() then
 				RenderPlan()
 			end
-			SetStatus("Price check complete.", COMPLETE_GREEN)
+			--SetStatus("Price check complete.", COMPLETE_GREEN)
 		else
-			stepLabel:SetText(string.format("Price check: waiting %.1fs cooldown", priceCheckCD))
+			--stepLabel:SetText(string.format("Price check: waiting %.1fs cooldown", priceCheckCD))
 		end
 		return
 	end
@@ -1846,14 +1849,14 @@ local function OnAuctionSearched()
 		and currentBuyIndex > 0
 		and buyQueue[currentBuyIndex] ~= nil
 	then
-		SetStatus(
-			"Auction results loaded. Buy "
-				.. tostring(buyQueue[currentBuyIndex].buy)
-				.. " x "
-				.. tostring(buyQueue[currentBuyIndex].item)
-				.. ", then click Next.",
-			nil
-		)
+		--SetStatus(
+		--	"Auction results loaded. Buy "
+		--		.. tostring(buyQueue[currentBuyIndex].buy)
+		--		.. " x "
+		--		.. tostring(buyQueue[currentBuyIndex].item)
+		--		.. ", then click Next.",
+		--	nil
+		--)
 	end
 end
 
