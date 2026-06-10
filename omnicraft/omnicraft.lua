@@ -894,94 +894,68 @@ local function FindRecipe(query)
 	return nil
 end
 
-local function CollectTree(name, visited, order)
-	if visited[name] then
-		return
-	end
-	visited[name] = true
-	local recipe = ResolveRecipe(name)
-	if recipe ~= nil then
-		for _, material in ipairs(recipe.materials or {}) do
-			if material.fromStage and ResolveRecipe(material.item) ~= nil then
-				CollectTree(material.item, visited, order)
-			end
-		end
-	end
-	order[#order + 1] = name
-end
-
 local function BuildPlan(finalName, finalCrafts)
-	if ResolveRecipe(finalName) == nil then
+	local finalRecipe = ResolveRecipe(finalName)
+	if finalRecipe == nil then
 		return nil
 	end
 
-	local order = {}
-	CollectTree(finalName, {}, order)
+	local result = { stages = {}, stageByKey = {}, stageByName = {}, finalUnits = 0 }
+	local nextStageId = 0
 
-	local crafts = {}
-	local unitsNeeded = {}
-	for index = #order, 1, -1 do
-		local name = order[index]
-		local recipe = ResolveRecipe(name)
-		local craftAmount
-		if name == finalName then
-			craftAmount = finalCrafts
-		else
-			local net = (unitsNeeded[name] or 0) - (owned[name] or 0)
-			if net < 0 then
-				net = 0
-			end
-			craftAmount = math.ceil(net / ((recipe and recipe.yield) or 1))
-		end
-		crafts[name] = craftAmount
-		for _, material in ipairs((recipe and recipe.materials) or {}) do
-			if material.fromStage and ResolveRecipe(material.item) ~= nil then
-				unitsNeeded[material.item] = (unitsNeeded[material.item] or 0) + (craftAmount * material.count)
-			end
-		end
+	local function NewStageKey(name)
+		nextStageId = nextStageId + 1
+		return string.format("%d:%s", nextStageId, tostring(name))
 	end
 
-	local result = { stages = {}, stageByName = {}, shop = {}, vendor = {}, totalLabor = 0, craftFee = 0, finalUnits = 0 }
-	local totalNeed = {}
-	local vendorNeed = {}
-	local seenOrder = {}
-	local seen = {}
-
-	local function AddNeed(bucket, item, qty)
-		bucket[item] = (bucket[item] or 0) + qty
-		if seen[item] ~= true then
-			seen[item] = true
-			seenOrder[#seenOrder + 1] = item
-		end
-	end
-
-	for _, name in ipairs(order) do
+	local function BuildStage(name, craftAmount, path)
 		local recipe = ResolveRecipe(name)
-		local craftAmount = crafts[name] or 0
-		if name == finalName then
-			result.finalUnits = craftAmount * ((recipe and recipe.yield) or 1)
+		if recipe == nil then
+			return nil
 		end
+		path = path or {}
+		local key = NewStageKey(name)
 		local stage = {
+			key = key,
 			name = name,
 			crafts = craftAmount,
 			craftFee = craftAmount * ((recipe.cost) or 0),
 			labor = math.floor(craftAmount * ((recipe.laborcost) or 0) + 0.5),
 			lines = {},
 		}
-		result.totalLabor = result.totalLabor + stage.labor
-		result.craftFee = result.craftFee + stage.craftFee
+		result.stages[#result.stages + 1] = stage
+		result.stageByKey[key] = stage
+		if result.stageByName[name] == nil then
+			result.stageByName[name] = stage
+		end
+
+		local nextPath = {}
+		for pathName in pairs(path) do
+			nextPath[pathName] = true
+		end
+		nextPath[name] = true
+
 		for _, material in ipairs(recipe.materials or {}) do
 			local qty = craftAmount * (material.count or 0)
 			local kind = "ah"
+			local childKey = nil
 			if material.fromStage and ResolveRecipe(material.item) ~= nil then
 				kind = "craft"
+				if not nextPath[material.item] then
+					local childRecipe = ResolveRecipe(material.item)
+					local childCrafts = math.ceil(qty / ((childRecipe and childRecipe.yield) or 1))
+					local childStage = BuildStage(material.item, childCrafts, nextPath)
+					childKey = childStage and childStage.key or nil
+				end
 			elseif material.fromVendor then
 				kind = "vendor"
-				AddNeed(vendorNeed, material.item, qty)
-			else
-				AddNeed(totalNeed, material.item, qty)
 			end
-			stage.lines[#stage.lines + 1] = { item = material.item, qty = qty, kind = kind }
+			stage.lines[#stage.lines + 1] = {
+				item = material.item,
+				qty = qty,
+				kind = kind,
+				childKey = childKey,
+			}
 			DebugPlan(
 				string.format(
 					"stage=%s crafts=%s material=%s qty=%s kind=%s",
@@ -993,30 +967,11 @@ local function BuildPlan(finalName, finalCrafts)
 				)
 			)
 		end
-		result.stages[#result.stages + 1] = stage
-		result.stageByName[name] = stage
+		return stage
 	end
 
-	for _, item in ipairs(seenOrder) do
-		local need = totalNeed[item] or 0
-		if need > 0 then
-			local have = owned[item] or 0
-			local buy = need - have
-			if buy < 0 then
-				buy = 0
-			end
-			result.shop[#result.shop + 1] = { item = item, need = need, have = have, buy = buy, search = item }
-		end
-		local vendorQty = vendorNeed[item] or 0
-		if vendorQty > 0 then
-			local have = owned[item] or 0
-			local buy = vendorQty - have
-			if buy < 0 then
-				buy = 0
-			end
-			result.vendor[#result.vendor + 1] = { item = item, need = vendorQty, have = have, buy = buy }
-		end
-	end
+	result.rootStage = BuildStage(finalName, finalCrafts, {})
+	result.finalUnits = finalCrafts * ((finalRecipe and finalRecipe.yield) or 1)
 
 	return result
 end
@@ -1148,8 +1103,8 @@ function BuildVisiblePlan()
 		result.craftFee = result.craftFee + (stage.craftFee or 0)
 		result.totalLabor = result.totalLabor + (stage.labor or 0)
 		for _, material in ipairs(stage.lines or {}) do
-			if material.kind == "craft" and expandedStages[material.item] then
-				WalkStage(plan.stageByName[material.item])
+			if material.kind == "craft" and material.childKey ~= nil and expandedStages[material.childKey] then
+				WalkStage(plan.stageByKey[material.childKey])
 			elseif material.kind == "vendor" then
 				AddNeed(vendorNeed, vendorOrder, material.item, material.qty)
 			else
@@ -1158,8 +1113,7 @@ function BuildVisiblePlan()
 		end
 	end
 
-	local stages = plan.stages or {}
-	WalkStage(plan.stageByName[selectedRecipe] or stages[#stages])
+	WalkStage(plan.rootStage)
 
 	for _, item in ipairs(shopOrder) do
 		local need = shopNeed[item] or 0
@@ -1395,20 +1349,20 @@ local function RenderPlan()
 			if rowIndex > MAX_ROW_COUNT then
 				return
 			end
-			local isCraft = material.kind == "craft"
+			local isCraft = material.kind == "craft" and material.childKey ~= nil
 			local color = isCraft and WARN_ORANGE or nil
 			local unitPrice = GetVendorUnitPrice(material.item)
 			if unitPrice <= 0 then
 				unitPrice = GetAuctionUnitPrice(material.item)
 			end
 			local function Toggle()
-				expandedStages[material.item] = not expandedStages[material.item]
+				expandedStages[material.childKey] = not expandedStages[material.childKey]
 				RebuildBuyQueue()
 				RenderPlan()
 			end
 			local expandPrefix = ""
 			if isCraft then
-				expandPrefix = expandedStages[material.item] and "[-] " or "[+] "
+				expandPrefix = expandedStages[material.childKey] and "[-] " or "[+] "
 			end
 			Row(
 				rowIndex,
@@ -1420,14 +1374,13 @@ local function RenderPlan()
 				isCraft and Toggle or nil
 			)
 			rowIndex = rowIndex + 1
-			if isCraft and expandedStages[material.item] then
-				RenderStage(plan.stageByName[material.item], depth + 1, false)
+			if isCraft and expandedStages[material.childKey] then
+				RenderStage(plan.stageByKey[material.childKey], depth + 1, false)
 			end
 		end
 	end
 
-	local stages = plan.stages or {}
-	RenderStage(plan.stageByName[selectedRecipe] or stages[#stages], 0, true)
+	RenderStage(plan.rootStage, 0, true)
 
 	if rowIndex <= MAX_ROW_COUNT then
 		RowLine(rowIndex)
