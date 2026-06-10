@@ -3,5 +3,5 @@
 ../globals/button.lua
 ../globals/windowcommon.lua
 ../globals/window.lua
-AutoShopCraftIndex.lua
-autoshop.lua
+../globals/craftids.lua
+omnicraft.lua

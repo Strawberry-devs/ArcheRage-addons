@@ -1,6 +1,6 @@
-# AutoShop
+# Omnicraft
 
-AutoShop helps plan crafting and buying materials in ArcheRage.
+Omnicraft helps plan crafting and buying materials in ArcheRage.
 
 ## What it does
 
@@ -9,4 +9,4 @@ AutoShop helps plan crafting and buying materials in ArcheRage.
 - Allow price per breakdown or for general item
 - Compare S/L gained from crafting vs buying
 
-![AutoShop screenshot](https://i.imgur.com/8z8uEje.png)
+![Omnicraft screenshot](https://i.imgur.com/8z8uEje.png)

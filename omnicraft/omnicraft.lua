@@ -34,10 +34,10 @@ local MAX_ROW_COUNT = 24
 local ROW_HEIGHT = 22
 local ROW_TOP = 248
 local FOOTER_HEIGHT = 20
-local SAVE_KEY = "autoshop_last_recipe"
-local GOLD_ICON = "Addon/autoshop/icons/gold.dds"
-local SILVER_ICON = "Addon/autoshop/icons/silver.dds"
-local COPPER_ICON = "Addon/autoshop/icons/copper.dds"
+local SAVE_KEY = "omnicraft_last_recipe"
+local GOLD_ICON = "Addon/globals/icons/gold.dds"
+local SILVER_ICON = "Addon/globals/icons/silver.dds"
+local COPPER_ICON = "Addon/globals/icons/copper.dds"
 local MONEY_ICON_SIZE = 13
 local MONEY_ICON_GAP = 1
 local MONEY_UNIT_GAP = 6
@@ -100,13 +100,13 @@ local DEBUG_BAD = false
 
 local function Chat(message)
 	pcall(function()
-		X2Chat:DispatchChatMessage(CMF_SYSTEM, "[AutoShop] " .. tostring(message))
+		X2Chat:DispatchChatMessage(CMF_SYSTEM, "[OmniCraft] " .. tostring(message))
 	end)
 end
 
 local function PrintDebug(message)
 	if type(aaprint) == "function" then
-		aaprint("[AutoShop] " .. tostring(message))
+		aaprint("[OmniCraft] " .. tostring(message))
 	else
 		Chat(message)
 	end
@@ -130,7 +130,7 @@ local function DebugBad(message)
 	end
 end
 
-function AutoShop_SetDebug(planDebug, priceDebug, badDebug)
+function OmniCraft_SetDebug(planDebug, priceDebug, badDebug)
 	DEBUG_PLAN = planDebug == true
 	DEBUG_PRICE = priceDebug == true
 	if badDebug ~= nil then
@@ -146,12 +146,12 @@ function AutoShop_SetDebug(planDebug, priceDebug, badDebug)
 	)
 end
 
-function AutoShop_DebugOn()
-	AutoShop_SetDebug(true, true, true)
+function OmniCraft_DebugOn()
+	OmniCraft_SetDebug(true, true, true)
 end
 
-function AutoShop_DebugOff()
-	AutoShop_SetDebug(false, false, false)
+function OmniCraft_DebugOff()
+	OmniCraft_SetDebug(false, false, false)
 end
 
 local function Trim(value)
@@ -244,14 +244,14 @@ local function ResolveIndexedRecipe(query)
 	end
 
 	local lower = clean:lower()
-	if type(AutoShopCraftIndex) == "table" then
-		for name, data in pairs(AutoShopCraftIndex) do
+	if type(OmniCraftCraftIndex) == "table" then
+		for name, data in pairs(OmniCraftCraftIndex) do
 			if tostring(name):lower() == lower then
 				data.name = name
 				return data
 			end
 		end
-		for name, data in pairs(AutoShopCraftIndex) do
+		for name, data in pairs(OmniCraftCraftIndex) do
 			if tostring(name):lower():find(lower, 1, true) ~= nil then
 				data.name = name
 				return data
@@ -259,13 +259,13 @@ local function ResolveIndexedRecipe(query)
 		end
 	end
 
-	if type(AutoShopItemTypes) == "table" then
-		for name, itemType in pairs(AutoShopItemTypes) do
+	if type(OmniCraftItemTypes) == "table" then
+		for name, itemType in pairs(OmniCraftItemTypes) do
 			if tostring(name):lower() == lower then
 				return { name = name, itemType = itemType }
 			end
 		end
-		for name, itemType in pairs(AutoShopItemTypes) do
+		for name, itemType in pairs(OmniCraftItemTypes) do
 			if tostring(name):lower():find(lower, 1, true) ~= nil then
 				return { name = name, itemType = itemType }
 			end
@@ -1537,7 +1537,7 @@ local function CreateMainWindow()
 		return
 	end
 
-	mainWindow = CreateEmptyWindow("autoShopWindow", "UIParent")
+	mainWindow = CreateEmptyWindow("omniCraftWindow", "UIParent")
 	mainWindow:SetExtent(WINDOW_WIDTH, MIN_WINDOW_HEIGHT)
 	mainWindow:AddAnchor("CENTER", "UIParent", 0, 0)
 	mainWindow:SetCloseOnEscape(true)
@@ -1545,8 +1545,8 @@ local function CreateMainWindow()
 	mainWindow:Show(false)
 
 	CreateWindowBackground(mainWindow)
-	CreateQuestStylePanel(mainWindow, "autoShopBodyPanel", 105, -25, 0.20)
-	--CreateQuestStyleStrip(mainWindow, "autoShopSummaryPanel", 18, 146, WINDOW_WIDTH - 36, 68, 0.13)
+	CreateQuestStylePanel(mainWindow, "omniCraftBodyPanel", 105, -25, 0.20)
+	--CreateQuestStyleStrip(mainWindow, "omniCraftSummaryPanel", 18, 146, WINDOW_WIDTH - 36, 68, 0.13)
 
 	mainWindow:SetHandler("OnDragStart", function(self)
 		self:StartMoving()
@@ -1556,90 +1556,90 @@ local function CreateMainWindow()
 		self:StopMovingOrSizing()
 	end)
 
-	local title = mainWindow:CreateChildWidget("label", "autoShopTitle", 0, true)
+	local title = mainWindow:CreateChildWidget("label", "omniCraftTitle", 0, true)
 	title:SetExtent(220, 24)
 	title:AddAnchor("TOPLEFT", mainWindow, 18, 14)
-	title:SetText("AutoShop")
+	title:SetText("OmniCraft")
 	StyleLabel(title, 18, ALIGN_LEFT, "brown")
 
-	CreateCloseButton(mainWindow, "autoShopClose", function()
+	CreateCloseButton(mainWindow, "omniCraftClose", function()
 		mainWindow:Show(false)
 	end)
 
-	local recipeLabel = mainWindow:CreateChildWidget("label", "autoShopRecipeLabel", 0, true)
+	local recipeLabel = mainWindow:CreateChildWidget("label", "omniCraftRecipeLabel", 0, true)
 	recipeLabel:SetExtent(80, 22)
 	recipeLabel:AddAnchor("TOPLEFT", mainWindow, 18, 48)
 	recipeLabel:SetText("Craft")
 	StyleLabel(recipeLabel, 13, ALIGN_LEFT, "brown")
 
-	recipeEdit = CreateEditBox(mainWindow, "autoShopRecipeEdit", 286)
+	recipeEdit = CreateEditBox(mainWindow, "omniCraftRecipeEdit", 286)
 	recipeEdit:AddAnchor("TOPLEFT", mainWindow, 88, 45)
 	recipeEdit:SetGuideText("Type craft name or id")
 	recipeEdit:SetHandler("OnEnterPressed", LoadRecipeFromInput)
 
-	CreateButton(mainWindow, "autoShopLoad", "Load", 398, 46, 48, LoadRecipeFromInput)
-	CreateButton(mainWindow, "autoShopCheckPrices", "Check Prices", 454, 46, 88, StartPriceCheck)
+	CreateButton(mainWindow, "omniCraftLoad", "Load", 398, 46, 48, LoadRecipeFromInput)
+	CreateButton(mainWindow, "omniCraftCheckPrices", "Check Prices", 454, 46, 88, StartPriceCheck)
 
-	local countLabel = mainWindow:CreateChildWidget("label", "autoShopCountLabel", 0, true)
+	local countLabel = mainWindow:CreateChildWidget("label", "omniCraftCountLabel", 0, true)
 	countLabel:SetExtent(52, 22)
 	countLabel:AddAnchor("TOPLEFT", mainWindow, 18, 82)
 	countLabel:SetText("Crafts")
 	StyleLabel(countLabel, 13, ALIGN_LEFT, "brown")
 
-	countEdit = CreateEditBox(mainWindow, "autoShopCountEdit", 60)
+	countEdit = CreateEditBox(mainWindow, "omniCraftCountEdit", 60)
 	countEdit:AddAnchor("TOPLEFT", mainWindow, 88, 79)
 	countEdit:SetText("1")
 	countEdit:SetHandler("OnEnterPressed", ApplyCount)
 	countEdit:SetHandler("OnEditFocusLost", ApplyCount)
 
-	CreateSmallButton(mainWindow, "autoShopMinus", "-", 160, 80, function()
+	CreateSmallButton(mainWindow, "omniCraftMinus", "-", 160, 80, function()
 		countEdit:SetText(tostring(math.max(1, craftCount - 1)))
 		ApplyCount()
 	end)
-	CreateSmallButton(mainWindow, "autoShopPlus", "+", 184, 80, function()
+	CreateSmallButton(mainWindow, "omniCraftPlus", "+", 184, 80, function()
 		countEdit:SetText(tostring(craftCount + 1))
 		ApplyCount()
 	end)
-	CreateButton(mainWindow, "autoShopRefresh", "Refresh Bag", 312, 80, 84, function()
+	CreateButton(mainWindow, "omniCraftRefresh", "Refresh Bag", 312, 80, 84, function()
 		RecomputePlan()
 		--SetStatus("Inventory refreshed.", nil)
 	end)
-	CreateButton(mainWindow, "autoShopGoBuy", "Go to Buy", 404, 80, 76, StartShopping)
-	CreateButton(mainWindow, "autoShopNext", "Next", 488, 80, 54, NextShoppingStep)
+	CreateButton(mainWindow, "omniCraftGoBuy", "Go to Buy", 404, 80, 76, StartShopping)
+	CreateButton(mainWindow, "omniCraftNext", "Next", 488, 80, 54, NextShoppingStep)
 
 	CreateSectionLine(mainWindow, "controls", 106)
 
-	statusLabel = mainWindow:CreateChildWidget("label", "autoShopStatus", 0, true)
+	statusLabel = mainWindow:CreateChildWidget("label", "omniCraftStatus", 0, true)
 	statusLabel:SetExtent(WINDOW_WIDTH - 36, 22)
 	statusLabel:AddAnchor("TOPLEFT", mainWindow, 18, 114)
 	StyleLabel(statusLabel, 13, ALIGN_LEFT, "default")
 	--statusLabel:SetText("Load a craft to start.")
 
-	targetLabel = mainWindow:CreateChildWidget("label", "autoShopTarget", 0, true)
+	targetLabel = mainWindow:CreateChildWidget("label", "omniCraftTarget", 0, true)
 	targetLabel:SetExtent(WINDOW_WIDTH - 36, 22)
 	targetLabel:AddAnchor("TOPLEFT", mainWindow, 18, 114)
 	StyleLabel(targetLabel, 13, ALIGN_LEFT, "brown")
 
-	craftLabel = mainWindow:CreateChildWidget("label", "autoShopCrafts", 0, true)
+	craftLabel = mainWindow:CreateChildWidget("label", "omniCraftCrafts", 0, true)
 	craftLabel:SetExtent(WINDOW_WIDTH - 36, 22)
 	craftLabel:AddAnchor("TOPLEFT", mainWindow, 18, 134)
 	StyleLabel(craftLabel, 13, ALIGN_LEFT, "default")
-	craftFeeMoney = CreateMoneyCluster(mainWindow, "autoShopCraftFeeMoney")
+	craftFeeMoney = CreateMoneyCluster(mainWindow, "omniCraftCraftFeeMoney")
 
-	economyLabel = mainWindow:CreateChildWidget("label", "autoShopEconomy", 0, true)
+	economyLabel = mainWindow:CreateChildWidget("label", "omniCraftEconomy", 0, true)
 	economyLabel:SetExtent(WINDOW_WIDTH - 36, 22)
 	economyLabel:AddAnchor("TOPLEFT", mainWindow, 18, 154)
 	StyleLabel(economyLabel, 13, ALIGN_LEFT, "default")
 	economyMoney = {
-		outrightText = CreateMoneyText(mainWindow, "autoShopOutrightText", "Outright", 18, CRAFTLABELHEIGHT1, 62),
-		pieceText = CreateMoneyText(mainWindow, "autoShopPieceText", "| Piece", 250, CRAFTLABELHEIGHT1, 48),
-		diffText = CreateMoneyText(mainWindow, "autoShopDiffText", "Diff", 18, CRAFTLABELHEIGHT2, 34),
-		laborText = CreateMoneyText(mainWindow, "autoShopLaborText", "|", 264, CRAFTLABELHEIGHT2, 10),
-		perLaborText = CreateMoneyText(mainWindow, "autoShopPerLaborText", "/labor", 360, CRAFTLABELHEIGHT2, 40),
-		outright = CreateMoneyCluster(mainWindow, "autoShopOutrightMoney"),
-		piece = CreateMoneyCluster(mainWindow, "autoShopPieceMoney"),
-		diff = CreateMoneyCluster(mainWindow, "autoShopDiffMoney"),
-		perLabor = CreateMoneyCluster(mainWindow, "autoShopPerLaborMoney"),
+		outrightText = CreateMoneyText(mainWindow, "omniCraftOutrightText", "Outright", 18, CRAFTLABELHEIGHT1, 62),
+		pieceText = CreateMoneyText(mainWindow, "omniCraftPieceText", "| Piece", 250, CRAFTLABELHEIGHT1, 48),
+		diffText = CreateMoneyText(mainWindow, "omniCraftDiffText", "Diff", 18, CRAFTLABELHEIGHT2, 34),
+		laborText = CreateMoneyText(mainWindow, "omniCraftLaborText", "|", 264, CRAFTLABELHEIGHT2, 10),
+		perLaborText = CreateMoneyText(mainWindow, "omniCraftPerLaborText", "/labor", 360, CRAFTLABELHEIGHT2, 40),
+		outright = CreateMoneyCluster(mainWindow, "omniCraftOutrightMoney"),
+		piece = CreateMoneyCluster(mainWindow, "omniCraftPieceMoney"),
+		diff = CreateMoneyCluster(mainWindow, "omniCraftDiffMoney"),
+		perLabor = CreateMoneyCluster(mainWindow, "omniCraftPerLaborMoney"),
 	}
 	economyMoney.labels = {
 		economyMoney.outrightText,
@@ -1657,36 +1657,36 @@ local function CreateMainWindow()
 
 	CreateSectionLine(mainWindow, "summary", 226)
 
-	shoppingLabel = mainWindow:CreateChildWidget("label", "autoShopShopping", 0, true)
+	shoppingLabel = mainWindow:CreateChildWidget("label", "omniCraftShopping", 0, true)
 	shoppingLabel:SetExtent(270, 22)
 	shoppingLabel:AddAnchor("BOTTOMLEFT", mainWindow, 18, -36)
 	StyleLabel(shoppingLabel, 13, ALIGN_LEFT, "default")
 
-	stepLabel = mainWindow:CreateChildWidget("label", "autoShopStep", 0, true)
+	stepLabel = mainWindow:CreateChildWidget("label", "omniCraftStep", 0, true)
 	stepLabel:SetExtent(250, 22)
 	stepLabel:AddAnchor("BOTTOMRIGHT", mainWindow, -18, -36)
 	StyleLabel(stepLabel, 13, ALIGN_RIGHT, "default")
 
 	local tableHeaderY = ROW_TOP - 18
-	local breakdownHeader = mainWindow:CreateChildWidget("label", "autoShopBreakdownHeader", 0, true)
+	local breakdownHeader = mainWindow:CreateChildWidget("label", "omniCraftBreakdownHeader", 0, true)
 	breakdownHeader:SetExtent(240, 18)
 	breakdownHeader:AddAnchor("TOPLEFT", mainWindow, 20, tableHeaderY)
 	breakdownHeader:SetText("Breakdown")
 	StyleLabel(breakdownHeader, 12, ALIGN_LEFT, "brown")
 
-	local qtyHeader = mainWindow:CreateChildWidget("label", "autoShopQtyHeader", 0, true)
+	local qtyHeader = mainWindow:CreateChildWidget("label", "omniCraftQtyHeader", 0, true)
 	qtyHeader:SetExtent(60, 18)
 	qtyHeader:AddAnchor("TOPLEFT", mainWindow, 20 + ROW_NAME_WIDTH + 10, tableHeaderY)
 	qtyHeader:SetText("Qty")
 	StyleLabel(qtyHeader, 12, ALIGN_LEFT, "brown")
 
-	local unitHeader = mainWindow:CreateChildWidget("label", "autoShopUnitHeader", 0, true)
+	local unitHeader = mainWindow:CreateChildWidget("label", "omniCraftUnitHeader", 0, true)
 	unitHeader:SetExtent(90, 18)
 	unitHeader:AddAnchor("TOPLEFT", mainWindow, ROW_UNIT_RIGHT - 70, tableHeaderY)
 	unitHeader:SetText("Unit Price")
 	StyleLabel(unitHeader, 12, ALIGN_LEFT, "brown")
 
-	local totalHeader = mainWindow:CreateChildWidget("label", "autoShopTotalHeader", 0, true)
+	local totalHeader = mainWindow:CreateChildWidget("label", "omniCraftTotalHeader", 0, true)
 	totalHeader:SetExtent(90, 18)
 	totalHeader:AddAnchor("TOPLEFT", mainWindow, ROW_TOTAL_RIGHT - 70, tableHeaderY)
 	totalHeader:SetText("Total Price")
@@ -1699,12 +1699,12 @@ local function CreateMainWindow()
 		line:AddAnchor("TOPLEFT", mainWindow, 20, y + math.floor(ROW_HEIGHT / 2))
 		line:SetVisible(false)
 
-		local left = mainWindow:CreateChildWidget("label", "autoShopRowLeft" .. tostring(index), index, true)
+		local left = mainWindow:CreateChildWidget("label", "omniCraftRowLeft" .. tostring(index), index, true)
 		left:SetExtent(ROW_NAME_WIDTH, 22)
 		left:AddAnchor("TOPLEFT", mainWindow, 20, y)
 		StyleLabel(left, 12, ALIGN_LEFT, "default")
 
-		local mid = mainWindow:CreateChildWidget("label", "autoShopRowMid" .. tostring(index), index, true)
+		local mid = mainWindow:CreateChildWidget("label", "omniCraftRowMid" .. tostring(index), index, true)
 		mid:SetExtent(ROW_QTY_WIDTH, 22)
 		mid:AddAnchor("TOPLEFT", mainWindow, 20 + ROW_NAME_WIDTH + 10, y)
 		StyleLabel(mid, 12, ALIGN_LEFT, "default")
@@ -1712,25 +1712,25 @@ local function CreateMainWindow()
 		rows[index] = {
 			left = left,
 			mid = mid,
-			unit = CreateMoneyCluster(mainWindow, "autoShopRowUnitPrice" .. tostring(index)),
-			total = CreateMoneyCluster(mainWindow, "autoShopRowTotalPrice" .. tostring(index)),
+			unit = CreateMoneyCluster(mainWindow, "omniCraftRowUnitPrice" .. tostring(index)),
+			total = CreateMoneyCluster(mainWindow, "omniCraftRowTotalPrice" .. tostring(index)),
 			line = line,
 			y = y + 3,
 		}
 	end
 
 	RenderPlan()
-
-	local saved = ADDON:LoadData(SAVE_KEY)
-	if type(saved) == "table" then
-		if saved.recipe ~= nil then
-			recipeEdit:SetText(tostring(saved.recipe))
-		end
-		if saved.count ~= nil then
-			countEdit:SetText(tostring(saved.count))
-			ApplyCount()
-		end
-	end
+	--DONT LOAD FOR NOW ITS KINDA ANNOYING TBH LOL
+	--local saved = ADDON:LoadData(SAVE_KEY)
+	--if type(saved) == "table" then
+	--	if saved.recipe ~= nil then
+	--		recipeEdit:SetText(tostring(saved.recipe))
+	--	end
+	--	if saved.count ~= nil then
+	--		countEdit:SetText(tostring(saved.count))
+	--		ApplyCount()
+	--	end
+	--end
 end
 
 local function ToggleWindow()
@@ -1747,7 +1747,7 @@ local function ToggleWindow()
 	end
 end
 
-launcherButton = CreateSimpleButton("AutoShop", 700, -430)
+launcherButton = CreateSimpleButton("OmniCraft", 700, -430)
 launcherButton:SetHandler("OnClick", ToggleWindow)
 
 local function OnBagChanged()
@@ -1875,11 +1875,11 @@ local function OnPriceTick()
 	end
 end
 
-priceTicker = CreateEmptyWindow("autoShopPriceTicker", "UIParent")
+priceTicker = CreateEmptyWindow("omniCraftPriceTicker", "UIParent")
 priceTicker:Show(true)
 priceTicker:SetHandler("OnUpdate", OnPriceTick)
 
-local eventWindow = CreateEmptyWindow("autoShopEvents", "UIParent")
+local eventWindow = CreateEmptyWindow("omniCraftEvents", "UIParent")
 eventWindow:Show(true)
 eventWindow:SetHandler("OnEvent", function(self, event)
 	if event == "ADDED_ITEM" or event == "REMOVED_ITEM" or event == "BAG_ITEM_CONFIRMED" then
@@ -1893,4 +1893,4 @@ pcall(function()
 	eventWindow:RegisterEvent("BAG_ITEM_CONFIRMED")
 end)
 
-Chat("Loaded. Click AutoShop to plan a craft.")
+--Chat("Loaded. Click OmniCraft to plan a craft.")
