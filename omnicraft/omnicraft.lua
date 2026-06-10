@@ -51,6 +51,7 @@ local ROW_UNIT_RIGHT = 445
 local ROW_TOTAL_RIGHT = WINDOW_WIDTH - 20
 local CRAFTLABELHEIGHT1 = 164
 local CRAFTLABELHEIGHT2 = 184
+local CRAFTLABELHEIGHT3 = 204
 
 local COMPLETE_GREEN = { 0.04, 0.50, 0.08, 1 }
 local WARN_ORANGE = { 0.85, 0.40, 0.05, 1 }
@@ -489,6 +490,16 @@ local function FormatMoney(copper)
 	return prefix .. table.concat(out, " ")
 end
 
+local function FormatQuantity(value)
+	value = tonumber(value) or 0
+	if math.abs(value - math.floor(value + 0.5)) < 0.0001 then
+		return tostring(math.floor(value + 0.5))
+	end
+	local text = string.format("%.2f", value)
+	text = text:gsub("0+$", ""):gsub("%.$", "")
+	return text
+end
+
 CopperToParts = function(copper)
 	copper = math.floor(tonumber(copper) or 0)
 	local sign = ""
@@ -908,19 +919,21 @@ local function BuildPlan(finalName, finalCrafts)
 		return string.format("%d:%s", nextStageId, tostring(name))
 	end
 
-	local function BuildStage(name, craftAmount, path)
+	local function BuildStage(name, requiredUnits, path)
 		local recipe = ResolveRecipe(name)
 		if recipe == nil then
 			return nil
 		end
 		path = path or {}
 		local key = NewStageKey(name)
+		local yield = math.max(1, tonumber(recipe.yield) or 1)
+		local craftScale = (requiredUnits or 0) / yield
 		local stage = {
 			key = key,
 			name = name,
-			crafts = craftAmount,
-			craftFee = craftAmount * ((recipe.cost) or 0),
-			labor = math.floor(craftAmount * ((recipe.laborcost) or 0) + 0.5),
+			crafts = requiredUnits,
+			craftFee = craftScale * ((recipe.cost) or 0),
+			labor = craftScale * ((recipe.laborcost) or 0),
 			lines = {},
 		}
 		result.stages[#result.stages + 1] = stage
@@ -936,15 +949,13 @@ local function BuildPlan(finalName, finalCrafts)
 		nextPath[name] = true
 
 		for _, material in ipairs(recipe.materials or {}) do
-			local qty = craftAmount * (material.count or 0)
+			local qty = craftScale * (material.count or 0)
 			local kind = "ah"
 			local childKey = nil
 			if material.fromStage and ResolveRecipe(material.item) ~= nil then
 				kind = "craft"
 				if not nextPath[material.item] then
-					local childRecipe = ResolveRecipe(material.item)
-					local childCrafts = math.ceil(qty / ((childRecipe and childRecipe.yield) or 1))
-					local childStage = BuildStage(material.item, childCrafts, nextPath)
+					local childStage = BuildStage(material.item, qty, nextPath)
 					childKey = childStage and childStage.key or nil
 				end
 			elseif material.fromVendor then
@@ -960,7 +971,7 @@ local function BuildPlan(finalName, finalCrafts)
 				string.format(
 					"stage=%s crafts=%s material=%s qty=%s kind=%s",
 					tostring(name),
-					tostring(craftAmount),
+					tostring(requiredUnits),
 					tostring(material.item),
 					tostring(qty),
 					tostring(kind)
@@ -971,7 +982,7 @@ local function BuildPlan(finalName, finalCrafts)
 	end
 
 	result.rootStage = BuildStage(finalName, finalCrafts, {})
-	result.finalUnits = finalCrafts * ((finalRecipe and finalRecipe.yield) or 1)
+	result.finalUnits = finalCrafts
 
 	return result
 end
@@ -1268,6 +1279,12 @@ local function UpdateEconomyLabel()
 			economyMoney.diffText:SetText("Diff: ")
 			economyMoney.laborText:SetText("")
 			economyMoney.perLaborText:SetText("/L")
+			economyMoney.totalOutrightText:SetText(string.format("Outright (%d): ", craftCount))
+			economyMoney.totalPieceText:SetText(string.format("Piece (%d): ", craftCount))
+			economyMoney.totalOutrightText:Show(false)
+			economyMoney.totalPieceText:Show(false)
+			HideMoneyCluster(economyMoney.totalOutright)
+			HideMoneyCluster(economyMoney.totalPiece)
 			if economy.noOutright == true then
 				economyMoney.outrightText:Show(false)
 				HideMoneyCluster(economyMoney.outright)
@@ -1285,6 +1302,14 @@ local function UpdateEconomyLabel()
 				local perLaborWidth = ShowMoneyCluster(economyMoney.perLabor, economy.perLabor, 280, CRAFTLABELHEIGHT2, nil)
 				economyMoney.perLaborText:RemoveAllAnchors()
 				economyMoney.perLaborText:AddAnchor("TOPLEFT", mainWindow, 282 + perLaborWidth, CRAFTLABELHEIGHT2)
+			end
+			if craftCount > 1 then
+				if economy.noOutright ~= true then
+					economyMoney.totalOutrightText:Show(true)
+					ShowMoneyCluster(economyMoney.totalOutright, economy.outright * craftCount, 112, CRAFTLABELHEIGHT3, nil)
+				end
+				economyMoney.totalPieceText:Show(true)
+				ShowMoneyCluster(economyMoney.totalPiece, economy.piecing * craftCount, 332, CRAFTLABELHEIGHT3, nil)
 			end
 		end
 	end
@@ -1338,7 +1363,7 @@ local function RenderPlan()
 			Row(
 				rowIndex,
 				indent .. tostring(stage.name),
-				tostring(stage.crafts),
+				FormatQuantity(stage.crafts),
 				nil,
 				nil,
 				nil
@@ -1367,7 +1392,7 @@ local function RenderPlan()
 			Row(
 				rowIndex,
 				indent .. "  " .. expandPrefix .. tostring(material.item),
-				tostring(material.qty),
+				FormatQuantity(material.qty),
 				unitPrice > 0 and unitPrice or nil,
 				unitPrice > 0 and ((material.qty or 0) * unitPrice) or nil,
 				color,
@@ -1401,7 +1426,7 @@ local function RenderPlan()
 			Row(
 				rowIndex,
 				entry.item,
-				tostring(entry.need or 0),
+				FormatQuantity(entry.need or 0),
 				unitPrice > 0 and unitPrice or nil,
 				unitPrice > 0 and ((entry.need or 0) * unitPrice) or nil,
 				WARN_ORANGE
@@ -1826,10 +1851,14 @@ local function CreateMainWindow()
 		diffText = CreateMoneyText(mainWindow, "omniCraftDiffText", "Diff", 18, CRAFTLABELHEIGHT2, 34),
 		laborText = CreateMoneyText(mainWindow, "omniCraftLaborText", "|", 264, CRAFTLABELHEIGHT2, 10),
 		perLaborText = CreateMoneyText(mainWindow, "omniCraftPerLaborText", "/labor", 360, CRAFTLABELHEIGHT2, 40),
+		totalOutrightText = CreateMoneyText(mainWindow, "omniCraftTotalOutrightText", "", 18, CRAFTLABELHEIGHT3, 92),
+		totalPieceText = CreateMoneyText(mainWindow, "omniCraftTotalPieceText", "", 250, CRAFTLABELHEIGHT3, 78),
 		outright = CreateMoneyCluster(mainWindow, "omniCraftOutrightMoney"),
 		piece = CreateMoneyCluster(mainWindow, "omniCraftPieceMoney"),
 		diff = CreateMoneyCluster(mainWindow, "omniCraftDiffMoney"),
 		perLabor = CreateMoneyCluster(mainWindow, "omniCraftPerLaborMoney"),
+		totalOutright = CreateMoneyCluster(mainWindow, "omniCraftTotalOutrightMoney"),
+		totalPiece = CreateMoneyCluster(mainWindow, "omniCraftTotalPieceMoney"),
 	}
 	economyMoney.labels = {
 		economyMoney.outrightText,
@@ -1837,12 +1866,16 @@ local function CreateMainWindow()
 		economyMoney.diffText,
 		economyMoney.laborText,
 		economyMoney.perLaborText,
+		economyMoney.totalOutrightText,
+		economyMoney.totalPieceText,
 	}
 	economyMoney.clusters = {
 		economyMoney.outright,
 		economyMoney.piece,
 		economyMoney.diff,
 		economyMoney.perLabor,
+		economyMoney.totalOutright,
+		economyMoney.totalPiece,
 	}
 
 	CreateSectionLine(mainWindow, "summary", 226)
