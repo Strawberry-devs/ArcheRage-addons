@@ -1401,9 +1401,13 @@ local function RenderPlan()
 				RebuildBuyQueue()
 				RenderPlan()
 			end
+			local expandPrefix = ""
+			if isCraft then
+				expandPrefix = expandedStages[material.item] and "[-] " or "[+] "
+			end
 			Row(
 				rowIndex,
-				indent .. "  " .. tostring(material.item),
+				indent .. "  " .. expandPrefix .. tostring(material.item),
 				tostring(material.qty),
 				unitPrice > 0 and unitPrice or nil,
 				unitPrice > 0 and ((material.qty or 0) * unitPrice) or nil,
