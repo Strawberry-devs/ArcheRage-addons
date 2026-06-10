@@ -27,6 +27,7 @@ ADDON:ImportAPI(API_TYPE.CHAT.id)
 ADDON:ImportAPI(API_TYPE.AUCTION.id)
 ADDON:ImportAPI(API_TYPE.BAG.id)
 ADDON:ImportAPI(API_TYPE.CRAFT.id)
+ADDON:ImportAPI(API_TYPE.ITEM.id)
 
 local WINDOW_WIDTH = 560
 local MIN_WINDOW_HEIGHT = 330
@@ -92,6 +93,7 @@ local priceCheckStart = 0
 local priceTicker
 local recipeCacheByCraftType = {}
 local recipeCacheByName = {}
+local recipePreviewDropdown = nil
 local expandedStages = {}
 local rowActions = {}
 local DEBUG_PLAN = false
@@ -368,6 +370,95 @@ local function LoadLiveRecipe(craftType)
 	recipeCacheByCraftType[craftType] = recipe
 	recipeCacheByName[productName] = recipe
 	return recipe
+end
+
+local function BuildRecipeSuggestion(name, data)
+	data = data or {}
+	local craftType = tonumber(data.craftType)
+	local itemType = tonumber(data.itemType)
+	if craftType ~= nil and (itemType == nil or name == nil) then
+		local recipe = LoadLiveRecipe(craftType)
+		if recipe ~= nil then
+			name = recipe.name or name
+			itemType = recipe.itemType or itemType
+		end
+	end
+	if craftType == nil and itemType ~= nil then
+		craftType = GetCraftTypeByItemType(itemType)
+	end
+	return {
+		name = name,
+		craftType = craftType,
+		itemType = itemType,
+	}
+end
+
+local function FindRecipeSuggestions(query, limit)
+	local clean = Trim(query)
+	local suggestions = {}
+	local seen = {}
+	limit = limit or 3
+	if clean == "" then
+		return suggestions
+	end
+
+	local function AddSuggestion(name, data)
+		if name == nil then
+			return #suggestions >= limit
+		end
+		local key = tostring(name):lower()
+		if seen[key] then
+			return #suggestions >= limit
+		end
+		seen[key] = true
+		local suggestion = BuildRecipeSuggestion(tostring(name), data)
+		if suggestion.name ~= nil then
+			suggestions[#suggestions + 1] = suggestion
+		end
+		return #suggestions >= limit
+	end
+
+	local numeric = tonumber(clean)
+	if numeric ~= nil and AddSuggestion(clean, { itemType = numeric, craftType = numeric }) then
+		return suggestions
+	end
+
+	local lower = clean:lower()
+	local function SearchTable(source, mode)
+		if type(source) ~= "table" then
+			return false
+		end
+		for name, data in pairs(source) do
+			local candidate = tostring(name)
+			local candidateLower = candidate:lower()
+			local matched
+			if mode == "exact" then
+				matched = candidateLower == lower
+			elseif mode == "prefix" then
+				matched = candidateLower:sub(1, #lower) == lower
+			else
+				matched = candidateLower:find(lower, 1, true) ~= nil
+			end
+			if matched then
+				local suggestionData = data
+				if type(data) ~= "table" then
+					suggestionData = { itemType = data }
+				end
+				if AddSuggestion(candidate, suggestionData) then
+					return true
+				end
+			end
+		end
+		return false
+	end
+
+	for _, mode in ipairs({ "exact", "prefix", "contains" }) do
+		if SearchTable(OmniCraftCraftIndex, mode) or SearchTable(OmniCraftItemTypes, mode) then
+			return suggestions
+		end
+	end
+
+	return suggestions
 end
 
 local function ResolveRecipe(name)
@@ -1382,6 +1473,12 @@ local function LoadRecipeFromInput()
 
 	selectedRecipe = recipeName
 	recipeEdit:SetText(recipeName)
+	if recipeEdit.HideDropdown ~= nil then
+		recipeEdit:HideDropdown()
+	end
+	if recipePreviewDropdown ~= nil then
+		recipePreviewDropdown:HidePreview()
+	end
 	ADDON:SaveData(SAVE_KEY, { recipe = recipeName, count = craftCount })
 	currentBuyIndex = 0
 	waitingForAuction = false
@@ -1414,6 +1511,128 @@ local function ApplyCount()
 		ADDON:SaveData(SAVE_KEY, { recipe = selectedRecipe, count = craftCount })
 	end
 	RecomputePlan()
+end
+
+local function SetPreviewIcon(icon, itemType)
+	icon:ClearAllTextures()
+	if itemType == nil or X2Item == nil or type(X2Item.GetItemIconSet) ~= "function" then
+		icon:SetVisible(false)
+		return
+	end
+	local ok, iconInfo = pcall(function()
+		return X2Item:GetItemIconSet(itemType, 0)
+	end)
+	if not ok or type(iconInfo) ~= "table" or iconInfo.icon == nil then
+		icon:SetVisible(false)
+		return
+	end
+	icon:AddTexture(iconInfo.icon)
+	if iconInfo.overIcon ~= nil then
+		icon:AddTexture(iconInfo.overIcon)
+	end
+	if iconInfo.gradeIcon ~= nil then
+		icon:AddTexture(iconInfo.gradeIcon)
+	end
+	icon:SetVisible(true)
+end
+
+local function CreateRecipePreviewDropdown(parent, edit, width)
+	local dropdown = parent:CreateChildWidget("emptywidget", "omniCraftRecipePreviewDropdown", 0, true)
+	dropdown:SetExtent(width, 74)
+	dropdown:AddAnchor("TOPLEFT", edit, "BOTTOMLEFT", 0, 1)
+	dropdown:Show(false)
+
+	local bg = dropdown:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
+	bg:AddAnchor("TOPLEFT", dropdown, 0, 0)
+	bg:AddAnchor("BOTTOMRIGHT", dropdown, 0, 0)
+
+	dropdown.rows = {}
+	for i = 1, 3 do
+		local row = dropdown:CreateChildWidget("label", string.format("row[%d]", i), 0, true)
+		row:SetExtent(width - 10, 22)
+		row:AddAnchor("TOPLEFT", dropdown, 5, 3 + ((i - 1) * 23))
+		row.style:SetAlign(ALIGN_LEFT)
+		row.style:SetColor(0.46, 0.23, 0.02, 1)
+
+		local rowBg = row:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
+		if rowBg == nil then
+			rowBg = row:CreateColorDrawable(0.76, 0.59, 0.32, 0.18, "background")
+		end
+		rowBg:AddAnchor("TOPLEFT", row, 0, 0)
+		rowBg:AddAnchor("BOTTOMRIGHT", row, 0, 0)
+		rowBg:SetVisible(false)
+		row.rowBg = rowBg
+
+		local icon = row:CreateIconDrawable("artwork")
+		icon:SetExtent(18, 18)
+		icon:AddAnchor("LEFT", row, 4, 0)
+		icon:SetVisible(false)
+
+		local text = row:CreateChildWidget("label", "name", 0, true)
+		text:SetExtent(width - 32, 18)
+		text:AddAnchor("LEFT", row, 28, 0)
+		text.style:SetAlign(ALIGN_LEFT)
+		text.style:SetColor(0.46, 0.23, 0.02, 1)
+		text:EnablePick(false)
+		if text.style.SetEllipsis ~= nil then
+			text.style:SetEllipsis(true)
+		end
+
+		function row:OnClick()
+			if self.suggestion == nil then
+				return
+			end
+			recipeEdit:SetText(self.suggestion.name)
+			LoadRecipeFromInput()
+		end
+		row:SetHandler("OnClick", row.OnClick)
+		function row:OnEnter()
+			self.rowBg:SetVisible(true)
+		end
+		row:SetHandler("OnEnter", row.OnEnter)
+		function row:OnLeave()
+			self.rowBg:SetVisible(false)
+		end
+		row:SetHandler("OnLeave", row.OnLeave)
+
+		dropdown.rows[i] = {
+			row = row,
+			icon = icon,
+			text = text,
+		}
+	end
+
+	function dropdown:HidePreview()
+		self:Show(false)
+		for _, entry in ipairs(self.rows) do
+			entry.row.suggestion = nil
+			entry.row:Show(false)
+		end
+	end
+
+	function dropdown:Update(query)
+		local suggestions = FindRecipeSuggestions(query, 3)
+		for i = 1, 3 do
+			local entry = self.rows[i]
+			local suggestion = suggestions[i]
+			if suggestion ~= nil then
+				entry.row.suggestion = suggestion
+				entry.text:SetText(suggestion.name)
+				SetPreviewIcon(entry.icon, suggestion.itemType)
+				entry.row:Show(true)
+			else
+				entry.row.suggestion = nil
+				entry.row:Show(false)
+			end
+		end
+		if #suggestions > 0 and self.Raise ~= nil then
+			self:Raise()
+		end
+		self:Show(#suggestions > 0)
+	end
+
+	dropdown:HidePreview()
+	return dropdown
 end
 
 local function SearchCurrentEntry(entry)
@@ -1563,6 +1782,9 @@ local function CreateMainWindow()
 	StyleLabel(title, 18, ALIGN_LEFT, "brown")
 
 	CreateCloseButton(mainWindow, "omniCraftClose", function()
+		if recipePreviewDropdown ~= nil then
+			recipePreviewDropdown:HidePreview()
+		end
 		mainWindow:Show(false)
 	end)
 
@@ -1576,6 +1798,12 @@ local function CreateMainWindow()
 	recipeEdit:AddAnchor("TOPLEFT", mainWindow, 88, 45)
 	recipeEdit:SetGuideText("Type craft name or id")
 	recipeEdit:SetHandler("OnEnterPressed", LoadRecipeFromInput)
+	recipeEdit:SetHandler("OnTextChanged", function()
+		if recipePreviewDropdown ~= nil then
+			recipePreviewDropdown:Update(recipeEdit:GetText())
+		end
+	end)
+	recipePreviewDropdown = CreateRecipePreviewDropdown(mainWindow, recipeEdit, 286)
 
 	CreateButton(mainWindow, "omniCraftLoad", "Load", 398, 46, 48, LoadRecipeFromInput)
 	CreateButton(mainWindow, "omniCraftCheckPrices", "Check Prices", 454, 46, 88, StartPriceCheck)
