@@ -1191,16 +1191,18 @@ local function CalculateEconomy()
 
 	local finalUnitPrice = GetAuctionUnitPrice(selectedRecipe)
 	local visible = BuildVisiblePlan()
-	local piecingCost = visible.craftFee or 0
+	local piecingCostTotal = visible.craftFee or 0
 	local missingPrices = {}
 	local hasFinalPrice = finalUnitPrice ~= nil and finalUnitPrice > 0
-	local outrightCost = hasFinalPrice and (finalUnitPrice * math.max(1, plan.finalUnits or craftCount)) or nil
+	local producedUnits = math.max(1, plan.finalUnits or craftCount)
+	local outrightCostPerUnit = hasFinalPrice and finalUnitPrice or nil
+	local outrightCostTotal = hasFinalPrice and (finalUnitPrice * producedUnits) or nil
 	DebugPrice(
 		string.format(
 			"economy final=%s unit=%s units=%s craftFee=%s",
 			tostring(selectedRecipe),
 			tostring(finalUnitPrice),
-			tostring(plan.finalUnits or craftCount),
+			tostring(producedUnits),
 			tostring(visible.craftFee or 0)
 		)
 	)
@@ -1222,7 +1224,7 @@ local function CalculateEconomy()
 			if unit == nil or unit <= 0 then
 				missingPrices[#missingPrices + 1] = entry.item
 			else
-				piecingCost = piecingCost + (need * unit)
+				piecingCostTotal = piecingCostTotal + (need * unit)
 			end
 		end
 	end
@@ -1240,7 +1242,7 @@ local function CalculateEconomy()
 					tostring(GetVendorUnitPrice(entry.item))
 				)
 			)
-			piecingCost = piecingCost + (need * GetVendorUnitPrice(entry.item))
+			piecingCostTotal = piecingCostTotal + (need * GetVendorUnitPrice(entry.item))
 		end
 	end
 
@@ -1249,37 +1251,40 @@ local function CalculateEconomy()
 		return { missing = missingPrices }
 	end
 
-	local labor = math.max(1, visible.totalLabor or 0)
+	-- compute per-produced-unit costs (divide total costs by producedUnits)
+	local piecingCost = piecingCostTotal / producedUnits
+	local laborPerUnit = (visible.totalLabor or 0) / producedUnits
 	local difference = nil
-	if outrightCost ~= nil then
-		difference = outrightCost - piecingCost
+	if outrightCostPerUnit ~= nil then
+		difference = outrightCostPerUnit - piecingCost
 	end
-	if outrightCost ~= nil and #(visible.shop or {}) > 0 and piecingCost <= (visible.craftFee or 0) then
+	local craftFeePerUnit = (visible.craftFee or 0) / producedUnits
+	if outrightCostPerUnit ~= nil and #(visible.shop or {}) > 0 and piecingCost <= craftFeePerUnit then
 		DebugBad(
 			string.format(
-				"piece cost suspicious: piece=%s craftFee=%s shopItems=%s",
+				"piece cost suspicious: piece=%s craftFee_per_unit=%s shopItems=%s",
 				tostring(piecingCost),
-				tostring(visible.craftFee or 0),
+				tostring(craftFeePerUnit),
 				tostring(#(visible.shop or {}))
 			)
 		)
 	end
 	DebugPrice(
 		string.format(
-			"economy result outright=%s piece=%s diff=%s labor=%s",
-			tostring(outrightCost),
+			"economy result outright_per_unit=%s piece_per_unit=%s diff_per_unit=%s labor_total=%s",
+			tostring(outrightCostPerUnit),
 			tostring(piecingCost),
 			tostring(difference),
 			tostring(visible.totalLabor or 0)
 		)
 	)
 	return {
-		outright = outrightCost,
+		outright = outrightCostPerUnit,
 		piecing = piecingCost,
 		difference = difference,
-		perLabor = difference ~= nil and (difference / labor) or nil,
-		labor = visible.totalLabor or 0,
-		noOutright = outrightCost == nil,
+		perLabor = (difference ~= nil and laborPerUnit > 0) and (difference / laborPerUnit) or nil,
+		labor = laborPerUnit,
+		noOutright = outrightCostPerUnit == nil,
 	}
 end
 
