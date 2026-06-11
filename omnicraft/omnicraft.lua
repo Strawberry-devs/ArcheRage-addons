@@ -52,6 +52,10 @@ local ROW_TOTAL_RIGHT = WINDOW_WIDTH - 20
 local CRAFTLABELHEIGHT1 = 164
 local CRAFTLABELHEIGHT2 = 184
 local CRAFTLABELHEIGHT3 = 204
+local BUY_TOTAL_WINDOW_WIDTH = 460
+local BUY_TOTAL_ROW_TOP = 96
+local BUY_TOTAL_ROW_HEIGHT = 22
+local BUY_TOTAL_MAX_ROWS = 24
 
 local COMPLETE_GREEN = { 0.04, 0.50, 0.08, 1 }
 local WARN_ORANGE = { 0.85, 0.40, 0.05, 1 }
@@ -64,6 +68,7 @@ local VendorPrices = {
 }
 
 local mainWindow = nil
+local buyTotalWindow = nil
 local launcherButton
 local recipeEdit = nil
 local countEdit = nil
@@ -76,6 +81,7 @@ local economyMoney = nil
 local shoppingLabel = nil
 local stepLabel = nil
 local rows = {}
+local buyTotalRows = {}
 
 local selectedRecipe = nil
 local craftCount = 1
@@ -1500,6 +1506,169 @@ local function ApplyCount()
 	RecomputePlan()
 end
 
+local function CreateBuyTotalHeader(parent, id, text, x, width, align)
+	local label = parent:CreateChildWidget("label", id, 0, true)
+	label:SetExtent(width, 18)
+	label:AddAnchor("TOPLEFT", parent, x, 72)
+	label:SetText(text)
+	StyleLabel(label, 12, align or ALIGN_LEFT, "brown")
+	return label
+end
+
+local function CreateBuyTotalWindow()
+	if buyTotalWindow ~= nil then
+		return
+	end
+
+	buyTotalWindow = CreateEmptyWindow("omniCraftBuyTotalWindow", "UIParent")
+	buyTotalWindow:SetExtent(BUY_TOTAL_WINDOW_WIDTH, 170)
+	buyTotalWindow:AddAnchor("CENTER", "UIParent", "CENTER", 0, 0)
+	buyTotalWindow:Show(false)
+	buyTotalWindow:EnableDrag(true)
+	buyTotalWindow:SetCloseOnEscape(true)
+	buyTotalWindow:SetHandler("OnDragStart", function(self)
+		self:StartMoving()
+	end)
+	buyTotalWindow:SetHandler("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+	end)
+
+	CreateWindowBackground(buyTotalWindow)
+	CreateCloseButton(buyTotalWindow, "omniCraftBuyTotalClose", function()
+		buyTotalWindow:Show(false)
+	end)
+
+	local title = buyTotalWindow:CreateChildWidget("label", "omniCraftBuyTotalTitle", 0, true)
+	title:SetExtent(220, 24)
+	title:AddAnchor("TOPLEFT", buyTotalWindow, 18, 14)
+	title:SetText("Buy Total")
+	StyleLabel(title, 18, ALIGN_LEFT, "brown")
+
+	local target = buyTotalWindow:CreateChildWidget("label", "omniCraftBuyTotalTarget", 0, true)
+	target:SetExtent(BUY_TOTAL_WINDOW_WIDTH - 36, 22)
+	target:AddAnchor("TOPLEFT", buyTotalWindow, 18, 42)
+	StyleLabel(target, 12, ALIGN_LEFT, "default")
+	buyTotalWindow.target = target
+
+	local line = buyTotalWindow:CreateColorDrawable(0.55, 0.36, 0.10, 0.35, "artwork")
+	line:SetExtent(BUY_TOTAL_WINDOW_WIDTH - 36, 2)
+	line:AddAnchor("TOPLEFT", buyTotalWindow, 18, 66)
+
+	CreateBuyTotalHeader(buyTotalWindow, "omniCraftBuyTotalItemHeader", "Item", 20, 210, ALIGN_LEFT)
+	CreateBuyTotalHeader(buyTotalWindow, "omniCraftBuyTotalNeedHeader", "Total", 235, 58, ALIGN_RIGHT)
+	CreateBuyTotalHeader(buyTotalWindow, "omniCraftBuyTotalHaveHeader", "Owned", 306, 58, ALIGN_RIGHT)
+	CreateBuyTotalHeader(buyTotalWindow, "omniCraftBuyTotalBuyHeader", "To Buy", 377, 58, ALIGN_RIGHT)
+
+	for index = 1, BUY_TOTAL_MAX_ROWS do
+		local y = BUY_TOTAL_ROW_TOP + ((index - 1) * BUY_TOTAL_ROW_HEIGHT)
+		local item = buyTotalWindow:CreateChildWidget("label", "omniCraftBuyTotalItem" .. tostring(index), index, true)
+		item:SetExtent(210, 22)
+		item:AddAnchor("TOPLEFT", buyTotalWindow, 20, y)
+		StyleLabel(item, 12, ALIGN_LEFT, "default")
+
+		local need = buyTotalWindow:CreateChildWidget("label", "omniCraftBuyTotalNeed" .. tostring(index), index, true)
+		need:SetExtent(58, 22)
+		need:AddAnchor("TOPLEFT", buyTotalWindow, 235, y)
+		StyleLabel(need, 12, ALIGN_RIGHT, "default")
+
+		local have = buyTotalWindow:CreateChildWidget("label", "omniCraftBuyTotalHave" .. tostring(index), index, true)
+		have:SetExtent(58, 22)
+		have:AddAnchor("TOPLEFT", buyTotalWindow, 306, y)
+		StyleLabel(have, 12, ALIGN_RIGHT, "default")
+
+		local buy = buyTotalWindow:CreateChildWidget("label", "omniCraftBuyTotalBuy" .. tostring(index), index, true)
+		buy:SetExtent(58, 22)
+		buy:AddAnchor("TOPLEFT", buyTotalWindow, 377, y)
+		StyleLabel(buy, 12, ALIGN_RIGHT, "default")
+
+		buyTotalRows[index] = { item = item, need = need, have = have, buy = buy }
+	end
+
+	local footer = buyTotalWindow:CreateChildWidget("label", "omniCraftBuyTotalFooter", 0, true)
+	footer:SetExtent(BUY_TOTAL_WINDOW_WIDTH - 36, 22)
+	footer:AddAnchor("BOTTOMLEFT", buyTotalWindow, 18, -24)
+	StyleLabel(footer, 12, ALIGN_LEFT, "default")
+	buyTotalWindow.footer = footer
+end
+
+local function BuildBuyTotalEntries()
+	local entries = {}
+	local visible = BuildVisiblePlan()
+	for _, entry in ipairs(visible.shop or {}) do
+		if (entry.need or 0) > 0 then
+			entries[#entries + 1] = entry
+		end
+	end
+	for _, entry in ipairs(visible.vendor or {}) do
+		if (entry.need or 0) > 0 then
+			entries[#entries + 1] = entry
+		end
+	end
+	return entries
+end
+
+local function RenderBuyTotalWindow()
+	CreateBuyTotalWindow()
+
+	local entries = BuildBuyTotalEntries()
+	local visibleRows = math.min(#entries, BUY_TOTAL_MAX_ROWS)
+	local height = BUY_TOTAL_ROW_TOP + (math.max(1, visibleRows) * BUY_TOTAL_ROW_HEIGHT) + 52
+	if height < 170 then
+		height = 170
+	end
+	buyTotalWindow:SetExtent(BUY_TOTAL_WINDOW_WIDTH, height)
+	buyTotalWindow.target:SetText("Target: " .. tostring(selectedRecipe or "-"))
+
+	for index = 1, BUY_TOTAL_MAX_ROWS do
+		local row = buyTotalRows[index]
+		local entry = entries[index]
+		if row ~= nil and entry ~= nil then
+			row.item:SetText(tostring(entry.item))
+			row.need:SetText(FormatQuantity(entry.need or 0))
+			row.have:SetText(FormatQuantity(entry.have or 0))
+			row.buy:SetText(FormatQuantity(entry.buy or 0))
+			row.item:Show(true)
+			row.need:Show(true)
+			row.have:Show(true)
+			row.buy:Show(true)
+			if (entry.buy or 0) <= 0 then
+				SetTextColorByKey(row.buy, "default")
+			else
+				SetTextColorByKey(row.buy, "brown")
+			end
+		elseif row ~= nil then
+			row.item:SetText("")
+			row.need:SetText("")
+			row.have:SetText("")
+			row.buy:SetText("")
+			row.item:Show(false)
+			row.need:Show(false)
+			row.have:Show(false)
+			row.buy:Show(false)
+		end
+	end
+
+	if #entries == 0 then
+		buyTotalWindow.footer:SetText("No buy materials for the current craft.")
+	elseif #entries > BUY_TOTAL_MAX_ROWS then
+		buyTotalWindow.footer:SetText(string.format("+ %d more item(s)", #entries - BUY_TOTAL_MAX_ROWS))
+	else
+		buyTotalWindow.footer:SetText("")
+	end
+end
+
+local function ShowBuyTotalWindow()
+	ApplyCount()
+	if not EnsureInputRecipeLoaded() then
+		SetStatus("Craft not found.", MISSING_RED)
+		return
+	end
+	RecomputePlan()
+	RenderBuyTotalWindow()
+	buyTotalWindow:Show(true)
+	buyTotalWindow:Raise()
+end
+
 local function SetPreviewIcon(icon, itemType)
 	icon:ClearAllTextures()
 	if itemType == nil or X2Item == nil or type(X2Item.GetItemIconSet) ~= "function" then
@@ -1815,10 +1984,7 @@ local function CreateMainWindow()
 		countEdit:SetText(tostring(craftCount + 1))
 		ApplyCount()
 	end)
-	CreateButton(mainWindow, "omniCraftRefresh", "Refresh Bag", 312, 80, 84, function()
-		RecomputePlan()
-		--SetStatus("Inventory refreshed.", nil)
-	end)
+	CreateButton(mainWindow, "omniCraftBuyTotal", "Buy Total", 312, 80, 84, ShowBuyTotalWindow)
 	CreateButton(mainWindow, "omniCraftGoBuy", "Go to Buy", 404, 80, 76, StartShopping)
 	CreateButton(mainWindow, "omniCraftNext", "Next", 488, 80, 54, NextShoppingStep)
 
