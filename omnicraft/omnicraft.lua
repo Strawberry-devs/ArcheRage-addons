@@ -28,12 +28,14 @@ ADDON:ImportAPI(API_TYPE.AUCTION.id)
 ADDON:ImportAPI(API_TYPE.BAG.id)
 ADDON:ImportAPI(API_TYPE.CRAFT.id)
 ADDON:ImportAPI(API_TYPE.ITEM.id)
+ADDON:ImportAPI(API_TYPE.STORE.id)
+ADDON:ImportAPI(API_TYPE.ABILITY.id)
 
 local WINDOW_WIDTH = 560
 local MIN_WINDOW_HEIGHT = 330
 local MAX_ROW_COUNT = 24
 local ROW_HEIGHT = 22
-local ROW_TOP = 248
+local ROW_TOP = 272
 local FOOTER_HEIGHT = 20
 local SAVE_KEY = "omnicraft_last_recipe"
 local GOLD_ICON = "Addon/globals/icons/gold.dds"
@@ -52,6 +54,7 @@ local ROW_TOTAL_RIGHT = WINDOW_WIDTH - 20
 local CRAFTLABELHEIGHT1 = 164
 local CRAFTLABELHEIGHT2 = 184
 local CRAFTLABELHEIGHT3 = 204
+local TRADE_COMMERCE_FOOTER_HEIGHT = 34
 local BUY_TOTAL_WINDOW_WIDTH = 460
 local BUY_TOTAL_ROW_TOP = 96
 local BUY_TOTAL_ROW_HEIGHT = 22
@@ -65,6 +68,63 @@ local VendorPrices = {
 	["Savory Soup"] = 8 * 100,
 	["Veiled Flame"] = 4 * 100,
 	["Mage's Vapor"] = 6 * 100,
+}
+local TradeOriginZones = {
+	{ prefix = "Gweonid", zone = 1, continent = "Nuia" },
+	{ prefix = "Marianople", zone = 2, continent = "Nuia" },
+	{ prefix = "Dewstone", zone = 3, continent = "Nuia" },
+	{ prefix = "Solzreed", zone = 5, continent = "Nuia" },
+	{ prefix = "Lilyut", zone = 6, continent = "Nuia" },
+	{ prefix = "Two Crowns", zone = 8, continent = "Nuia" },
+	{ prefix = "Airain", zone = 10, continent = "Nuia" },
+	{ prefix = "White Arden", zone = 18, continent = "Nuia" },
+	{ prefix = "Karkasse", zone = 19, continent = "Nuia" },
+	{ prefix = "Cinderstone", zone = 20, continent = "Nuia" },
+	{ prefix = "Aubre", zone = 21, continent = "Nuia" },
+	{ prefix = "Halcyona", zone = 22, continent = "Nuia" },
+	{ prefix = "Hellswamp", zone = 26, continent = "Nuia" },
+	{ prefix = "Sanddeep", zone = 27, continent = "Nuia" },
+	{ prefix = "Ahnimar", zone = 93, continent = "Nuia" },
+	{ prefix = "Solis", zone = 4, continent = "Haranya" },
+	{ prefix = "Arcum Iris", zone = 7, continent = "Haranya" },
+	{ prefix = "Mahadevi", zone = 9, continent = "Haranya" },
+	{ prefix = "Falcorth", zone = 11, continent = "Haranya" },
+	{ prefix = "Villanelle", zone = 12, continent = "Haranya" },
+	{ prefix = "Sunbite", zone = 13, continent = "Haranya" },
+	{ prefix = "Windscour", zone = 14, continent = "Haranya" },
+	{ prefix = "Perinoor", zone = 15, continent = "Haranya" },
+	{ prefix = "Rookborne", zone = 16, continent = "Haranya" },
+	{ prefix = "Ynystere", zone = 17, continent = "Haranya" },
+	{ prefix = "Hasla", zone = 23, continent = "Haranya" },
+	{ prefix = "Tigerspine", zone = 24, continent = "Haranya" },
+	{ prefix = "Silent Forest", zone = 25, continent = "Haranya" },
+	{ prefix = "Rokhala", zone = 99, continent = "Haranya" },
+	{ prefix = "Exeloch", zone = 54, continent = "Auroria" },
+	{ prefix = "Sungold", zone = 56, continent = "Auroria" },
+	{ prefix = "Golden Ruins", zone = 57, continent = "Auroria" },
+	{ prefix = "Aegis", zone = 102, continent = "Auroria" },
+	{ prefix = "Whalesong", zone = 103, continent = "Auroria" },
+}
+local TradeTargetZones = {
+	Nuia = {
+		{ name = "Solzreed", fullName = "Solzreed Peninsula", zone = 5 },
+		{ name = "Two Crowns", fullName = "Two Crowns", zone = 8 },
+		{ name = "Cinderstone", fullName = "Cinderstone Moor", zone = 20 },
+	},
+	Haranya = {
+		{ name = "Solis", fullName = "Solis Headlands", zone = 4 },
+		{ name = "Villanelle", fullName = "Villanelle", zone = 12 },
+		{ name = "Ynystere", fullName = "Ynystere", zone = 17 },
+	},
+	Auroria = {
+		{ name = "Heedmar", fullName = "Heedmar", zone = 33 },
+	},
+}
+local TradeFreshnessMultipliers = {
+	Luxury = 1.30,
+	Fine = 1.15,
+	Commercial = 1.05,
+	Preserved = 1.03,
 }
 
 local mainWindow = nil
@@ -80,6 +140,12 @@ local craftFeeMoney = nil
 local economyMoney = nil
 local shoppingLabel = nil
 local stepLabel = nil
+local tradeTargetDropdown = nil
+local tradeTargetButton = nil
+local tradeCommerceLabel = nil
+local tradeCommerceValueLabel = nil
+local tradeCommerceMinusButton = nil
+local tradeCommercePlusButton = nil
 local rows = {}
 local buyTotalRows = {}
 
@@ -96,16 +162,31 @@ local priceCheckQueue = {}
 local currentPriceRequest = nil
 local priceCheckBusy = false
 local priceCheckCD = 1.2
+local priceCheckTimeout = 4
 local priceCheckStart = 0
 local priceTicker
 local recipeCacheByCraftType = {}
 local recipeCacheByName = {}
 local recipePreviewDropdown = nil
+local tradePackInfo = nil
+local selectedTradeTarget = nil
+local currentTradeRatio = nil
+local tradeRatioRequestKey = nil
+local tradeRatioPending = false
+local tradeRatioDeferred = false
+local tradeRatioCooldown = 6
+local tradeRatioStart = 0
+local tradeMaxFreshness = false
+local detectedCommerceSkill = 0
+local commerceOverride = nil
 local expandedStages = {}
 local rowActions = {}
 local DEBUG_PLAN = false
 local DEBUG_PRICE = false
 local DEBUG_BAD = false
+
+OmniCraftCommerceHoldDirection = 0
+OmniCraftCommerceHoldNextAt = 0
 
 local function Chat(message)
 	pcall(function()
@@ -165,6 +246,12 @@ end
 
 local function Trim(value)
 	return tostring(value or ""):match("^%s*(.-)%s*$") or ""
+end
+
+local function StartsWith(value, prefix)
+	value = tostring(value or ""):lower()
+	prefix = tostring(prefix or ""):lower()
+	return value:sub(1, #prefix) == prefix
 end
 
 local function ParseCopper(value)
@@ -568,7 +655,10 @@ local function GetAuctionUnitPrice(item)
 		return 0
 	end
 	local trimmed = Trim(item)
-	local exact = tonumber(auctionPrices[item]) or tonumber(auctionPrices[trimmed]) or tonumber(auctionPrices[trimmed:lower()]) or 0
+	local exact = tonumber(auctionPrices[item])
+		or tonumber(auctionPrices[trimmed])
+		or tonumber(auctionPrices[trimmed:lower()])
+		or 0
 	if exact > 0 then
 		return exact
 	end
@@ -787,10 +877,17 @@ local function SetMoneyClusterColor(cluster, color)
 	if cluster == nil then
 		return
 	end
-	SetTextColorByKey(cluster.sign, "default")
-	SetTextColorByKey(cluster.gl, "default")
-	SetTextColorByKey(cluster.sl, "default")
-	SetTextColorByKey(cluster.cl, "default")
+	if color ~= nil then
+		SetTextColor(cluster.sign, color)
+		SetTextColor(cluster.gl, color)
+		SetTextColor(cluster.sl, color)
+		SetTextColor(cluster.cl, color)
+	else
+		SetTextColorByKey(cluster.sign, "default")
+		SetTextColorByKey(cluster.gl, "default")
+		SetTextColorByKey(cluster.sl, "default")
+		SetTextColorByKey(cluster.cl, "default")
+	end
 end
 
 ShowMoneyCluster = function(cluster, copper, x, y, color)
@@ -1064,6 +1161,9 @@ local function ResizeWindowForRows(rowCount)
 		return
 	end
 	local height = ROW_TOP + (math.max(1, rowCount or 1) * ROW_HEIGHT) + FOOTER_HEIGHT
+	if tradePackInfo ~= nil then
+		height = height + TRADE_COMMERCE_FOOTER_HEIGHT
+	end
 	if height < MIN_WINDOW_HEIGHT then
 		height = MIN_WINDOW_HEIGHT
 	end
@@ -1071,6 +1171,9 @@ local function ResizeWindowForRows(rowCount)
 end
 
 local BuildVisiblePlan
+local RenderPlan
+local UpdateTradeTargetControl
+local GetTradeBasePrice
 
 local function RebuildBuyQueue()
 	buyQueue = {}
@@ -1089,6 +1192,201 @@ local function GetVendorUnitPrice(item)
 		return tonumber(VendorPrices[item]) or 0
 	end
 	return 0
+end
+
+local function DetectTradePack(recipeName)
+	if type(recipeName) ~= "string" then
+		return nil
+	end
+	local isKnownTradePack = recipeName:find("Specialty", 1, true) ~= nil
+		or recipeName:find(" Pack", 1, true) ~= nil
+		or GetTradeBasePrice(5, recipeName) ~= nil
+		or GetTradeBasePrice(8, recipeName) ~= nil
+		or GetTradeBasePrice(20, recipeName) ~= nil
+		or GetTradeBasePrice(4, recipeName) ~= nil
+		or GetTradeBasePrice(12, recipeName) ~= nil
+		or GetTradeBasePrice(17, recipeName) ~= nil
+		or GetTradeBasePrice(33, recipeName) ~= nil
+	if not isKnownTradePack then
+		return nil
+	end
+	for _, zone in ipairs(TradeOriginZones) do
+		if StartsWith(recipeName, zone.prefix) then
+			return {
+				name = recipeName,
+				originName = zone.prefix,
+				originZone = zone.zone,
+				continent = zone.continent,
+			}
+		end
+	end
+	return nil
+end
+
+local function GetAllowedTradeTargets(info)
+	if info == nil then
+		return {}
+	end
+	local targets = TradeTargetZones[info.continent] or {}
+	local filtered = {}
+	for _, target in ipairs(targets) do
+		if target.zone ~= info.originZone then
+			filtered[#filtered + 1] = target
+		end
+	end
+	return filtered
+end
+
+local function FindTargetByZone(zone)
+	zone = tonumber(zone)
+	for _, targets in pairs(TradeTargetZones) do
+		for _, target in ipairs(targets) do
+			if target.zone == zone then
+				return target
+			end
+		end
+	end
+	return nil
+end
+
+local function GetDefaultTradeTarget(info)
+	local targets = GetAllowedTradeTargets(info)
+	return targets[1]
+end
+
+GetTradeBasePrice = function(toZone, packName)
+	if toZone == 5 and type(SOLZREED_PRICE) == "table" and SOLZREED_PRICE[packName] ~= nil then
+		return tonumber(SOLZREED_PRICE[packName][1])
+	elseif toZone == 8 and type(TWOCROWNS_PRICE) == "table" and TWOCROWNS_PRICE[packName] ~= nil then
+		return tonumber(TWOCROWNS_PRICE[packName][1])
+	elseif toZone == 20 and type(CINDERSTONE_MOOR_PRICE) == "table" and CINDERSTONE_MOOR_PRICE[packName] ~= nil then
+		return tonumber(CINDERSTONE_MOOR_PRICE[packName][1])
+	elseif toZone == 4 and type(SOLIS_HEADLANDS_PRICE) == "table" and SOLIS_HEADLANDS_PRICE[packName] ~= nil then
+		return tonumber(SOLIS_HEADLANDS_PRICE[packName][1])
+	elseif toZone == 12 and type(VILLANELLE_PRICE) == "table" and VILLANELLE_PRICE[packName] ~= nil then
+		return tonumber(VILLANELLE_PRICE[packName][1])
+	elseif toZone == 17 and type(YNYSTERE_PRICE) == "table" and YNYSTERE_PRICE[packName] ~= nil then
+		return tonumber(YNYSTERE_PRICE[packName][1])
+	elseif toZone == 33 and type(HEEDMAR_PRICE) == "table" and HEEDMAR_PRICE[packName] ~= nil then
+		return tonumber(HEEDMAR_PRICE[packName][1])
+	end
+	return nil
+end
+
+local function DetectCommerceSkill()
+	if X2Ability == nil or type(X2Ability.GetAllMyActabilityInfos) ~= "function" then
+		return 0
+	end
+	local ok, infos = pcall(function()
+		return X2Ability:GetAllMyActabilityInfos()
+	end)
+	if not ok or type(infos) ~= "table" then
+		return 0
+	end
+	for _, info in pairs(infos) do
+		if type(info) == "table" and info.name == "Commerce" then
+			return (tonumber(info.point) or 0) + (tonumber(info.modifyPoint) or 0)
+		end
+	end
+	return 0
+end
+
+local function RefreshDetectedCommerceSkill()
+	detectedCommerceSkill = DetectCommerceSkill()
+	return detectedCommerceSkill
+end
+
+local function GetCommerceSkill()
+	if commerceOverride ~= nil then
+		return commerceOverride
+	end
+	return RefreshDetectedCommerceSkill()
+end
+
+local function FormatCommerce(value)
+	return tostring(math.floor(tonumber(value) or 0))
+end
+
+local function GetCommerceLaborDiscount(skill)
+	skill = tonumber(skill) or 0
+	if skill >= 180000 then
+		return 0.40
+	elseif skill >= 150000 then
+		return 0.30
+	elseif skill >= 130000 then
+		return 0.25
+	elseif skill >= 50000 then
+		return 0.20
+	elseif skill >= 40000 then
+		return 0.15
+	elseif skill >= 30000 then
+		return 0.10
+	elseif skill >= 20000 then
+		return 0.05
+	end
+	return 0
+end
+
+local function GetTradePackTurnInLabor()
+	local discount = GetCommerceLaborDiscount(GetCommerceSkill())
+	return math.ceil(70 * (1 - discount))
+end
+
+local function GetFreshnessMultiplier(packName, targetZone)
+	if tradeMaxFreshness ~= true then
+		return 1
+	end
+	if targetZone == 33 then
+		return 1.30
+	end
+	for packType, multiplier in pairs(TradeFreshnessMultipliers) do
+		if tostring(packName or ""):find(packType, 1, true) ~= nil then
+			return multiplier
+		end
+	end
+	return 1
+end
+
+local function CalculateTradeTurnIn(packName, targetZone, ratio)
+	local basePrice = GetTradeBasePrice(targetZone, packName)
+	if basePrice == nil or ratio == nil then
+		return nil
+	end
+	local commerceBonus = 1 + ((GetCommerceSkill() / 10000) * 0.05)
+	local freshnessBonus = GetFreshnessMultiplier(packName, targetZone)
+	return math.floor((basePrice * ratio) * commerceBonus * freshnessBonus)
+end
+
+local function GetTradeRatioKey(info, target)
+	if info == nil or target == nil then
+		return nil
+	end
+	return tostring(info.originZone) .. ":" .. tostring(target.zone) .. ":" .. tostring(info.name)
+end
+
+local function RequestTradeRatio(force)
+	if tradePackInfo == nil or selectedTradeTarget == nil then
+		return
+	end
+	local key = GetTradeRatioKey(tradePackInfo, selectedTradeTarget)
+	if key == nil or tradeRatioRequestKey == key or tradePackInfo.originZone == selectedTradeTarget.zone then
+		return
+	end
+	if X2Store == nil or type(X2Store.GetSpecialtyRatioBetween) ~= "function" then
+		return
+	end
+	if force ~= true and tradeRatioStart > 0 and (os.time() - tradeRatioStart) < tradeRatioCooldown then
+		tradeRatioDeferred = true
+		return
+	end
+	tradeRatioRequestKey = key
+	tradeRatioPending = true
+	tradeRatioDeferred = false
+	tradeRatioStart = os.time()
+	currentTradeRatio = nil
+	pcall(function()
+		X2Store:GetSpecialtyRatioBetween(tradePackInfo.originZone, selectedTradeTarget.zone)
+	end)
 end
 
 function BuildVisiblePlan()
@@ -1160,14 +1458,14 @@ local function CalculateEconomy()
 		return nil
 	end
 
-	local finalUnitPrice = GetAuctionUnitPrice(selectedRecipe)
+	local isTradePack = tradePackInfo ~= nil
+	local finalUnitPrice = isTradePack and 0 or GetAuctionUnitPrice(selectedRecipe)
 	local visible = BuildVisiblePlan()
 	local piecingCostTotal = visible.craftFee or 0
 	local missingPrices = {}
-	local hasFinalPrice = finalUnitPrice ~= nil and finalUnitPrice > 0
+	local hasFinalPrice = not isTradePack and finalUnitPrice ~= nil and finalUnitPrice > 0
 	local producedUnits = math.max(1, plan.finalUnits or craftCount)
 	local outrightCostPerUnit = hasFinalPrice and finalUnitPrice or nil
-	local outrightCostTotal = hasFinalPrice and (finalUnitPrice * producedUnits) or nil
 	DebugPrice(
 		string.format(
 			"economy final=%s unit=%s units=%s craftFee=%s",
@@ -1218,14 +1516,33 @@ local function CalculateEconomy()
 	end
 
 	if #missingPrices > 0 then
-		DebugBad("missing prices: " .. table.concat(missingPrices, ", "))
-		return { missing = missingPrices }
+		DebugBad("skipped missing prices: " .. table.concat(missingPrices, ", "))
 	end
 
 	-- compute per-produced-unit costs (divide total costs by producedUnits)
 	local piecingCost = piecingCostTotal / producedUnits
 	local laborPerUnit = (visible.totalLabor or 0) / producedUnits
 	local difference = nil
+	if isTradePack then
+		laborPerUnit = laborPerUnit + GetTradePackTurnInLabor()
+		local turnIn = nil
+		if selectedTradeTarget ~= nil and currentTradeRatio ~= nil then
+			turnIn = CalculateTradeTurnIn(selectedRecipe, selectedTradeTarget.zone, currentTradeRatio)
+		end
+		if turnIn ~= nil then
+			difference = turnIn - piecingCost
+		end
+		return {
+			isTradePack = true,
+			turnIn = turnIn,
+			piecing = piecingCost,
+			difference = difference,
+			perLabor = (difference ~= nil and laborPerUnit > 0) and (difference / laborPerUnit) or nil,
+			labor = laborPerUnit,
+			ratioPending = tradeRatioPending == true,
+			noTurnIn = turnIn == nil,
+		}
+	end
 	if outrightCostPerUnit ~= nil then
 		difference = outrightCostPerUnit - piecingCost
 	end
@@ -1291,7 +1608,42 @@ local function UpdateEconomyLabel()
 			economyMoney.totalPieceText:Show(false)
 			HideMoneyCluster(economyMoney.totalOutright)
 			HideMoneyCluster(economyMoney.totalPiece)
-			if economy.noOutright == true then
+			if economy.isTradePack == true then
+				economyMoney.outrightText:SetText("Turn-in: ")
+				economyMoney.pieceText:SetText("Cost: ")
+				economyMoney.diffText:SetText("Profit: ")
+				economyMoney.laborText:SetText("")
+				economyMoney.perLaborText:SetText("/L")
+				economyMoney.totalOutrightText:SetText(string.format("Turn-in (%d): ", craftCount))
+				economyMoney.totalPieceText:SetText(string.format("Cost (%d): ", craftCount))
+				economyMoney.pieceText:Show(true)
+				ShowMoneyCluster(economyMoney.piece, economy.piecing, 302, CRAFTLABELHEIGHT1, nil)
+				if economy.noTurnIn == true then
+					economyMoney.outrightText:Show(false)
+					HideMoneyCluster(economyMoney.outright)
+					economyMoney.diffText:Show(false)
+					HideMoneyCluster(economyMoney.diff)
+					economyMoney.laborText:Show(false)
+					economyMoney.perLaborText:Show(false)
+					HideMoneyCluster(economyMoney.perLabor)
+				else
+					local profitColor = economy.difference ~= nil and economy.difference < 0 and MISSING_RED or COMPLETE_GREEN
+					ShowMoneyCluster(economyMoney.outright, economy.turnIn, 76, CRAFTLABELHEIGHT1, nil)
+					ShowMoneyCluster(economyMoney.diff, economy.difference, 62, CRAFTLABELHEIGHT2, profitColor)
+					local perLaborWidth =
+						ShowMoneyCluster(economyMoney.perLabor, economy.perLabor, 280, CRAFTLABELHEIGHT2, profitColor)
+					economyMoney.perLaborText:RemoveAllAnchors()
+					economyMoney.perLaborText:AddAnchor("TOPLEFT", mainWindow, 282 + perLaborWidth, CRAFTLABELHEIGHT2)
+					if craftCount > 1 then
+						economyMoney.totalOutrightText:Show(true)
+						ShowMoneyCluster(economyMoney.totalOutright, economy.turnIn * craftCount, 112, CRAFTLABELHEIGHT3, nil)
+					end
+				end
+				if craftCount > 1 then
+					economyMoney.totalPieceText:Show(true)
+					ShowMoneyCluster(economyMoney.totalPiece, economy.piecing * craftCount, 332, CRAFTLABELHEIGHT3, nil)
+				end
+			elseif economy.noOutright == true then
 				economyMoney.outrightText:Show(false)
 				HideMoneyCluster(economyMoney.outright)
 				economyMoney.diffText:Show(false)
@@ -1309,7 +1661,7 @@ local function UpdateEconomyLabel()
 				economyMoney.perLaborText:RemoveAllAnchors()
 				economyMoney.perLaborText:AddAnchor("TOPLEFT", mainWindow, 282 + perLaborWidth, CRAFTLABELHEIGHT2)
 			end
-			if craftCount > 1 then
+			if economy.isTradePack ~= true and craftCount > 1 then
 				if economy.noOutright ~= true then
 					economyMoney.totalOutrightText:Show(true)
 					ShowMoneyCluster(economyMoney.totalOutright, economy.outright * craftCount, 112, CRAFTLABELHEIGHT3, nil)
@@ -1321,11 +1673,12 @@ local function UpdateEconomyLabel()
 	end
 end
 
-local function RenderPlan()
+RenderPlan = function()
 	ClearRows()
 	if plan == nil or selectedRecipe == nil then
 		--targetLabel:SetText("Target: none")
 		craftLabel:SetText("Crafts: -")
+		UpdateTradeTargetControl()
 		HideMoneyCluster(craftFeeMoney)
 		--economyLabel:SetText("Economy: -")
 		HideEconomyMoney()
@@ -1335,14 +1688,30 @@ local function RenderPlan()
 		return
 	end
 
-	targetLabel:SetText("Target: " .. tostring(selectedRecipe))
+	UpdateTradeTargetControl()
+	if tradePackInfo ~= nil then
+		targetLabel:SetText(
+			string.format(
+				"Target: %s   Route: %s -> %s",
+				tostring(selectedRecipe),
+				tostring(tradePackInfo.originName or "-"),
+				tostring((selectedTradeTarget and selectedTradeTarget.name) or "-")
+			)
+		)
+	else
+		targetLabel:SetText("Target: " .. tostring(selectedRecipe))
+	end
 	local visible = BuildVisiblePlan()
+	local totalLabor = visible.totalLabor or 0
+	if tradePackInfo ~= nil then
+		totalLabor = totalLabor + (GetTradePackTurnInLabor() * (plan.finalUnits or craftCount))
+	end
 	craftLabel:SetText(
 		string.format(
 			"Crafts: %d   Produces: %d   Labor: %d   Craft fee:",
 			craftCount,
 			plan.finalUnits or craftCount,
-			visible.totalLabor or 0
+			totalLabor
 		)
 	)
 	if craftFeeMoney ~= nil then
@@ -1381,7 +1750,6 @@ local function RenderPlan()
 				return
 			end
 			local isCraft = material.kind == "craft" and material.childKey ~= nil
-			local color = isCraft and WARN_ORANGE or nil
 			local unitPrice = GetVendorUnitPrice(material.item)
 			if unitPrice <= 0 then
 				unitPrice = GetAuctionUnitPrice(material.item)
@@ -1401,7 +1769,7 @@ local function RenderPlan()
 				FormatQuantity(material.qty),
 				unitPrice > 0 and unitPrice or nil,
 				unitPrice > 0 and ((material.qty or 0) * unitPrice) or nil,
-				color,
+				nil,
 				isCraft and Toggle or nil
 			)
 			rowIndex = rowIndex + 1
@@ -1447,8 +1815,49 @@ local function RecomputePlan()
 	ScanInventory()
 	if selectedRecipe == nil then
 		plan = nil
+		tradePackInfo = nil
+		selectedTradeTarget = nil
+		currentTradeRatio = nil
+		tradeRatioRequestKey = nil
+		tradeRatioPending = false
+		tradeRatioDeferred = false
 	else
 		plan = BuildPlan(selectedRecipe, craftCount)
+		local previousTargetZone = selectedTradeTarget and selectedTradeTarget.zone or nil
+		local previousKey = tradeRatioRequestKey
+		local previousRatio = currentTradeRatio
+		local previousPending = tradeRatioPending
+		local previousDeferred = tradeRatioDeferred
+		tradePackInfo = DetectTradePack(selectedRecipe)
+		currentTradeRatio = nil
+		tradeRatioRequestKey = nil
+		tradeRatioPending = false
+		tradeRatioDeferred = false
+		if tradePackInfo ~= nil then
+			selectedTradeTarget = previousTargetZone and FindTargetByZone(previousTargetZone) or nil
+			local allowed = GetAllowedTradeTargets(tradePackInfo)
+			local targetAllowed = false
+			for _, target in ipairs(allowed) do
+				if selectedTradeTarget ~= nil and selectedTradeTarget.zone == target.zone then
+					targetAllowed = true
+					break
+				end
+			end
+			if not targetAllowed then
+				selectedTradeTarget = GetDefaultTradeTarget(tradePackInfo)
+			end
+			local nextKey = GetTradeRatioKey(tradePackInfo, selectedTradeTarget)
+			if previousKey == nextKey then
+				tradeRatioRequestKey = previousKey
+				currentTradeRatio = previousRatio
+				tradeRatioPending = previousPending == true and previousRatio == nil
+				tradeRatioDeferred = previousDeferred == true and previousRatio == nil
+			else
+				RequestTradeRatio()
+			end
+		else
+			selectedTradeTarget = nil
+		end
 	end
 	RebuildBuyQueue()
 	RenderPlan()
@@ -1829,7 +2238,9 @@ local function BuildPriceCheckQueue()
 		end
 	end
 
-	add(selectedRecipe)
+	if tradePackInfo == nil then
+		add(selectedRecipe)
+	end
 	for _, entry in ipairs(BuildVisiblePlan().shop or {}) do
 		add(entry.item)
 	end
@@ -1905,6 +2316,197 @@ local function NextShoppingStep()
 		return
 	end
 	SearchCurrentEntry(entry)
+end
+
+local function HideTradeTargetDropdown()
+	if tradeTargetDropdown ~= nil then
+		tradeTargetDropdown:Show(false)
+	end
+end
+
+local function SetTradeCommerceControlsVisible(visible)
+	if not visible then
+		StopCommerceHold()
+	end
+	if tradeCommerceLabel ~= nil then
+		tradeCommerceLabel:Show(visible)
+	end
+	if tradeCommerceValueLabel ~= nil then
+		tradeCommerceValueLabel:Show(visible)
+	end
+	if tradeCommerceMinusButton ~= nil then
+		tradeCommerceMinusButton:Show(visible)
+	end
+	if tradeCommercePlusButton ~= nil then
+		tradeCommercePlusButton:Show(visible)
+	end
+end
+
+local function ChangeCommerceOverride(delta)
+	local base = commerceOverride
+	if base == nil then
+		base = RefreshDetectedCommerceSkill()
+	end
+	commerceOverride = math.max(0, math.floor((tonumber(base) or 0) + delta))
+	if mainWindow ~= nil and mainWindow:IsVisible() then
+		RenderPlan()
+	end
+end
+
+function StopCommerceHold()
+	OmniCraftCommerceHoldDirection = 0
+	OmniCraftCommerceHoldNextAt = 0
+end
+
+local function StartCommerceHold(direction)
+	OmniCraftCommerceHoldDirection = direction
+	OmniCraftCommerceHoldNextAt = os.clock() + 0.35
+	ChangeCommerceOverride(direction * 1000)
+end
+
+local function UpdateTradeCommerceControl()
+	if tradeCommerceLabel == nil then
+		return
+	end
+	if tradePackInfo == nil then
+		SetTradeCommerceControlsVisible(false)
+		return
+	end
+	local detected = RefreshDetectedCommerceSkill()
+	local used = commerceOverride or detected
+	local suffix = commerceOverride ~= nil and " (manual)" or " (detected)"
+	tradeCommerceValueLabel:SetText(
+		FormatCommerce(used) .. suffix .. " | turn-in LP " .. tostring(GetTradePackTurnInLabor())
+	)
+	SetTradeCommerceControlsVisible(true)
+end
+
+local function CreateTradeTargetControl(parent)
+	if tradeTargetButton ~= nil then
+		return
+	end
+	tradeTargetButton = CreateButton(parent, "omniCraftTradeTarget", "To: -", 214, 80, 90, function()
+		if tradeTargetDropdown ~= nil then
+			tradeTargetDropdown:Show(not tradeTargetDropdown:IsVisible())
+			if tradeTargetDropdown:IsVisible() and tradeTargetDropdown.Raise ~= nil then
+				tradeTargetDropdown:Raise()
+			end
+		end
+	end)
+	tradeTargetButton:Show(false)
+
+	tradeTargetDropdown = parent:CreateChildWidget("emptywidget", "omniCraftTradeTargetDropdown", 0, true)
+	tradeTargetDropdown:SetExtent(136, 118)
+	tradeTargetDropdown:AddAnchor("TOPLEFT", tradeTargetButton, "BOTTOMLEFT", 0, 1)
+	tradeTargetDropdown:Show(false)
+	local bg = tradeTargetDropdown:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
+	if bg == nil then
+		bg = tradeTargetDropdown:CreateColorDrawable(0.76, 0.59, 0.32, 0.30, "background")
+	end
+	bg:AddAnchor("TOPLEFT", tradeTargetDropdown, 0, 0)
+	bg:AddAnchor("BOTTOMRIGHT", tradeTargetDropdown, 0, 0)
+
+	tradeTargetDropdown.rows = {}
+	for index = 1, 6 do
+		local row = tradeTargetDropdown:CreateChildWidget("label", "omniCraftTradeTargetRow" .. tostring(index), index, true)
+		row:SetExtent(126, 18)
+		row:AddAnchor("TOPLEFT", tradeTargetDropdown, 5, 4 + ((index - 1) * 19))
+		row.style:SetAlign(ALIGN_LEFT)
+		row.style:SetFontSize(12)
+		row.style:SetColor(0.35, 0.18, 0.02, 1)
+		local rowBg = row:CreateColorDrawable(0.76, 0.59, 0.32, 0.20, "background")
+		rowBg:AddAnchor("TOPLEFT", row, 0, 0)
+		rowBg:AddAnchor("BOTTOMRIGHT", row, 0, 0)
+		rowBg:SetVisible(false)
+		row.rowBg = rowBg
+		row:SetHandler("OnEnter", function(self)
+			self.rowBg:SetVisible(true)
+		end)
+		row:SetHandler("OnLeave", function(self)
+			self.rowBg:SetVisible(false)
+		end)
+		row:SetHandler("OnClick", function(self)
+			if self.target == nil then
+				return
+			end
+			selectedTradeTarget = self.target
+			currentTradeRatio = nil
+			tradeRatioRequestKey = nil
+			tradeRatioPending = false
+			tradeRatioDeferred = false
+			HideTradeTargetDropdown()
+			RequestTradeRatio()
+			RenderPlan()
+		end)
+		row:Show(false)
+		tradeTargetDropdown.rows[index] = row
+	end
+
+	tradeCommerceLabel = parent:CreateChildWidget("label", "omniCraftTradeCommerceLabel", 0, true)
+	tradeCommerceLabel:SetExtent(92, 18)
+	tradeCommerceLabel:AddAnchor("BOTTOMLEFT", parent, 18, -16)
+	tradeCommerceLabel:SetText("Commerce:")
+	StyleLabel(tradeCommerceLabel, 12, ALIGN_LEFT, "brown")
+
+	tradeCommerceMinusButton = CreateSmallButton(parent, "omniCraftTradeCommerceMinus", "-", 102, 0, function() end)
+	tradeCommerceMinusButton:RemoveAllAnchors()
+	tradeCommerceMinusButton:AddAnchor("BOTTOMLEFT", parent, 102, -16)
+	tradeCommerceMinusButton:SetHandler("OnMouseDown", function()
+		StartCommerceHold(-1)
+	end)
+	tradeCommerceMinusButton:SetHandler("OnMouseUp", StopCommerceHold)
+	tradeCommerceMinusButton:SetHandler("OnLeave", StopCommerceHold)
+
+	tradeCommerceValueLabel = parent:CreateChildWidget("label", "omniCraftTradeCommerceValue", 0, true)
+	tradeCommerceValueLabel:SetExtent(230, 18)
+	tradeCommerceValueLabel:AddAnchor("BOTTOMLEFT", parent, 126, -16)
+	StyleLabel(tradeCommerceValueLabel, 12, ALIGN_LEFT, "default")
+
+	tradeCommercePlusButton = CreateSmallButton(parent, "omniCraftTradeCommercePlus", "+", 360, 0, function() end)
+	tradeCommercePlusButton:RemoveAllAnchors()
+	tradeCommercePlusButton:AddAnchor("BOTTOMLEFT", parent, 360, -16)
+	tradeCommercePlusButton:SetHandler("OnMouseDown", function()
+		StartCommerceHold(1)
+	end)
+	tradeCommercePlusButton:SetHandler("OnMouseUp", StopCommerceHold)
+	tradeCommercePlusButton:SetHandler("OnLeave", StopCommerceHold)
+
+	SetTradeCommerceControlsVisible(false)
+end
+
+UpdateTradeTargetControl = function()
+	if tradeTargetButton == nil then
+		return
+	end
+	if tradePackInfo == nil then
+		tradeTargetButton:Show(false)
+		UpdateTradeCommerceControl()
+		HideTradeTargetDropdown()
+		return
+	end
+	UpdateTradeCommerceControl()
+	local text = selectedTradeTarget and selectedTradeTarget.name or "-"
+	tradeTargetButton:SetText("To: " .. text)
+	tradeTargetButton:Show(true)
+	local targets = GetAllowedTradeTargets(tradePackInfo)
+	for index = 1, 6 do
+		local row = tradeTargetDropdown.rows[index]
+		local target = targets[index]
+		if row ~= nil and target ~= nil then
+			row.target = target
+			row:SetText(target.fullName or target.name)
+			row:Show(true)
+			if selectedTradeTarget ~= nil and selectedTradeTarget.zone == target.zone then
+				row.style:SetColor(0.04, 0.50, 0.08, 1)
+			else
+				row.style:SetColor(0.35, 0.18, 0.02, 1)
+			end
+		elseif row ~= nil then
+			row.target = nil
+			row:SetText("")
+			row:Show(false)
+		end
+	end
 end
 
 local function CreateMainWindow()
@@ -1984,6 +2586,7 @@ local function CreateMainWindow()
 		countEdit:SetText(tostring(craftCount + 1))
 		ApplyCount()
 	end)
+	CreateTradeTargetControl(mainWindow)
 	CreateButton(mainWindow, "omniCraftBuyTotal", "Buy Total", 312, 80, 84, ShowBuyTotalWindow)
 	CreateButton(mainWindow, "omniCraftGoBuy", "Go to Buy", 404, 80, 76, StartShopping)
 	CreateButton(mainWindow, "omniCraftNext", "Next", 488, 80, 54, NextShoppingStep)
@@ -2044,7 +2647,7 @@ local function CreateMainWindow()
 		economyMoney.totalPiece,
 	}
 
-	CreateSectionLine(mainWindow, "summary", 226)
+	CreateSectionLine(mainWindow, "summary", 246)
 
 	shoppingLabel = mainWindow:CreateChildWidget("label", "omniCraftShopping", 0, true)
 	shoppingLabel:SetExtent(270, 22)
@@ -2207,17 +2810,14 @@ local function OnAuctionSearched()
 				auctionPrices[currentPriceRequest.item] = foundPrice
 				auctionPrices[key] = foundPrice
 				auctionPrices[key:lower()] = foundPrice
-				--SetStatus("Price found: " .. tostring(currentPriceRequest.item) .. " = " .. FormatMoney(foundPrice), COMPLETE_GREEN)
 				if mainWindow ~= nil and mainWindow:IsVisible() then
 					RenderPlan()
 				end
 			else
 				DebugBad("no exact auction price for " .. tostring(currentPriceRequest.item))
-				--SetStatus("No exact price found for " .. tostring(currentPriceRequest.item) .. ".", WARN_ORANGE)
 			end
 		else
 			DebugBad("no auction listings for " .. tostring(currentPriceRequest.item))
-			--SetStatus("No auction listings found for " .. tostring(currentPriceRequest.item) .. ".", WARN_ORANGE)
 		end
 		currentPriceRequest = nil
 		if #priceCheckQueue == 0 then
@@ -2226,35 +2826,72 @@ local function OnAuctionSearched()
 			if mainWindow ~= nil and mainWindow:IsVisible() then
 				RenderPlan()
 			end
-			--SetStatus("Price check complete.", COMPLETE_GREEN)
-		else
-			--stepLabel:SetText(string.format("Price check: waiting %.1fs cooldown", priceCheckCD))
 		end
 		return
 	end
+end
 
-	if mainWindow ~= nil
-		and mainWindow:IsVisible()
-		and currentBuyIndex > 0
-		and buyQueue[currentBuyIndex] ~= nil
-	then
-		--SetStatus(
-		--	"Auction results loaded. Buy "
-		--		.. tostring(buyQueue[currentBuyIndex].buy)
-		--		.. " x "
-		--		.. tostring(buyQueue[currentBuyIndex].item)
-		--		.. ", then click Next.",
-		--	nil
-		--)
+local function OnSpecialtyRatioBetweenInfo(ratioTable)
+	if tradeRatioPending ~= true then
+		return
+	end
+	tradeRatioPending = false
+	if tradePackInfo == nil or selectedTradeTarget == nil or type(ratioTable) ~= "table" then
+		return
+	end
+	local expectedKey = GetTradeRatioKey(tradePackInfo, selectedTradeTarget)
+	for _, data in pairs(ratioTable) do
+		local itemInfo = type(data) == "table" and data.itemInfo or nil
+		local name = type(itemInfo) == "table" and itemInfo.name or nil
+		if name ~= nil and SameItemName(name, tradePackInfo.name) then
+			currentTradeRatio = tonumber(data.ratio)
+			tradeRatioRequestKey = expectedKey
+			if mainWindow ~= nil and mainWindow:IsVisible() then
+				RenderPlan()
+			end
+			return
+		end
+	end
+	currentTradeRatio = nil
+	tradeRatioRequestKey = expectedKey
+	if mainWindow ~= nil and mainWindow:IsVisible() then
+		RenderPlan()
 	end
 end
 
 pcall(function()
 	UIParent:SetEventHandler(UIEVENT_TYPE.BAG_UPDATE, OnBagChanged)
 	UIParent:SetEventHandler(UIEVENT_TYPE.AUCTION_ITEM_SEARCHED, OnAuctionSearched)
+	UIParent:SetEventHandler(UIEVENT_TYPE.SPECIALTY_RATIO_BETWEEN_INFO, OnSpecialtyRatioBetweenInfo)
 end)
 
 local function OnPriceTick()
+	if OmniCraftCommerceHoldDirection ~= 0 and os.clock() >= OmniCraftCommerceHoldNextAt then
+		ChangeCommerceOverride(OmniCraftCommerceHoldDirection * 1000)
+		OmniCraftCommerceHoldNextAt = os.clock() + 0.08
+	end
+	if tradeRatioDeferred
+		and not tradeRatioPending
+		and tradeRatioStart > 0
+		and (os.time() - tradeRatioStart) >= tradeRatioCooldown
+	then
+		tradeRatioDeferred = false
+		RequestTradeRatio(true)
+	end
+	if priceCheckBusy
+		and currentPriceRequest ~= nil
+		and (os.time() - priceCheckStart) >= priceCheckTimeout
+	then
+		DebugBad("auction price request timed out: " .. tostring(currentPriceRequest.item))
+		currentPriceRequest = nil
+		if #priceCheckQueue == 0 then
+			priceCheckBusy = false
+			UpdateEconomyLabel()
+			if mainWindow ~= nil and mainWindow:IsVisible() then
+				RenderPlan()
+			end
+		end
+	end
 	if priceCheckBusy
 		and currentPriceRequest == nil
 		and #priceCheckQueue > 0
