@@ -77,9 +77,7 @@ local lastHitTime = nil
 local fightDone   = false
 local fightElapsed = 0
 local saveCurrentSettings -- forward declaration; assigned after windows are created
-local miniButton -- forward declaration; assigned after main window buttons are created
 local detailFrame -- forward declaration; assigned when the detail window is created
-local positionMiniButtonNearHide -- forward declaration; assigned after mini button is created
 
 local function findIndex(list, value, fallback)
 	for i = 1, #list do
@@ -109,9 +107,7 @@ local function loadSettings()
 		detail_h = HEADER_H + MAX_DETAIL_ROWS * ROW_H + PAD * 2,
 		active_mode = MODE_ORDER[1],
 		detail_view = DETAIL_VIEW_ORDER[1],
-		is_hidden = 0,
-		mini_x = DEFAULT_MAIN_X,
-		mini_y = DEFAULT_MAIN_Y
+		is_hidden = 0
 	}
 
 	local file = io.open(SETTINGS_FILE, "r")
@@ -262,60 +258,12 @@ hideBtn:AddAnchor("TOPRIGHT", resetBtn, "TOPLEFT", -2, 0)
 hideBtn:Show(true)
 hideBtn:SetHandler("OnClick", function()
 	isMeterHidden = true
-	if positionMiniButtonNearHide then
-		positionMiniButtonNearHide()
-	end
 	mainFrame:Show(false)
 	detailFrame:Show(false)
-	if miniButton ~= nil then
-		miniButton:Show(true)
-	end
 	if saveCurrentSettings then
 		saveCurrentSettings()
 	end
 end)
-
-miniButton = UIParent:CreateWidget("button", "dpsMeterMiniButton", "UIParent", "")
-miniButton:SetText("dpsmeter")
-miniButton:SetStyle("text_default")
-miniButton:SetHeight(25)
-miniButton:SetWidth(80)
-miniButton:AddAnchor("TOPLEFT", "UIParent", loadedSettings.mini_x, loadedSettings.mini_y)
-miniButton:Show(isMeterHidden)
-miniButton:EnableDrag(true)
-miniButton:SetHandler("OnDragStart", function(self)
-	self:StartMoving()
-	self.moving = true
-end)
-miniButton:SetHandler("OnDragStop", function(self)
-	self:StopMovingOrSizing()
-	self.moving = false
-	if saveCurrentSettings then
-		saveCurrentSettings()
-	end
-end)
-miniButton:SetHandler("OnClick", function()
-	isMeterHidden = false
-	mainFrame:Show(true)
-	miniButton:Show(false)
-	if saveCurrentSettings then
-		saveCurrentSettings()
-	end
-end)
-
-positionMiniButtonNearHide = function()
-	if miniButton == nil then
-		return
-	end
-
-	local mainX, mainY = mainFrame:GetOffset()
-	local mainW = mainFrame:GetWidth() or WINDOW_W
-	local x = (mainX or 0) + mainW - 120
-	local y = (mainY or 0) + 4
-
-	miniButton:RemoveAllAnchors()
-	miniButton:AddAnchor("TOPLEFT", "UIParent", x, y)
-end
 
 -- ============================================================
 -- Main window rows (pre-created, shown/hidden per update)
@@ -534,7 +482,6 @@ end
 saveCurrentSettings = function()
 	local mainX, mainY = mainFrame:GetOffset()
 	local detailX, detailY = detailFrame:GetOffset()
-	local miniX, miniY = miniButton:GetOffset()
 	local uiScale = getUIScaleFactor()
 
 	-- Save normalized offsets so positions remain stable with UI scale changes.
@@ -542,8 +489,6 @@ saveCurrentSettings = function()
 	mainY = math.floor((mainY or 0) / uiScale)
 	detailX = math.floor((detailX or 0) / uiScale)
 	detailY = math.floor((detailY or 0) / uiScale)
-	miniX = math.floor((miniX or 0) / uiScale)
-	miniY = math.floor((miniY or 0) / uiScale)
 
 	local file = io.open(SETTINGS_FILE, "w")
 	if not file then
@@ -561,8 +506,6 @@ saveCurrentSettings = function()
 	file:write(string.format("active_mode=%s\n", activeMode))
 	file:write(string.format("detail_view=%s\n", detailViewMode))
 	file:write(string.format("is_hidden=%d\n", isMeterHidden and 1 or 0))
-	file:write(string.format("mini_x=%d\n", miniX))
-	file:write(string.format("mini_y=%d\n", miniY))
 	file:close()
 end
 
@@ -859,5 +802,21 @@ function mainFrame:OnUpdate(dt)
 end
 
 mainFrame:SetHandler("OnUpdate", mainFrame.OnUpdate)
+
+local dpsMeterMenuButton = CreateSimpleButton("DPS Meter", 700, -460)
+dpsMeterMenuButton:SetHandler("OnClick", function()
+	if mainFrame:IsVisible() then
+		isMeterHidden = true
+		mainFrame:Show(false)
+		detailFrame:Show(false)
+	else
+		isMeterHidden = false
+		mainFrame:Show(true)
+	end
+
+	if saveCurrentSettings then
+		saveCurrentSettings()
+	end
+end)
 
 X2Chat:DispatchChatMessage(CMF_SYSTEM, "DPS Meter loaded.")
