@@ -1,52 +1,224 @@
------ save draggable window ----------
-local function SaveButtonPosition(buttonText, x, y)
-	local buttonSettings = { ["x"] = x, ["y"] = y }
-	ADDON:ClearData(buttonText)
-	ADDON:SaveData(buttonText, buttonSettings)
-end
-
-local function LoadSavedPosition(buttonText)
-	local buttonSettings = ADDON:LoadData(buttonText)
-	local savedY, savedX = 0
-	if buttonSettings ~= nil then
-		savedX = tonumber(buttonSettings["x"])
-		savedY = tonumber(buttonSettings["y"])
-	end
-	return savedX, savedY
-end
-
 --make simple button
+local SIMPLE_BUTTON_REGISTRY_PATHS = {
+	"simple_button_slots.txt",
+}
+local SIMPLE_BUTTON_WIDTH = 80
+local SIMPLE_BUTTON_HEIGHT = 25
+local SIMPLE_BUTTON_GAP = 4
+local SIMPLE_BUTTON_COLUMN_GAP = 6
+local SIMPLE_BUTTON_MAX_PER_COLUMN = 12
+
+local function GetSimpleButtonAddonSignature()
+	if ADDON == nil or ADDON.GetAddonInfos == nil then
+		return "unknown"
+	end
+
+	local ok, addons = pcall(function()
+		return ADDON:GetAddonInfos()
+	end)
+	if not ok or addons == nil then
+		return "unknown"
+	end
+
+	local names = {}
+	for _, addon in pairs(addons) do
+		if addon ~= nil and addon.enable and addon.name ~= nil then
+			table.insert(names, tostring(addon.name))
+		end
+	end
+
+	table.sort(names)
+	return table.concat(names, "|")
+end
+
+local function ReadSimpleButtonSlots()
+	local slots = {}
+	local addonSignature = nil
+	if io == nil or io.open == nil then
+		return slots, addonSignature
+	end
+
+	local file
+	for i = 1, #SIMPLE_BUTTON_REGISTRY_PATHS do
+		file = io.open(SIMPLE_BUTTON_REGISTRY_PATHS[i], "r")
+		if file ~= nil then
+			break
+		end
+	end
+
+	if file == nil then
+		return slots, addonSignature
+	end
+
+	for line in file:lines() do
+		local headerSignature = string.match(line, "^addons=(.*)$")
+		if headerSignature ~= nil then
+			addonSignature = headerSignature
+		else
+			local slot, name = string.match(line, "^(%d+)\t(.+)$")
+			slot = tonumber(slot)
+			if slot ~= nil and name ~= nil and name ~= "" then
+				slots[name] = slot
+			end
+		end
+	end
+
+	file:close()
+	return slots, addonSignature
+end
+
+local function WriteSimpleButtonSlots(slots, addonSignature)
+	if io == nil or io.open == nil then
+		return false
+	end
+
+	local file
+	for i = 1, #SIMPLE_BUTTON_REGISTRY_PATHS do
+		file = io.open(SIMPLE_BUTTON_REGISTRY_PATHS[i], "w")
+		if file ~= nil then
+			break
+		end
+	end
+
+	if file == nil then
+		return false
+	end
+
+	local rows = {}
+	for name, slot in pairs(slots) do
+		table.insert(rows, { name = name, slot = slot })
+	end
+
+	table.sort(rows, function(left, right)
+		if left.slot == right.slot then
+			return left.name < right.name
+		end
+		return left.slot < right.slot
+	end)
+
+	file:write(string.format("addons=%s\n", addonSignature or GetSimpleButtonAddonSignature()))
+	for i = 1, #rows do
+		file:write(string.format("%d\t%s\n", rows[i].slot, rows[i].name))
+	end
+
+	file:close()
+	return true
+end
+
+local function GetFallbackSimpleButtonSlot(y)
+	local yOffset = math.abs(tonumber(y) or 0)
+	local slot = math.floor((yOffset - 120) / 30) + 1
+	if slot < 1 then
+		slot = 1
+	end
+	return slot
+end
+
+local function ClaimSimpleButtonSlot(buttonText, y)
+	local name = tostring(buttonText or "")
+	local currentAddonSignature = GetSimpleButtonAddonSignature()
+	local slots, savedAddonSignature = ReadSimpleButtonSlots()
+
+	if savedAddonSignature ~= currentAddonSignature then
+		slots = {}
+	end
+
+	if slots[name] ~= nil then
+		return slots[name]
+	end
+
+	local used = {}
+	for _, slot in pairs(slots) do
+		used[slot] = true
+	end
+
+	local slot = 1
+	while used[slot] do
+		slot = slot + 1
+	end
+
+	slots[name] = slot
+	if WriteSimpleButtonSlots(slots, currentAddonSignature) then
+		return slot
+	end
+
+	return GetFallbackSimpleButtonSlot(y)
+end
+
+local function SetSimpleButtonSlot(button, slot)
+	local index = slot - 1
+	local column = math.floor(index / SIMPLE_BUTTON_MAX_PER_COLUMN)
+	local row = index % SIMPLE_BUTTON_MAX_PER_COLUMN
+
+	button.simpleButtonX = 8 + column * (SIMPLE_BUTTON_WIDTH + SIMPLE_BUTTON_COLUMN_GAP)
+	button.simpleButtonY = 38 + row * (SIMPLE_BUTTON_HEIGHT + SIMPLE_BUTTON_GAP)
+end
+
+local function UpdateSimpleButtonPosition(button, force)
+	local configX, configY, configW, _, isVisible = ADDON:GetContentMainScriptPosVis(UIC_SYSTEM_CONFIG_FRAME)
+
+	if not isVisible then
+		if button.simpleButtonVisible == false and not force then
+			return
+		end
+
+		button.simpleButtonVisible = false
+		button:Show(false)
+		return
+	end
+
+	if
+		not force
+		and button.simpleButtonVisible == true
+		and button.simpleButtonLastConfigX == configX
+		and button.simpleButtonLastConfigY == configY
+		and button.simpleButtonLastConfigW == configW
+	then
+		return
+	end
+
+	button.simpleButtonVisible = true
+	button.simpleButtonLastConfigX = configX
+	button.simpleButtonLastConfigY = configY
+	button.simpleButtonLastConfigW = configW
+
+	button:RemoveAllAnchors()
+	button:AddAnchor("TOPLEFT", "UIParent", configX + configW + button.simpleButtonX, configY + button.simpleButtonY)
+	button:Show(true)
+end
+
+local function EnsureSimpleButtonWatcher(button)
+	if button.simpleButtonWatcher ~= nil then
+		return
+	end
+
+	local watcher = UIParent:CreateWidget("window", string.format("%sWatcher", button.simpleButtonWidgetId), "UIParent")
+	watcher:SetExtent(1, 1)
+	watcher:AddAnchor("TOPLEFT", "UIParent", "BOTTOMRIGHT", 100, 100)
+	watcher:Show(true)
+	watcher:SetHandler("OnUpdate", function()
+		UpdateSimpleButtonPosition(button)
+	end)
+
+	button.simpleButtonWatcher = watcher
+end
+
 function CreateSimpleButton(buttonText, x, y)
-	newButton = UIParent:CreateWidget("button", "newButton", "UIParent", "")
+	local slot = ClaimSimpleButtonSlot(buttonText, y)
+	local widgetId = string.format("simpleButton%d", slot)
+
+	local newButton = UIParent:CreateWidget("button", widgetId, "UIParent", "")
+	newButton.simpleButtonWidgetId = widgetId
 	newButton:SetText(buttonText)
 	newButton:SetStyle("text_default")
-	newButton:SetHeight(25)
-	newButton:SetWidth(80)
-	local savedX, savedY = LoadSavedPosition(buttonText)
-	if savedX ~= 0 and savedY ~= 0 then
-		newButton:AddAnchor("TOPLEFT", "UIParent", savedX, savedY)
-	else
-		newButton:AddAnchor("BOTTOM", "UIParent", x, y)
-	end
-	newButton:Show(true)
-	newButton:EnableDrag(true)
+	newButton:SetHeight(SIMPLE_BUTTON_HEIGHT)
+	newButton:SetWidth(SIMPLE_BUTTON_WIDTH)
+	newButton:Show(false)
+	newButton:EnableDrag(false)
 
-	function newButton:OnDragStart()
-		self:StartMoving()
-		self.moving = true
-	end
-	newButton:SetHandler("OnDragStart", newButton.OnDragStart)
-
-	function newButton:OnDragStop()
-		self:StopMovingOrSizing()
-		self.moving = false
-		local offsetX, offsetY = self:GetOffset()
-		local uiScale = UIParent:GetUIScale() or 1.0
-		local normalizedX = offsetX * uiScale
-		local normalizedY = offsetY * uiScale
-		SaveButtonPosition(buttonText, normalizedX, normalizedY)
-	end
-	newButton:SetHandler("OnDragStop", newButton.OnDragStop)
+	SetSimpleButtonSlot(newButton, slot)
+	EnsureSimpleButtonWatcher(newButton)
+	UpdateSimpleButtonPosition(newButton, true)
 
 	return newButton
 end
