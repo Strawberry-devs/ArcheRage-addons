@@ -510,4 +510,14 @@ for _, event in ipairs(events) do
 	UIParent:SetEventHandler(UIEVENT_TYPE[event], GenericEventHandler(event))
 end
 
+local timeUntilMenuButton = CreateSimpleButton("timeuntil", 700, -490)
+timeUntilMenuButton:SetHandler("OnClick", function()
+	local show = not timerAnchor:IsVisible()
+	timerAnchor:Show(show)
+
+	if not show and filterWindow ~= nil then
+		filterWindow:Show(false)
+	end
+end)
+
 --moreEntries:SetWidth(25)
