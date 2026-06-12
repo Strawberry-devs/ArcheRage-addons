@@ -813,6 +813,15 @@ modelViewer:SetHandler("OnWheelUp", modelViewer.OnWheelUp)
 
 IniitalizeDressup()
 
+local function OpenDressupWindow()
+	dressUpWindow:Show(true)
+	modelViewer:Init("player", true)
+	modelViewer:PlayAnimation(RELAX_ANIMATION_NAME, true)
+end
+
+local dressupMenuButton = CreateSimpleButton("dressup", 700, -520)
+dressupMenuButton:SetHandler("OnClick", OpenDressupWindow)
+
 ---------- Chat listener -----------
 local chatAggroEventListenerEvents = {
 	CHAT_MESSAGE = function(channel, relation, name, message, info)
@@ -820,9 +829,7 @@ local chatAggroEventListenerEvents = {
 			local firstWord = string.match(message, "/%w+")
 			local secondWord = string.match(message, "/[%w_]+%s+([^%s]+)")
 			if firstWord == "/dressup" then
-				dressUpWindow:Show(true)
-				modelViewer:Init("player", true)
-				modelViewer:PlayAnimation(RELAX_ANIMATION_NAME, true)
+				OpenDressupWindow()
 			elseif firstWord == "/closedressup" then
 				dressUpWindow:Show(false)
 			elseif firstWord == "/animate" then
