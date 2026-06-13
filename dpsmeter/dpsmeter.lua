@@ -551,6 +551,10 @@ local function truncateLabel(text, maxChars)
 	return text
 end
 
+local function isRankingDisplayName(name)
+	return tostring(name or ""):find(" ", 1, true) == nil
+end
+
 updateDetailDisplay = function()
 	local modeStats = getActiveStats()
 	if not detailPlayer or not modeStats[detailPlayer] then
@@ -660,15 +664,23 @@ local function updateDisplay()
 	end
 
 	table.sort(sorted, function(a, b) return a.dps > b.dps end)
-	for rank, entry in ipairs(sorted) do
+
+	local rankingList = {}
+	for _, entry in ipairs(sorted) do
+		if isRankingDisplayName(entry.name) then
+			table.insert(rankingList, entry)
+		end
+	end
+
+	for rank, entry in ipairs(rankingList) do
 		entry.rank = rank
 	end
 
-	local maxDps = (#sorted > 0) and sorted[1].dps or 0
+	local maxDps = (#rankingList > 0) and rankingList[1].dps or 0
 	local displayList = {}
 	local selfEntry = nil
 
-	for _, entry in ipairs(sorted) do
+	for _, entry in ipairs(rankingList) do
 		if entry.name == SELF_NAME then
 			selfEntry = entry
 			break
@@ -677,7 +689,7 @@ local function updateDisplay()
 	if selfEntry ~= nil then
 		table.insert(displayList, selfEntry)
 	end
-	for _, entry in ipairs(sorted) do
+	for _, entry in ipairs(rankingList) do
 		if entry.name ~= SELF_NAME then
 			table.insert(displayList, entry)
 		end
