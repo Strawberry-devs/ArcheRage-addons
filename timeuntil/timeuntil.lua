@@ -27,6 +27,20 @@ ADDON:ImportAPI(API_TYPE.LOCALE.id) --add to localization
 --window length saved
 local countFilePath = "TimeUntilWindowCount.txt"
 local filterFilePath = "TimeUntilEventFilters.txt"
+local VISIBILITY_SAVE_KEY = "timeuntil_visibility"
+
+local function LoadVisibility()
+	local saved = ADDON:LoadData(VISIBILITY_SAVE_KEY)
+	if saved ~= nil and saved.shown ~= nil then
+		return saved.shown == true
+	end
+	return true
+end
+
+local function SaveVisibility(shown)
+	ADDON:ClearData(VISIBILITY_SAVE_KEY)
+	ADDON:SaveData(VISIBILITY_SAVE_KEY, { shown = shown == true })
+end
 
 local function SaveTimerCount(count)
 	local file = io.open(countFilePath, "w")
@@ -80,7 +94,7 @@ end
 ---
 
 local timerAnchor = CreateEmptyWindow("timerAnchor", "UIParent")
-timerAnchor:Show(true)
+timerAnchor:Show(LoadVisibility())
 timerAnchor:AddAnchor("TOPLEFT", "UIParent", 100, 100)
 timerAnchor:SetExtent(150, 50)
 timerAnchor:EnableDrag(true)
@@ -514,6 +528,7 @@ local timeUntilMenuButton = CreateSimpleButton("timeuntil", 700, -490)
 timeUntilMenuButton:SetHandler("OnClick", function()
 	local show = not timerAnchor:IsVisible()
 	timerAnchor:Show(show)
+	SaveVisibility(show)
 
 	if not show and filterWindow ~= nil then
 		filterWindow:Show(false)
