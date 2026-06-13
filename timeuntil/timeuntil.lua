@@ -29,19 +29,6 @@ local countFilePath = "TimeUntilWindowCount.txt"
 local filterFilePath = "TimeUntilEventFilters.txt"
 local VISIBILITY_SAVE_KEY = "timeuntil_visibility"
 
-local function LoadVisibility()
-	local saved = ADDON:LoadData(VISIBILITY_SAVE_KEY)
-	if saved ~= nil and saved.shown ~= nil then
-		return saved.shown == true
-	end
-	return true
-end
-
-local function SaveVisibility(shown)
-	ADDON:ClearData(VISIBILITY_SAVE_KEY)
-	ADDON:SaveData(VISIBILITY_SAVE_KEY, { shown = shown == true })
-end
-
 local function SaveTimerCount(count)
 	local file = io.open(countFilePath, "w")
 	file:write(tostring(count))
@@ -94,8 +81,7 @@ end
 ---
 
 local timerAnchor = CreateEmptyWindow("timerAnchor", "UIParent")
-timerAnchor:Show(LoadVisibility())
-timerAnchor:AddAnchor("TOPLEFT", "UIParent", 100, 100)
+timerAnchor:Show(WindowState.LoadVisibility(VISIBILITY_SAVE_KEY))
 timerAnchor:SetExtent(150, 50)
 timerAnchor:EnableDrag(true)
 local background = timerAnchor:CreateColorDrawable(0, 0, 0, 0.5, "background")
@@ -170,49 +156,7 @@ end
 lessEntries:SetHandler("OnClick", lessEntries.OnClick)
 
 ----- save draggable window ----------
-local filePath = "TimeUntilWindowPos.txt"
-local function GetUIScaleFactor()
-	return UIParent:GetUIScale() or 1.0
-end
-local function SaveWindowPosition(x, y)
-	local uiScale = GetUIScaleFactor()
-	x = math.floor(x / uiScale)
-	y = math.floor(y / uiScale)
-	local file = io.open(filePath, "w")
-	file:write(string.format("%d,%d", x, y))
-	file:close()
-end
-local function LoadSavedPosition()
-	local file = io.open(filePath, "r")
-	if not file then
-		return 0, 0
-	end
-	local line = file:read("*line")
-	file:close()
-	local x, y = line:match("(%d+),(%d+)")
-	if x and y then
-		return x, y
-	else
-		return 0, 0
-	end
-end
-function timerAnchor:OnDragStart()
-	self:StartMoving()
-	self.moving = true
-end
-timerAnchor:SetHandler("OnDragStart", timerAnchor.OnDragStart)
-function timerAnchor:OnDragStop()
-	self:StopMovingOrSizing()
-	self.moving = false
-	local offsetX, offsetY = self:GetOffset()
-	local uiScale = UIParent:GetUIScale() or 1.0
-	local normalizedX = offsetX * uiScale
-	local normalizedY = offsetY * uiScale
-	SaveWindowPosition(normalizedX, normalizedY)
-end
-timerAnchor:SetHandler("OnDragStop", timerAnchor.OnDragStop)
-local savedWindowX, savedWindowY = LoadSavedPosition()
-timerAnchor:AddAnchor("TOPLEFT", "UIParent", tonumber(savedWindowX), tonumber(savedWindowY))
+WindowState.TrackPosition(timerAnchor, "TimeUntilWindowPos.txt", 0, 0)
 
 local whaleConflict = false
 local aegConflict = true
@@ -528,7 +472,7 @@ local timeUntilMenuButton = CreateSimpleButton("timeuntil", 700, -490)
 timeUntilMenuButton:SetHandler("OnClick", function()
 	local show = not timerAnchor:IsVisible()
 	timerAnchor:Show(show)
-	SaveVisibility(show)
+	WindowState.SaveVisibility(VISIBILITY_SAVE_KEY, show)
 
 	if not show and filterWindow ~= nil then
 		filterWindow:Show(false)

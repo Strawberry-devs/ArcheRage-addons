@@ -5,4 +5,5 @@
 ../globals/button.lua
 ../globals/classmappings.lua
 ../globals/barmaker.lua
+../globals/windowstate.lua
 gearswap.lua

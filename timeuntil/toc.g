@@ -3,6 +3,7 @@
 ../globals/button.lua
 ../globals/windowcommon.lua
 ../globals/window.lua
+../globals/windowstate.lua
 EventNames.lua
 RuTimers.lua
 NATimers.lua

@@ -37,37 +37,10 @@ gearListWindow:SetExtent(0, 0)
 --gearListWindow:AddAnchor("RIGHT", "UIParent", -100, -200)
 gearListWindow:EnableDrag(true)
 gearListWindow:Show(true)
-local function GetUIScaleFactor()
-	return UIParent:GetUIScale() or 1.0
-end
 
 local gearWidgets = {}
 
-local filePath = "GearWindowPos.txt"
-local function SaveWindowPosition(x, y)
-	local uiScale = GetUIScaleFactor()
-	x = math.floor(x / uiScale)
-	y = math.floor(y / uiScale)
-	local file = io.open(filePath, "w")
-	file:write(string.format("%d,%d", x, y))
-	file:close()
-end
-local function LoadSavedPosition()
-	local file = io.open(filePath, "r")
-	if not file then
-		return 0, 0
-	end
-	local line = file:read("*line")
-	file:close()
-	local x, y = line:match("(%d+),(%d+)")
-	if x and y then
-		return x, y
-	else
-		return 0, 0
-	end
-end
-local savedWindowX, savedWindowY = LoadSavedPosition()
-gearListWindow:AddAnchor("TOPLEFT", "UIParent", tonumber(savedWindowX), tonumber(savedWindowY))
+WindowState.TrackPosition(gearListWindow, "GearWindowPos.txt", 0, 0)
 
 local background = gearListWindow:CreateColorDrawable(0, 0, 0, 0.5, "background")
 background:AddAnchor("TOPLEFT", gearListWindow, 0, 0)
@@ -414,20 +387,4 @@ local RegistUIEvent = function(window, eventTable)
 	end
 end
 RegistUIEvent(chatEventListenerAggro, chatAggroEventListenerEvents)
---
---make draggable window
-function gearListWindow:OnDragStart()
-	self:StartMoving()
-	self.moving = true
-end
-gearListWindow:SetHandler("OnDragStart", gearListWindow.OnDragStart)
-function gearListWindow:OnDragStop()
-	self:StopMovingOrSizing()
-	self.moving = false
-	local offsetX, offsetY = self:GetOffset()
-	local uiScale = UIParent:GetUIScale() or 1.0
-	local normalizedX = offsetX * uiScale
-	local normalizedY = offsetY * uiScale
-	SaveWindowPosition(normalizedX, normalizedY)
-end
-gearListWindow:SetHandler("OnDragStop", gearListWindow.OnDragStop)
+-- Window position is persisted by WindowState.TrackPosition (see top of file).
