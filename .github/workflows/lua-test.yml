@@ -1,0 +1,37 @@
+name: Lua Tests
+
+on:
+  push:
+    paths:
+      - "**/*.lua"
+      - "spec/**"
+      - ".busted"
+      - ".github/workflows/lua-test.yml"
+  pull_request:
+    paths:
+      - "**/*.lua"
+      - "spec/**"
+      - ".busted"
+      - ".github/workflows/lua-test.yml"
+
+jobs:
+  busted:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Lua
+        uses: leafo/gh-actions-lua@v11
+        with:
+          luaVersion: "5.1"
+
+      - name: Setup LuaRocks
+        uses: leafo/gh-actions-luarocks@v4
+
+      - name: Install busted
+        run: luarocks install busted
+
+      - name: Run tests
+        run: busted
