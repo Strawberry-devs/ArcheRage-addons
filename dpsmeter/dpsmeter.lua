@@ -43,6 +43,7 @@ local MODE_RATE_LABEL = {
 	HealT = "htps"
 }
 local SETTINGS_FILE = "dpsmeter_settings.txt"
+local VISIBILITY_SAVE_KEY = "dpsmeter_visibility"
 local TITLE_PAD_RIGHT = 140
 local DETAIL_TITLE_PAD_RIGHT = 80
 local DETAIL_VIEW_ORDER = { "Spell", "Target" }
@@ -143,6 +144,15 @@ activeMode = MODE_ORDER[activeModeIndex]
 detailViewIndex = findIndex(DETAIL_VIEW_ORDER, loadedSettings.detail_view, 1)
 detailViewMode = DETAIL_VIEW_ORDER[detailViewIndex]
 local isMeterHidden = loadedSettings.is_hidden == 1
+local savedVisibility = ADDON:LoadData(VISIBILITY_SAVE_KEY)
+if savedVisibility ~= nil and savedVisibility.shown ~= nil then
+	isMeterHidden = savedVisibility.shown ~= true
+end
+
+local function saveVisibility(shown)
+	ADDON:ClearData(VISIBILITY_SAVE_KEY)
+	ADDON:SaveData(VISIBILITY_SAVE_KEY, { shown = shown == true })
+end
 
 local function resetFight()
 	statsByMode.Damage  = {}
@@ -507,6 +517,7 @@ saveCurrentSettings = function()
 	file:write(string.format("detail_view=%s\n", detailViewMode))
 	file:write(string.format("is_hidden=%d\n", isMeterHidden and 1 or 0))
 	file:close()
+	saveVisibility(not isMeterHidden)
 end
 
 -- ============================================================
