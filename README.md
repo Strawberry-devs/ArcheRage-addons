@@ -31,6 +31,19 @@ powershell -ExecutionPolicy Bypass -File .\scripts\install-hooks.ps1
 
 This enables `.githooks/pre-commit`, which lints staged `.lua` files before each commit.
 
+## Tests
+
+Unit tests cover the game-independent modules in `globals/` (currently `windowstate.lua`) and run on every push and pull request via the `Lua Tests` workflow.
+
+Tests use [busted](https://lunarmodules.github.io/busted/). Install and run locally:
+
+```powershell
+luarocks install busted
+busted
+```
+
+Specs live in `spec/` and end in `_spec.lua`. Modules that talk to the live ArcheRage UI API (`UIParent`, `X2*`, widgets) cannot be tested headless; keep testable logic free of those globals so it can be covered here.
+
 # Current Addons:
 
 ## Autorole  

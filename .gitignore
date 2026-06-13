@@ -11,6 +11,11 @@
 .luacheckrc
 README.md
 
+# CI / tooling
+!.busted
+!.github/**
+!spec/**
+
 # Addons
 !autoscanner/**
 !autoraidkick/**
