@@ -33,7 +33,7 @@ ADDON:ImportAPI(API_TYPE.ABILITY.id)
 
 local WINDOW_WIDTH = 560
 local MIN_WINDOW_HEIGHT = 330
-local MAX_ROW_COUNT = 24
+local MAX_ROW_COUNT = 12
 local ROW_HEIGHT = 22
 local ROW_TOP = 272
 local FOOTER_HEIGHT = 20
@@ -688,20 +688,41 @@ local function SetTextColorByKey(widget, colorKey)
 end
 
 local function CreateSectionLine(parent, id, y)
-	local line = parent:CreateColorDrawable(0.55, 0.36, 0.10, 0.35, "artwork")
+	local line
+	local ok = pcall(function()
+		if type(CreateLine) == "function" then
+			line = CreateLine(parent, "TYPE1", "artwork")
+		else
+			line = parent:CreateDrawable("ui/common/default.dds", "line_01", "artwork")
+			if line ~= nil and line.SetTextureColor ~= nil then
+				line:SetTextureColor("default")
+			end
+		end
+	end)
+	if not ok or line == nil or line.SetExtent == nil or line.AddAnchor == nil then
+		line = parent:CreateColorDrawable(0.42, 0.42, 0.42, 0.28, "artwork")
+	end
 	line:SetExtent(WINDOW_WIDTH - 36, 2)
 	line:AddAnchor("TOPLEFT", parent, 18, y)
 	return line
 end
 
 local function CreateWindowBackground(window)
+	if type(SettingWindowSkin) == "function" then
+		local ok = pcall(function()
+			SettingWindowSkin(window)
+		end)
+		if ok then
+			return nil
+		end
+	end
 	local bg = window:CreateDrawable("ui/common/default.dds", "main_bg", "background")
 	if bg ~= nil and bg.AddAnchor ~= nil then
 		bg:AddAnchor("TOPLEFT", window, -5, -5)
 		bg:AddAnchor("BOTTOMRIGHT", window, 5, 5)
 		return bg
 	end
-	bg = window:CreateColorDrawable(0.92, 0.86, 0.66, 0.95, "background")
+	bg = window:CreateColorDrawable(0.15, 0.15, 0.15, 0.90, "background")
 	bg:AddAnchor("TOPLEFT", window, 0, 0)
 	bg:AddAnchor("BOTTOMRIGHT", window, 0, 0)
 	return bg
@@ -712,16 +733,21 @@ local function CreateQuestStylePanel(parent, id, top, bottom, alpha)
 	holder:AddAnchor("TOPLEFT", parent, 14, top)
 	holder:AddAnchor("BOTTOMRIGHT", parent, -14, bottom)
 	local ok, bg = pcall(function()
+		local drawable = holder:CreateDrawable("ui/common/default.dds", "common_bg", "background")
+		if drawable ~= nil and drawable.SetTextureColor ~= nil then
+			drawable:SetTextureColor("bg_02")
+			return drawable
+		end
 		if type(CreateContentBackground) == "function" then
 			return CreateContentBackground(holder, "TYPE11", "bg_02", "background")
 		end
-		return nil
+		return drawable
 	end)
 	if ok and bg ~= nil then
 		bg:AddAnchor("TOPLEFT", holder, 0, 0)
 		bg:AddAnchor("BOTTOMRIGHT", holder, 0, 0)
 	else
-		bg = holder:CreateColorDrawable(0.74, 0.64, 0.43, alpha or 0.22, "background")
+		bg = holder:CreateColorDrawable(0.78, 0.73, 0.58, alpha or 0.18, "background")
 		bg:AddAnchor("TOPLEFT", holder, 0, 0)
 		bg:AddAnchor("BOTTOMRIGHT", holder, 0, 0)
 	end
@@ -732,7 +758,20 @@ local function CreateQuestStyleStrip(parent, id, x, y, width, height, alpha)
 	local holder = parent:CreateChildWidget("emptywidget", id, 0, true)
 	holder:SetExtent(width, height)
 	holder:AddAnchor("TOPLEFT", parent, x, y)
-	local bg = holder:CreateColorDrawable(0.74, 0.64, 0.43, alpha or 0.16, "background")
+	local ok, bg = pcall(function()
+		local drawable = holder:CreateDrawable("ui/common/default.dds", "common_bg", "background")
+		if drawable ~= nil and drawable.SetTextureColor ~= nil then
+			drawable:SetTextureColor("bg_02")
+			return drawable
+		end
+		if type(CreateContentBackground) == "function" then
+			return CreateContentBackground(holder, "TYPE11", "bg_02", "background")
+		end
+		return drawable
+	end)
+	if not ok or bg == nil then
+		bg = holder:CreateColorDrawable(0.78, 0.73, 0.58, alpha or 0.14, "background")
+	end
 	bg:AddAnchor("TOPLEFT", holder, 0, 0)
 	bg:AddAnchor("BOTTOMRIGHT", holder, 0, 0)
 	return holder
@@ -897,7 +936,7 @@ ShowMoneyCluster = function(cluster, copper, x, y, color)
 		return 0
 	end
 	HideMoneyCluster(cluster)
-	SetMoneyClusterColor(cluster, color or { 0.45, 0.25, 0.02, 1 })
+	SetMoneyClusterColor(cluster, color)
 
 	local sign, gold, silver = CopperToParts(copper)
 	local parts = {}
@@ -1158,7 +1197,65 @@ local function RowLine(index)
 	row.line:SetVisible(true)
 end
 
-local function ResizeWindowForRows(rowCount)
+local ResizeWindowForRows
+
+local function RenderRowItems(items)
+	items = items or {}
+	rows.renderItems = items
+	rows.scrollOffset = tonumber(rows.scrollOffset) or 0
+	local maxOffset = math.max(0, #items - MAX_ROW_COUNT)
+	if rows.scrollOffset > maxOffset then
+		rows.scrollOffset = maxOffset
+	end
+	if rows.scrollOffset < 0 then
+		rows.scrollOffset = 0
+	end
+	ClearRows()
+	if stepLabel ~= nil then
+		if #items > MAX_ROW_COUNT then
+			stepLabel:SetText(
+				string.format(
+					"Rows %d-%d / %d",
+					rows.scrollOffset + 1,
+					math.min(#items, rows.scrollOffset + MAX_ROW_COUNT),
+					#items
+				)
+			)
+		else
+			stepLabel:SetText("")
+		end
+	end
+	for visibleIndex = 1, MAX_ROW_COUNT do
+		local item = items[rows.scrollOffset + visibleIndex]
+		if item == nil then
+			break
+		end
+		if item.kind == "line" then
+			RowLine(visibleIndex)
+		else
+			Row(
+				visibleIndex,
+				item.left,
+				item.mid,
+				item.unitPrice,
+				item.totalPrice,
+				item.color,
+				item.onClick
+			)
+		end
+	end
+	ResizeWindowForRows(math.min(#items, MAX_ROW_COUNT))
+end
+
+local function ScrollBreakdown(delta)
+	if rows.renderItems == nil or #rows.renderItems <= MAX_ROW_COUNT then
+		return
+	end
+	rows.scrollOffset = (tonumber(rows.scrollOffset) or 0) + delta
+	RenderRowItems(rows.renderItems)
+end
+
+ResizeWindowForRows = function(rowCount)
 	if mainWindow == nil then
 		return
 	end
@@ -1676,10 +1773,18 @@ local function UpdateEconomyLabel()
 end
 
 RenderPlan = function()
+	if mainWindow == nil or craftLabel == nil then
+		return
+	end
 	ClearRows()
 	if plan == nil or selectedRecipe == nil then
+		rows.renderItems = {}
+		rows.scrollOffset = 0
 		--targetLabel:SetText("Target: none")
 		craftLabel:SetText("Crafts: -")
+		if stepLabel ~= nil then
+			stepLabel:SetText("")
+		end
 		UpdateTradeTargetControl()
 		HideMoneyCluster(craftFeeMoney)
 		--economyLabel:SetText("Economy: -")
@@ -1717,7 +1822,7 @@ RenderPlan = function()
 		)
 	)
 	if craftFeeMoney ~= nil then
-		ShowMoneyCluster(craftFeeMoney, visible.craftFee or 0, 345, 134, { 0.45, 0.25, 0.02, 1 })
+		ShowMoneyCluster(craftFeeMoney, visible.craftFee or 0, 345, 134, nil)
 	end
 	UpdateEconomyLabel()
 
@@ -1729,28 +1834,37 @@ RenderPlan = function()
 	end
 	--shoppingLabel:SetText(string.format("Auction items still needed: %d", missing))
 
-	local rowIndex = 1
+	local displayRows = {}
+	local function AddRow(left, mid, unitPrice, totalPrice, color, onClick)
+		displayRows[#displayRows + 1] = {
+			kind = "row",
+			left = left,
+			mid = mid,
+			unitPrice = unitPrice,
+			totalPrice = totalPrice,
+			color = color,
+			onClick = onClick,
+		}
+	end
+	local function AddLine()
+		displayRows[#displayRows + 1] = { kind = "line" }
+	end
 
 	local function RenderStage(stage, depth, showHeader)
-		if stage == nil or rowIndex > MAX_ROW_COUNT then
+		if stage == nil then
 			return
 		end
 		local indent = string.rep("  ", depth)
 		if showHeader ~= false then
-			Row(
-				rowIndex,
+			AddRow(
 				indent .. tostring(stage.name),
 				FormatQuantity(stage.crafts),
 				nil,
 				nil,
 				nil
 			)
-			rowIndex = rowIndex + 1
 		end
 		for _, material in ipairs(stage.lines or {}) do
-			if rowIndex > MAX_ROW_COUNT then
-				return
-			end
 			local isCraft = material.kind == "craft" and material.childKey ~= nil
 			local unitPrice = GetVendorUnitPrice(material.item)
 			if unitPrice <= 0 then
@@ -1765,8 +1879,7 @@ RenderPlan = function()
 			if isCraft then
 				expandPrefix = expandedStages[material.childKey] and "[-] " or "[+] "
 			end
-			Row(
-				rowIndex,
+			AddRow(
 				indent .. "  " .. expandPrefix .. tostring(material.item),
 				FormatQuantity(material.qty),
 				unitPrice > 0 and unitPrice or nil,
@@ -1774,7 +1887,6 @@ RenderPlan = function()
 				nil,
 				isCraft and Toggle or nil
 			)
-			rowIndex = rowIndex + 1
 			if isCraft and expandedStages[material.childKey] then
 				RenderStage(plan.stageByKey[material.childKey], depth + 1, false)
 			end
@@ -1783,34 +1895,22 @@ RenderPlan = function()
 
 	RenderStage(plan.rootStage, 0, true)
 
-	if rowIndex <= MAX_ROW_COUNT then
-		RowLine(rowIndex)
-		rowIndex = rowIndex + 1
-	end
+	AddLine()
 
-	if #visible.vendor > 0 and rowIndex <= MAX_ROW_COUNT then
-		RowLine(rowIndex)
-		rowIndex = rowIndex + 1
-	end
-
-	if #visible.vendor > 0 and rowIndex <= MAX_ROW_COUNT then
+	if #visible.vendor > 0 then
+		AddLine()
 		for _, entry in ipairs(visible.vendor) do
-			if rowIndex > MAX_ROW_COUNT then
-				break
-			end
 			local unitPrice = GetVendorUnitPrice(entry.item)
-			Row(
-				rowIndex,
+			AddRow(
 				entry.item,
 				FormatQuantity(entry.need or 0),
 				unitPrice > 0 and unitPrice or nil,
 				unitPrice > 0 and ((entry.need or 0) * unitPrice) or nil,
 				WARN_ORANGE
 			)
-			rowIndex = rowIndex + 1
 		end
 	end
-	ResizeWindowForRows(rowIndex - 1)
+	RenderRowItems(displayRows)
 end
 
 local function RecomputePlan()
@@ -1961,7 +2061,13 @@ local function CreateBuyTotalWindow()
 	StyleLabel(target, 12, ALIGN_LEFT, "default")
 	buyTotalWindow.target = target
 
-	local line = buyTotalWindow:CreateColorDrawable(0.55, 0.36, 0.10, 0.35, "artwork")
+	local line = buyTotalWindow:CreateDrawable("ui/common/default.dds", "line_01", "artwork")
+	if line ~= nil and line.SetTextureColor ~= nil then
+		line:SetTextureColor("default")
+	end
+	if line == nil or line.SetExtent == nil or line.AddAnchor == nil then
+		line = buyTotalWindow:CreateColorDrawable(0.42, 0.42, 0.42, 0.28, "artwork")
+	end
 	line:SetExtent(BUY_TOTAL_WINDOW_WIDTH - 36, 2)
 	line:AddAnchor("TOPLEFT", buyTotalWindow, 18, 66)
 
@@ -2119,11 +2225,11 @@ local function CreateRecipePreviewDropdown(parent, edit, width)
 		row:SetExtent(width - 10, 22)
 		row:AddAnchor("TOPLEFT", dropdown, 5, 3 + ((i - 1) * 23))
 		row.style:SetAlign(ALIGN_LEFT)
-		row.style:SetColor(0.46, 0.23, 0.02, 1)
+		SetTextColorByKey(row, "default")
 
 		local rowBg = row:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
 		if rowBg == nil then
-			rowBg = row:CreateColorDrawable(0.76, 0.59, 0.32, 0.18, "background")
+			rowBg = row:CreateColorDrawable(0.78, 0.73, 0.58, 0.16, "background")
 		end
 		rowBg:AddAnchor("TOPLEFT", row, 0, 0)
 		rowBg:AddAnchor("BOTTOMRIGHT", row, 0, 0)
@@ -2139,7 +2245,7 @@ local function CreateRecipePreviewDropdown(parent, edit, width)
 		text:SetExtent(width - 32, 18)
 		text:AddAnchor("LEFT", row, 28, 0)
 		text.style:SetAlign(ALIGN_LEFT)
-		text.style:SetColor(0.46, 0.23, 0.02, 1)
+		SetTextColorByKey(text, "default")
 		text:EnablePick(false)
 		if text.style.SetEllipsis ~= nil then
 			text.style:SetEllipsis(true)
@@ -2403,7 +2509,7 @@ local function CreateTradeTargetControl(parent)
 	tradeTargetDropdown:Show(false)
 	local bg = tradeTargetDropdown:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
 	if bg == nil then
-		bg = tradeTargetDropdown:CreateColorDrawable(0.76, 0.59, 0.32, 0.30, "background")
+		bg = tradeTargetDropdown:CreateColorDrawable(0.78, 0.73, 0.58, 0.24, "background")
 	end
 	bg:AddAnchor("TOPLEFT", tradeTargetDropdown, 0, 0)
 	bg:AddAnchor("BOTTOMRIGHT", tradeTargetDropdown, 0, 0)
@@ -2415,8 +2521,8 @@ local function CreateTradeTargetControl(parent)
 		row:AddAnchor("TOPLEFT", tradeTargetDropdown, 5, 4 + ((index - 1) * 19))
 		row.style:SetAlign(ALIGN_LEFT)
 		row.style:SetFontSize(12)
-		row.style:SetColor(0.35, 0.18, 0.02, 1)
-		local rowBg = row:CreateColorDrawable(0.76, 0.59, 0.32, 0.20, "background")
+		SetTextColorByKey(row, "default")
+		local rowBg = row:CreateColorDrawable(0.78, 0.73, 0.58, 0.18, "background")
 		rowBg:AddAnchor("TOPLEFT", row, 0, 0)
 		rowBg:AddAnchor("BOTTOMRIGHT", row, 0, 0)
 		rowBg:SetVisible(false)
@@ -2501,7 +2607,7 @@ UpdateTradeTargetControl = function()
 			if selectedTradeTarget ~= nil and selectedTradeTarget.zone == target.zone then
 				row.style:SetColor(0.04, 0.50, 0.08, 1)
 			else
-				row.style:SetColor(0.35, 0.18, 0.02, 1)
+				SetTextColorByKey(row, "default")
 			end
 		elseif row ~= nil then
 			row.target = nil
@@ -2513,7 +2619,10 @@ end
 
 local function CreateMainWindow()
 	if mainWindow ~= nil then
-		return
+		if craftLabel ~= nil then
+			return
+		end
+		mainWindow = nil
 	end
 
 	mainWindow = CreateEmptyWindow("omniCraftWindow", "UIParent")
@@ -2533,6 +2642,12 @@ local function CreateMainWindow()
 	end)
 	mainWindow:SetHandler("OnDragStop", function(self)
 		self:StopMovingOrSizing()
+	end)
+	mainWindow:SetHandler("OnWheelUp", function()
+		ScrollBreakdown(-1)
+	end)
+	mainWindow:SetHandler("OnWheelDown", function()
+		ScrollBreakdown(1)
 	end)
 
 	local title = mainWindow:CreateChildWidget("label", "omniCraftTitle", 0, true)
@@ -2688,7 +2803,13 @@ local function CreateMainWindow()
 
 	for index = 1, MAX_ROW_COUNT do
 		local y = ROW_TOP + ((index - 1) * ROW_HEIGHT)
-		local line = mainWindow:CreateColorDrawable(0.55, 0.36, 0.10, 0.30, "artwork")
+		local line = mainWindow:CreateDrawable("ui/common/default.dds", "line_01", "artwork")
+		if line ~= nil and line.SetTextureColor ~= nil then
+			line:SetTextureColor("default")
+		end
+		if line == nil or line.SetExtent == nil or line.AddAnchor == nil then
+			line = mainWindow:CreateColorDrawable(0.42, 0.42, 0.42, 0.24, "artwork")
+		end
 		line:SetExtent(WINDOW_WIDTH - 40, 1)
 		line:AddAnchor("TOPLEFT", mainWindow, 20, y + math.floor(ROW_HEIGHT / 2))
 		line:SetVisible(false)
@@ -2697,11 +2818,23 @@ local function CreateMainWindow()
 		left:SetExtent(ROW_NAME_WIDTH, 22)
 		left:AddAnchor("TOPLEFT", mainWindow, 20, y)
 		StyleLabel(left, 12, ALIGN_LEFT, "default")
+		left:SetHandler("OnWheelUp", function()
+			ScrollBreakdown(-1)
+		end)
+		left:SetHandler("OnWheelDown", function()
+			ScrollBreakdown(1)
+		end)
 
 		local mid = mainWindow:CreateChildWidget("label", "omniCraftRowMid" .. tostring(index), index, true)
 		mid:SetExtent(ROW_QTY_WIDTH, 22)
 		mid:AddAnchor("TOPLEFT", mainWindow, 20 + ROW_NAME_WIDTH + 10, y)
 		StyleLabel(mid, 12, ALIGN_LEFT, "default")
+		mid:SetHandler("OnWheelUp", function()
+			ScrollBreakdown(-1)
+		end)
+		mid:SetHandler("OnWheelDown", function()
+			ScrollBreakdown(1)
+		end)
 
 		rows[index] = {
 			left = left,
