@@ -46,7 +46,7 @@ local MONEY_ICON_GAP = 1
 local MONEY_UNIT_GAP = 6
 local MONEY_DIGIT_W = 7
 local BUTTON_HEIGHT = 18
-local SMALL_BUTTON_WIDTH = 16
+local SMALL_BUTTON_WIDTH = 22
 local ROW_NAME_WIDTH = 274
 local ROW_QTY_WIDTH = 60
 local ROW_UNIT_RIGHT = 445
@@ -759,34 +759,36 @@ local function StyleFlatButton(button)
 	if button == nil then
 		return
 	end
+	button:SetStyle("text_default")
+	button:SetAutoResize(false)
+	button:SetInset(0, 0, 0, 0)
 	button.style:SetAlign(ALIGN_CENTER)
 	button.style:SetFontSize(12)
-	button.style:SetColor(0.35, 0.18, 0.02, 1)
 end
 
 local function CreateButton(parent, name, text, x, y, width, onClick)
-	local button = parent:CreateChildWidget("label", name, 0, true)
-	button:SetExtent(width, BUTTON_HEIGHT)
-	button:AddAnchor("TOPLEFT", parent, x, y)
-	button:SetText(text)
+	local button = parent:CreateChildWidget("button", name, 0, true)
 	StyleFlatButton(button)
-	local bg = button:CreateColorDrawable(0.76, 0.59, 0.32, 0.30, "background")
-	bg:AddAnchor("TOPLEFT", button, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", button, 0, 0)
+	button:SetExtent(width, BUTTON_HEIGHT)
+	button:SetWidth(width)
+	button:SetHeight(BUTTON_HEIGHT)
+	button:SetText(text)
+	button:AddAnchor("TOPLEFT", parent, x, y)
 	button:SetHandler("OnClick", onClick)
+	button:SetWidth(width)
 	return button
 end
 
 local function CreateSmallButton(parent, name, text, x, y, onClick)
-	local button = parent:CreateChildWidget("label", name, 0, true)
-	button:SetExtent(SMALL_BUTTON_WIDTH, BUTTON_HEIGHT)
-	button:AddAnchor("TOPLEFT", parent, x, y)
-	button:SetText(text)
+	local button = parent:CreateChildWidget("button", name, 0, true)
 	StyleFlatButton(button)
-	local bg = button:CreateColorDrawable(0.76, 0.59, 0.32, 0.30, "background")
-	bg:AddAnchor("TOPLEFT", button, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", button, 0, 0)
+	button:SetExtent(SMALL_BUTTON_WIDTH, BUTTON_HEIGHT)
+	button:SetWidth(SMALL_BUTTON_WIDTH)
+	button:SetHeight(BUTTON_HEIGHT)
+	button:SetText(text)
+	button:AddAnchor("TOPLEFT", parent, x, y)
 	button:SetHandler("OnClick", onClick)
+	button:SetWidth(SMALL_BUTTON_WIDTH)
 	return button
 end
 
