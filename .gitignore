@@ -12,10 +12,7 @@
 README.md
 
 # Addons
-!autoscanner/**
-!autoraidkick/**
 !autorole/**
-!Backup/**
 !bigcastbars/**
 !buffcaptracker/**
 !choretracker/**
@@ -28,15 +25,12 @@ README.md
 !gearswap/**
 !globals/**
 !guildquesttracker/**
-!hiddendebufftracker/**
 !highlight/**
 !luaerrorprinter/**
 !magiccircle/**
 !omnicraft/**
 !personalportals/**
-!raidchecker/**
 !raidmanager/**
-!raidcheckresige/**
 !reloadcfg/**
 !residentboard/**
 !scripts/**
@@ -50,3 +44,4 @@ README.md
 !z_images/**
 !z_pub_wip/**
 !z_scriptsbin/**
+!z_trash/**

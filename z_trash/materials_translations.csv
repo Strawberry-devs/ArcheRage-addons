@@ -1,0 +1,936 @@
+﻿item_id,zh_cn,ru,fr,en,icon_path,category_zh_cn,category_ru,category_fr,category_en
+688,龙的槽牙,Клык дракона,Molaire de dragon,Dragon Molar,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+1383,毒性粉末,Ядовитый порошок,Pincée de poudre toxique,Toxic Powder,icons/icon_item_0089.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+2191,蝙蝠爪,Коготь летучей мыши,Griffe de chiroptère,Bat Claw,icons/icon_item_0186.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+2250,豆油,Соевое масло,Bouteille d'huile de soja,Soybean Oil,icons/icon_item_0309.dds.png,食用油,Пищевое масло,Huile de cuisson,Cooking Oil
+2251,橄榄油,Оливковое масло,Bouteille d'huile d'olive,Olive Oil,icons/icon_item_0309.dds.png,食用油,Пищевое масло,Huile de cuisson,Cooking Oil
+3332,碎星锭,Слиток метеоритного железа,Lingot de stellarite,Starshard Ingot,icons/icon_item_0855.dds.png,金属,Слиток металла,Métal,Metal
+3360,橡胶轮,Резиновое колесо,Roue en caoutchouc,Rubber Wheel,icons/icon_item_0077.dds.png,橡胶,Каучук,Caoutchouc,Rubber
+3407,空背架,Пустые заплечные носилки,Transporteur vide,Empty Carrier,icons/icon_item_0384.dds.png,生产材料,Редкий материал,Matériau,Material
+3408,白糖,Сахар,Morceau de sucre,Sugar,icons/icon_item_0085.dds.png,调味料,Приправа,Épices,Spices
+3409,食盐,Соль,Sel,Salt,icons/icon_item_0085.dds.png,调味料,Приправа,Épices,Spices
+3451,石化蜥蜴鳞片,Чешуя василиска,Écaille de basilic,Basilisk Scale,icons/quest/icon_item_quest048.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+3748,银白色粉末,Серебряный порошок,Once de poudre argentée,Silvery Powder,icons/icon_item_0085.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+3796,巨魔血液,Кровь тролля,Volume de sang de troll,Troll Blood,icons/quest/icon_item_quest038.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+3932,猫头鹰羽毛,Перо совы,Plume de hibou,Owl Feather,icons/quest/icon_item_quest129.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+3939,水银,Ртуть,Volume de mercure,Mercury,icons/icon_item_0165.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+3940,海鸥羽毛,Перо чайки,Plume de mouette,Seagull Feather,icons/quest/icon_item_quest129.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+4747,特产品质认证书,Сертификат торговца,Certificat de qualité,Quality Certificate,icons/icon_item_0857.dds.png,生产材料,Редкий материал,Matériau,Material
+7752,狐狸尾巴,Хвост лисы,Queue de renard,Fox Tail,icons/quest/icon_item_quest097.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7757,旧布,Старый лоскут,Vieille étoffe,Old Cloth,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+7760,野猪槽牙,Клык кабана,Défense de sanglier,Boar Tusk,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7770,猪笼草草茎,Стебель саррацении,Tige de sarracénie,Sarracenia Stem,icons/quest/icon_item_quest166.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7771,猪笼草唾腺,Слюнная железа саррацении,Glande de sarracénie,Sarracenia Gland,icons/icon_item_0080.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7773,薄布条,Тонкий лоскут ткани,Chiffon fin,Thin Cloth Scrap,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+7774,粘液团,Сгусток слизи,Amas de mucus,Mucous Lump,icons/quest/icon_item_quest038.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7775,坚韧的皮绳,Прочная кожаная веревка,Bande de cuir coriace,Tough Leather String,icons/icon_item_0049.dds.png,皮革,Кожа,Peau,Hide
+7783,模糊的风痕,Тусклый след Ветра,Souffle alizéen léger,Faint Wind Breath,icons/quest/icon_item_quest103.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7784,肮脏的布条,Грязный лоскут ткани,Lien putride,Putrid Binding,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+7786,透明的风痕,Прозрачный след с клеймом Ветра,Souffle des Giflevents,Windwhisp's Breath,icons/quest/icon_item_quest103.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7801,人鱼尾巴,Хвост русалки,Queue de Lige-marée,Seafolk Tail,icons/icon_item_0105.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7802,人鱼鳞片,Чешуя русалки,Écaille de Lige-marée,Seafolk Scale,icons/icon_item_0053.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7804,人鱼鳍,Плавник русалки,Aileron de Lige-marée,Seafolk Fin,icons/icon_item_0109.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7836,蜥蜴尾巴,Хвост ящера,Queue de lézard,Lizard Tail,icons/icon_item_0180.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7840,尖喙鸟羽毛,Перо шипастой птицы,Plume en bec-rasoir,Razorbeak Feather,icons/icon_item_0170.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7896,鹰身女妖羽毛,Перо гарпии,Plume de harpie,Harpy Feather,icons/icon_item_0170.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7897,鹰身女妖爪,Коготь гарпии,Griffe de harpie,Harpy Claw,icons/icon_item_0169.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7909,鳄鱼尾巴,Хвост крокодила,Queue de crocodile,Crocodile Tail,icons/quest/icon_item_quest159.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7910,鳄鱼牙齿,Зуб крокодила,Dent de crocodile,Crocodile Tooth,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7922,象牙,Бивень,Morceau d'ivoire,Ivory Chunk,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7933,海虫毒腺,Ядовитая железа морского жука,Poison de Puce de mer,Seabug Poison,icons/icon_item_0080.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7940,巨魔槽牙,Клык тролля,Molaire de troll,Troll Molar,icons/icon_item_0169.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7945,蜥蜴人爪子,Коготь байяма,Griffe d'Achassi,Achassi Claw,icons/icon_item_0169.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7952,狼獠牙,Волчий клык,Croc de loup,Wolf Fang,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7963,蜥蜴人的皮,Панцирь байяма,Peau d'Achassi,Achassi Skin,icons/icon_item_0095.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7976,蝎子尾巴,Хвост скорпиона,Queue de scorpion,Scorpion Tail,icons/icon_item_0180.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7987,狮鹫羽毛,Перо грифона,Plume de griffon,Griffin Feather,icons/quest/icon_item_quest129.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7989,狮鹫爪,Коготь грифона,Griffe de griffon,Griffin Claw,icons/icon_item_0169.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+7999,毒蘑菇,Ядовитый гриб,Champignon vénéneux,Toadstool,icons/quest/icon_item_quest077.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8011,污染的水,Зараженная вода,Flacon d'eau polluée,Polluted Water,icons/icon_item_0176.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8041,德翡纳锭,Слиток дельфинада,Lingot de Delphinad,Delphinad Ingot,icons/icon_item_0871.dds.png,金属,Слиток металла,Métal,Metal
+8043,精选食盐,Сверкающая соль,Sel brillant,Shining Salt,icons/icon_item_0085.dds.png,调味料,Приправа,Épices,Spices
+8049,食醋,Уксус,Volume de vinaigre,Vinegar,icons/icon_item_0176.dds.png,调味料,Приправа,Épices,Spices
+8068,记忆之息,Энергия памяти,Esprit mnésique,Memory Spirit,icons/quest/icon_item_quest103.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8069,记忆精华,Эссенция памяти,Essence mnésique,Memory Essence,icons/icon_item_0082.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8070,剧毒之息,Энергия яда,Esprit venimeux,Venom Spirit,icons/quest/icon_item_quest103.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8071,剧毒精华,Эссенция яда,Essence venimeuse,Venom Essence,icons/icon_item_0082.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8072,悲痛之息,Энергия печали,Esprit d'affliction,Sorrowful Spirit,icons/quest/icon_item_quest103.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8073,悲痛精华,Эссенция печали,Essence d'affliction,Sorrowful Essence,icons/icon_item_0082.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8074,治愈之息,Энергия исцеления,Esprit curatif,Healing Spirit,icons/quest/icon_item_quest103.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8075,治愈精华,Эссенция исцеления,Essence curative,Healing Essence,icons/icon_item_0082.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8248,小爪子,Маленький коготь,Petite griffe,Small Claw,icons/icon_item_0169.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8249,巨大的爪子,Большой коготь,Grande griffe,Large Claw,icons/icon_item_0169.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8250,尖锐的爪,Острый коготь,Griffe pointue,Pointed Claw,icons/icon_item_0169.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8251,尖锐的牙,Заостренный клык,Dent pointue,Pointed Tooth,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8252,尖利的牙齿,Острый клык,Dent aiguisée,Sharp Tooth,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8253,结实的牙齿,Прочный клык,Dent résistante,Sturdy Tooth,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8254,碎布料,Порванная ткань,Étoffe déchirée,Torn Fabric,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+8255,撕裂的布料,Заплатка,Étoffe rapiécée,Stitched Fabric,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+8256,布料,Ткань,Tissu,Fabric,icons/icon_item_0356.dds.png,布料,Ткань,Tissu,Fabric
+8257,旧绳,Старая веревка,Ficelle effilochée,Frayed String,icons/icon_item_0091.dds.png,布料,Ткань,Tissu,Fabric
+8258,粗线,Толстая веревка,Ficelle épaisse,Thick String,icons/icon_item_0091.dds.png,布料,Ткань,Tissu,Fabric
+8259,坚韧的线,Прочный канат,Ficelle coriace,Tough String,icons/icon_item_0091.dds.png,布料,Ткань,Tissu,Fabric
+8260,旧纸,Мятая бумажка,Papier jauni,Yellowed Paper,icons/icon_item_0232.dds.png,纸张,Бумага,Papier,Paper
+8263,晨星结晶,Кристалл утренней звезды,Cristal d'aurorine,Dawnstar Crystal,icons/quest/icon_item_quest128.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8264,新月结晶,Кристалл полумесяца,Cristal-croissant,Crescent Crystal,icons/quest/icon_item_quest128.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8265,太阳结晶,Кристалл солнца,Cristal solaire,Sun Crystal,icons/quest/icon_item_quest128.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8266,晨星精华,Эссенция утренней звезды,Essence d'aurorine,Dawnstar Essence,icons/quest/icon_item_quest021.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8267,新月精华,Эссенция полумесяца,Essence-croissant,Crescent Essence,icons/quest/icon_item_quest021.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8268,太阳精华,Эссенция солнца,Essence solaire,Sun Essence,icons/quest/icon_item_quest021.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8269,晨星之息,Энергия утренней звезды,Esprit d'aurorine,Dawnstar Spirit,icons/icon_item_0162.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8270,新月之息,Энергия полумесяца,Esprit-croissant,Crescent Spirit,icons/icon_item_0162.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8271,太阳之息,Энергия солнца,Esprit solaire,Sun Spirit,icons/icon_item_0162.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8272,粉碎的骨头,Разбитая кость,Os décrépit,Crumbling Bone,icons/icon_item_0181.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8273,裂开的骨头,Расколотая кость,Os fendillé,Cracked Bone,icons/icon_item_0181.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8274,坚硬的骨头,Прочная кость,Os dur,Hard Bone,icons/icon_item_0181.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8275,粉碎的骷髅,Разбитый череп,Crâne tombant en miettes,Crumbing Skull,icons/quest/icon_item_quest123.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8276,旧骷髅,Старый череп,Crâne vénérable,Venerable Skull,icons/quest/icon_item_quest123.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8277,奇妙的骷髅,Жуткий череп,Crâne étrange,Peculiar Skull,icons/quest/icon_item_quest123.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8278,褴褛的布料,Потрепанная ткань,Tissu effiloché,Frayed Fabric,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+8279,硬挺布料,Жесткая ткань,Étoffe raide,Stiff Fabric,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+8280,柔软的布料,Мягкая ткань,Étoffe douce,Soft Fabric,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+8281,混沌粉末,Порошок хаоса,Once de poudre chaotique,Chaotic Powder,icons/icon_item_0090.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8282,秩序粉末,Порошок порядка,Once de poudre axiomatique,Axiomatic Powder,icons/icon_item_0090.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8283,和谐粉末,Порошок гармонии,Once de poudre harmonique,Harmonic Powder,icons/icon_item_0090.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8284,混沌碎片,Фрагмент хаоса,Éclat chaotique,Chaotic Shard,icons/quest/icon_item_quest125.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8285,秩序碎片,Фрагмент порядка,Éclat axiomatique,Axiomatic Shard,icons/quest/icon_item_quest125.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8286,和谐碎片,Фрагмент гармонии,Éclat harmonique,Harmonic Shard,icons/quest/icon_item_quest125.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8287,混沌溶液,Раствор хаоса,Solution chaotique,Chaotic Solution,icons/icon_item_0080.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8288,秩序溶液,Раствор порядка,Solution axiomatique,Axiomatic Solution,icons/icon_item_0080.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8289,和谐溶液,Раствор гармонии,Solution harmonique,Harmonic Solution,icons/icon_item_0080.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8299,断裂的角,Сломанный рог,Corne brisée,Broken Horn,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8300,尖锐的角,Заостренный рог,Corne pointue,Pointed Horn,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8301,尖利的角,Острый рог,Corne acérée,Sharp Horn,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8302,轻盈之翼,Легкое крыло,Aile légère,Light Wing,icons/icon_item_0187.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8303,厚实的翅膀,Плотное крыло,Aile lourde,Heavy Wing,icons/icon_item_0187.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8304,结实的翅膀,Прочное крыло,Aile résistante,Sturdy Wing,icons/icon_item_0187.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8305,小尾巴,Маленький хвост,Petite queue,Small Tail,icons/quest/icon_item_quest159.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8306,蕴含魔力的恶魔尾巴,Магический хвост демона,Queue magique de démon,Magic Demon Tail,icons/quest/icon_item_quest159.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8307,美丽的尾巴,Красивый хвост,Queue magnifique,Beautiful Tail,icons/quest/icon_item_quest097.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8308,梦境结晶,Кристалл мечты,Cristal onirique,Dream Crystal,icons/quest/icon_item_quest015.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8309,黑暗结晶,Кристалл тьмы,Cristal d'ombre,Shadow Crystal,icons/quest/icon_item_quest015.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8310,光辉结晶,Кристалл света,Cristal lumineux,Light Crystal,icons/quest/icon_item_quest015.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8311,梦境精华,Эссенция мечты,Essence onirique,Dream Essence,icons/quest/icon_item_quest021.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8312,黑暗精华,Эссенция тьмы,Essence d'ombre,Shadow Essence,icons/quest/icon_item_quest021.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8313,光辉精华,Эссенция света,Essence lumineuse,Light Essence,icons/quest/icon_item_quest021.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8314,梦境之息,Энергия мечты,Esprit onirique,Dream Spirit,icons/quest/icon_item_quest171.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8315,黑暗之息,Энергия тьмы,Esprit d'ombre,Shadow Spirit,icons/quest/icon_item_quest171.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8316,光辉之息,Энергия света,Esprit lumineux,Light Spirit,icons/quest/icon_item_quest171.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8318,铁锭,Слиток железа,Lingot de fer,Iron Ingot,icons/quest/icon_item_quest053.dds.png,金属,Слиток металла,Métal,Metal
+8319,合金锭,Прочный сплав,Lingot résistant,Sturdy Ingot,icons/icon_item_0282.dds.png,金属,Слиток металла,Métal,Metal
+8320,铜锭,Слиток меди,Lingot de cuivre,Copper Ingot,icons/icon_item_0281.dds.png,金属,Слиток металла,Métal,Metal
+8324,海之珊瑚,Толченый коралл,Corail bleu océan,Ocean Blue Coral,icons/icon_item_1758.dds.png,生产材料,Редкий материал,Matériau,Material
+8325,黄昏珍珠,Коралловый жемчуг,Perle du couchant,Sunset Pearl,icons/icon_item_1756.dds.png,生产材料,Редкий материал,Matériau,Material
+8326,青铜雕刀,Чудо-измельчитель консорциума,Couteau du Sel bleu,Blue Salt Knife,icons/icon_item_1750.dds.png,特殊材料,Особый материал,Special Material,Special Material
+8337,木材,Упаковка строительной древесины,Planche,Lumber,icons/icon_item_0041.dds.png,木材,Древесина,Planche,Lumber
+8338,木板,Доска,Planche,Plank,icons/icon_item_0037.dds.png,木材,Древесина,Planche,Lumber
+8339,细木棍,Деревянный стержень,Perche en bois,Wood Pole,icons/icon_item_0038.dds.png,木材,Древесина,Planche,Lumber
+8340,锯末,Опилки,Sciure,Sawdust,icons/icon_item_0039.dds.png,木材,Древесина,Planche,Lumber
+8341,粗木棒,Деревянный шест,Cheville en bois,Wood Dowel,icons/icon_item_0040.dds.png,木材,Древесина,Planche,Lumber
+8342,胶合板,Фанера,Placage en bois,Wood Veneer,icons/icon_item_0037.dds.png,木材,Древесина,Planche,Lumber
+8343,石材,Каменный блок,Brique de pierre,Stone Brick,icons/icon_item_0283.dds.png,石材,Камень,Brique de pierre,Stone Brick
+8344,石板,Каменная плита,Tablette en pierre,Stone Slab,icons/icon_item_0043.dds.png,石材,Камень,Brique de pierre,Stone Brick
+8345,石棍,Каменный стержень,Bourdon en pierre,Stone Rod,icons/icon_item_0044.dds.png,石材,Камень,Brique de pierre,Stone Brick
+8346,石粉,Каменный порошок,Pincée de poussière de pierre,Stone Dust,icons/icon_item_0045.dds.png,石材,Камень,Brique de pierre,Stone Brick
+8347,石柱,Сталагмит,Pilier en pierre,Stone Pillar,icons/icon_item_0046.dds.png,石材,Камень,Brique de pierre,Stone Brick
+8348,砖头,Кирпич,Brique,Brick,icons/icon_item_0284.dds.png,石材,Камень,Brique de pierre,Stone Brick
+8349,皮绳,Кожаная веревка,Ficelle en cuir,Leather String,icons/icon_item_0049.dds.png,皮革,Кожа,Peau,Hide
+8350,皮板,Кожаный лоскут,Plate en cuir,Leather Plate,icons/icon_item_0050.dds.png,皮革,Кожа,Peau,Hide
+8352,软皮,Мягкая кожа,Morceau de cuir souple,Supple Leather,icons/icon_item_0285.dds.png,皮革,Кожа,Peau,Hide
+8358,羊毛布,Шерсть,Laine,Wool,icons/icon_item_0065.dds.png,布料,Ткань,Tissu,Fabric
+8359,丝绸,Шелк,Soie,Silk,icons/icon_item_0058.dds.png,布料,Ткань,Tissu,Fabric
+8360,纯棉,Натуральный хлопок,Coton pur,Pure Cotton,icons/icon_item_0056.dds.png,布料,Ткань,Tissu,Fabric
+8361,纯毛,Натуральная шерсть,Laine pure,Pure Wool,icons/icon_item_0056.dds.png,布料,Ткань,Tissu,Fabric
+8373,玻璃珠,Стеклянная жемчужина,Orbe en verre,Glass Orb,icons/icon_item_0067.dds.png,玻璃,Флакон,Verre,Glass
+8374,玻璃棺,Стеклянная трубка,Tube en verre,Glass Tube,icons/icon_item_0068.dds.png,玻璃,Флакон,Verre,Glass
+8377,玻璃板,Лист стекла,Panneau en verre,Glass Pane,icons/icon_item_0071.dds.png,玻璃,Флакон,Verre,Glass
+8378,玻璃窗,Окно,Vitre,Glass Window,icons/icon_item_0071.dds.png,玻璃,Флакон,Verre,Glass
+8379,玻璃箱,Стеклянный ящик,Boîte en verre,Glass Box,icons/icon_item_0073.dds.png,玻璃,Флакон,Verre,Glass
+8380,青铜镜,Бронзовое зеркало,Miroir en bronze,Bronze Mirror,icons/icon_item_0074.dds.png,玻璃,Флакон,Verre,Glass
+8381,玻璃镜,Стеклянное зеркало,Miroir en verre,Glass Mirror,icons/icon_item_0074.dds.png,玻璃,Флакон,Verre,Glass
+8386,软胶,Мягкая резина,Gomme douce,Soft Rubber,icons/icon_item_0163.dds.png,橡胶,Каучук,Caoutchouc,Rubber
+8387,橡皮塞,Резиновая пробка,Arrêtoir en caoutchouc,Rubber Stopper,icons/icon_item_0077.dds.png,橡胶,Каучук,Caoutchouc,Rubber
+8388,橡皮筋,Резиновая веревка,Élastique,Rubber Band,icons/icon_item_0078.dds.png,橡胶,Каучук,Caoutchouc,Rubber
+8389,坚硬的橡胶,Прочная резина,Caoutchouc dur,Hard Rubber,icons/icon_item_0077.dds.png,橡胶,Каучук,Caoutchouc,Rubber
+8390,胶皮管,Резиновая трубка,Tube en caoutchouc,Rubber Tube,icons/quest/icon_item_quest072.dds.png,橡胶,Каучук,Caoutchouc,Rubber
+8391,橡胶板,Резиновый пласт,Plaque de caoutchouc,Rubber Plate,icons/icon_item_0043.dds.png,橡胶,Каучук,Caoutchouc,Rubber
+8394,野兽之爪,Коготь зверя,Griffe de bête,Beast Claw,icons/icon_item_0169.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8395,野兽之牙,Клык зверя,Croc de bête,Beast Fang,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8397,线团,Клубок нити,Écheveau,Skein,icons/icon_item_0091.dds.png,布料,Ткань,Tissu,Fabric
+8399,天空结晶,Кристалл неба,Cristal céleste,Sky Crystal,icons/quest/icon_item_quest109.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8400,天空精华,Эссенция небес,Essence céleste,Sky Essence,icons/quest/icon_item_quest109.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8401,天空之息,Энергия небес,Esprit céleste,Sky Spirit,icons/quest/icon_item_quest109.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8402,亡者的骨头,Кость мертвеца,Os inerte,Lifeless Bone,icons/icon_item_0181.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8403,亡者的骸骨,Череп мертвеца,Crâne inerte,Lifeless Skull,icons/quest/icon_item_quest123.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8404,魔力粉末,Магический порошок,Once de poussière magique,Magic Dust,icons/icon_item_0153.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8405,魔力碎片,Магический осколок,Éclat magique,Magic Shard,icons/icon_item_0039.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8406,魔力溶液,Магический раствор,Solution magique,Magic Solution,icons/icon_item_0084.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8410,恶魔之角,Рог демона,Corne de démon,Demon Horn,icons/icon_item_0182.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8411,恶魔之翼,Крыло демона,Aile de démon,Demon Wing,icons/icon_item_0187.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8412,恶魔之尾,Хвост демона,Queue de démon,Demon Tail,icons/icon_item_0180.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8413,幻想结晶,Иллюзорный кристалл,Cristal illusoire,Illusion Crystal,icons/quest/icon_item_quest116.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8414,幻想精华,Иллюзорная эссенция,Essence illusoire,Illusion Essence,icons/quest/icon_item_quest116.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8415,幻想之息,Иллюзорная энергия,Esprit illusoire,Illusion Spirit,icons/quest/icon_item_quest116.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8661,家具设计图：猫头鹰邮箱,Договор с совиной почтой,Plan : boîte aux lettres hibou,Owl Mailbox Design,icons/icon_item_0005.dds.png,生产材料,Редкий материал,Matériau,Material
+14939,杏仁油,Миндальное масло,Bouteille d'huile d'amande,Almond Oil,icons/icon_item_0309.dds.png,食用油,Пищевое масло,Huile de cuisson,Cooking Oil
+14940,椰子油,Кокосовое масло,Bouteille d'huile de noix de coco,Coconut Oil,icons/icon_item_0309.dds.png,食用油,Пищевое масло,Huile de cuisson,Cooking Oil
+14941,芝麻油,Кунжутное масло,Bouteille d'huile de sésame,Sesame Oil,icons/icon_item_0309.dds.png,食用油,Пищевое масло,Huile de cuisson,Cooking Oil
+14942,玉米油,Кукурузное масло,Bouteille d'huile de maïs,Corn Oil,icons/icon_item_0309.dds.png,食用油,Пищевое масло,Huile de cuisson,Cooking Oil
+14943,牡蛎酱,Устричный соус,Sauce aux huîtres,Oyster Sauce,icons/icon_item_0176.dds.png,调味料,Приправа,Épices,Spices
+14944,苹果醋,Яблочный уксус,Volume de vinaigre de pomme,Apple Vinegar,icons/icon_item_0176.dds.png,调味料,Приправа,Épices,Spices
+14945,葡萄醋,Винный уксус,Volume de vinaigre de vin,Wine Vinegar,icons/icon_item_0176.dds.png,调味料,Приправа,Épices,Spices
+14946,椰子醋,Кокосовый уксус,Volume de vinaigre de noix de coco,Coconut Vinegar,icons/icon_item_0176.dds.png,调味料,Приправа,Épices,Spices
+14947,谷物醋,Зерновой уксус,Volume de vinaigre de grain fermenté,Fermented Grain Vinegar,icons/icon_item_0176.dds.png,调味料,Приправа,Épices,Spices
+14970,猪油,Свиной жир,Bouteille d'huile de cochon,Pig Oil,icons/icon_item_0309.dds.png,食用油,Пищевое масло,Huile de cuisson,Cooking Oil
+15292,被弄脏的月光土,Загрязненный песок лунного света,Once de terre lunaire souillée,Befouled Moonlight Soil,icons/quest/icon_item_quest104.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15304,冰凉的蓝色血液,Холодная голубая кровь,Sang-bleu gelé,Frozen Blueblood,icons/icon_item_0205.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15314,华彩羽毛,Перо яркой окраски,Plume colorée,Colorful Feather,icons/quest/icon_item_quest129.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15315,艳彩羽毛,Перо насыщенного цвета,Plume brillante,Bright Feather,icons/quest/icon_item_quest129.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15318,亡者的头骨,Череп мертвых,Crâne de défunt,Dead Man's Skull,icons/quest/icon_item_quest123.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15320,闪耀的玻璃碎片,Блестящий осколок стекла,Éclat de verre scintillant,Sparkling Glass Shard,icons/quest/icon_item_quest121.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15323,哥布林指甲,Ногти гоблина,Ongle de gobelin,Goblin Nail,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15324,食人魔獠牙,Клык огра,Dent d'ogre,Ogre Tooth,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15331,兽人的信物：智者,Знак орка: Мудрец,Talisman d'orc sage,Wise Orc Talisman,icons/quest/icon_item_quest170.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15332,兽人的信物：勇者,Знак орка: Храбрец,Talisman d'orc courageux,Courageous Orc Talisman,icons/quest/icon_item_quest170.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15334,牛头怪角,Рог минотавра,Corne de minotaure,Minotaur Horn,icons/quest/icon_item_quest111.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15335,牛头怪蹄,Копыто минотавра,Sabot de minotaure,Minotaur Hoof,icons/quest/icon_item_quest069.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15337,石化蜥蜴眼,Глаз василиска,Œil de basilic,Basilisk Eye,icons/icon_item_0184.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15338,忐忑的石心脏,Трепещущее каменное сердце,Cœur de pierre palpitant,Beating Stone Heart,icons/quest/icon_item_quest028.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15341,螯爪,Клешни,Pince,Pincer,icons/icon_item_0173.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15343,狮鹫尾毛,Хвостовое перо грифона,Plume rectrice de griffon,Griffin Tail Feather,icons/quest/icon_item_quest129.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15344,长颈鹿蹄,Копыто жирафа,Sabot de girafe,Giraffe Hoof,icons/quest/icon_item_quest069.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15367,阴郁亡者的绝望,Отчаяние унылого мертвеца,Essence mortelle sinistre,Dismal Death Essence,icons/quest/icon_item_quest171.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15369,巨大的蜘蛛网,Огромная паутина,Grande toile,Large Cobweb,icons/quest/icon_item_quest020.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15375,史莱姆唾腺,Слюнная железа слайма,Glande de limon,Slime Gland,icons/icon_item_0205.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15378,美洲狮爪,Коготь пумы,Griffe de puma,Cougar Claw,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15383,克拉肯之眼,Глаз кракена,Œil de kraken,Kraken Eye,icons/icon_item_0184.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+15386,万紫千红的叶子,Пестрые листья,Feuille brillante,Bright Leaf,icons/quest/icon_item_quest168.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15387,蝎子毒腺,Ядовитая железа,Glande à venin de scorpion,Scorpion Venom Gland,icons/icon_item_0205.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15392,虎爪,Коготь тигра,Griffe de tigre,Tiger Claw,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15415,螳螂皮,Куколка богомола,Mue de mante,Mantis Husk,icons/icon_item_0172.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15418,捕蝇草根,Корень венериной мухоловки,Racine de dionée,Flytrap Root,icons/icon_item_0151.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15419,大王花茎,Стебель раффлезии,Tige de rafflésie,Rafflesia Stem,icons/quest/icon_item_quest166.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15420,曼德拉草根,Корень мандрагоры,Racine de mandragore,Mandragora Root,icons/icon_item_0151.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15421,含冤之刃,Клинок обиды,Couteau ensanglanté,Bloody Knife,icons/quest/icon_item_quest161.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15424,双头蛇鳞片,Чешуя сандуса,Écaille de vipère bicéphale,Twinhead Viper Scale,icons/icon_item_0096.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15435,碎裂的水色幻想,Развеянная бирюзовая иллюзия,Mirage disloqué,Shattered Mirage,icons/icon_item_0159.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15436,消散的风之记忆,Воспоминания рассеянного ветра,Souvenir balayé,Windblown Memory,icons/icon_item_0157.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15437,佩皮吹管,Ветряной пистолет пеппи,Sarbacane de Chlorolien,Greenman Blowpipe,icons/quest/icon_item_quest033.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15441,鹰毛,Соколиное перо,Plume de faucon,Falcon Feather,icons/icon_item_0170.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15442,骏鹰羽毛,Перо гиппогрифа,Plume d'hippogryphe,Hippogryph Feather,icons/icon_item_0170.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15445,猫头鹰爪,Когти совы,Griffe de hibou,Owl Claw,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15447,乌鸦爪,Когти вороны,Serre de corbeau,Crow Claw,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15449,尖喙鸟爪,Когти птицы-шипоклюва,Griffe en bec-rasoir,Razorbeak Claw,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15452,雪狮爪子,Когти снежного льва,Griffe de lion des neiges,Snowlion Claw,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15453,郊狼爪,Когти койота,Griffe de coyote,Coyote Claw,icons/quest/icon_item_quest112.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15454,乌鸦羽毛,Перо вороны,Plume de corbeau,Crow Feather,icons/icon_item_0170.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15458,郊狼獠牙,Клык койота,Croc de coyote,Coyote Fang,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15464,虎牙,Клык тигра,Croc de tigre,Tiger Fang,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15467,雪狮獠牙,Клык снежного льва,Croc de lion des neiges,Snowlion Fang,icons/icon_item_0189.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15488,乌龟贝壳,Панцирь черепахи,Carapace de tortue,Turtle Shell,icons/quest/icon_item_quest155.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15490,龙虾贝壳,Панцирь морского рака,Carapace de homard,Lobster Shell,icons/quest/icon_item_quest155.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15508,死亡精华,Эликсир смерти,Essence mortelle,Death Essence,icons/quest/icon_item_quest173.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15512,奇美拉翅膀,Крыло химеры,Aile de chimère,Chimera Wing,icons/icon_item_0187.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15513,昆虫薄翼,Тонкое крыло насекомого,Délicate aile d'insecte,Delicate Insect Wing,icons/icon_item_0187.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15514,有毒蜂针,Ядовитое пчелиное жало,Dard d'abeille,Bee Stinger,icons/quest/icon_item_quest041.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15526,断绝的记忆碎片,Фрагмент обрывочных воспоминаний,Souvenir arraché,Severed Memory,icons/quest/icon_item_quest122.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15530,鹿蹄,Копыто оленя,Sabot de chevreuil,Deer Hoof,icons/quest/icon_item_quest069.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15531,野牛蹄,Копыто бизона,Sabot de buffle,Buffalo Hoof,icons/quest/icon_item_quest069.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15621,浮游石,Мерцающий осколок,Prisme luisant,Glowing Prism,icons/icon_item_0296.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+15632,亚纳锭,Слиток анадия,Lingot d'Anya,Anya Ingot,icons/icon_item_1167.dds.png,金属,Слиток металла,Métal,Metal
+15711,金蛋,Золотое яйцо,Œuf doré,Golden Egg,icons/icon_item_1440.dds.png,生产材料,Редкий материал,Matériau,Material
+15715,火药,Порох,Pincée de poudre à canon,Gunpowder,icons/quest/icon_item_quest019.dds.png,生产材料,Редкий материал,Matériau,Material
+15730,天然橡胶,Каучуковая смола,Caoutchouc naturel,Natural Rubber,icons/icon_item_5201.dds.png,橡胶,Каучук,Caoutchouc,Rubber
+15765,竹笋,Побеги бамбука,Pousse de bambou,Bamboo Shoot,icons/icon_item_1443.dds.png,生产材料,Редкий материал,Matériau,Material
+16321,高压石材,Гладкий каменный блок,Pierre résistante,Sturdy Stone,icons/icon_item_0349.dds.png,石材,Камень,Brique de pierre,Stone Brick
+16323,星升石材,Сияющий каменный блок,Pierre d'étoile montante,Rising Star Stone,icons/icon_item_0351.dds.png,石材,Камень,Brique de pierre,Stone Brick
+16324,胶合木材,Лакированная древесина,Planche de bois délicat,Fine Lumber,icons/icon_item_0346.dds.png,木材,Древесина,Planche,Lumber
+16325,阳光之锭,Слиток солнечного металла,Lingot de sol-crête,Sunridge Ingot,icons/icon_item_0280.dds.png,金属,Слиток металла,Métal,Metal
+16326,纤维木材,Мерцающая древесина,Planche de bois d'abattage de Nuri,Nuri Forest Lumber,icons/icon_item_0348.dds.png,木材,Древесина,Planche,Lumber
+16327,皮革,Сыромятная кожа,Cuir,Leather,icons/icon_item_0352.dds.png,皮革,Кожа,Peau,Hide
+16328,优质皮革,Дубленая кожа,Morceau de cuir délicat,Fine Leather,icons/icon_item_0353.dds.png,皮革,Кожа,Peau,Hide
+16330,真皮皮革,Тисненая кожа,Morceau de cuir d'esprit du vent,Wind Spirit Leather,icons/icon_item_0355.dds.png,皮革,Кожа,Peau,Hide
+16344,亮纹布料,Отбеленная ткань,Tissu magnifiquement coloré,Beautifully Colored Fabric,icons/icon_item_0357.dds.png,布料,Ткань,Tissu,Fabric
+16346,云纹布料,Пропитанная ткань,Tissu de Tissenuage,Cloudspun Fabric,icons/icon_item_0359.dds.png,布料,Ткань,Tissu,Fabric
+17774,银锭,Слиток серебра,Lingot d'argent,Silver Ingot,icons/icon_item_0325.dds.png,稀有金属,Драгоценный металл,Métal précieux,Precious Metal
+17775,金锭,Слиток золота,Lingot d'or,Gold Ingot,icons/icon_item_0324.dds.png,稀有金属,Драгоценный металл,Métal précieux,Precious Metal
+17776,源晶锭,Слиток акхиума,Lingot d'archeum,Archeum Ingot,icons/icon_item_0282.dds.png,金属,Слиток металла,Métal,Metal
+17803,坚韧的桅杆木,Мачтовая древесина,Mât résistant,Sturdy Mast Lumber,icons/icon_item_0036.dds.png,木材,Древесина,Planche,Lumber
+18431,哈羯之泪,Слезы искупления,Larmes d'Haje,Haje's Tears,icons/icon_item_0306.dds.png,生产材料,Редкий материал,Matériau,Material
+18432,一公升的汗水,Пот стыда,Suée d'instrospection,Introspection's Perspiration,icons/icon_item_0298.dds.png,生产材料,Редкий материал,Matériau,Material
+19020,大海的温暖之息,Светящийся шар,Essence de brise marine,Seabreeze Essence,icons/icon_item_0079.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+19034,打捞袋制作工具,Детали для подъемного мешка,Kit pour bourse de récupération,Recovery Pouch Kit,icons/quest/icon_item_quest026.dds.png,生产材料,Редкий материал,Matériau,Material
+19402,叶片柔顺剂,Очищенное пропиточное масло,Pigment de petite feuille,Small Leaf Pigment,icons/icon_item_0641.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19403,根茎柔顺剂,Процеженное пропиточное масло,Pigment de tige douce,Soft Stem Pigment,icons/icon_item_0642.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19404,香花柔顺剂,Прозрачное пропиточное масло,Pigment de pétale parfumé,Scented Petal Pigment,icons/icon_item_0643.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19407,杂质皮革油,Очищенный лакировочный состав,Bouteille d'huile soyeuse visqueuse,Viscous Glossy Oil,icons/icon_item_0649.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19408,透明皮革油,Процеженный лакировочный состав,Huile émulsionnée,Emulsified Oil,icons/icon_item_0650.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19409,五彩皮革油,Прозрачный лакировочный состав,Bouteille d'huile fortement colorée,Deeply Colored Oil,icons/icon_item_0651.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19410,浊体翻新剂,Очищенное шлифовальное масло,Cirage brut,Rough Polish,icons/icon_item_0645.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19411,珍珠翻新剂,Процеженное шлифовальное масло,Cirage non collant,Non-Stick Polish,icons/icon_item_0646.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19412,彩虹翻新剂,Прозрачное шлифовальное масло,Cirage arc-en-ciel,Rainbow Polish,icons/icon_item_0647.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19413,轻盈的握把,Легкая рукоятка,Poignée légère,Light Handle,icons/icon_item_dagger_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19414,坚硬的握把,Массивная рукоятка,Poignée dure,Hard Handle,icons/icon_item_dagger_0003.dds.png,生产材料,Редкий материал,Matériau,Material
+19415,坚固的握把,Прочная рукоятка,Poignée solide,Solid Handle,icons/icon_item_dagger_0007.dds.png,生产材料,Редкий материал,Matériau,Material
+19416,轻盈的盾面,Легкий круглый щит,Armature de bouclier légère,Light Shield Frame,icons/icon_item_shield_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19417,坚硬的盾面,Массивный круглый щит,Armature de bouclier dure,Hard Shield Frame,icons/icon_item_shield_0003.dds.png,生产材料,Редкий материал,Matériau,Material
+19418,坚固的盾面,Прочный круглый щит,Armature de bouclier solide,Solid Shield Frame,icons/icon_item_shield_0002.dds.png,生产材料,Редкий материал,Matériau,Material
+19419,笔直的手柄,Ровный мешок,Sac droit,Straight Sack,icons/icon_item_spear_1h_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19420,光滑的手柄,Гладкий мешок,Sac lisse,Smooth Sack,icons/icon_item_spear_2h_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19421,结实的握把,Крепкий мешок,Sac résistant,Sturdy Sack,icons/icon_item_spear_2h_0002.dds.png,生产材料,Редкий материал,Matériau,Material
+19422,笔直的弓身,Ровный округлый лук,Armature d'arc droite,Straight Bow Frame,icons/icon_item_bow_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19423,光滑的弓身雏形,Гладкий округлый лук,Armature d'arc lisse,Smooth Bow Frame,icons/icon_item_bow_0004.dds.png,生产材料,Редкий материал,Matériau,Material
+19424,结实的盾面,Крепкий округлый лук,Armature d'arc résistante,Sturdy Bow Frame,icons/icon_item_bow_0005.dds.png,生产材料,Редкий материал,Matériau,Material
+19425,粗糙的棍子,Неуклюжая палка,Bourdon brut,Rough Rod,icons/icon_item_staff_1h_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19426,纤细的棍子,Искусно сделанная палка,Bourdon délicat,Delicate Rod,icons/icon_item_staff_1h_0003.dds.png,生产材料,Редкий материал,Matériau,Material
+19427,古风棍子,Старинная палка,Bourdon ancien,Vintage Rod,icons/icon_item_staff_1h_0004.dds.png,生产材料,Редкий материал,Matériau,Material
+19428,粗糙的乐器雏形,Неуклюжий округлый музыкальный инструмент,Armature brute d'instrument,Rough Instrument Frame,icons/icon_item_0037.dds.png,生产材料,Редкий материал,Matériau,Material
+19429,竹制长竿,Бамбуковое удилище,Manche de canne à pêche en bambou,Bamboo Fishing Pole Frame,icons/icon_item_1127.dds.png,生产材料,Редкий материал,Matériau,Material
+19430,铁制长竿,Железное удилище,Scion de canne à pêche en acier,Steel Fishing Pole Frame,icons/icon_item_1128.dds.png,生产材料,Редкий материал,Matériau,Material
+19448,细须柔顺剂,Густое пропиточное масло,Pigment de petite racine,Small Root Pigment,icons/icon_item_0640.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19449,胚芽皮革油,Густой лакировочный состав,Bouteille d'huile de petite graine,Small Seed Oil,icons/icon_item_0648.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19450,双花翻新剂,Густое шлифовальное масло,Cirage opaque,Opaque Polish,icons/icon_item_0644.dds.png,炼金专用油,Алхимическое масло,Alchemy Oil,Alchemy Oil
+19451,弹性长竿,Латунное удилище,Scion de canne à pêche en acier souple,Springy Steel Fishing Pole Frame,icons/icon_item_1129.dds.png,生产材料,Редкий материал,Matériau,Material
+19452,粗劣的手柄,Грубо сшитый мешок,Sac rudimentaire,Crude Sack,icons/icon_item_spear_1h_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19453,合金长竿,Позолоченное удилище,Manche de canne à pêche doré,Gilt Fishing Pole Frame,icons/icon_item_1130.dds.png,生产材料,Редкий материал,Matériau,Material
+19454,粗劣的扶手,Грубо сделанная рукоятка,Poignée rudimentaire,Crude Handle,icons/icon_item_dagger_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19455,粗劣的棍子,Грубо сделанная палка,Bourdon rudimentaire,Crude Rod,icons/icon_item_staff_1h_0001.dds.png,生产材料,Редкий материал,Matériau,Material
+19456,源晶装饰鱼竿原型,Акхиумное удилище,Manche de canne à pêche en archeum,Archeum Fishing Pole Frame,icons/icon_item_1131.dds.png,生产材料,Редкий материал,Matériau,Material
+19467,战车炮塔,Орудийная башня,Canon de tank,Tank Cannon,icons/icon_item_0213.dds.png,生产材料,Редкий материал,Matériau,Material
+19477,装备制作工具箱,Ящик с инструментами для изготовления оборудования,Boîte à outil d'artisanat,Equipment Crafting Toolbox,icons/quest/icon_item_quest070.dds.png,生产材料,Редкий материал,Matériau,Material
+20174,凝油,Твердый жир,Bouteille d'huile figée,Congealed Oil,icons/quest/icon_item_quest148.dds.png,生产材料,Редкий материал,Matériau,Material
+23710,诺伊的微笑,Чистая слеза Нуи,Sourire de Nui,Nui's Smile,icons/icon_item_0657.dds.png,金属,Слиток металла,Métal,Metal
+23711,德翡纳之光,Вспышка дельфината,Flammes de Delphinad,Delphinad Flame,icons/icon_item_0656.dds.png,稀有金属,Драгоценный металл,Métal précieux,Precious Metal
+23712,血之源晶,Акхиум свежей крови,Archeum sanglant,Blood Archeum,icons/icon_item_0658.dds.png,稀有金属,Драгоценный металл,Métal précieux,Precious Metal
+23838,水母毒液,Яд медузы,Poison de méduse,Jellyfish Poison,icons/icon_item_0205.dds.png,生产材料,Редкий материал,Matériau,Material
+24911,银月之尘,Лунная пыль,Lunarite,Lunarite,icons/icon_item_0848.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+24912,银月之石,Лунный слиток,Lunarite délicate,Fine Lunarite,icons/icon_item_0849.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+24913,银月之晶,Лунная призма,Lunarite supérieure,Superior Lunarite,icons/icon_item_0850.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+24914,银月之华,Лунная эссенция,Lunarite primordiale,Prime Lunarite,icons/icon_item_0851.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+26357,牛粪,Коровий навоз,Fumier de vache,Cow Manure,icons/quest/icon_item_quest066.dds.png,生产材料,Редкий материал,Matériau,Material
+26853,原大陆之书,Дельфийская книга об огранке камней,Livre d'Auroria,Book of Auroria,icons/icon_item_0976.dds.png,生产材料,Редкий материал,Matériau,Material
+27278,白纸,Бумага,Morceau de papier,Paper,icons/icon_item_0233.dds.png,特殊材料,Особый материал,Special Material,Special Material
+27540,资格证明书-新手,Сертификат качества необычных товаров,Certificat de néophyte,Apprentice's Certificate,icons/icon_item_0857.dds.png,生产材料,Редкий материал,Matériau,Material
+27541,资格证明书-熟工,Сертификат качества редких товаров,Certificat d'artificier,Artificer's Certificate,icons/icon_item_0857.dds.png,生产材料,Редкий материал,Matériau,Material
+27542,资格证明书-工匠,Сертификат качества уникальных товаров,Certificat de fabricant,Artisan's Certificate,icons/icon_item_0857.dds.png,生产材料,Редкий материал,Matériau,Material
+27543,资格证明书-专家,Сертификат качества легендарных товаров,Certificat de conquérant,Conqueror's Certificate,icons/icon_item_0857.dds.png,生产材料,Редкий материал,Matériau,Material
+27544,初级捆制作书,Книга с выкройками,Plan d'assemblage de paquet basique,Basic Pack Blueprint,icons/icon_item_1125.dds.png,生产材料,Редкий материал,Matériau,Material
+27546,活性炼金溶液,Ртуть,Solution instable,Unstable Solution,icons/icon_item_0290.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+27652,捆包制作书,Книга с выкройками,Plan d'assemblage de paquet,Pack Blueprint,icons/icon_item_1125.dds.png,生产材料,Редкий материал,Matériau,Material
+28187,海光次元之石,Средоточие стихий,Pierre fortensel,Brinebrawn Stone,icons/icon_item_2729.dds.png,生产材料,Редкий материал,Matériau,Material
+28188,深渊结晶,Сплав стихий,Cristal abyssal,Abyssal Crystal,icons/icon_item_1235.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+28189,深渊碎片,Осколок хаоса,Éclat abyssal,Abyssal Shard,icons/icon_item_1236.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+28219,耀眼的闪电之华,Клубок молний,Essence de foudre brillante,Shining Lightning Essence,icons/icon_item_0991.dds.png,生产材料,Редкий материал,Matériau,Material
+28296,光辉的武器强化卷轴,Свиток сильных чар оружейника,Parchemin resplendissant de renivellement d'arme,Resplendent Weapon Regrade Scroll,icons/icon_item_1270.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+28297,光辉的防具强化卷轴,Свиток сильных чар бронника,Parchemin resplendissant de renivellement d'armure,Resplendent Armor Regrade Scroll,icons/icon_item_1271.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+28298,武器强化卷轴,Свиток чар оружейника,Parchemin de renivellement d'arme,Weapon Regrade Scroll,icons/icon_item_1268.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+28299,防具强化卷轴,Свиток чар бронника,Parchemin de renivellement d'armure,Armor Regrade Scroll,icons/icon_item_1269.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+28305,空卷轴,Пергамент,Parchemin de renivellement vierge,Blank Regrade Scroll,icons/icon_item_1267.dds.png,特殊材料,Особый материал,Special Material,Special Material
+28449,品质认证书：良种骏马,Племенное свидетельство конезаводчика,Certificat de pur-sang,Purebred Certificate,icons/icon_item_0857.dds.png,生产材料,Редкий материал,Matériau,Material
+28874,摩耳甫斯的头发,Прядь волос Морфеоса,Cheveux de Morpheus,Morpheus's Hair,icons/icon_item_0033.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+28914,被封印的时空之痕卷轴碎片,Обрывок старинного ритуала,Morceau de parchemin de l'espace-temps,Timespace Scroll Scrap,icons/quest/icon_item_quest016.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+28969,灼烧的阳光之锭,Слиток пламенного металла,Lingot de sol-crête brûlant,Blazing Sunridge Ingot,icons/icon_item_1347.dds.png,金属,Слиток металла,Métal,Metal
+28970,柔韧的真皮皮革,Пламенеющая кожа,Morceau de cuir d'esprit du vent brûlant,Blazing Wind Spirit Leather,icons/icon_item_1348.dds.png,皮革,Кожа,Peau,Hide
+28971,燃烧的云纹布料,Пламенеющая ткань,Tissu de Tissenuage brûlant,Blazing Cloudspun Fabric,icons/icon_item_1346.dds.png,布料,Ткань,Tissu,Fabric
+28973,龙牙兵的骨饰,Украшение из костей экихона,Carcanet des Guivrelin,Wyrmkin Carcanet,icons/icon_item_1352.dds.png,生产材料,Редкий материал,Matériau,Material
+28974,龙骨碎片,Обломок кости дракона,Os de dragon abîmé,Chipped Dragon Bone,icons/icon_item_1353.dds.png,生产材料,Редкий материал,Matériau,Material
+28975,燃烧的永恒之火,Искра драконьего пламени,Braises éternelles,Eternal Embers,icons/icon_item_1354.dds.png,生产材料,Редкий материал,Matériau,Material
+28976,红龙的链鳞,Обломок чешуи красного дракона,Écaille endurcie de dragon rouge,Hardened Red Dragon Scale,icons/icon_item_1340.dds.png,生产材料,Редкий материал,Matériau,Material
+28977,红龙之心,Сердце красного дракона,Cœur de dragon rouge,Red Dragon Heart,icons/icon_item_1341.dds.png,生产材料,Редкий материал,Matériau,Material
+28978,红龙刺鬃,Огненная чешуя,Crête dorsale de dragon rouge,Red Dragon Spinal Ridge,icons/icon_item_1342.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+28979,海之泡沫,Сфера бушующих волн,Écume d'Arcadia,Arcadian Seafoam,icons/icon_item_1355.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+28980,达忽塔之像,Статуэтка Дауты,Faveur de Dahuta,Dahuta's Favor,icons/icon_item_1357.dds.png,生产材料,Редкий материал,Matériau,Material
+28981,翻滚的漩涡,Сфера водяных вихрей,Remous incessant,Swirling Whirlpool,icons/icon_item_1356.dds.png,生产材料,Редкий материал,Matériau,Material
+28982,疯狂的灵魂,Дух безумия,Esprit dérangé,Deranged Spirit,icons/icon_item_1358.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+28983,波浪型发夹雏形,Чертеж: диадема морской ведьмы,Prototype de bandeau gemme-vive,Gemfast Circlet Prototype,icons/costume_hm/nu_m_hm_cloth164.dds.png,生产材料,Редкий материал,Matériau,Material
+28984,唤雨帽握把,Выкройка: капитанская треуголка,Prototype de tricorne de tempête en mer,Seastorm Tricorne Prototype,icons/costume_hm/nu_m_hm_leather217.dds.png,生产材料,Редкий материал,Matériau,Material
+28985,风浪注视者护目镜雏形,Схема: очки навигатора,Prototype de lunettes embuées de fin limier,Sleuth's Steamgoggles Prototype,icons/costume_hm/nu_m_hm_metal208.dds.png,生产材料,Редкий материал,Matériau,Material
+28986,时空之痕封印卷轴,Ритуал призыва Сальфирона,Parchemin de l'espace-temps,Timespace Scroll,icons/icon_item_0004.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+29165,平静的漩涡,Безмолвный водоворот,Remous apaisé,Calmed Whirlpool,icons/icon_item_1356.dds.png,生产材料,Редкий материал,Matériau,Material
+29211,涌动的漩涡,Вихревой водоворот,Remous incessant,Swirling Whirlpool,icons/icon_item_1356.dds.png,生产材料,Редкий материал,Matériau,Material
+29212,别致的鸡毛,Перо довольной курицы,Plume de poule épanouie,Thriving Hen's Feather,icons/icon_item_0170.dds.png,生产材料,Редкий материал,Matériau,Material
+29213,飘扬的永恒之火,Искра танцующего пламени,Braises éternelles cendreuses,Ashy Eternal Embers,icons/icon_item_1354.dds.png,生产材料,Редкий материал,Matériau,Material
+29214,燃烧的龙骨碎片,Обломок кости сгоревшего дракона,Os de dragon abîmé brûlant,Burning Chipped Dragon Bone,icons/icon_item_1353.dds.png,生产材料,Редкий материал,Matériau,Material
+29215,牛头怪的图腾,Тотем минотавра,Totem de minotaure,Minotaur Totem,icons/icon_item_1352.dds.png,生产材料,Редкий материал,Matériau,Material
+29216,汹涌的漩涡,Ледяная пена,Écume glacée,Chilled Seafoam,icons/icon_item_1355.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+29217,雪人之泪,Слеза снежного человека,Larmes de yéti,Yeti Tears,icons/icon_item_1352.dds.png,生产材料,Редкий материал,Matériau,Material
+29218,凝结的雪人之泪,Накопленные слезы снежного человека,Larmes de yéti taillées,Shaped Yeti Tears,icons/icon_item_1352.dds.png,生产材料,Редкий материал,Matériau,Material
+29219,撕裂的刺鬃碎片,Кусок шипастой гривы,Pendentif en os calcinés,Charred Bone Pendant,icons/icon_item_1342.dds.png,生产材料,Редкий материал,Matériau,Material
+29220,魔化女妖翼翎,Перо из крыла маленькой гарпии,Plume de harpie chargée de haine,Rage-Filled Harpy Pinion,icons/icon_item_1352.dds.png,生产材料,Редкий материал,Matériau,Material
+29221,女妖翼翎,Перо из крыла гарпии,Plume en cristal,Crystal Feather,icons/icon_item_1352.dds.png,生产材料,Редкий материал,Matériau,Material
+29222,魍魉的摇篮,Колыбель демонов,Collier de berceau fantôme,Ghost Cradly Necklace,icons/icon_item_1352.dds.png,生产材料,Редкий материал,Matériau,Material
+29238,高密度纤维木材,Пламенеющие доски,Planche de bois d'abattage de Nuri brûlant,Blazing Nuri Forest Lumber,icons/icon_item_3210.dds.png,木材,Древесина,Planche,Lumber
+29280,蜜蜡,Пчелиный воск,Morceau de cire,Wax Nugget,icons/icon_item_1401.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+29304,草原奶酪,Зрелый крестьянский сыр,Fromage des champs,Prairie Cheese,icons/icon_item_0225.dds.png,生产材料,Редкий материал,Matériau,Material
+29305,蜂蜜酵素,Экстракт прополиса,Miel prospère,Prosperous Honey,icons/icon_item_1399.dds.png,生产材料,Редкий материал,Matériau,Material
+29306,镇痛药水,Целебная наливка,Herbes séchées,Dried Herbs,icons/icon_item_1400.dds.png,生产材料,Редкий материал,Matériau,Material
+29499,亚历山大的手杖,Посох Алесандера,Bâton d'Alexander,Alexander's Staff,icons/icon_item_staff_2h_0032.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+29511,克拉肯之眼,Глаз кракена,Œil de Kraken,Kraken Eye,icons/icon_item_0184.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+29512,罕乌雷的心脏,Сердце Сехекмет,Cœur d'Hanure,Hanure's Heart,icons/quest/icon_item_quest198.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+29513,安塔伦的手杖,Посох Анталлона,Bâton d'Anthalon,Anthalon's Staff,icons/icon_item_staff_2h_0003.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+29514,突击队长的灵魂石,Осколок души рыцаря-узурпатора,Pierre d'âme de Chien de Kyrios,Hound of Kyrios Soulstone,icons/quest/icon_item_quest021.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+29515,巴尔拉巴的魔力石,Лавовый камень Сальфирона,Pierre de mana de Vyrava,Vyrava's Manastone,icons/quest/icon_item_quest073.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+29612,古龙的碎骨,Фрагмент драконьих костей,Éclat d'os de dragon,Dragon Bone Chip,icons/icon_item_1353.dds.png,生产材料,Редкий материал,Matériau,Material
+29767,品质认证书：良种熊崽,Родословная питомца,Certificat d'ours pur-sang,Purebred Bear Certificate,icons/icon_item_0857.dds.png,生产材料,Редкий материал,Matériau,Material
+30002,蕾娜的戒指,Кольцо Лореи,Anneau de Meina,Meina's Ring,icons/icon_item_ring_0004.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+30003,格蓝的戒指,Кольцо Гленна,Anneau de Glenn,Glenn's Ring,icons/icon_item_ring_0004.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+30004,美杜莎的鳞发,Чешуя Ашьяры,Volant écailleux de Jola,Jola's Scaly Frill,icons/icon_item_0053.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+30174,端雅布料,Изящная ткань,Tissu fragile,Delicate Fabric,icons/icon_item_0058.dds.png,布料,Ткань,Tissu,Fabric
+30176,纯朴布料,Простая ткань,Tissu uni,Plain Fabric,icons/icon_item_0356.dds.png,布料,Ткань,Tissu,Fabric
+30628,巨树原木堆,Вязанка бревен,Bûches d'abondance,Cornucopia Logs,icons/icon_item_0568.dds.png,木材,Древесина,Planche,Lumber
+30898,切碎的蔬菜,Нашинкованные овощи,Primeurs hachées,Chopped Produce,icons/icon_item_1765.dds.png,特殊材料,Особый материал,Special Material,Special Material
+30899,浓缩的果汁,Свежевыжатый сок,Purée du verger,Orchard Puree,icons/icon_item_1759.dds.png,特殊材料,Особый материал,Special Material,Special Material
+30900,晒干的花草,Измельченные лепестки цветов,Fleurs séchées,Dried Flowers,icons/icon_item_1762.dds.png,特殊材料,Особый материал,Special Material,Special Material
+30901,捣碎的香料,Молотые специи,Épices moulues,Ground Spices,icons/icon_item_1763.dds.png,特殊材料,Особый материал,Special Material,Special Material
+30902,谷物细粉,Измельченные злаки,Céréales moulues,Ground Grain,icons/icon_item_1769.dds.png,特殊材料,Особый материал,Special Material,Special Material
+30903,熏蒸的药粉,Лекарственный порошок,Poudre médicinale,Medicinal Powder,icons/icon_item_1768.dds.png,特殊材料,Особый материал,Special Material,Special Material
+30905,干净的肉脯,Мясной фарш,Viande dégraissée,Trimmed Meat,icons/icon_item_1764.dds.png,特殊材料,Особый материал,Special Material,Special Material
+31009,新月赤石粉,Красный эмалевый пигмент,Lunarite de feu,Fire Lunarite,icons/icon_item_1561.dds.png,生产材料,Редкий материал,Matériau,Material
+31010,新月赤石晶,Красное эмалевое стекло,Lunarite supérieure Lumifeu,Superior Fireglow Lunarite,icons/icon_item_1565.dds.png,生产材料,Редкий материал,Matériau,Material
+31011,新月赤石片,Красная эмалевая глазурь,Lunarite délicate Lumifeu,Fine Fireglow Lunarite,icons/icon_item_1563.dds.png,生产材料,Редкий материал,Matériau,Material
+31012,新月碧石粉,Синий эмалевый пигмент,Lunarite des vagues,Wave Lunarite,icons/icon_item_1562.dds.png,生产材料,Редкий материал,Matériau,Material
+31013,新月碧石晶,Синее эмалевое стекло,Lunarite supérieure Lumivague,Superior Waveglow Lunarite,icons/icon_item_1566.dds.png,生产材料,Редкий материал,Matériau,Material
+31014,新月碧石片,Синяя эмалевая глазурь,Lunarite délicate Lumivague,Fine Waveglow Lunarite,icons/icon_item_1564.dds.png,生产材料,Редкий материал,Matériau,Material
+31015,洞察·新月黄石粉,Пигмент для гравировки штурмового копья,Lunarite de rafale : Perforation,Gale Lunarite: Pierce,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31016,狂怒·新月黄石粉,Пигмент для гравировки секиры,Lunarite de rafale : Colère,Gale Lunarite: Wrath,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31017,冷静·新月黄石粉,Пигмент для гравировки натянутого лука,Lunarite de rafale : Sérénité,Gale Lunarite: Serenity,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31018,冷彻·新月黄石粉,Пигмент для двойной гравировки натянутого лука,Lunarite de rafale : Constance,Gale Lunarite: Constance,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31019,怒涛·新月黄石粉,Пигмент для гравировки песочных часов,Lunarite de rafale : Torrent,Gale Lunarite: Torrent,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31020,百中·新月黄石粉,Пигмент для двойной гравировки рыцарского шлема,Lunarite de rafale : Fidélité,Gale Lunarite: Fidelity,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31021,愤怒·新月黄石粉,Пигмент для гравировки секиры,Lunarite de rafale : Fureur,Gale Lunarite: Fury,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31022,诡诈·新月黄石粉,Пигмент для гравировки дремлющего ока,Lunarite de rafale : Réconfort,Gale Lunarite: Consolation,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31023,狡诈·新月黄石粉,Пигмент для двойной гравировки дремлющего ока,Lunarite de rafale : Consolation,Gale Lunarite: Solace,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31024,威压·新月黄石粉,Пигмент для двойной гравировки лика Акритеса,Lunarite de rafale : Surpuissance,Gale Lunarite: Overpower,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31025,威胁·新月黄石粉,Пигмент для гравировки лика Акритеса,Lunarite de rafale : Agressivité,Gale Lunarite: Aggro,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31026,慈悲·新月黄石粉,Пигмент для гравировки чаши врачевателя,Lunarite de rafale : Pitié,Gale Lunarite: Mercy,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31027,慈爱·新月黄石粉,Пигмент для двойной гравировки чаши врачевателя,Lunarite de rafale : Bienveillance,Gale Lunarite: Benevolence,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31028,疾风·新月黄石粉,Пигмент для гравировки мчащегося всадника,Lunarite de rafale : Tempête,Gale Lunarite: Tempest,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31029,破坏·新月黄石粉,Пигмент для гравировки падающей звезды,Lunarite de rafale : Destruction,Gale Lunarite: Destruction,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31030,破灭·新月黄石粉,Пигмент для двойной гравировки падающей звезды,Lunarite de rafale : Devin,Gale Lunarite: Harbinger,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31031,必中·新月黄石粉,Пигмент для гравировки рыцарского шлема,Lunarite de rafale : Maîtrise,Gale Lunarite: Mastery,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+31032,洞察·新月黄石晶,Стекло для гравировки штурмового копья,Lunarite supérieure de rafale : Perforation,Superior Gale Lunarite: Pierce,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31033,狂怒·新月黄石晶,Стекло для двойной гравировки секиры,Lunarite supérieure de rafale : Colère,Superior Gale Lunarite: Wrath,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31034,冷静·新月黄石晶,Стекло для гравировки натянутого лука,Lunarite supérieure de rafale : Sérénité,Superior Gale Lunarite: Serenity,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31035,冷彻·新月黄石晶,Стекло для двойной гравировки натянутого лука,Lunarite supérieure de rafale : Constance,Superior Gale Lunarite: Constance,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31036,怒涛·新月黄石晶,Стекло для гравировки песочных часов,Lunarite supérieure de rafale : Torrent,Superior Gale Lunarite: Torrent,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31037,百中·新月黄石晶,Стекло для двойной гравировки рыцарского шлема,Lunarite supérieure de rafale : Fidélité,Superior Gale Lunarite: Fidelity,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31038,愤怒·新月黄石晶,Стекло для гравировки секиры,Lunarite supérieure de rafale : Fureur,Superior Gale Lunarite: Fury,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31039,诡诈·新月黄石晶,Стекло для гравировки дремлющего ока,Lunarite supérieure de rafale : Réconfort,Superior Gale Lunarite: Consolation,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31040,狡诈·新月黄石晶,Стекло для двойной гравировки дремлющего ока,Lunarite supérieure de rafale : Consolation,Superior Gale Lunarite: Solace,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31041,威压·新月黄石晶,Стекло для двойной гравировки лика Акритеса,Lunarite supérieure de rafale : Surpuissance,Superior Gale Lunarite: Overpower,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31042,威胁·新月黄石晶,Стекло для гравировки лика Акритеса,Lunarite supérieure de rafale : Agressivité,Superior Gale Lunarite: Aggro,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31043,慈悲·新月黄石晶,Стекло для гравировки чаши врачевателя,Lunarite supérieure de rafale : Pitié,Superior Gale Lunarite: Mercy,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31044,慈爱·新月黄石晶,Стекло для двойной гравировки чаши врачевателя,Lunarite supérieure de rafale : Bienveillance,Superior Gale Lunarite: Benevolence,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31045,疾风·新月黄石晶,Стекло для гравировки мчащегося всадника,Lunarite supérieure de rafale : Tempête,Superior Gale Lunarite: Tempest,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31046,破坏·新月黄石晶,Стекло для гравировки падающей звезды,Lunarite supérieure de rafale : Destruction,Superior Gale Lunarite: Destruction,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31047,破灭·新月黄石晶,Стекло для двойной гравировки падающей звезды,Lunarite supérieure de rafale : Devin,Superior Gale Lunarite: Harbinger,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31048,必中·新月黄石晶,Стекло для гравировки рыцарского шлема,Lunarite supérieure de rafale : Maîtrise,Superior Gale Lunarite: Mastery,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+31049,洞察·新月黄石片,Глазурь для гравировки штурмового копья,Lunarite délicate de rafale : Perforation,Fine Gale Lunarite: Pierce,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31050,狂怒·新月黄石片,Глазурь для двойной гравировки секиры,Lunarite délicate de rafale : Colère,Fine Gale Lunarite: Wrath,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31051,冷静·新月黄石片,Глазурь для гравировки натянутого лука,Lunarite délicate de rafale : Sérénité,Fine Gale Lunarite: Serenity,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31052,冷彻·新月黄石片,Глазурь для двойной гравировки натянутого лука,Lunarite délicate de rafale : Constance,Fine Gale Lunarite: Constance,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31053,怒涛·新月黄石片,Глазурь для гравировки песочных часов,Lunarite délicate de rafale : Torrent,Fine Gale Lunarite: Torrent,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31054,百中·新月黄石片,Глазурь для двойной гравировки рыцарского шлема,Lunarite délicate de rafale : Fidélité,Fine Gale Lunarite: Fidelity,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31055,愤怒·新月黄石片,Глазурь для гравировки секиры,Lunarite délicate de rafale : Fureur,Fine Gale Lunarite: Fury,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31056,诡诈·新月黄石片,Глазурь для гравировки дремлющего ока,Lunarite délicate de rafale : Réconfort,Fine Gale Lunarite: Consolation,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31057,狡诈·新月黄石片,Глазурь для двойной гравировки дремлющего ока,Lunarite délicate de rafale : Consolation,Fine Gale Lunarite: Solace,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31058,威压·新月黄石片,Глазурь для двойной гравировки лика Акритеса,Lunarite délicate de rafale : Surpuissance,Fine Gale Lunarite: Overpower,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31059,威胁·新月黄石片,Глазурь для гравировки лика Акритеса,Lunarite délicate de rafale : Agressivité,Fine Gale Lunarite: Aggro,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31060,慈悲·新月黄石片,Глазурь для гравировки чаши врачевателя,Lunarite délicate de rafale : Pitié,Fine Gale Lunarite: Mercy,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31061,慈爱·新月黄石片,Глазурь для двойной гравировки чаши врачевателя,Lunarite délicate de rafale : Bienveillance,Fine Gale Lunarite: Benevolence,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31062,疾风·新月黄石片,Глазурь для гравировки мчащегося всадника,Lunarite délicate de rafale : Tempête,Fine Gale Lunarite: Tempest,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31063,破坏·新月黄石片,Глазурь для гравировки падающей звезды,Lunarite délicate de rafale : Destruction,Fine Gale Lunarite: Destruction,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31064,破灭·新月黄石片,Глазурь для двойной гравировки падающей звезды,Lunarite délicate de rafale : Devin,Fine Gale Lunarite: Harbinger,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31065,必中·新月黄石片,Глазурь для гравировки рыцарского шлема,Lunarite délicate de rafale : Maîtrise,Fine Gale Lunarite: Mastery,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+31066,招架·新月青石粉,Пигмент для гравировки скрещенных мечей,Lunarite de la terre : Ésotérisme,Earth Lunarite: Esoteric,icons/icon_item_1715.dds.png,生产材料,Редкий материал,Matériau,Material
+31067,闪避·新月青石粉,Пигмент для гравировки кошачьей лапки,Lunarite de la terre : Finesse,Earth Lunarite: Finesse,icons/icon_item_1715.dds.png,生产材料,Редкий материал,Matériau,Material
+31068,生机·新月青石粉,Пигмент для гравировки сердца,Lunarite de la terre : Effervescence,Earth Lunarite: Effervescence,icons/icon_item_1715.dds.png,生产材料,Редкий материал,Matériau,Material
+31069,神速·新月青石粉,Пигмент для гравировки смерча,Lunarite de la terre : Célérité,Earth Lunarite: Celerity,icons/icon_item_1715.dds.png,生产材料,Редкий материал,Matériau,Material
+31070,格挡·新月青石粉,Пигмент для гравировки щита,Lunarite de la terre : Barrage,Earth Lunarite: Impenetrable,icons/icon_item_1715.dds.png,生产材料,Редкий материал,Matériau,Material
+31071,魔力·新月青石粉,Пигмент для гравировки водоворота,Lunarite de la terre : Vitalité,Earth Lunarite: Vitality,icons/icon_item_1715.dds.png,生产材料,Редкий материал,Matériau,Material
+31072,招架·新月青石晶,Стекло для гравировки скрещенных мечей,Lunarite supérieure de la terre : Ésotérisme,Superior Earth Lunarite: Esoteric,icons/icon_item_1721.dds.png,生产材料,Редкий материал,Matériau,Material
+31073,闪避·新月青石晶,Стекло для гравировки кошачьей лапки,Lunarite supérieure de la terre : Finesse,Superior Earth Lunarite: Finesse,icons/icon_item_1721.dds.png,生产材料,Редкий материал,Matériau,Material
+31074,生机·新月青石晶,Стекло для гравировки сердца,Lunarite supérieure de la terre : Effervescence,Superior Earth Lunarite: Effervescence,icons/icon_item_1721.dds.png,生产材料,Редкий материал,Matériau,Material
+31075,神速·新月青石晶,Стекло для гравировки смерча,Lunarite supérieure de la terre : Célérité,Superior Earth Lunarite: Celerity,icons/icon_item_1721.dds.png,生产材料,Редкий материал,Matériau,Material
+31076,格挡·新月青石晶,Стекло для гравировки щита,Lunarite supérieure de la terre : Barrage,Superior Earth Lunarite: Impenetrable,icons/icon_item_1721.dds.png,生产材料,Редкий материал,Matériau,Material
+31077,魔力·新月青石晶,Стекло для гравировки водоворота,Lunarite supérieure de la terre : Vitalité,Superior Earth Lunarite: Vitality,icons/icon_item_1721.dds.png,生产材料,Редкий материал,Matériau,Material
+31078,招架·新月青石片,Глазурь для гравировки скрещенных мечей,Lunarite délicate de la terre : Ésotérisme,Fine Earth Lunarite: Esoteric,icons/icon_item_1718.dds.png,生产材料,Редкий материал,Matériau,Material
+31079,闪避·新月青石片,Глазурь для гравировки кошачьей лапки,Lunarite délicate de la terre : Finesse,Fine Earth Lunarite: Finesse,icons/icon_item_1718.dds.png,生产材料,Редкий материал,Matériau,Material
+31080,生机·新月青石片,Глазурь для гравировки сердца,Lunarite délicate de la terre : Effervescence,Fine Earth Lunarite: Effervescence,icons/icon_item_1718.dds.png,生产材料,Редкий материал,Matériau,Material
+31081,神速·新月青石片,Глазурь для гравировки смерча,Lunarite délicate de la terre : Célérité,Fine Earth Lunarite: Celerity,icons/icon_item_1718.dds.png,生产材料,Редкий материал,Matériau,Material
+31082,格挡·新月青石片,Глазурь для гравировки щита,Lunarite délicate de la terre : Barrage,Fine Earth Lunarite: Impenetrable,icons/icon_item_1718.dds.png,生产材料,Редкий материал,Matériau,Material
+31083,魔力·新月青石片,Глазурь для гравировки водоворота,Lunarite délicate de la terre : Vitalité,Fine Earth Lunarite: Vitality,icons/icon_item_1718.dds.png,生产材料,Редкий материал,Matériau,Material
+31727,幻想岛明细表,Значок славы Миражей,Ticket du mirage,Mirage Ticket,icons/quest/icon_item_quest023.dds.png,生产材料,Редкий материал,Matériau,Material
+31728,幻想岛优秀顾客明细表,Значок лучшего покупателя Миражей,Ticket du mirage VIP,VIP Mirage Ticket,icons/quest/icon_item_quest023.dds.png,生产材料,Редкий материал,Matériau,Material
+31809,炫光黑珍珠,Радужный жемчуг,Perle prismatique,Prismatic Pearl,icons/icon_item_1760.dds.png,生产材料,Редкий материал,Matériau,Material
+31810,七彩钻石,Радужный хрусталь,Diamant prismatique,Prismatic Diamond,icons/icon_item_1761.dds.png,特殊材料,Особый материал,Special Material,Special Material
+31819,暗晶草之茎,Занданит,Pousse d'arbuste à gemmes pétrifié,Petrified Gemshrub Stalk,icons/icon_item_1701.dds.png,生产材料,Редкий материал,Matériau,Material
+31820,硬胡须草的枝,Побеги дыбоборода,Racine de cactus de corail,Coral Cactus Root,icons/icon_item_1699.dds.png,生产材料,Редкий материал,Matériau,Material
+31821,柔嫩的狐尾草,Лисохвост,Fronde de fougère de toundra,Tundra Fern Leaf,icons/icon_item_1698.dds.png,生产材料,Редкий материал,Matériau,Material
+31822,柔软寒草茎,Побеги перистого папоротника,Tige de tête-de-violon violette,Violet Fiddlehead Stem,icons/icon_item_1697.dds.png,生产材料,Редкий материал,Matériau,Material
+31823,灼热的干草,Листья колючего папоротника,Herbe épineuse séchée,Dried Thorngrass,icons/icon_item_1700.dds.png,生产材料,Редкий материал,Matériau,Material
+31824,闪耀的睫毛苔,Щетинник,Moût d'or des brumes,Dewy Goldwort,icons/icon_item_1702.dds.png,生产材料,Редкий материал,Matériau,Material
+31927,光辉的饰品强化卷轴,Свиток сильных чар ювелира,Parchemin resplendissant de renivellement d'accessoire,Resplendent Accessory Regrade Scroll,icons/icon_item_1696.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+31928,饰品强化卷轴,Свиток чар ювелира,Parchemin de renivellement d'accessoire,Accessory Regrade Scroll,icons/icon_item_1695.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+31974,黄色祝福石,Слабый катализатор,Charme de renivellement jaune,Yellow Regrade Charm,icons/icon_item_1848.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+31975,黄色超级祝福石,Слабый универсальный катализатор,Charme de renivellement jaune supérieur,Superior Yellow Regrade Charm,icons/icon_item_1848.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+31976,红色祝福石,Мощный катализатор,Charme de renivellement rouge,Red Regrade Charm,icons/icon_item_1850.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+31977,红色超级祝福石,Мощный универсальный катализатор,Charme de renivellement rouge supérieur,Superior Red Regrade Charm,icons/icon_item_1851.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+32038,静电叶片,Клейкий листочек,Feuille de mana terrestre,Earthmana Leaf,icons/icon_item_1781.dds.png,特殊材料,Особый материал,Special Material,Special Material
+32060,继承者服装设计书的碎页,Руководство эрнардского портного,Fragment de plan de costume d'Ayanad,Ayanad Costume Design Scrap,icons/icon_item_1146.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+32061,蕴含魔力的线团,Клубок эрнардской пряжи,Écheveau enchanté,Enchanted Skein,icons/icon_item_0091.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+32062,赐福者的黑色泪珠,Слеза Эрнарда,Larme de disciple,Disciple's Tear,icons/quest/icon_item_quest173.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+32103,黑色源晶精华,Акхиумный раствор,Essence d'archeum onyx,Onyx Archeum Essence,icons/icon_item_4457.dds.png,特殊材料,Особый материал,Special Material,Special Material
+32104,稳定的石盐碎片,Каменная соль,Stabilisateur de sel gemme,Rock Salt Stabilizer,icons/icon_item_1757.dds.png,生产材料,Редкий материал,Matériau,Material
+32105,稳定的海水胶状体,Желатин,Stabilisateur de cristal,Crystal Stabilizer,icons/icon_item_1755.dds.png,生产材料,Редкий материал,Matériau,Material
+32106,稳定的龙骨精华,Щелочной раствор,Stabilisateur d'essence de dragon,Dragon Essence Stabilizer,icons/icon_item_1168.dds.png,特殊材料,Особый материал,Special Material,Special Material
+32575,突破·新月黄石粉,Пигмент для гравировки расколотой сферы,Lunarite de rafale : Percée,Gale Lunarite: Breakthrough,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+32576,突破·新月黄石晶,Стекло для гравировки расколотой сферы,Lunarite supérieure de rafale : Percée,Superior Gale Lunarite: Breakthrough,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+32578,突破·新月黄石片,Глазурь для гравировки расколотой сферы,Lunarite délicate de rafale : Percée,Fine Gale Lunarite: Breakthrough,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+34238,空白的信纸,Пустая записка,Papier à lettre vierge,Blank Notepaper,icons/icon_item_0233.dds.png,纸张,Бумага,Papier,Paper
+34239,手写的情书,Любовная записка,Lettre manuscrite affectueuse,Love Letter,icons/quest/icon_item_quest023.dds.png,纸张,Бумага,Papier,Paper
+34323,蓝色祝福石,Улучшенный основной катализатор,Charme de renivellement bleu,Blue Regrade Charm,icons/icon_item_1916.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+34563,绿色祝福石,Основной катализатор,Charme de renivellement vert,Green Regrade Charm,icons/icon_item_1917.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+34724,邪恶的黑玉,Небольшой кусок обсидиана,Obsidienne malveillante,Malevolent Obsidian,icons/icon_item_1932.dds.png,生产材料,Редкий материал,Matériau,Material
+34725,怨灵沉睡的黑曜石,Крупный кусок обсидиана,Obsidienne hantée,Haunted Obsidian,icons/icon_item_1933.dds.png,生产材料,Редкий материал,Matériau,Material
+34726,不详的魔法月石,Опал,Joyau souillé,Tainted Jewel,icons/icon_item_1934.dds.png,生产材料,Редкий материал,Matériau,Material
+34727,残忍仪式的蓝宝石,Бирюза,Aigue-marine rituelle,Ritual Aquamarine,icons/icon_item_1935.dds.png,生产材料,Редкий материал,Matériau,Material
+34728,精炼硫磺结晶,Самородная сера,Cristal de soufre,Sulfur Crystal,icons/icon_item_1936.dds.png,生产材料,Редкий материал,Matériau,Material
+34730,变质的盐粉,Мышьяк,Flocons de saumure,Brine Flakes,icons/quest/icon_item_quest011.dds.png,生产材料,Редкий материал,Matériau,Material
+34731,凝缩的铅块,Кусок свинца,Plomb dense,Dense Lead,icons/icon_item_1938.dds.png,生产材料,Редкий материал,Matériau,Material
+34733,赫尔赞的实验日志,Лабораторный журнал Эрдана,Recherche d'Herzan,Herzan's Research,icons/icon_item_1947.dds.png,生产材料,Редкий материал,Matériau,Material
+34734,伊纳克斯的魔导书,Книга Игнация,Grimoire d'Inakos,Inakos's Grimoire,icons/icon_item_1962.dds.png,生产材料,Редкий материал,Matériau,Material
+34735,鲁斯塔特的潦草字条,Записи Руфуса,Croquis de Ruthart,Ruthart's Doodles,icons/icon_item_0065.dds.png,生产材料,Редкий материал,Matériau,Material
+34736,风化的绿柱石书板,Каменная табличка,Béryl usé,Weathered Beryl,icons/icon_item_1940.dds.png,生产材料,Редкий материал,Matériau,Material
+34738,小人族骸骨,Отполированный череп,Crâne de pygmée,Pygmy Skull,icons/quest/icon_item_quest123.dds.png,生产材料,Редкий материал,Matériau,Material
+34739,连尾蛇石像,Символ бесконечности,Statue d'ouroboros,Ouroboros Statue,icons/icon_item_1941.dds.png,生产材料,Редкий материал,Matériau,Material
+34750,金刚的石片,Осколок камня Ячи,Fragment de pierre de yaksa,Yaksa Stone Fragment,icons/icon_item_0366.dds.png,生产材料,Редкий материал,Matériau,Material
+34751,罕乌雷的角,Рога Сехекмет,Corne d'Hanure,Hanure's Horn,icons/icon_item_1955.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34752,巴尔拉巴之焰,Огненная кисть Сальфирона,Brasier de Vyrava,Vyrava's Inferno,icons/icon_item_1956.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34753,美杜莎的鳞片,Фрагмент чешуи Ашьяры,Balance de Jola,Jola's Scale,icons/icon_item_1957.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34754,突击队长的铁甲碎片,Наплечник рыцаря-узурпатора,Fragment d'armure de fer,Iron Armor Fragment,icons/icon_item_1958.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34755,噩梦精华,Призрачная материя,Essence de cauchemar,Nightmare Essence,icons/icon_item_1945.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34756,有关庭院的记录,Книга заклинаний Лореи,Archives du Jardin,Garden Records,icons/icon_item_1959.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34757,饱含回忆的罗盘,Компас «Морского дракона»,Boussole d'aventurier expérimenté,Experienced Adventurer's Compass,icons/icon_item_1960.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34758,纳扎尔的王冠,Корона Наджара,Couronne de Nazar,Nazar's Crown,icons/icon_item_1949.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34759,克拉肯的墨囊,Чернильный мешочек Кракена,Poche d'encre du Kraken,Kraken Ink Sac,icons/icon_item_1961.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34760,安塔伦的血光圣物,Пламя Анталлона,Relique pourpre d'Anthalon,Anthalon's Crimson Hallow,icons/icon_item_1946.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34761,冰霜萤纱之泪,Каменное сердце Марли,Larme amère,Bitter Teardrop,icons/quest/icon_item_quest139.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34762,烈焰之誓之血,Каменное сердце Морфеоса,Sang de vœu féroce,Fierce Vow's Blood,icons/quest/icon_item_quest028.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+34773,非标准建筑柱子包,Упаковка рассохшихся досок,Paquet de poutres en bois non standard,Nonstandard Wooden Beam Bundle,icons/icon_item_1974.dds.png,生产材料,Редкий материал,Matériau,Material
+34774,非标准建筑工具包,Набор заржавевших инструментов,Paquet d'outils de construction non standard,Nonstandard Construction Tool Bundle,icons/icon_item_1977.dds.png,生产材料,Редкий материал,Matériau,Material
+34775,非标准结尾建筑材料包,Упаковка испорченных материалов,Paquet de touches finales non standard,Nonstandard Finishing Touches Bundle,icons/icon_item_1976.dds.png,生产材料,Редкий материал,Matériau,Material
+34776,非标准建筑石砖包,Упаковка растрескавшегося кирпича,Paquet de briques de construction non standard,Nonstandard Construction Brick Bundle,icons/icon_item_1975.dds.png,生产材料,Редкий материал,Matériau,Material
+35060,远古巨松木材包,Гигантская связка бревен,Troncs majestueux,Majestic Logs,icons/icon_item_0568.dds.png,木材,Древесина,Planche,Lumber
+35117,幻化复原剂,Стирающий порошок,Alambic de restauration emballé,Wrapped Restoration Alembic,icons/icon_item_2039.dds.png,生产材料,Редкий материал,Matériau,Material
+35390,八角亭圆柱捆,Упаковка лакированных досок,Paq. de poutres pour pavillon,Pavilion Beam Bundle,icons/icon_item_1974.dds.png,生产材料,Редкий материал,Matériau,Material
+35526,快艇建造材料,Материалы для верфей катеров,Matériaux de clipper,Clipper Materials,icons/icon_item_0384.dds.png,生产材料,Редкий материал,Matériau,Material
+35527,贸易船建造材料,Материалы для верфей торговых шхун,Matériaux de goélette marchande,Merchant Schooner Materials,icons/icon_item_0384.dds.png,生产材料,Редкий материал,Matériau,Material
+35528,小型帆船建造材料,Материалы для верфей малых парусников,Matér. de petit navire de guerre,Small Warship Materials,icons/icon_item_0384.dds.png,生产材料,Редкий материал,Matériau,Material
+35529,中型帆船建造材料,Материалы для верфей средних парусников,Matér. de navire de guerre moyen,Medium Warship Materials,icons/icon_item_0384.dds.png,生产材料,Редкий материал,Matériau,Material
+35885,恶灵黄玉,Затвердевшая смола,Topaze possédé,Possessed Topaz,icons/quest/icon_item_quest007.dds.png,生产材料,Редкий материал,Matériau,Material
+35887,怨之骨的碎片,Кости захватчика,Éclat d'os,Bone Chip,icons/icon_item_0177.dds.png,生产材料,Редкий материал,Matériau,Material
+35888,禁忌咒术的黑玉,Гадальная руна,Sorcegemme interdite,Forbidden Spellgem,icons/quest/icon_item_quest014.dds.png,生产材料,Редкий материал,Matériau,Material
+35889,蕴含邪恶灵魂的水晶球,Прозрачный речной жемчуг,Orbe d'ombre,Shadow Orb,icons/quest/icon_item_quest021.dds.png,生产材料,Редкий материал,Matériau,Material
+35895,利维坦之眼,Глаз Левиафана,Œil de Léviathan,Leviathan Eye,icons/icon_item_0184.dds.png,生产材料,Редкий материал,Matériau,Material
+36602,黄色超级祝福石（绑定）,Слабый универсальный катализатор,Charme de renivellement jaune supérieur lié,Bound Superior Yellow Regrade Charm,icons/icon_item_1849.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+36604,红色超级祝福石（绑定）,Мощный универсальный катализатор,Charme de renivellement rouge supérieur lié,Bound Superior Red Regrade Charm,icons/icon_item_1851.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+36605,光辉的武器强化卷轴（绑定）,Свиток сильных чар оружейника,Parchemin resplendissant de renivellement d'arme lié,Bound Resplendent Weapon Regrade Scroll,icons/icon_item_1270.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+36606,光辉的防具强化卷轴（绑定）,Свиток сильных чар бронника,Parchemin resplendissant de renivellement d'armure lié,Bound Resplendent Armor Regrade Scroll,icons/icon_item_1271.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+36867,红色祝福石（绑定）,Мощный катализатор,Charme de renivellement rouge lié,Bound Red Regrade Charm,icons/icon_item_1850.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+36905,礼物兑换券,Подарочный купон,Ticket cadeau,Gift Ticket,icons/quest/icon_item_quest023.dds.png,生产材料,Редкий материал,Matériau,Material
+37554,绿色祝福石（绑定）,Основной катализатор,Charme de renivellement vert lié,Bound Green Regrade Charm,icons/icon_item_1917.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+37893,建筑柱子包,Упаковка обструганных досок,Paquet de poutres en bois,Wooden Beam Bundle,icons/icon_item_1974.dds.png,生产材料,Редкий материал,Matériau,Material
+37894,建筑工具包,Набор строительных инструментов,Paquet d'outils de construction,Construction Tool Bundle,icons/icon_item_1977.dds.png,生产材料,Редкий материал,Matériau,Material
+37895,结尾建筑材料包,Упаковка отделочных материалов,Paquet de touches finales,Finishing Touches Bundle,icons/icon_item_1976.dds.png,生产材料,Редкий материал,Matériau,Material
+37896,建筑石砖包,Упаковка строительного кирпича,Paquet de briques de construction,Construction Brick Bundle,icons/icon_item_1975.dds.png,生产材料,Редкий материал,Matériau,Material
+38087,召唤兽装饰强化卷轴,Свиток чар шорника,Parchemin de renivellement d'accessoire pour familier,Pet Accessory Regrade Scroll,icons/icon_item_1695.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+38600,武器强化卷轴（绑定）,Свиток чар оружейника,Parchemin de renivellement d'arme lié,Bound Weapon Regrade Scroll,icons/icon_item_1268.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+38601,防具强化卷轴（绑定）,Свиток чар бронника,Parchemin de renivellement d'armure lié,Bound Armor Regrade Scroll,icons/icon_item_1269.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+38752,紫色祝福石,Слабый бледно-лиловый катализатор,Charme de renivellement violet,Purple Regrade Charm,icons/icon_item_2736.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+38754,橘色祝福石,Слабый медно-оранжевый катализатор,Charme de renivellement orange,Orange Regrade Charm,icons/icon_item_2737.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+38757,白色祝福石,Слабый универсальный катализатор,Charme de renivellement blanc,White Regrade Charm,icons/icon_item_2738.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+38758,白色超级祝福石,Мощный универсальный катализатор,Charme de renivellement blanc supérieur,Superior White Regrade Charm,icons/icon_item_2738.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+38814,雾光次元之石,Сердце света,Pierre de puissance brumeuse,Mistmight Stone,icons/icon_item_2727.dds.png,生产材料,Редкий материал,Matériau,Material
+38815,露光次元之石,Средоточие света,Pierre de force solaire,Sunstrength Stone,icons/icon_item_2728.dds.png,生产材料,Редкий материал,Matériau,Material
+38835,凝缩魔力的轻盈金属结晶,Легкий зачарованный сплав,Feu-follet de mana de métal à une main,One-Hander Metal Mana Wisp,icons/icon_item_2740.dds.png,生产材料,Редкий материал,Matériau,Material
+38836,凝缩魔力的沉重金属结晶,Тяжелый зачарованный сплав,Feu-follet de mana de métal à deux mains,Two-Hander Metal Mana Wisp,icons/icon_item_2741.dds.png,生产材料,Редкий материал,Matériau,Material
+38837,凝缩魔力的木工结晶,Брусок зачарованной древесины,Feu-follet de mana de bois,Wooden Mana Wisp,icons/icon_item_2743.dds.png,生产材料,Редкий материал,Matériau,Material
+38838,凝缩魔力的沉重木工结晶,Зачарованный обломок,Feu-follet de mana de bois à deux mains,Two-Hander Wood Mana Wisp,icons/icon_item_dagger_0027.dds.png,生产材料,Редкий материал,Matériau,Material
+38839,凝缩魔力的旋律结晶,Брусок поющей древесины,Feu-follet de mana musical,Musical Mana Wisp,icons/icon_item_2744.dds.png,生产材料,Редкий материал,Matériau,Material
+38840,凝缩魔力的宝石结晶,Зачарованный самоцвет,Grand Feu-follet de mana de bijou,Large Jewelry Mana Wisp,icons/icon_item_0157.dds.png,生产材料,Редкий материал,Matériau,Material
+38841,凝缩魔力的宝石碎片,Зачарованный кристалл,Petit Feu-follet de mana de bijou,Small Jewelry Mana Wisp,icons/icon_item_0288.dds.png,生产材料,Редкий материал,Matériau,Material
+38842,凝缩魔力的宝石粉末,Зачарованный обломок,Feu-follet de mana d'anneau,Ring Mana Wisp,icons/icon_item_dagger_0027.dds.png,生产材料,Редкий материал,Matériau,Material
+38843,凝缩魔力的布料碎片,Лоскут зачарованной материи,Feu-follet de mana de tissu,Cloth Mana Wisp,icons/icon_item_2745.dds.png,生产材料,Редкий материал,Matériau,Material
+38844,凝缩魔力的皮革碎片,Лоскут зачарованной кожи,Feu-follet de mana de cuir,Leather Mana Wisp,icons/icon_item_0285.dds.png,生产材料,Редкий материал,Matériau,Material
+38845,凝缩魔力的金属碎片,Пластина зачарованного металла,Feu-follet de mana de plates,Plate Mana Wisp,icons/icon_item_2746.dds.png,生产材料,Редкий материал,Matériau,Material
+39097,饰品强化卷轴（绑定）,Свиток чар ювелира,Parch. reniv. d'accessoire lié,Bound Accessory Regrade Scroll,icons/icon_item_1695.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+39100,召唤兽装饰强化卷轴（绑定）,Свиток чар шорника,Parch. : reniv. acc. familier lié,Bound Pet Accessory Regrade Scroll,icons/icon_item_1695.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+39102,银色超级祝福石,Мерцающий катализатор,Charme de renivellement argenté,Silver Regrade Charm,icons/icon_item_2738.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+39424,未拆封的神秘幸运石,Ирамийская гадальная руна,Pierre de sérendipité emballée,Wrapped Serendipity Stone,icons/icon_item_3017.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+39780,霞光次元之石,Субстанция света,Pierre de portail du couchant,Sunset Portalstone,icons/icon_item_2871.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+39826,击破·新月黄石粉,Пигмент для гравировки рухнувшей башни,Lunarite de rafale : Entrechoc,Gale Lunarite: Clash,icons/icon_item_1716.dds.png,生产材料,Редкий материал,Matériau,Material
+39827,击破·新月黄石片,Глазурь для гравировки рухнувшей башни,Lunarite délicate de rafale : Entrechoc,Fine Gale Lunarite: Clash,icons/icon_item_1719.dds.png,生产材料,Редкий материал,Matériau,Material
+39828,击破·新月黄石晶,Стекло для гравировки рухнувшей башни,Lunarite supérieure de rafale : Entrechoc,Superior Gale Lunarite: Clash,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+39829,击落·新月青石粉,Пигмент для гравировки расколотого щита,Lunarite de la terre : Interception,Earth Lunarite: Intercept,icons/icon_item_1715.dds.png,生产材料,Редкий материал,Matériau,Material
+39830,击落·新月青石片,Глазурь для гравировки расколотого щита,Lunarite délicate de la terre : Interception,Fine Earth Lunarite: Intercept,icons/icon_item_1718.dds.png,生产材料,Редкий материал,Matériau,Material
+39831,击落·新月青石晶,Стекло для гравировки расколотого щита,Lunarite supérieure de la terre : Interception,Superior Earth Lunarite: Intercept,icons/icon_item_1721.dds.png,生产材料,Редкий материал,Matériau,Material
+39885,绿色祝福石（绑定）,Основной катализатор,Charme de renivellement vert lié expiré,Bound Green Regrade Charm,icons/icon_item_1917.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+40025,光辉的饰品强化卷轴（绑定）,Свиток сильных чар ювелира,Parchemin resplendissant de renivellement d'accessoire,Bound Resplendent Accessory Regrade Scroll,icons/icon_item_1696.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+40026,绿色祝福石（绑定）,Основной катализатор,Charme de renivellement vert lié,Bound Green Regrade Charm,icons/icon_item_1917.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+40027,蓝色祝福石（绑定）,Улучшенный основной катализатор,Charme de renivellement bleu lié,Bound Blue Regrade Charm,icons/icon_item_1916.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+40028,黄色祝福石（绑定）,Слабый катализатор,Charme de renivellement jaune lié,Bound Yellow Regrade Charm,icons/icon_item_1848.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+40029,红色祝福石（绑定）,Мощный катализатор,Charme de renivellement rouge lié,Bound Red Regrade Charm,icons/icon_item_1850.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+40200,神与英雄们的原画,Холст «Боги и герои»,Tableau original : Dieux et Héros,Original Painting: Gods and Heroes,icons/icon_item_3049.dds.png,生产材料,Редкий материал,Matériau,Material
+40232,独立宣言,Декларация независимости,Déclaration d'indépendance,Declaration of Independence,icons/icon_item_3140.dds.png,纸张,Бумага,Papier,Paper
+40234,独立宣言授权书,Заверенная подписями декларация независимости,Permis d'indépendance,Independence Permit,icons/icon_item_3141.dds.png,纸张,Бумага,Papier,Paper
+40736,伊修达尔的盔甲碎片,Обломок статуи Иштара,Éclat d'armure Frapperage,Wrathsmite Armor Shard,icons/icon_item_3148.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+40809,凝结魔力的短剑,Заготовка для кинжала короля-завоевателя,Feu-follet de dague de soufre,Brimstone Dagger Wisp,icons/icon_item_dagger_0094.dds.png,生产材料,Редкий материал,Matériau,Material
+40810,凝结魔力的单手剑,Заготовка для одноручного меча короля-завоевателя,Feu-follet d'épée de soufre,Brimstone Sword Wisp,icons/icon_item_sword_1h_0096.dds.png,生产材料,Редкий материал,Matériau,Material
+40811,凝结魔力的双手剑,Заготовка для двуручного меча короля-завоевателя,Feu-follet d'espadon de soufre,Brimstone Greatsword Wisp,icons/icon_item_sword_2h_0074.dds.png,生产材料,Редкий материал,Matériau,Material
+40812,凝结魔力的单手刀,Заготовка для одноручного клинка короля-завоевателя,Feu-follet de katana de soufre,Brimstone Katana Wisp,icons/icon_item_blade_1h_0088.dds.png,生产材料,Редкий материал,Matériau,Material
+40813,凝结魔力的双手刀,Заготовка для двуручного клинка короля-завоевателя,Feu-follet de nodachi de soufre,Brimstone Nodachi Wisp,icons/icon_item_blade_2h_0075.dds.png,生产材料,Редкий материал,Matériau,Material
+40814,凝结魔力的单手斧,Заготовка для боевого топора короля-завоевателя,Feu-follet de hache de soufre,Brimstone Axe Wisp,icons/icon_item_axe_1h_0089.dds.png,生产材料,Редкий материал,Matériau,Material
+40815,凝结魔力的双手斧,Заготовка для секиры короля-завоевателя,Feu-follet de bardiche de soufre,Brimstone Greataxe Wisp,icons/icon_item_axe_2h_0056.dds.png,生产材料,Редкий материал,Matériau,Material
+40816,凝结魔力的单手钝器,Заготовка для молота короля-завоевателя,Feu-follet de gourdin de soufre,Brimstone Club Wisp,icons/icon_item_mace_1h_0084.dds.png,生产材料,Редкий материал,Matériau,Material
+40817,凝结魔力的双手钝器,Заготовка для двуручного молота короля-завоевателя,Feu-follet de grand gourdin de soufre,Brimstone Greatclub Wisp,icons/icon_item_mace_2h_0066.dds.png,生产材料,Редкий материал,Matériau,Material
+40818,凝结魔力的单手枪,Заготовка для копья короля-завоевателя,Feu-follet de pilum de soufre,Brimstone Shortspear Wisp,icons/icon_item_spear_1h_0086.dds.png,生产材料,Редкий материал,Matériau,Material
+40819,凝结魔力的双手枪,Заготовка для алебарды короля-завоевателя,Feu-follet de pertuisane de soufre,Brimstone Longspear Wisp,icons/icon_item_spear_2h_0071.dds.png,生产材料,Редкий материал,Matériau,Material
+40820,凝结魔力的单手杖,Заготовка для короткого посоха короля-завоевателя,Feu-follet de sceptre de soufre,Brimstone Scepter Wisp,icons/icon_item_staff_1h_0088.dds.png,生产材料,Редкий материал,Matériau,Material
+40821,凝结魔力的双手杖,Заготовка для боевого посоха короля-завоевателя,Feu-follet de bâton de soufre,Brimstone Staff Wisp,icons/icon_item_staff_2h_0052.dds.png,生产材料,Редкий материал,Matériau,Material
+40822,凝结魔力的魔力弓,Заготовка для лука короля-завоевателя,Feu-follet d'arc de soufre,Brimstone Bow Wisp,icons/icon_item_bow_0091.dds.png,生产材料,Редкий материал,Matériau,Material
+40823,凝结魔力的弦乐器,Заготовка для лютни короля-завоевателя,Feu-follet de luth de soufre,Brimstone Lute Wisp,icons/icon_item_ins_s_0052.dds.png,生产材料,Редкий материал,Matériau,Material
+40824,凝结魔力的管乐器,Заготовка для кларнета короля-завоевателя,Feu-follet de flûte de soufre,Brimstone Flute Wisp,icons/icon_item_ins_w_0049.dds.png,生产材料,Редкий материал,Matériau,Material
+40825,凝结魔力的盾牌,Заготовка для щита короля-завоевателя,Feu-follet de bouclier de soufre,Brimstone Shield Wisp,icons/icon_item_shield_0095.dds.png,生产材料,Редкий материал,Matériau,Material
+40826,凝结魔力的王冠,Заготовка для фибулы короля-завоевателя,Feu-follet de capuche de soufre,Brimstone Hood Wisp,icons/costume_hm/nu_m_hm_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+40827,凝结魔力的软布上衣,Заготовка для легкого дублета короля-завоевателя,Feu-follet de chemise de soufre,Brimstone Shirt Wisp,icons/costume_ar/nu_f_ar_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+40828,凝结魔力的软布裤子,Заготовка для легких поножей короля-завоевателя,Feu-follet de pantalon de soufre,Brimstone Pants Wisp,icons/costume_pt/nu_f_pt_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+40829,凝结魔力的软布手套,Заготовка для легких перчаток короля-завоевателя,Feu-follet de gants de soufre,Brimstone Gloves Wisp,icons/costume_gv/nu_f_gv_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+40830,凝结魔力的软布鞋子,Заготовка для легких сапог короля-завоевателя,Feu-follet chaussures soufre,Brimstone Shoes Wisp,icons/costume_bo/nu_f_bo_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+40831,凝结魔力的头饰,Заготовка для головного убора короля-завоевателя,Feu-follet de casque de soufre,Brimstone Cap Wisp,icons/costume_hm/nu_m_hm_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+40832,凝结魔力的轻皮胸甲,Заготовка для мехового жилета короля-завоевателя,Feu-follet de pourpoint de soufre,Brimstone Jerkin Wisp,icons/costume_ar/nu_m_ar_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+40833,凝结魔力的轻皮裤子,Заготовка для кожаных штанов короля-завоевателя,Feu-follet de braies de soufre,Brimstone Breeches Wisp,icons/costume_pt/nu_f_pt_leather198.dds.png,生产材料,Редкий материал,Matériau,Material
+40834,凝结魔力的轻皮手套,Заготовка для кожаных перчаток короля-завоевателя,Feu-follet de poings de soufre,Brimstone Fists Wisp,icons/costume_gv/nu_m_gv_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+40835,凝结魔力的皮鞋,Заготовка для меховых сапог короля-завоевателя,Feu-follet de bottes de soufre,Brimstone Boots Wisp,icons/costume_bo/nu_m_bo_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+40836,凝结魔力的金属头盔,Заготовка для железной маски короля-завоевателя,Feu-follet de heaume de soufre,Brimstone Helm Wisp,icons/costume_hm/nu_m_hm_metal210.dds.png,生产材料,Редкий материал,Matériau,Material
+40837,凝结魔力的金属胸甲,Заготовка для пластинчатого панциря короля-завоевателя,Feu-follet de cuirasse de soufre,Brimstone Cuirass Wisp,icons/costume_ar/nu_f_ar_metal215.dds.png,生产材料,Редкий материал,Matériau,Material
+40838,凝结魔力的金属腿甲,Заготовка для пластинчатых поножей короля-завоевателя,Feu-follet de grèves de soufre,Brimstone Greaves Wisp,icons/costume_pt/nu_f_pt_metal216.dds.png,生产材料,Редкий материал,Matériau,Material
+40839,凝结魔力的金属护手,Заготовка для пластинчатых перчаток короля-завоевателя,Feu-follet de gantelets de soufre,Brimstone Gauntlets Wisp,icons/costume_gv/nu_m_gv_metal219.dds.png,生产材料,Редкий материал,Matériau,Material
+40840,凝结魔力的金属长靴,Заготовка для пластинчатых сапог короля-завоевателя,Feu-follet de solerets de soufre,Brimstone Sabatons Wisp,icons/costume_bo/nu_f_bo_metal216.dds.png,生产材料,Редкий материал,Matériau,Material
+40842,遗忘的古代金属锭,Грубый сплав,Lingot antique,Ancient Ingot,icons/icon_item_0871.dds.png,金属,Слиток металла,Métal,Metal
+40901,tool_独立宣言,tool_Декларация независимости,482293 DO NOT TRANSLATE,tool_the declaration of independence,icons/icon_item_tool.dds.png,纸张,Бумага,Papier,Paper
+40902,伊修达尔的灵魂,Эссенция водной стихии,Âme de Taris,Taris's Soul,icons/quest/icon_item_quest171.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+40903,伊修达尔的断罪之斧碎片,Сломанный правый топор Иштара,Éclat de hache Frapperage,Wrathsmite Axe Shard,icons/icon_item_axe_1h_0092.dds.png,生产材料,Редкий материал,Matériau,Material
+40904,伊修达尔的业火之斧碎片,Сломанный левый топор Иштара,Éclat de hache Frapperage sup.,Superior Wrathsmite Axe Shard,icons/icon_item_axe_1h_0093.dds.png,生产材料,Редкий материал,Matériau,Material
+40916,空白画纸,Бумага для рисования,Toile blanche,Empty Canvas,icons/icon_item_3104.dds.png,纸张,Бумага,Papier,Paper
+40917,空白画板,Мольберт,Chevalet vide,Empty Easel,icons/icon_item_2204.dds.png,纸张,Бумага,Papier,Paper
+41172,未拆封的武器强化卷轴,Свиток чар оружейника,Parch. reniv. d'arme emballé,Wrapped Weapon Regrade Scroll,icons/icon_item_1268.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+41173,未拆封的防具强化卷轴,Свиток чар бронника,Parch. de reniv. d'armure emballé,Wrapped Armor Regrade Scroll,icons/icon_item_1269.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+41174,未拆封的饰品强化卷轴,Свиток чар ювелира,Parch. reniv. d'access. emballé,Wrapped Accessory Regrade Scroll,icons/icon_item_1695.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+41176,未拆封的光辉的武器强化卷轴,Упакованный Свиток сильных чар оружейника,Parchemin resplendissant de renivellement d'arme emballé,Wrapped Resplendent Weapon Regrade Scroll,icons/icon_item_1270.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+41253,神秘幸运石碎片（绑定）,Осколок ирамийской гадальной руны,Éclat de pierre de sérendipité lié,Bound Serendipity Stone Shard,icons/icon_item_3399.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42084,武器辟邪石：传说,Талисман оружейника из очищенного акхиума,Emblème d'ancrage d'arme céleste,Celestial Weapon Anchoring Emblem,icons/icon_item_3505.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42085,防具辟邪石：传说,Талисман бронника из очищенного акхиума,Emblème d'ancrage d'armure céleste,Celestial Armor Anchoring Emblem,icons/icon_item_3506.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42086,饰品辟邪石：传说,Талисман ювелира из очищенного акхиума,Emblème d'ancrage d'accessoire céleste,Celestial Accessory Anchoring Emblem,icons/icon_item_3507.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42090,武器辟邪石：远古,Талисман оружейника из истинного акхиума,Emblème d'ancrage d'arme divine,Divine Weapon Anchoring Emblem,icons/icon_item_3511.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42091,防具辟邪石：远古,Талисман бронника из истинного акхиума,Emblème d'ancrage d'armure divine,Divine Armor Anchoring Emblem,icons/icon_item_3512.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42092,饰品辟邪石：远古,Талисман ювелира из истинного акхиума,Emblème d'ancrage d'accessoire divin,Divine Accessory Anchoring Emblem,icons/icon_item_3513.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42096,武器辟邪石碎片：传说,Заготовка из очищенного солнечного акхиума,Fragment d'ancrage d'arme céleste,Celestial Weapon Anchoring Shard,icons/icon_item_3505.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42097,防具辟邪石碎片：传说,Заготовка из очищенного лунного акхиума,Fragment d'ancrage d'armure céleste,Celestial Armor Anchoring Shard,icons/icon_item_3506.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42098,饰品辟邪石碎片：传说,Заготовка из очищенного звездного акхиума,Fragment d'ancrage access. céleste,Celestial Accessory Anchoring Shard,icons/icon_item_3507.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42102,武器辟邪石碎片：远古,Заготовка из истинного солнечного акхиума,Fragment d'ancrage d'arme divine,Divine Weapon Anchoring Shard,icons/icon_item_3511.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42103,防具辟邪石碎片：远古,Заготовка из истинного лунного акхиума,Fragment d'ancrage d'armure divine,Divine Armor Anchoring Shard,icons/icon_item_3512.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42104,饰品辟邪石碎片：远古,Заготовка из истинного звездного акхиума,Fragment d'ancrage d'accessoire divin,Divine Accessory Anchoring Shard,icons/icon_item_3513.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+42342,清香的绿叶,Душистые листья,Feuille parfumée,Scented Leaf,icons/icon_item_3598.dds.png,特殊材料,Особый материал,Special Material,Special Material
+42343,有光泽的种子,Маслянистые семена,Graine royale,Royal Seed,icons/icon_item_3600.dds.png,特殊材料,Особый материал,Special Material,Special Material
+42824,未拆封的八角亭圆柱捆,Упаковка лакированных досок,Paq. de poutres pour pavillon emballé,Wrapped Pavilion Beam Bundle,icons/icon_item_1974.dds.png,生产材料,Редкий материал,Matériau,Material
+43068,黄金铃铛花茎干,Листья златоцвета,Vigne d'Auricloche,Goldenbell Vine,icons/icon_item_3882.dds.png,生产材料,Редкий материал,Matériau,Material
+43069,歌唱的碱蓬嫩叶,Побеги медузника,Feuille de Soude maritime chantante,Singing Sea-Blite Leaf,icons/icon_item_3883.dds.png,生产材料,Редкий материал,Matériau,Material
+43128,甲胄碎片,Обломок эфенских доспехов,Pièce d'armure maudite,Cursed Armor Scrap,icons/icon_item_3864.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+43129,酸性泡泡,Яд кир'фера,Morceau acide,Acid Gobbet,icons/icon_item_3887.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+43130,酸性毒囊,Флакон с ядом кир'фера,Fiole d'acide,Acid Vessel,icons/icon_item_3863.dds.png,生产材料,Редкий материал,Matériau,Material
+43131,完整的甲胄,Эфенские доспехи,Armure maudite complète,Complete Cursed Armor,icons/icon_item_3888.dds.png,生产材料,Редкий материал,Matériau,Material
+43445,新月石循环催化剂,Сфера огранщика,Cirage pour Gemme sélène,Lunagem Polish,icons/icon_item_4001.dds.png,生产材料,Редкий материал,Matériau,Material
+43448,新月青石晶,Зеленое эмалевое стекло,Lunarite supérieure Lumiterre,Superior Earthglow Lunarite,icons/icon_item_1721.dds.png,生产材料,Редкий материал,Matériau,Material
+43463,新月黄石晶,Желтое эмалевое стекло,Lunarite supérieure Lumirafale,Superior Galeglow Lunarite,icons/icon_item_1722.dds.png,生产材料,Редкий материал,Matériau,Material
+43468,新月褐石晶,Бежевое эмалевое стекло,Lunarite supérieure Lumicuivre,Superior Copperglow Lunarite,icons/icon_item_1720.dds.png,生产材料,Редкий материал,Matériau,Material
+43469,新月赤石冶炼石,Рубиновая заготовка,Gemme sélène brute Lumifeu,Uncut Fireglow Lunagem,icons/icon_item_3994.dds.png,生产材料,Редкий материал,Matériau,Material
+43470,新月褐石冶炼石,Кварцевая заготовка,Gemme sélène brute Lumicuivre,Uncut Copperglow Lunagem,icons/icon_item_3995.dds.png,生产材料,Редкий материал,Matériau,Material
+43471,新月黄石冶炼石,Янтарная заготовка,Gemme sélène brute Lumirafale,Uncut Galeglow Lunagem,icons/icon_item_3996.dds.png,生产材料,Редкий материал,Matériau,Material
+43472,新月血石冶炼石,Турмалиновая заготовка,Gemme sélène brute Lumisol,Uncut Sunglow Lunagem,icons/icon_item_3997.dds.png,生产材料,Редкий материал,Matériau,Material
+43473,新月青石冶炼石,Изумрудная заготовка,Gemme sélène brute Lumiterre,Uncut Earthglow Lunagem,icons/icon_item_3998.dds.png,生产材料,Редкий материал,Matériau,Material
+43474,新月海石冶炼石,Бирюзовая заготовка,Oracle Lumiciel,Skyglow Oracle,icons/icon_item_3999.dds.png,生产材料,Редкий материал,Matériau,Material
+43475,新月碧石冶炼石,Сапфировая заготовка,Gemme sélène brute Lumivague,Uncut Waveglow Lunagem,icons/icon_item_4000.dds.png,生产材料,Редкий материал,Matériau,Material
+43586,新月褐石碎片,Бежевая эмалевая глазурь,Lunarite délicate Lumicuivre,Fine Copperglow Lunarite,icons/icon_item_1717.dds.png,生产材料,Редкий материал,Matériau,Material
+43802,编制的甲胄,Эфенские доспехи,Pièce d'armure maudite,Cursed Armor Piece,icons/icon_item_3888.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+43803,强酸性毒囊,Флакон с ядом кир'фера,Bourse de poison acide,Acidic Poison Pouch,icons/icon_item_3863.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+44059,被净化的魔力匕首,Заготовка для закаленного аргенитового кинжала,Composant de Dague d'obsidienne enchantée,Enchanted Obsidian Dagger Component,icons/icon_item_dagger_0094.dds.png,生产材料,Редкий материал,Matériau,Material
+44060,被净化的魔力单手剑,Заготовка для закаленного аргенитового меча,Composant d'Épée d'obsidienne enchantée,Enchanted Obsidian Sword Component,icons/icon_item_sword_1h_0096.dds.png,生产材料,Редкий материал,Matériau,Material
+44061,被净化的魔力双手剑,Заготовка для закаленного аргенитового клеймора,Composant d'Espadon d'obsidienne enchantée,Enchanted Obsidian Greatsword Component,icons/icon_item_sword_2h_0074.dds.png,生产材料,Редкий материал,Matériau,Material
+44062,被净化的魔力单手刀,Заготовка для закаленного аргенитового ятагана,Composant de Katana d'obsidienne enchantée,Enchanted Obsidian Katana Component,icons/icon_item_blade_1h_0088.dds.png,生产材料,Редкий материал,Matériau,Material
+44063,被净化的魔力双手刀,Заготовка для закаленного аргенитового палаша,Composant de Nodachi d'obsidienne enchantée,Enchanted Obsidian Nodachi Component,icons/icon_item_blade_2h_0075.dds.png,生产材料,Редкий материал,Matériau,Material
+44064,被净化的魔力单手斧,Заготовка для закаленного аргенитового боевого топора,Composant de Hache d'obsidienne enchantée,Enchanted Obsidian Axe Component,icons/icon_item_axe_1h_0089.dds.png,生产材料,Редкий материал,Matériau,Material
+44065,被净化的魔力双手斧,Заготовка для закаленной аргенитовой секиры,Composant de Bardiche d'obsidienne enchantée,Enchanted Obsidian Greataxe Component,icons/icon_item_axe_2h_0056.dds.png,生产材料,Редкий материал,Matériau,Material
+44066,被净化的魔力单手钝器,Заготовка для закаленной аргенитовой булавы,Composant de Gourdin d'obsidienne enchantée,Enchanted Obsidian Club Component,icons/icon_item_mace_1h_0084.dds.png,生产材料,Редкий материал,Matériau,Material
+44067,被净化的魔力双手钝器,Заготовка для закаленного аргенитового боевого молота,Composant de Grand gourdin d'obsidienne enchantée,Enchanted Obsidian Greatclub Component,icons/icon_item_mace_2h_0066.dds.png,生产材料,Редкий материал,Matériau,Material
+44068,被净化的魔力单手枪,Заготовка для закаленного аргенитового копья,Composant de Pilum d'obsidienne enchantée,Enchanted Obsidian Shortspear Component,icons/icon_item_spear_1h_0086.dds.png,生产材料,Редкий материал,Matériau,Material
+44069,被净化的魔力双手枪,Заготовка для закаленной аргенитовой алебарды,Composant de Pertuisane d'obsidienne enchantée,Enchanted Obsidian Longspear Component,icons/icon_item_spear_2h_0071.dds.png,生产材料,Редкий материал,Matériau,Material
+44070,被净化的魔力单手杖,Заготовка для закаленного аргенитового короткого посоха,Composant de Sceptre d'obsidienne enchantée,Enchanted Obsidian Scepter Component,icons/icon_item_staff_1h_0088.dds.png,生产材料,Редкий материал,Matériau,Material
+44071,被净化的魔力双手杖,Заготовка для закаленного аргенитового боевого посоха,Composant de Bâton d'obsidienne enchantée,Enchanted Obsidian Staff Component,icons/icon_item_staff_2h_0052.dds.png,生产材料,Редкий материал,Matériau,Material
+44072,被净化的魔力长弓,Заготовка для закаленного аргенитового лука,Composant d'Arc d'obsidienne enchantée,Enchanted Obsidian Bow Component,icons/icon_item_bow_0091.dds.png,生产材料,Редкий материал,Matériau,Material
+44073,被净化的魔力弦乐器,Заготовка для закаленной аргенитовой лютни,Composant de Luth d'obsidienne enchantée,Enchanted Obsidian Lute Component,icons/icon_item_ins_s_0052.dds.png,生产材料,Редкий материал,Matériau,Material
+44074,被净化的魔力管乐器,Заготовка для закаленного аргенитового кларнета,Composant de Flûte d'obsidienne enchantée,Enchanted Obsidian Flute Component,icons/icon_item_ins_w_0049.dds.png,生产材料,Редкий материал,Matériau,Material
+44075,被净化的魔力盾牌,Заготовка для закаленного аргенитового щита,Composant de Bouclier d'obsidienne enchantée,Enchanted Obsidian Shield Component,icons/icon_item_shield_0095.dds.png,生产材料,Редкий материал,Matériau,Material
+44076,被净化的魔力布巾,Заготовка для искаженной диадемы эпохи Хищника,Composant de Capuche d'obsidienne enchantée,Enchanted Obsidian Hood Component,icons/costume_hm/nu_m_hm_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44077,被净化的魔力布衣,Заготовка для искаженного камзола эпохи Хищника,Composant de Chemise d'obsidienne enchantée,Enchanted Obsidian Shirt Component,icons/costume_ar/nu_f_ar_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44078,被净化的魔力布裤,Заготовка для искаженных тканевых поножей эпохи Хищника,Composant de Pantalon d'obsidienne enchantée,Enchanted Obsidian Pants Component,icons/costume_pt/nu_f_pt_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44079,被净化的魔力布手套,Заготовка для искаженных тканевых перчаток эпохи Хищника,Composant de Gants d'obsidienne enchantée,Enchanted Obsidian Gloves Component,icons/costume_gv/nu_f_gv_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44080,被净化的魔力布鞋,Заготовка для искаженных тканевых сапог эпохи Хищника,Composant de Chaussures d'obsidienne enchantée,Enchanted Obsidian Shoes Component,icons/costume_bo/nu_f_bo_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44081,被净化的魔力皮帽,Заготовка для искаженной фибулы эпохи Хищника,Composant de Casque d'obsidienne enchantée,Enchanted Obsidian Cap Component,icons/costume_hm/nu_m_hm_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+44082,被净化的魔力皮胸甲,Заготовка для искаженного кожаного нагрудника эпохи Хищника,Composant de Pourpoint d'obsidienne enchantée,Enchanted Obsidian Jerkin Component,icons/costume_ar/nu_m_ar_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+44083,被净化的魔力皮腿甲,Заготовка для искаженных кожаных поножей эпохи Хищника,Composant de Braies d'obsidienne enchantée,Enchanted Obsidian Breeches Component,icons/costume_pt/nu_f_pt_leather198.dds.png,生产材料,Редкий материал,Matériau,Material
+44084,被净化的魔力皮手套,Заготовка для искаженных кожаных перчаток эпохи Хищника,Composant de Poings d'obsidienne enchantée,Enchanted Obsidian Fists Component,icons/costume_gv/nu_m_gv_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+44085,被净化的魔力皮长靴,Заготовка для искаженных кожаных сапог эпохи Хищника,Composant de Bottes d'obsidienne enchantée,Enchanted Obsidian Boots Component,icons/costume_bo/nu_m_bo_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+44086,被净化的魔力板金头盔,Заготовка для искаженного венца эпохи Хищника,Composant de Heaume d'obsidienne enchantée,Enchanted Obsidian Helm Component,icons/costume_hm/nu_m_hm_metal210.dds.png,生产材料,Редкий материал,Matériau,Material
+44087,被净化的魔力板金胸甲,Заготовка для искаженного кованого панциря эпохи Хищника,Composant de Cuirasse d'obsidienne enchantée,Enchanted Obsidian Cuirass Component,icons/costume_ar/nu_f_ar_metal215.dds.png,生产材料,Редкий материал,Matériau,Material
+44088,被净化的魔力板金腿甲,Заготовка для искаженных кованых поножей эпохи Хищника,Composant de Grèves d'obsidienne enchantée,Enchanted Obsidian Greaves Component,icons/costume_pt/nu_f_pt_metal216.dds.png,生产材料,Редкий материал,Matériau,Material
+44089,被净化的魔力板金手套,Заготовка для искаженных кованых перчаток эпохи Хищника,Composant de Gantelets d'obsidienne enchantée,Enchanted Obsidian Gauntlets Component,icons/costume_gv/nu_m_gv_metal219.dds.png,生产材料,Редкий материал,Matériau,Material
+44090,被净化的魔力板金长靴,Заготовка для искаженных кованых сапог эпохи Хищника,Composant de Solerets d'obsidienne enchantée,Enchanted Obsidian Sabatons Component,icons/costume_bo/nu_f_bo_metal216.dds.png,生产材料,Редкий материал,Matériau,Material
+44091,蕴含魔力的匕首,Заготовка для искусного аргенитового кинжала,Composant de Dague d'obsidienne envoûtée,Spellbound Obsidian Dagger Component,icons/icon_item_dagger_0094.dds.png,生产材料,Редкий материал,Matériau,Material
+44092,蕴含魔力的单手剑,Заготовка для искусного аргенитового меча,Composant d'Épée d'obsidienne envoûtée,Spellbound Obsidian Sword Component,icons/icon_item_sword_1h_0096.dds.png,生产材料,Редкий материал,Matériau,Material
+44093,蕴含魔力的双手剑,Заготовка для искусного аргенитового клеймора,Composant d'Espadon d'obsidienne envoûtée,Spellbound Obsidian Greatsword Component,icons/icon_item_sword_2h_0074.dds.png,生产材料,Редкий материал,Matériau,Material
+44094,蕴含魔力的单手刀,Заготовка для искусного аргенитового ятагана,Composant de Katana d'obsidienne envoûtée,Spellbound Obsidian Katana Component,icons/icon_item_blade_1h_0088.dds.png,生产材料,Редкий материал,Matériau,Material
+44095,蕴含魔力的双手刀,Заготовка для искусного аргенитового палаша,Composant de Nodachi d'obsidienne envoûtée,Spellbound Obsidian Nodachi Component,icons/icon_item_blade_2h_0075.dds.png,生产材料,Редкий материал,Matériau,Material
+44096,蕴含魔力的单手斧,Заготовка для искусного аргенитового боевого топора,Composant de Hache d'obsidienne envoûtée,Spellbound Obsidian Axe Component,icons/icon_item_axe_1h_0089.dds.png,生产材料,Редкий материал,Matériau,Material
+44097,蕴含魔力的双手斧,Заготовка для искусной аргенитовой секиры,Composant de Bardiche d'obsidienne envoûtée,Spellbound Obsidian Greataxe Component,icons/icon_item_axe_2h_0056.dds.png,生产材料,Редкий материал,Matériau,Material
+44098,蕴含魔力的单手钝器,Заготовка для искусной аргенитовой булавы,Composant de Gourdin d'obsidienne envoûtée,Spellbound Obsidian Club Component,icons/icon_item_mace_1h_0084.dds.png,生产材料,Редкий материал,Matériau,Material
+44099,蕴含魔力的双手钝器,Заготовка для искусного аргенитового боевого молота,Composant de Grand gourdin d'obsidienne envoûtée,Spellbound Obsidian Greatclub Component,icons/icon_item_mace_2h_0066.dds.png,生产材料,Редкий материал,Matériau,Material
+44100,蕴含魔力的单手枪,Заготовка для искусного аргенитового копья,Composant de Pilum d'obsidienne envoûtée,Spellbound Obsidian Shortspear Component,icons/icon_item_spear_1h_0086.dds.png,生产材料,Редкий материал,Matériau,Material
+44101,蕴含魔力的双手枪,Заготовка для искусной аргенитовой алебарды,Composant de Pertuisane d'obsidienne envoûtée,Spellbound Obsidian Longspear Component,icons/icon_item_spear_2h_0071.dds.png,生产材料,Редкий материал,Matériau,Material
+44102,蕴含魔力的单手杖,Заготовка для искусного аргенитового короткого посоха,Composant de Sceptre d'obsidienne envoûtée,Spellbound Obsidian Scepter Component,icons/icon_item_staff_1h_0088.dds.png,生产材料,Редкий материал,Matériau,Material
+44103,蕴含魔力的双手杖,Заготовка для искусного аргенитового боевого посоха,Composant de Bâton d'obsidienne envoûtée,Spellbound Obsidian Staff Component,icons/icon_item_staff_2h_0052.dds.png,生产材料,Редкий материал,Matériau,Material
+44104,蕴含魔力的长弓,Заготовка для искусного аргенитового лука,Composant d'Arc d'obsidienne envoûtée,Spellbound Obsidian Bow Component,icons/icon_item_bow_0091.dds.png,生产材料,Редкий материал,Matériau,Material
+44105,蕴含魔力的弦乐器,Заготовка для искусной аргенитовой лютни,Composant de Luth d'obsidienne envoûtée,Spellbound Obsidian Lute Component,icons/icon_item_ins_s_0052.dds.png,生产材料,Редкий материал,Matériau,Material
+44106,蕴含魔力的管乐器,Заготовка для искусного аргенитового кларнета,Composant de Flûte d'obsidienne envoûtée,Spellbound Obsidian Flute Component,icons/icon_item_ins_w_0049.dds.png,生产材料,Редкий материал,Matériau,Material
+44107,蕴含魔力的盾牌,Заготовка для искусного аргенитового щита,Composant de Bouclier d'obsidienne envoûtée,Spellbound Obsidian Shield Component,icons/icon_item_shield_0095.dds.png,生产材料,Редкий материал,Matériau,Material
+44108,蕴含魔力的布巾,Заготовка для зловещей диадемы эпохи Хищника,Composant de Capuche d'obsidienne envoûtée,Spellbound Obsidian Hood Component,icons/costume_hm/nu_m_hm_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44109,蕴含魔力的布衣,Заготовка для зловещего камзола эпохи Хищника,Composant de Chemise d'obsidienne envoûtée,Spellbound Obsidian Shirt Component,icons/costume_ar/nu_f_ar_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44110,蕴含魔力的布裤,Заготовка для зловещих тканевых поножей эпохи Хищника,Composant de Pantalon d'obsidienne envoûtée,Spellbound Obsidian Pants Component,icons/costume_pt/nu_f_pt_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44111,蕴含魔力的布手套,Заготовка для зловещих тканевых перчаток эпохи Хищника,Composant de Gants d'obsidienne envoûtée,Spellbound Obsidian Gloves Component,icons/costume_gv/nu_f_gv_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44112,蕴含魔力的布鞋,Заготовка для зловещих тканевых сапог эпохи Хищника,Composant de Chaussures d'obsidienne envoûtée,Spellbound Obsidian Shoes Component,icons/costume_bo/nu_f_bo_cloth199.dds.png,生产材料,Редкий материал,Matériau,Material
+44113,蕴含魔力的皮帽,Заготовка для зловещей фибулы эпохи Хищника,Composant de Casque d'obsidienne envoûtée,Spellbound Obsidian Cap Component,icons/costume_hm/nu_m_hm_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+44114,蕴含魔力的皮胸甲,Заготовка для зловещего кожаного нагрудника эпохи Хищника,Composant de Pourpoint d'obsidienne envoûtée,Spellbound Obsidian Jerkin Component,icons/costume_ar/nu_m_ar_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+44115,蕴含魔力的皮腿甲,Заготовка для зловещих кожаных поножей эпохи Хищника,Composant de Braies d'obsidienne envoûtée,Spellbound Obsidian Breeches Component,icons/costume_pt/nu_f_pt_leather198.dds.png,生产材料,Редкий материал,Matériau,Material
+44116,蕴含魔力的皮手套,Заготовка для зловещих кожаных перчаток эпохи Хищника,Composant de Poings d'obsidienne envoûtée,Spellbound Obsidian Fists Component,icons/costume_gv/nu_m_gv_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+44117,蕴含魔力的皮长靴,Заготовка для зловещих кожаных сапог эпохи Хищника,Composant de Bottes d'obsidienne envoûtée,Spellbound Obsidian Boots Component,icons/costume_bo/nu_m_bo_leather199.dds.png,生产材料,Редкий материал,Matériau,Material
+44118,蕴含魔力的板金头盔,Заготовка для зловещего венца эпохи Хищника,Composant de Heaume d'obsidienne envoûtée,Spellbound Obsidian Helm Component,icons/costume_hm/nu_m_hm_metal210.dds.png,生产材料,Редкий материал,Matériau,Material
+44119,蕴含魔力的板金胸甲,Заготовка для зловещего кованого панциря эпохи Хищника,Composant de Cuirasse d'obsidienne envoûtée,Spellbound Obsidian Cuirass Component,icons/costume_ar/nu_f_ar_metal215.dds.png,生产材料,Редкий материал,Matériau,Material
+44120,蕴含魔力的板金腿甲,Заготовка для зловещих кованых поножей эпохи Хищника,Composant de Grèves d'obsidienne envoûtée,Spellbound Obsidian Greaves Component,icons/costume_pt/nu_f_pt_metal216.dds.png,生产材料,Редкий материал,Matériau,Material
+44121,蕴含魔力的板金手套,Заготовка для зловещих кованых перчаток эпохи Хищника,Composant de Gantelets d'obsidienne envoûtée,Spellbound Obsidian Gauntlets Component,icons/costume_gv/nu_m_gv_metal219.dds.png,生产材料,Редкий материал,Matériau,Material
+44122,蕴含魔力的板金长靴,Заготовка для зловещих кованых сапог эпохи Хищника,Composant de Solerets d'obsidienne envoûtée,Spellbound Obsidian Sabatons Component,icons/costume_bo/nu_f_bo_metal216.dds.png,生产材料,Редкий материал,Matériau,Material
+44589,新月血石晶,Розовое эмалевое стекло,Lunarite Lumisol supérieure,Superior Sunglow Lunarite,icons/icon_item_4160.dds.png,生产材料,Редкий материал,Matériau,Material
+44864,强大的巨翼青鸾颌骨,Клюв Авиары,Mâchoire de Titan Ailes de foudre robuste,Strong Thunderwing Titan's Jawbone,icons/icon_item_4202.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+44913,冰冻的火焰心脏,Генетический материал дракона,Éclat de cœur de dragon,Dragon Heartshard,icons/icon_item_4260.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+44914,搏动的火焰心脏,Крохотный красный дракончик,Cœur de Claque-flamme,Flamebeat Heart,icons/icon_item_4257.dds.png,生产材料,Редкий материал,Matériau,Material
+44915,歌颂清风的心脏,Крохотный зеленый дракончик,Cœur de Chante-vent,Windsong Heart,icons/icon_item_4258.dds.png,生产材料,Редкий материал,Matériau,Material
+44916,咆哮大地的心脏,Крохотный черный дракончик,Cœur de Gronde-terre,Earthroar Heart,icons/icon_item_4259.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45045,时空裂缝碎片,Клубок лиловых молний,Fragment de faille spatio-temporelle,Time-Space Rift Shard,icons/icon_item_4268.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45046,溺死尸的汁液,Слизь утопленника,Fluide de corps noyé,Drowned Corpse Fluid,icons/icon_item_4269.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45047,鱼翅,Акулий плавник,Aileron de requin,Shark Fin,icons/icon_item_4270.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45048,半人马的尾巴,Хвост кентавра,Queue de centaure,Centaur's Tail,icons/icon_item_4271.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45049,牛头怪角,Рог минотавра,Corne de minotaure,Minotaur Horn,icons/icon_item_4272.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45050,双头蛇毒牙,Клык огненной кобры,Crochet de vipère bicéphale,Twinhead Viper Fang,icons/icon_item_4273.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45051,亡灵的灵魂,Проклятая душа,Âme de revenant,Revenant Soul,icons/icon_item_4274.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45052,雪人皮,Шкура снежного великана,Peau de yéti,Yeti's Pelt,icons/icon_item_4275.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45053,鬼刃刺客的武器碎片,Обломок древней секиры,Fragment d'arme de Lame fantôme,Ghost Blade's Weapon Shard,icons/icon_item_4276.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45054,巴尔拉巴的碎片,Тлеющие кости,Fragment de Vyrava,Vyrava's Fragment,icons/icon_item_4277.dds.png,生产材料,Редкий материал,Matériau,Material
+45198,亚历山大的手杖,Посох Алесандера,Bâton d'Alexander,Alexander's Staff,icons/icon_item_staff_2h_0032.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+45602,封印的破碎月影,Лунный камень,Givre sélène fendillé scellé,Sealed Cracked Lunafrost,icons/icon_item_0827.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45603,封印的坚硬月影,Обработанный лунный камень,Givre sélène entier scellé,Sealed Whole Lunafrost,icons/icon_item_0828.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45604,封印的结实月影,Ограненный лунный камень,Givre sélène sans défaut scellé,Sealed Flawless Lunafrost,icons/icon_item_0829.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45605,封印的荣光月影,Лунная звезда,Givre sélène probe scellé,Sealed Honorbound Lunafrost,icons/icon_item_0835.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45606,封印的成名月影,Сияющая лунная звезда,Givre sélène éminent scellé,Sealed Honorbold Lunafrost,icons/icon_item_0836.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45624,封印的名誉月影,Запечатанная руна,Givre sélène auguste scellé,Sealed Honorhewn Lunafrost,icons/icon_item_0835.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45732,受损修复卷轴,Рамианский свиток восстановления,Parchemin de décristallisation,Decrystallization Scroll,icons/icon_item_4408.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45914,武器翻新剂,Эфенский куб оружейника,Trempe solaire,Solar Temper,icons/icon_item_2070.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45915,防具翻新剂,Эфенский куб бронника,Trempe lunaire,Lunar Temper,icons/icon_item_2069.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45916,光辉的武器翻新剂,Большой эфенский куб оружейника,Trempe solaire resplendissante,Resplendent Solar Temper,icons/icon_item_2070.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45917,光辉的防具翻新剂,Большой эфенский куб бронника,Trempe lunaire resplendissante,Resplendent Lunar Temper,icons/icon_item_2069.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45918,光辉的翻新添加剂,Большая эфенская сфера,Charme de trempe resplendissant,Resplendent Tempering Charm,icons/icon_item_4002.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+45979,翻新添加剂,Эфенская сфера,Charme de trempe,Tempering Charm,icons/icon_item_4001.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46024,光辉的翻新添加剂（绑定）,Персональная Большая эфенская сфера,Charme de trempe resplendissant lié,Bound Resplendent Tempering Charm,icons/icon_item_4002.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46025,翻新添加剂（绑定）,Эфенская сфера,Charme de trempe lié,Bound Tempering Charm,icons/icon_item_4001.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46026,特别的翻新添加剂,Янтарная эфенская сфера,Charme de trempe inférieur,Lesser Tempering Charm,icons/icon_item_4001.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46067,被深渊浸染的碎片,Сплав хаоса,Éclat de la Bibliothèque abyssale,Abyssal Library Shard,icons/icon_item_0854.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+46129,未拆封的装备外形提取催化剂,Стирающий пигмент,Alambic de récupération emballé,Wrapped Image Recovery Alembic,icons/icon_item_3293.dds.png,生产材料,Редкий материал,Matériau,Material
+46151,新月石强化菱石：1阶段,Заготовка огранщика,Charme sélène de rang 1,Luna Charm Rank 1,icons/icon_item_4467.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46152,新月石强化菱石：2阶段,Двойная заготовка огранщика,Charme sélène de rang 2,Luna Charm Rank 2,icons/icon_item_4467.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46156,新月石晶,Эмалевое стекло,Lunarite lumi supérieure,Superior Glow Lunarite,icons/icon_item_4469.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+46157,新月石片,Эмалевая глазурь,Lunarite délicate lumi,Fine Glow Lunarite,icons/icon_item_4470.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+46420,新月石强化菱石：3阶段,Тройная заготовка огранщика,Charme sélène de rang 3,Luna Charm Rank 3,icons/icon_item_4467.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46421,新月石强化菱石：4阶段,Четырехгранная заготовка огранщика,Charme sélène de rang 4,Luna Charm Rank 4,icons/icon_item_4468.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46422,Luna Charm Rank 5,Пятигранная заготовка огранщика,Charme sélène de rang 5,Luna Charm Rank 5,icons/icon_item_4468.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46428,深邃的新月石强化菱石,Хрупкая тройная заготовка огранщика,Charme sélène de Daru,Daru's Luna Charm,icons/icon_item_4467.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+46574,被撕裂的红龙鬃毛,Фрагмент огненной чешуи,Éclat d'arête vertébrale du dragon rouge,Red Dragon Spinal Ridge Shard,icons/icon_item_4522.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+46682,神秘幸运石,Персональная ирамийская гадальная руна,Pierre de sérendipité liée,Bound Serendipity Stone,icons/icon_item_3017.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+47115,结块的高级香料,Молотые специи,Bourse des Épices moulues,Ground Spices Pouch,icons/icon_item_1763.dds.png,生产材料,Редкий материал,Matériau,Material
+47116,结块的健康蔬菜,Нашинкованные овощи,Bourse des Primeurs hachées,Chopped Produce Pouch,icons/icon_item_1765.dds.png,生产材料,Редкий материал,Matériau,Material
+47117,结块的谷物粉,Измельченные злаки,Bourse des Céréales moulues,Ground Grain Pouch,icons/icon_item_1769.dds.png,生产材料,Редкий материал,Matériau,Material
+47118,高浓缩果汁,Свежевыжатый сок,Bourse de Purée du verger,Orchard Puree Pouch,icons/icon_item_1759.dds.png,生产材料,Редкий материал,Matériau,Material
+47119,结块的干花草,Измельченные лепестки цветов,Bourse des Fleurs séchées,Dried Flowers Pouch,icons/icon_item_1762.dds.png,生产材料,Редкий материал,Matériau,Material
+47120,结块的熏蒸药材,Лекарственный порошок,Bourse de Poudre médicinale,Medicinal Powder Pouch,icons/icon_item_1768.dds.png,生产材料,Редкий материал,Matériau,Material
+47347,被深渊侵蚀的碎片,Амальгама хаоса,Éclat du Cœur d'Ayanad Abyssal,Abyssal Heart of Ayanad Shard,icons/icon_item_4629.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+47581,新月紫石晶,Лиловое эмалевое стекло,Lunarite Lumiconstante,Evenglow Lunarite,icons/icon_item_4211.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+47588,新月强化菱石：怒刺,Заготовка огранщика для гравировки морской бездны,Charme sélène Lumiconstante : Traumatisme,Evenglow Luna Charm: Trauma,icons/icon_item_1559.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+47589,新月强化菱石：悲鸣监狱,Заготовка огранщика для гравировки пиратской метки,Charme sélène Lumiconstante : Cauchemars,Evenglow Luna Charm: Nightmares,icons/icon_item_1559.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+47592,新月强化菱石：幻影链条,Заготовка огранщика для гравировки кровавой длани,Charme sélène Lumiconstante : Stase,Evenglow Luna Charm: Stasis,icons/icon_item_1559.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+47593,新月强化菱石：蜘蛛网,Заготовка огранщика для гравировки багровой грозы,Charme sélène Lumiconstante : Impact,Evenglow Luna Charm: Impact,icons/icon_item_1559.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+47594,新月强化菱石：星空,Заготовка огранщика для гравировки северной звезды,Charme sélène Lumiconstante : Échappez-vous,Evenglow Luna Charm: Escape,icons/icon_item_1559.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+47595,新月强化菱石：风吟,Заготовка огранщика для гравировки «Морского дракона»,Charme sélène Lumiconstante : Déplacement,Evenglow Luna Charm: Movement,icons/icon_item_1559.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+47929,新月石选择宝箱（绑定）,Набор гравировок,Caisse de Gemme sélène liée,Bound Lunagem Crate,icons/quest/icon_item_quest169.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48124,武器辟邪石：不朽,Талисман оружейника из изначального акхиума,Emblème d'ancrage d'arme épique,Epic Weapon Anchoring Emblem,icons/icon_item_3511.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48125,防具辟邪石：不朽,Талисман бронника из изначального акхиума,Emblème d'ancrage d'armure épique,Epic Armor Anchoring Emblem,icons/icon_item_3512.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48126,饰品辟邪石：不朽,Талисман ювелира из изначального акхиума,Emblème d'ancrage d'accessoire épique,Epic Accessory Anchoring Emblem,icons/icon_item_3513.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48130,武器辟邪石碎片：不朽,Заготовка из изначального солнечного акхиума,Fragment d'ancrage d'arme épique,Epic Weapon Anchoring Shard,icons/icon_item_3511.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48131,防具辟邪石碎片：不朽,Заготовка из изначального лунного акхиума,Fragment d'ancrage d'armure épique,Epic Armor Anchoring Shard,icons/icon_item_3512.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48132,饰品辟邪石碎片：不朽,Заготовка из изначального звездного акхиума,Fragment d'ancrage d'accessoire épique,Epic Accessory Anchoring Shard,icons/icon_item_3513.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48406,注视者青色结晶,Средоточие морей,Cristal d'âme du Léviathan,Leviathan's Soul Crystal,icons/icon_item_4770.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+48407,侵略者黑色结晶,Средоточие сумрака,Cristal d'âme du Dragon noir,Black Dragon's Soul Crystal,icons/icon_item_4771.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+48408,捕食者红色结晶,Средоточие ярости,Cristal d'âme de Charybde,Charybdis' Soul Crystal,icons/icon_item_4772.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+48409,破坏神的紫色结晶,Средоточие безумия,Cristal d'âme d'Anthalon,Anthalon's Soul Crystal,icons/icon_item_4773.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+48450,翻新选择宝箱（绑定）,Сундук с эфенскими сферами и кубами,Caisse de charme de trempe lié,Bound Temper Crate,icons/quest/icon_item_quest169.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48521,光辉的武器翻新剂（绑定）,Большой эфенский куб оружейника,Trempe solaire resplendissante lié,Bound Resplendent Solar Temper,icons/icon_item_2070.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48522,光辉的防具翻新剂（绑定）,Большой эфенский куб бронника,Trempe lunaire resplendissante lié,Bound Resplendent Lunar Temper,icons/icon_item_2069.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48813,海怪毒牙,Клык Калидиса,Croc de Charybde,Charybdis' Fang,icons/icon_item_4812.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+48814,卡里迪斯的皮,Лоскут кожи Калидиса,Peau de Charybde,Charybdis' Hide,icons/icon_item_4813.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+48858,武器翻新添加剂（绑定）,Эфенская сфера оружейника,Charme de trempe d'arme lié,Bound Weapon Tempering Charm,icons/icon_item_4001.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48859,防具翻新添加剂（绑定）,Эфенская сфера бронника,Charme de trempe d'armure lié,Bound Armor Tempering Charm,icons/icon_item_4815.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48860,光辉的武器翻新添加剂（绑定）,Большая эфенская сфера оружейника,Charme de trempe d'arme resplendissant lié,Bound Resplendent Weapon Tempering Charm,icons/icon_item_4002.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48861,光辉的防具翻新添加剂（绑定）,Большая эфенская сфера бронника,Charme de trempe d'armure resplendissant lié,Bound Resplendent Armor Tempering Charm,icons/icon_item_4816.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48862,辟邪武器翻新添加剂,Сверкающая эфенская сфера оружейника,Charme d'ancrage de trempe d'arme,Weapon Anchoring Tempering Charm,icons/icon_item_4817.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48863,辟邪防具翻新添加剂,Сверкающая эфенская сфера бронника,Charme d'ancrage de trempe d'armure,Armor Anchoring Tempering Charm,icons/icon_item_4818.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48864,幸运的武器翻新添加剂,Драгоценная эфенская сфера оружейника,Charme d'ancrage de trempe d'arme resplendissant,Resplendent Weapon Anchoring Tempering Charm,icons/icon_item_4819.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48865,幸运的防具翻新添加剂,Драгоценная эфенская сфера бронника,Charme d'ancrage de trempe d'armure resplendissant,Resplendent Armor Anchoring Tempering Charm,icons/icon_item_4820.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48866,武器翻新添加剂,Эфенская сфера оружейника,Charme de trempe d'arme,Weapon Tempering Charm,icons/icon_item_4001.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48867,防具翻新添加剂,Эфенская сфера бронника,Charme de trempe d'armure,Armor Tempering Charm,icons/icon_item_4815.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48868,光辉的武器翻新添加剂,Большая эфенская сфера оружейника,Charme de trempe d'arme resplendissant,Resplendent Weapon Tempering Charm,icons/icon_item_4002.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48869,光辉的防具翻新添加剂,Большая эфенская сфера бронника,Charme de trempe d'armure resplendissant,Resplendent Armor Tempering Charm,icons/icon_item_4816.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48885,辟邪武器翻新添加剂（绑定）,Сверкающая эфенская сфера оружейника,Charme d'ancrage de trempe d'arme lié,Bound Weapon Anchoring Tempering Charm,icons/icon_item_4817.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48886,辟邪防具翻新添加剂（绑定）,Сверкающая эфенская сфера бронника,Charme d'ancrage de trempe d'armure lié,Bound Armor Anchoring Tempering Charm,icons/icon_item_4818.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48893,幸运的武器翻新添加剂（绑定）,Драгоценная эфенская сфера оружейника,Charme d'ancrage de trempe d'arme resplendissant lié,Bound Resplendent Weapon Anchoring Tempering Charm,icons/icon_item_4819.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48894,幸运的防具翻新添加剂（绑定）,Драгоценная эфенская сфера бронника,Charme d'ancrage de trempe d'armure resplendissant lié,Bound Resplendent Armor Anchoring Tempering Charm,icons/icon_item_4820.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48903,辟邪翻新添加剂选择宝箱（绑定）,Набор сверкающих эфенских сфер,Boîte de charme d'ancrage de trempe liée,Bound Anchoring Tempering Charm Box,icons/icon_item_3282.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48904,光辉的翻新添加剂选择宝箱（绑定）,Набор больших эфенских сфер,Boîte de charme de trempe resplendissant liée,Bound Resplendent Tempering Charm Box,icons/icon_item_3278.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48905,翻新添加剂选择宝箱（绑定）,Набор эфенских сфер,Boîte de charme de trempe liée,Bound Tempering Charm Box,icons/icon_item_3279.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+48994,幻化复原剂,Стирающий порошок,Alambic de restauration,Restoration Alembic,icons/icon_item_2039.dds.png,生产材料,Редкий материал,Matériau,Material
+49002,装备外形提取催化剂,Стирающий пигмент,Alambic de récupération,Image Recovery Alembic,icons/icon_item_3293.dds.png,生产材料,Редкий материал,Matériau,Material
+49239,耀眼的源晶珠,Акхиумная сфера,Orbe d'Archeum vif,Vivid Archeum Orb,icons/icon_item_4790.dds.png,生产材料,Редкий материал,Matériau,Material
+49695,守护者的魔力核心,Знак хранителя,Manaréacteur du Gardien,Warden's Manacore,icons/icon_item_4947.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+49770,守护者的魔力碎片,Фрагмент знака хранителя,Éclat de mana du Gardien,Warden's Manashard,icons/icon_item_4948.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+49775,新月石强化菱石：6阶段,Шестигранная заготовка огранщика,Charme sélène de rang 6,Luna Charm Rank 6,icons/icon_item_4468.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+50177,格蓝的怨恨戒指,Перстень Гленна,Anneau d'Implacable Glenn,Relentless Glenn's Ring,icons/icon_item_ring_0004.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+50178,蕾娜的憎恨戒指,Перстень Лореи,Anneau de Meina vicieux,Vicious Meina's Ring,icons/icon_item_ring_0004.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+50180,变化的美杜莎鳞发,Потускневшая чешуя Ашьяры,Volant radieux de Jola,Jola's Radiant Frill,icons/icon_item_0053.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+50415,次元结晶,Осколок кристалла измерений,Cristal d'âme voilé,Clouded Soul Crystal,icons/icon_item_5019.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+50529,翻新剂选择宝箱,Ящик с эфенскими кубами,Caisse de Trempe,Temper Crate,icons/icon_item_2273.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+50537,荣光月影选择宝箱,Ларец со звездами,Caisse de Givre sélène probe,Honorbound Lunafrost Crate,icons/quest/icon_item_quest169.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+50546,机甲兵器部件,Стальная чешуйка,Parties de Risopode,Risopoda Parts,icons/icon_item_0060.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+50684,未鉴定的灵魂碎片,Ларец механика,Pochette de Résilience non-identifiée,Unidentified Resilience Pouch,icons/icon_item_5001.dds.png,生产材料,Редкий материал,Matériau,Material
+50730,光辉的翻新添加剂宝箱（绑定）,Сундук с большой эфенской сферой,Caisse de Charme de trempe resplendissant liée,Bound Resplendent Tempering Charm Crate,icons/icon_item_2374.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51583,武器翻新剂捆,Набор эфенских кубов оружейника,Trempes solaires,Solar Tempers,icons/icon_item_2070.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51584,防具翻新剂捆,Набор эфенских кубов бронника,Trempes lunaires,Lunar Tempers,icons/icon_item_2069.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51594,伊弗南的勇气,Печать силы Эфе,Puissance de Gedlon,Gedlon's Strength,icons/icon_item_5140.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51595,伊弗南的忍耐,Печать стойкости Эфе,Résilience d'Herstan,Herstan's Resilience,icons/icon_item_5141.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51596,伊弗南的智慧,Печать мудрости Эфе,Sagesse de Yordan,Yordan's Wisdom,icons/icon_item_5142.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51597,命运突破石：1阶段,Малый кристалл Эфе,Rune d'Ewan Rang 1,Ewan's Rune Rank 1,icons/icon_item_5143.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51598,命运突破石：2阶段,Средний кристалл Эфе,Rune d'Ewan Rang 2,Ewan's Rune Rank 2,icons/icon_item_5143.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51599,命运突破石：3阶段,Большой кристалл Эфе,Rune d'Ewan Rang 3,Ewan's Rune Rank 3,icons/icon_item_5143.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51601,染血的娜刹仕鳞片,Окровавленная чешуйка,Écaille de serpent,Serpent Scale,icons/icon_item_0096.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+51602,伊弗南的魔法珠,Золотая печать Эфе,Essence de demi-dieu,Demigod Essence,icons/icon_item_5145.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+52138,翻新剂选择宝箱,Ящик с эфенскими кубами,Caisse de Trempe,Temper Crate,icons/icon_item_1176.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+53419,海盗气魄,Подношение охотников за удачей,Esprit amoral,Lawless Spirit,icons/quest/icon_item_quest009.dds.png,生产材料,Редкий материал,Matériau,Material
+53814,大草原的精华雕塑,Осколок изначального анадия,Fragment d'essence de la Grande prairie,Great Prairie Essence Piece,icons/icon_item_4948.dds.png,生产材料,Редкий материал,Matériau,Material
+53815,大草原的精华,Анадиевая сфера,Essence de la Grande prairie,Great Prairie Essence,icons/icon_item_4947.dds.png,生产材料,Редкий материал,Matériau,Material
+53816,大草原的结晶雕塑,Фрагмент изначального анадия,Morceau de cristal de la Grande prairie,Great Prairie Crystal Piece,icons/icon_item_4835.dds.png,生产材料,Редкий материал,Matériau,Material
+53817,大草原的结晶,Анадиевая гемма,Cristal de la Grande prairie,Great Prairie Crystal,icons/icon_item_4836.dds.png,生产材料,Редкий материал,Matériau,Material
+8000026,Gilda Dust,Дельфийская пыль,Poussière de Gilda,Gilda Dust,icons/icon_item_2045.dds.png,生产材料,Редкий материал,Matériau,Material
+8000134,Discontinued Land Expansion Permit,Истекший арендный договор,Permis expansion terrain plus vendu,Discontinued Land Expansion Permit,icons/icon_item_2984.dds.png,生产材料,Редкий материал,Matériau,Material
+8000165,猩红雷霆精华碎片,Эссенция Химериона,Essence d'Éclair pourpre,Crimson Lightning Essence,icons/icon_item_2994.dds.png,生产材料,Редкий материал,Matériau,Material
+8000271,White Regrade Charm,Слабый универсальный катализатор,Charme de renivellement blanc,White Regrade Charm,icons/icon_item_2738.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8000272,Bound Superior White Regrade Charm,Мощный белый универсальный катализатор,Charme reniv. blanc supérieur lié,Bound Superior White Regrade Charm,icons/icon_item_2738.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8000487,Bound Green Regrade Charm,Основной катализатор,Charme de renivellement vert lié,Bound Green Regrade Charm,icons/icon_item_1917.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8000488,Blue Regrade Charm,Улучшенный основной катализатор,Charme de renivellement bleu,Blue Regrade Charm,icons/icon_item_1916.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8000498,Discontinued Remodeling Permit,Недействительный сертификат независимого ремесленника,Permis restructuration obsolète,Discontinued Remodeling Permit,icons/icon_item_2985.dds.png,生产材料,Редкий материал,Matériau,Material
+8000966,米沙坤的水晶,Кристалл Мисагона,Cristal de Misagon,Misagon's Crystal,icons/icon_item_3390.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8000999,神秘幸运石碎片（绑定）,Часть Руны закройщика костюмов,Éclat de pierre de sérendipité lié,Bound Serendipity Stone Shard,icons/icon_item_3399.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001000,未拆封的神秘幸运石,Упакованная Ирамийская гадальная руна,Pierre de sérendipité liée,Wrapped Serendipity Stone,icons/icon_item_3017.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001002,Glass Prismatic Diamond,Чистый Радужный хрусталь,Diamant prismatique en verre,Glass Prismatic Diamond,icons/icon_item_1761.dds.png,生产材料,Редкий материал,Matériau,Material
+8001035,Bound Superior White Regrade Charm,Мощный белый универсальный катализатор,Charme de renivellement blanc supérieur lié,Bound Superior White Regrade Charm,icons/icon_item_2738.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001094,建筑管理许可证,Разрешение на управление строительством,Permis gestion de construction,Building Management Permit,icons/icon_item_3447.dds.png,生产材料,Редкий материал,Matériau,Material
+8001130,Bound Silver Regrade Charm,Мощный серебрянный катализатор,Charme renivel. argenté lié,Bound Silver Regrade Charm,icons/icon_item_2738.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001187,Daru Cauldron Shard,Осколок Котла Дару,Éclat de chaudron daru,Daru Cauldron Shard,icons/icon_item_3497.dds.png,生产材料,Редкий материал,Matériau,Material
+8001189,Refined Iron Ingot,Тонкий железный лист,Lingot de fer,Refined Iron Ingot,icons/icon_item_3498.dds.png,金属,Слиток металла,Métal,Metal
+8001190,Magic Solution,Магический раствор,Solution magique,Magic Solution,icons/quest/icon_item_quest179.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+8001381,Celestial Weapon Anchoring Emblem,Квейсарская эмблема оружейника,Emblème d'ancrage d'arme céleste,Celestial Weapon Anchoring Emblem,icons/icon_item_3505.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001382,Celestial Armor Anchoring Emblem,Квейсарская эмблема бронника,Emblème d'ancrage d'armure céleste,Celestial Armor Anchoring Emblem,icons/icon_item_3506.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001383,Celestial Accessory Anchoring Emblem,Квейсарская эмблема ювелира,Emblème d'ancrage d'accessoire céleste,Celestial Accessory Anchoring Emblem,icons/icon_item_3507.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001384,Celestial Weapon Anchoring Charm: 1.5x,Квейсарский талисман оружейника: 1.5х,Charme d'ancrage d'arme céleste : 1.5x,Celestial Weapon Anchoring Charm: 1.5x,icons/icon_item_3508.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001385,Celestial Armor Anchoring Charm: 1.5x,Квейсарский талисман бронника: 1.5х,Charme d'ancrage d'armure céleste : 1.5x,Celestial Armor Anchoring Charm: 1.5x,icons/icon_item_3509.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001386,Celestial Accessory Anchoring Charm: 1.5x,Квейсарский талисман ювелира: 1.5х,Charme d'ancrage d'accessoire céleste : 1.5x,Celestial Accessory Anchoring Charm: 1.5x,icons/icon_item_3510.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001387,Celestial Weapon Anchoring Charm: 2x,Квейсарский талисман оружейника: 2х,Charme d'ancrage d'arme céleste : 2x,Celestial Weapon Anchoring Charm: 2x,icons/icon_item_3508.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001388,Celestial Armor Anchoring Charm: 2x,Квейсарский талисман бронника: 2х,Charme d'ancrage d'armure céleste : 2x,Celestial Armor Anchoring Charm: 2x,icons/icon_item_3509.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001389,Celestial Accessory Anchoring Charm: 2x,Квейсарский талисман ювелира: 2х,Charme d'ancrage d'accessoire céleste : 2x,Celestial Accessory Anchoring Charm: 2x,icons/icon_item_3510.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001390,Divine Weapon Anchoring Emblem,Древняя Квейсарская эмблема оружейника,Emblème d'ancrage d'arme divine,Divine Weapon Anchoring Emblem,icons/icon_item_3511.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001391,Divine Armor Anchoring Emblem,Древняя Квейсарская эмблема бронника,Emblème d'ancrage d'armure divine,Divine Armor Anchoring Emblem,icons/icon_item_3512.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001392,Divine Accessory Anchoring Emblem,Древняя Квейсарская эмблема ювелира,Emblème d'ancrage d'accessoire divin,Divine Accessory Anchoring Emblem,icons/icon_item_3513.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001393,Divine Weapon Anchoring Charm: 1.5x,Древний Квейсарский талисман оружейника: 1.5х,Charme d'ancrage d'arme divine : 1.5x,Divine Weapon Anchoring Charm: 1.5x,icons/icon_item_3514.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001394,Divine Armor Anchoring Charm: 1.5x,Древний Квейсарский талисман бронника: 1.5х,Charme d'ancrage d'armure divine : 1.5x,Divine Armor Anchoring Charm: 1.5x,icons/icon_item_3515.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001395,Divine Accessory Anchoring Charm: 1.5x,Древний Квейсарский талисман ювелира: 1.5х,Charme d'ancrage d'accessoire divin : 1.5x,Divine Accessory Anchoring Charm: 1.5x,icons/icon_item_3516.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001396,Divine Weapon Anchoring Charm: 2x,Древний Квейсарский талисман оружейника: 2х,Charme d'ancrage d'arme divine : 2x,Divine Weapon Anchoring Charm: 2x,icons/icon_item_3514.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001397,Divine Armor Anchoring Charm: 2x,Древний Квейсарский талисман бронника: 2х,Charme d'ancrage d'armure divine : 2x,Divine Armor Anchoring Charm: 2x,icons/icon_item_3515.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001398,Divine Accessory Anchoring Charm: 2x,Древний Квейсарский талисман ювелира: 2х,Charme d'ancrage d'accessoire divin : 2x,Divine Accessory Anchoring Charm: 2x,icons/icon_item_3516.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001399,Celestial Weapon Anchoring Shard,Квейсарский осколок оружейника,Fragment d'ancrage d'arme céleste,Celestial Weapon Anchoring Shard,icons/icon_item_3505.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001400,Celestial Armor Anchoring Shard,Квейсарский осколок бронника,Fragment d'ancrage d'armure céleste,Celestial Armor Anchoring Shard,icons/icon_item_3506.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001401,Celestial Accessory Anchoring Shard,Квейсарский осколок ювелира,Fragment d'ancrage access. céleste,Celestial Accessory Anchoring Shard,icons/icon_item_3507.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001402,Divine Weapon Anchoring Shard,Древний Квейсарский осколок оружейника,Fragment d'ancrage d'arme divine,Divine Weapon Anchoring Shard,icons/icon_item_3511.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001403,Divine Armor Anchoring Shard,Древний Квейсарский осколок бронника,Fragment d'ancrage d'armure divine,Divine Armor Anchoring Shard,icons/icon_item_3512.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001404,Divine Accessory Anchoring Shard,Древний Квейсарский осколок ювелира,Fragment d'ancrage d'accessoire divin,Divine Accessory Anchoring Shard,icons/icon_item_3513.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001875,未拆封的神秘幸运石,Упакованная руна закройщика костюмов,Pierre de sérendipité emballée,Wrapped Serendipity Stone,icons/icon_item_3017.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8001964,Ancestral Warrior Medal,Руна Эфе'рунда,Médaillon de guerrier ancestral,Ancestral Warrior Medal,icons/arcustom/ancestral_medal_1.dds.png,生产材料,Редкий материал,Matériau,Material
+8002845,Bound Resplendent Solar Temper,Персональный Большой эфенский куб оружейника,Trempe solaire resplendissante lié,Bound Resplendent Solar Temper,icons/icon_item_2070.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8002846,Bound Resplendent Lunar Temper,Персональный Большой эфенский куб бронника,Trempe lunaire resplendissante lié,Bound Resplendent Lunar Temper,icons/icon_item_2069.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+8002967,Bound Restoration Alembic,Стирающий порошок,Alambic de restauration lié,Bound Restoration Alembic,icons/icon_item_2039.dds.png,生产材料,Редкий материал,Matériau,Material
+8003194,Resplendent Temper Ticket,Билет Большой эфенской сферы,Ticket de trempe resplendissante,Resplendent Temper Ticket,icons/icon_item_2799.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9000154,Serendipity Stone,Руна закройщика костюмов,Serendipity Stone,Serendipity Stone,icons/icon_item_3017.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9000155,黑暗封印石,Печать тьмы,Dark Sealstone,Dark Sealstone,icons/icon_item_2969.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+9000156,邪恶封印石,Печать зла,Evil Sealstone,Evil Sealstone,icons/icon_item_2968.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+9000157,剧毒封印石,Печать ненависти,Venom Sealstone,Venom Sealstone,icons/icon_item_2967.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+9000158,血染封印石,Печать крови,Bloody Sealstone,Bloody Sealstone,icons/icon_item_2966.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+9000159,无常封印石,Печать неопределенности,Uncertainty Sealstone,Uncertainty Sealstone,icons/icon_item_3150.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+9000279,陌生人的封印石,Печать странника,Stranger's Sealstone,Stranger's Sealstone,icons/icon_item_3621.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+9000823,辉光碎片,Сверкающий осколок,Shining Fragment,Shining Fragment,icons/icon_item_1782.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+9001065,Eternal Breath,Дыхание Дракона,Eternal Breath,Eternal Breath,icons/icon_item_0658.dds.png,生产材料,Редкий материал,Matériau,Material
+9001351,麦哲伦的罗盘碎片,Осколок компаса Магеллана,Magellan's Compass Shard,Magellan's Compass Shard,icons/icon_item_1960.dds.png,生产材料,Редкий материал,Matériau,Material
+9001352,麦哲伦的罗盘碎片,Осколок компаса Магеллана,Magellan's Compass Shard,Magellan's Compass Shard,icons/icon_item_1960.dds.png,生产材料,Редкий материал,Matériau,Material
+9001353,麦哲伦的罗盘碎片,Осколок компаса Магеллана,Magellan's Compass Shard,Magellan's Compass Shard,icons/icon_item_1960.dds.png,生产材料,Редкий материал,Matériau,Material
+9001424,受损修复卷轴碎片,Обрывок Рамианского свитка восстановления,Decrystallization Scroll Fragment,Decrystallization Scroll Fragment,icons/icon_item_4408.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9001532,Solar Temper Pack,Упаковка эфенских кубов оружейника,Solar Temper Pack,Solar Temper Pack,icons/icon_item_2070.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9001533,Lesser Tempering Crystal Pack,Упаковка янтарных эфенских сфер,Lesser Tempering Crystal Pack,Lesser Tempering Crystal Pack,icons/icon_item_4001.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9001534,Lunar Temper Pack,Упаковка эфенских кубов бронника,Lunar Temper Pack,Lunar Temper Pack,icons/icon_item_2069.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9001876,亚历山大的手杖,Посох Алесандера,Alexander's Staff,Alexander's Staff,icons/icon_item_staff_2h_0032.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+9001920,未拆封的神秘幸运石,Упакованная ирамийская гадальная руна,Wrapped Serendipity Stone,Wrapped Serendipity Stone,icons/icon_item_3017.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9001921,Charred Hull Wood,Обожженная корпусная древесина,Charred Hull Wood,Charred Hull Wood,icons/arcustom/custom_speedcar_craft_item_1.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+9001922,Titanweave Feather Silk,Ткань из перьев гиганта,Titanweave Feather Silk,Titanweave Feather Silk,icons/arcustom/custom_speedcar_craft_item_3.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+9001923,Onyx Motor Oil,Черное машинное масло,Onyx Motor Oil,Onyx Motor Oil,icons/arcustom/custom_speedcar_craft_item_4.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+9001924,Eternal Tree's Living Fibre,Живые волокна вечного древа,Eternal Tree's Living Fibre,Eternal Tree's Living Fibre,icons/arcustom/custom_speedcar_craft_item_5.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+9001925,Indestructible Sea Rubber,Неразрушимая морская резина,Indestructible Sea Rubber,Indestructible Sea Rubber,icons/arcustom/custom_speedcar_craft_item_2.dds.png,战利品,Легендарный трофей,Legendary Trophy,Legendary Trophy
+9001929,神秘幸运石碎片,Осколок упакованной ирамийской гадальной руны,Wrapped Serendipity Stone Shard,Wrapped Serendipity Stone Shard,icons/icon_item_3399.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9001936,Bound Lunar Temper Pack,Упаковка эфенских кубов бронника,Bound Lunar Temper Pack,Bound Lunar Temper Pack,icons/icon_item_2069.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9001937,Bound Solar Temper Pack,Упаковка эфенских кубов оружейника,Bound Solar Temper Pack,Bound Solar Temper Pack,icons/icon_item_2070.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9001938,Bound Lesser Tempering Crystal Pack,Упаковка янтарных эфенских сфер,Bound Lesser Tempering Crystal Pack,Bound Lesser Tempering Crystal Pack,icons/icon_item_4001.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9002049,Bound Armor Anchoring Tempering Charm,Персональная Сверкающая эфенская сфера бронника,Bound Armor Anchoring Tempering Charm,Bound Armor Anchoring Tempering Charm,icons/icon_item_4818.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9002050,Bound Weapon Anchoring Tempering Charm,Персональная Сверкающая эфенская сфера оружейника,Bound Weapon Anchoring Tempering Charm,Bound Weapon Anchoring Tempering Charm,icons/icon_item_4817.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9002355,Sealed Superior Glow Lunarite,Запечатанное Эмалевое стекло,Sealed Superior Glow Lunarite,Sealed Superior Glow Lunarite,icons/icon_item_4469.dds.png,炼金材料,Реактив,Alchimie,Alchemy
+9002972,Bound Serendipity Stone Fragment,Обломок ирамийской гадальной руны,Bound Serendipity Stone Fragment,Bound Serendipity Stone Fragment,icons/icon_item_3399.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9003053,Sealed Honorhewn Lunafrost,Sealed Honorhewn Lunafrost,Sealed Honorhewn Lunafrost,Sealed Honorhewn Lunafrost,icons/icon_item_0835.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials
+9003812,英雄的天眷之石,Героическая руна закройщика,Heroes Serendipity Stone,Heroes Serendipity Stone,icons/arcustom/ancestral_medal_2.dds.png,强化材料,Материал для улучшения,Enchancement Materials,Enchancement Materials

@@ -1,0 +1,436 @@
+idx	type	completed	inProgress	tracked	title
+1	1112	false	true	false	An Ancient Tradition
+2	1113	false	true	false	The Road to Fortune-Telling
+3	1117	false	true	false	Quarry Cleanup
+4	1140	false	true	false	Contamination Retaliation
+5	2349	false	true	false	Contacting the Shadowhawks
+6	2350	false	true	false	Your First Contact
+7	2354	false	true	false	A Morbid Memento
+8	3505	false	true	false	A Missing Dog
+9	3506	false	true	false	A Grim Discovery
+10	3507	false	true	false	The Mysterious Box
+11	3508	false	true	false	Dangerous Contents
+12	3509	false	true	false	Shady Dealings
+13	3510	false	true	false	A Respectable Businessman
+14	3511	false	true	false	A Pleasant Conversation
+15	3512	false	true	false	Playing it Safe
+16	3513	false	true	false	Meeting Haman
+17	3514	false	true	false	Honor Amongst Thieves
+18	3515	false	true	false	Escape from Serpent's Pass
+19	3516	false	true	false	Ruthless Tactics
+20	3517	false	true	false	The Path of Vengeance
+21	3518	false	true	false	Innocent Victims
+22	3519	false	true	false	Dangerous Cargo
+23	3520	false	true	false	Baht's Invitation
+24	3521	false	true	false	Joining the Shadowhawks
+25	3522	false	true	false	Promised Payment
+26	3523	false	true	false	Counterintelligence
+27	3524	false	true	false	Into the Field
+28	3525	false	true	false	The Mayor of Tigerseye
+29	3526	false	true	false	Feigned Formalities
+30	3527	false	true	false	Friends in High Places
+31	3528	false	true	false	Raiding the Shrine
+32	3529	false	true	false	Go to Ground
+33	3530	false	true	false	A Second Chance
+34	3531	false	true	false	Going Rogue
+35	3532	false	true	false	Terror in the Temple
+36	3533	false	true	false	Mission Accomplished
+37	3534	false	true	false	A Shadowhawk at Last
+38	3535	false	true	false	Vincenzio's Fate
+39	3536	false	true	false	Vincenzio's Trail
+40	3537	false	true	false	A City at Risk
+41	3538	false	true	false	To the City of Towers
+42	3539	false	true	false	The Origin of the Iron Crescent
+43	3540	false	true	false	The Helm of Kyrios
+44	3541	false	true	false	Bladewing Delivery
+45	3542	false	true	false	Blunt Instrument
+46	3543	false	true	false	The Middleman
+47	3544	false	true	false	The Mad Scholar
+48	3545	false	true	false	Laying the Bait
+49	3546	false	true	false	Keeping Secrets
+50	3547	false	true	false	A Glimpse of Destruction
+51	3548	false	true	false	Baht's Betrayal
+52	3549	false	true	false	A Brother in Arms
+53	3550	false	true	false	Vincenzio's Family
+54	3551	false	true	false	The Ashen Altar
+55	3552	false	true	false	A Dying Wish
+56	3553	false	true	false	Misar the Coward
+57	3554	false	true	false	The Fight to Haman
+58	3555	false	true	false	The Tower of Lord Ashabel
+59	3556	false	true	false	Lord Ashabel
+60	3557	false	true	false	Parting Ways
+61	3558	false	true	false	A Shadowhawk's Request
+62	3559	false	true	false	Anthalon's Invasion
+63	3560	false	true	false	Baht's Final Gift
+64	3561	false	true	false	A Lucky Break
+65	6577	false	true	false	A Test of Strength
+66	6580	false	true	false	Kyrios Worshippers
+67	6584	false	true	false	Security Concerns
+68	6615	false	true	false	The Final Test
+69	6696	false	true	false	Broken Supply Lines
+70	6697	false	true	false	Finding Sir Livek
+71	6698	false	true	false	A Suspicious Death
+72	6699	false	true	false	An Emergency Meeting
+73	6700	false	true	false	A Mysterious Ally
+74	6701	false	true	false	A Shocking Truth
+75	6702	false	true	false	Rescue Mission
+76	6703	false	true	false	A Secret Meeting
+77	6704	false	true	false	The End of the Line
+78	6705	false	true	false	The Golden Ruins
+79	6706	false	true	false	The Captain's Doubts
+80	6707	false	true	false	Primary Suspects
+81	6708	false	true	false	Tracking the Traitor
+82	6709	false	true	false	The Poisoned Scout
+83	6710	false	true	false	The Truth at Last
+84	6711	false	true	false	Searching the Ruins
+85	6712	false	true	false	The Silent Watcher
+86	6713	false	true	false	A Puzzling Prophecy
+87	6714	false	true	false	Zeladian the Necromancer
+88	6715	false	true	false	A Strained Alliance
+89	7117	false	true	false	Your Legend Continues
+90	7122	false	true	false	A Secret Mission
+91	7124	false	true	false	Heading to Halcyona
+92	7126	false	true	false	Traveling on Business
+93	7127	false	true	false	A Secret in Sun's End
+94	7128	false	true	false	An Agent in Anarchi
+95	7129	false	true	false	The Traitor in the Tower
+96	7130	false	true	false	The Chimera Agent
+97	7131	false	true	false	A Dangerous Antidote
+98	7132	false	true	false	Memory Mender
+99	7133	false	true	false	Innocents In Danger
+100	7134	false	true	false	The Missing Child
+101	7135	false	true	false	Precious Cargo
+102	7136	false	true	false	Gathering Information
+103	7137	false	true	false	Across the Sea
+104	7138	false	true	false	A Scented Signal
+105	7139	false	true	false	A Moving Target
+106	7140	false	true	false	The Specialist
+107	7141	false	true	false	Captives and Coercion
+108	7142	false	true	false	Ayle's Fate
+109	7143	false	true	false	A Custom Solution
+110	7144	false	true	false	Arra's Ingredients
+111	7145	false	true	false	The Captured Child
+112	7146	false	true	false	The Training Camp
+113	7147	false	true	false	One Last Job
+114	7148	false	true	false	The Souleye's Location
+115	7149	false	true	false	The Riven Gates
+116	7466	false	true	false	Joining the Crimson Watch
+117	8536	false	true	false	No Man Left Behind
+118	8537	false	true	false	Friends and Acquaintances
+119	8538	false	true	false	Reclaiming Reedwind
+120	8539	false	true	false	Above Your Pay Grade
+121	8540	false	true	false	Unquestioned Authority
+122	8541	false	true	false	Lock and Key
+123	8543	false	true	false	A Good Reputation
+124	8544	false	true	false	A Deadly Meeting
+125	8545	false	true	false	Silver Lining
+126	8546	false	true	false	No Time to Rest
+127	8547	false	true	false	A Prophetic Warning
+128	8548	false	true	false	Missing Information
+129	8549	false	true	false	An Ancient Language
+130	8550	false	true	false	Lost Souls
+131	8551	false	true	false	The Leviathan's Essence
+132	8552	false	true	false	Souls Unbound
+133	8553	false	true	false	A New Weapon
+134	8554	false	true	false	Battle Preparations
+135	8555	false	true	false	Crimson Watch Defense Preparations
+136	8556	false	true	false	To Aegis Island
+137	8557	false	true	false	Island Monsters
+138	8558	false	true	false	The Great Seal of Erenor
+139	9009	false	true	false	A Call for Help
+140	9115	false	true	false	Defeat the Giant Abomination
+141	9173	false	true	false	The Call of the Hiram
+142	9174	false	true	false	Joining Forces
+143	9175	false	true	false	The Amaitan Highlands
+144	9176	false	true	false	Purifying Energy
+145	9178	false	true	false	An Ominous Cave
+146	9179	false	true	false	A Mysterious Cube
+147	9180	false	true	false	To the Nemi River
+148	9181	false	true	false	Nightmarish Encounter
+149	9182	false	true	false	Disguise Mission
+150	9183	false	true	false	Infiltrating the Worship Site
+151	9185	false	true	false	A Destined Meeting
+152	9186	false	true	false	Akasch Worship Site Investigation
+153	9187	false	true	false	The Truth about the Abominations
+154	9188	false	true	false	A Nearing Disaster
+155	9189	false	true	false	The Chosen One
+156	9190	false	true	false	The Relic of Hiram City
+157	9191	false	true	false	The Holy Soldiers
+158	9192	false	true	false	Protect the Mountain Gate
+159	9193	false	true	false	The Shadow of Disaster
+160	9194	false	true	false	Just the Beginning
+161	9195	false	true	false	Neverending Disaster
+162	9212	false	true	false	Hiram Guardian Statue
+163	9213	false	true	false	Omen
+164	9235	false	true	false	The Path East
+165	9237	false	true	false	Setting up Camp
+166	9238	false	true	false	Missing Scouts
+167	9239	false	true	false	Tracking the Scouts
+168	9240	false	true	false	Serpent Horrors
+169	9241	false	true	false	Signs of Corruption
+170	9242	false	true	false	Haradium Research
+171	9243	false	true	false	A Spreading Problem
+172	9244	false	true	false	The Gate of Strength
+173	9245	false	true	false	A Test of Strength
+174	9246	false	true	false	The Message
+175	9247	false	true	false	The Three Gates
+176	9249	false	true	false	Black Forest Investigation
+177	9250	false	true	false	The Gate of Patience
+178	9252	false	true	false	A Test of Patience
+179	9253	false	true	false	The Holy Vessel
+180	9254	false	true	false	A Refined Secret
+181	9255	false	true	false	Haradium Research Journal
+182	9256	false	true	false	To the Meadows
+183	9257	false	true	false	A Secret Meeting
+184	9258	false	true	false	The Rudai Family
+185	9259	false	true	false	Abyssal Dwarves
+186	9260	false	true	false	The Gate of Wisdom
+187	9262	false	true	false	A Test of Wisdom
+188	9263	false	true	false	Broken Seals
+189	9264	false	true	false	Ipnya's Blessing
+190	9265	false	true	false	Chaos and Destruction
+191	9266	false	true	false	Path to the Garden
+192	9298	false	true	false	An Experiment
+193	9305	false	true	false	Under Assault?
+194	9469	false	true	false	Solis Headlands
+195	9983	false	true	false	Kyprosa's Message
+196	9989	false	true	false	Enos the Oracle
+197	10001	false	true	false	Winged Messenger
+198	10011	false	true	false	The Gatekeeper Hall
+199	10012	false	true	false	Kyprosa's Plea
+200	10013	false	true	false	To Elysium
+201	10014	false	true	false	The Source of Power
+202	10015	false	true	false	Skyfin Safe Haven
+203	10016	false	true	false	Amber Ridge Miner
+204	10017	false	true	false	The Genesis Glade
+205	10018	false	true	false	Rush Delivery
+206	10019	false	true	false	A Mysterious Elf
+207	10020	false	true	false	Teamwork
+208	10021	false	true	false	Fighting Kyrios' Minions
+209	10022	false	true	false	A Skyfin's Senses
+210	10023	false	true	false	Infusing the Barrier Crystals
+211	10024	false	true	false	A Nefarious Appearance
+212	10025	false	true	false	Master of the Shadow Demons
+213	10026	false	true	false	To Celestia
+214	10027	false	true	false	Celestia in Trouble
+215	10028	false	true	false	Nebe's Echo
+216	10029	false	true	false	Where is Gladie?
+217	10030	false	true	false	Cold Hands
+218	10031	false	true	false	Seed Delivery
+219	10032	false	true	false	Back Across
+220	10033	false	true	false	Celestia Gardener
+221	10034	false	true	false	Aerial Seeding
+222	10036	false	true	false	Flowers in Bloom
+223	10037	false	true	false	The Cat Man
+224	10038	false	true	false	Demon Flora
+225	10039	false	true	false	Sowing Bodies
+226	10040	false	true	false	Infinite Snow
+227	10041	false	true	false	Enhancing an Arrow
+228	10042	false	true	false	Pit Fiend Colander
+229	10043	false	true	false	Master of Demons Part 2
+230	10044	false	true	false	Returning the Frozen Flame
+231	10045	false	true	false	Restoring Celestia
+232	10047	false	true	false	Informing Kyprosa
+233	10048	false	true	false	Return to Owner
+234	10049	false	true	false	Blessing of the Gods
+235	10050	false	true	false	Mysterious City
+236	10052	false	true	false	Fighting Back
+237	10053	false	true	false	Melisara's Orders
+238	10054	false	true	false	Ringing the Bell
+239	10055	false	true	false	Anthalon's Twisted Shadowhawks
+240	10058	false	true	false	Entering the Citadel
+241	10059	false	true	false	Sherlock Livolla
+242	10060	false	true	false	Searching for Clues
+243	10061	false	true	false	Petrified Fairies
+244	10101	false	true	false	Anthalon's Lair
+245	10102	false	true	false	An Attempted Escape
+246	10103	false	true	false	Shadowhawk Showdown
+247	10104	false	true	false	Delphinad Investigator
+248	10125	false	true	false	Circle of Authority
+249	10126	false	true	false	God of Destruction
+250	10127	false	true	false	Gene
+251	10128	false	true	false	Kyprosa's Final Task
+252	10270	false	true	false	Torch of Ipnya
+253	10271	false	true	false	An Ancient Voice
+254	10272	false	true	false	The Ipnysh Sanctuary
+255	10292	false	true	false	The Lodestone Token
+256	10297	false	true	false	Preparing an Offering
+257	10303	false	true	false	Orien, Warden of the Atrium
+258	10361	false	true	false	To Mysthrane
+259	10362	false	true	false	Back to School
+260	10363	false	true	false	Ipnysh Sealstones
+261	10364	false	true	false	War Remnants
+262	10365	false	true	false	Searching Constructs
+263	10366	false	true	false	Lauryla of Mysthrane
+264	10367	false	true	false	Dormant Risopoda
+265	10368	false	true	false	Reunion
+266	10369	false	true	false	Joining Forces
+267	10646	false	true	false	Journey West
+268	10647	false	true	false	Strange Ruins
+269	10648	false	true	false	Raeven's Magic
+270	10649	false	true	false	A Perfect Lookout
+271	10650	false	true	false	Teleporter Repairs
+272	10651	false	true	false	To the Ethereal Haven
+273	10652	false	true	false	Surveying the Ipnya Ridge
+274	10653	false	true	false	Searching for Allies
+275	10654	false	true	false	I'm Here
+276	10655	false	true	false	Splitting the Party
+277	10656	false	true	false	Ancient Alikits
+278	10657	false	true	false	Friend or Foe
+279	10658	false	true	false	Two-Legged Snowlion
+280	10659	false	true	false	Searching the Warden
+281	10660	false	true	false	Unknown Fate
+282	10661	false	true	false	Securing the Cave
+283	10662	false	true	false	Watchmen Rescue
+284	10663	false	true	false	Akasch Altar
+285	10664	false	true	false	The Cave's Secret
+286	10665	false	true	false	Tracking the Warborn
+287	10666	false	true	false	Clash of Warriors
+288	10667	false	true	false	Onward
+289	10668	false	true	false	D-egg-struction
+290	10669	false	true	false	Clearing the Scars
+291	10670	false	true	false	Where's Raeven?
+292	10671	false	true	false	Facing the Wizard
+293	10672	false	true	false	Into the Abyss
+294	10673	false	true	false	Family Reunion
+295	10674	false	true	false	Raeven's Hideout
+296	10675	false	true	false	New Clues
+297	10676	false	true	false	Time Research Lab
+298	10677	false	true	false	Dark Visions
+299	10678	false	true	false	The Voidbreaker
+300	10679	false	true	false	The Queen's Altar
+301	10680	false	true	false	Escaping the Trap
+302	10681	false	true	false	Queen of the Akasch
+303	10682	false	true	false	A Moment to Reminisce
+304	10772	false	true	false	Message in the Wind
+305	10773	false	true	false	Windwhip Leader
+306	10774	false	true	false	Firran Folk Remedy
+307	10775	false	true	false	Preparing for Healing
+308	10776	false	true	false	Dreadful Poison
+309	10777	false	true	false	The Origin of the Poison
+310	10778	false	true	false	Wild Herbs from the Wildflower Forest
+311	10780	false	true	false	Forgotten Spike
+312	10781	false	true	false	Firran With a Tear Scar
+313	10782	false	true	false	Aust Follower Governor
+314	10783	false	true	false	Legend of the Great Prairie
+315	10931	false	true	false	Prairie Border
+316	11010	false	true	false	Warriors Are Welcome!
+317	11011	false	true	false	The Reason for a Camp
+318	11012	false	true	false	Nomad's Fire and Water
+319	11013	false	true	false	The Bard Who Connects the Memories of the Wind
+320	9000011	false	true	false	Taming the fugitives
+321	9000012	false	true	false	Mysterious Letter
+322	9000013	false	true	false	Dangerous journey
+323	9000014	false	true	false	CRIMSON WATCH CALLS!
+324	9000015	false	true	false	Intelligence is dangerous
+325	9000016	false	true	false	The Forgotten Legend
+326	9000017	false	true	false	Development of New Land
+327	9000018	false	true	false	Cold place
+328	9000019	false	true	false	Wild animals
+329	9000020	false	true	false	The enemy is near!
+330	9000021	false	true	false	Recovering the forgotten words
+331	9000022	false	true	false	A long forgotten enemy
+332	9000023	false	true	false	Following the necromancy
+333	9000024	false	true	false	Recruits to be!
+334	9000025	false	true	false	Slayer of Gods
+335	9000026	false	true	false	Farmer's contest
+336	9000027	false	true	false	Every soul needs music
+337	9000028	false	true	false	Turtle, tortoise… so, what’s the correct pronunciation?!
+338	9000029	false	true	false	Villains from Serpentis
+339	9000030	false	true	false	A little gift from Nui
+340	9000031	false	true	false	Monsters of Reedwind
+341	9000032	false	true	false	There is something inside the shell!
+342	9000033	false	true	false	Strange sounds at night
+343	9000034	false	true	false	Weird Crew
+344	9000035	false	true	false	High, high up in the mountains
+345	9000036	false	true	false	Strange healing
+346	9000037	false	true	false	A mysterious stranger's trace
+347	9000038	false	true	false	The Den of the unknown
+348	9000039	false	true	false	Isolated island
+349	9000040	false	true	false	Seeds for a friend
+350	9000041	false	true	false	Tiny Magic
+351	9000042	false	true	false	Up!
+352	9000043	false	true	false	Trip to the dream
+353	9000044	false	true	false	Deep sea explorer
+354	9000045	false	true	false	On the high-way
+355	9000046	false	true	false	Speeding Up!
+356	9000047	false	true	false	Profit is good!
+357	9000048	false	true	false	Darkness is impenetrable
+358	9000049	false	true	false	Raid! Attack the monsters dungeon!
+359	9000050	false	true	false	The battle of the fearless!
+360	9000087	false	true	false	A letter for you!
+361	9000088	false	true	false	Dangerous research
+362	9000089	false	true	false	Breaking the chains
+363	9000090	false	true	false	Truths
+364	9000091	false	true	false	Rising from the depths
+365	9000117	false	true	false	Find it – but what?
+366	9000118	false	true	false	Puppeteers
+367	9000119	false	true	false	Eternal Recovery
+368	9000120	false	true	false	A well deserved break
+369	9000121	false	true	false	The border
+370	9000122	false	true	false	Protect the Diamond Shores
+371	9000123	false	true	false	Backstage
+372	9000124	false	true	false	The legend of the holy sword
+373	9000125	false	true	false	A heros pure soul
+374	9000126	false	true	false	To the great hero – a great sword!
+375	9000127	false	true	false	The mysterious Tree
+376	9000128	false	true	false	Legendary Armor
+377	9000129	false	true	false	Another road...
+378	9000130	false	true	false	The beginning of the end
+379	9000131	false	true	false	Secrets, spirited away
+380	9000132	false	true	false	Invincible enemy
+381	9000133	false	true	false	Face the death
+382	9000189	false	true	false	Deserved Punishment
+383	9000190	false	true	false	Decent Prisoner
+384	9000191	false	true	false	Urgent Report
+385	9000192	false	true	false	Stronghold
+386	9000193	false	true	false	Early News
+387	9000194	false	true	false	Nightmare Echoes
+388	9000195	false	true	false	Lighter
+389	9000196	false	true	false	Caustic Solution
+390	9000197	false	true	false	Last General of Eilat
+391	9000199	false	true	false	Fallen Fortress
+392	9000200	false	true	false	The World at the Dawn of Time...Hic!
+393	9000201	false	true	false	Bad News
+394	9000202	false	true	false	Name-Cursed Venue
+395	9000203	false	true	false	Alliance: Wyrdwinds
+396	9000204	false	true	false	Alliance: East Ishvara
+397	9000205	false	true	false	Where is my white horse?...
+398	9000206	false	true	false	Alliance: Order of Nui
+399	9000207	false	true	false	Alliance. Pangs Of Conscience
+400	9000208	false	true	false	Whaleswell Straits Artifact
+401	9000209	false	true	false	Chasing
+402	9000210	false	true	false	Conspiracy
+403	9000211	false	true	false	To The Eye Of The Storm
+404	9000212	false	true	false	The Real Face Of Death
+405	9000213	false	true	false	Decisive Choice
+406	9000214	false	true	false	[Cult] On The End Of Time Verge
+407	9000215	false	true	false	[Crimson Watch] On The End Of Time Verge
+408	9000267	false	true	false	The Imprisoned Monk
+409	9000268	false	true	false	Necronomicon
+410	9000269	false	true	false	Flickering Darkness
+411	9000270	false	true	false	The Great Combinator
+412	9000271	false	true	false	Endless Ale
+413	9000272	false	true	false	Endless Ale pt.2
+414	9000273	false	true	false	Ram Rider
+415	9000274	false	true	false	Skilled Linguists
+416	9000275	false	true	false	I'll become a Narayanan when I grow up!
+417	9000276	false	true	false	Striped Cat's Spine
+418	9000277	false	true	false	Hal Hahpa
+419	9000278	false	true	false	When it rains plague, it pours
+420	9000280	false	true	false	The Plague's Source
+421	9000281	false	true	false	It'll be just a minute
+422	9000282	false	true	false	It'll be just a minute pt.2
+423	9000283	false	true	false	The Wonders of Technology
+424	9000284	false	true	false	The Wetlands
+425	9000285	false	true	false	From Dusk Till Dawn
+426	9000286	false	true	false	Swamp Butcher
+427	9000287	false	true	false	Brave New World (Of Wine)
+428	9000288	false	true	false	An Another Drunken Night
+429	9000289	false	true	false	An Another Drunken Night pt.2
+430	9000290	false	true	false	An Another Drunken Night pt.3
+431	9000291	false	true	false	A Beauty For A Beast
+432	9000292	false	true	false	Eanna Nimush's Song
+433	9000293	false	true	false	The Riddle of Mirage
+434	9000294	false	true	false	The Last Abbot
+435	9000295	false	true	false	Salvation of Souls

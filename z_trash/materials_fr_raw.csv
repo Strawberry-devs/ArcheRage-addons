@@ -1,0 +1,935 @@
+3332;Lingot de stellarite;icons/icon_item_0855.dds.png;Métal
+3360;Roue en caoutchouc;icons/icon_item_0077.dds.png;Caoutchouc
+3407;Transporteur vide;icons/icon_item_0384.dds.png;Matériau
+3408;Morceau de sucre;icons/icon_item_0085.dds.png;Épices
+3409;Sel;icons/icon_item_0085.dds.png;Épices
+3451;Écaille de basilic;icons/quest/icon_item_quest048.dds.png;Alchimie
+2191;Griffe de chiroptère;icons/icon_item_0186.dds.png;Alchimie
+2250;Bouteille d'huile de soja;icons/icon_item_0309.dds.png;Huile de cuisson
+2251;Bouteille d'huile d'olive;icons/icon_item_0309.dds.png;Huile de cuisson
+3748;Once de poudre argentée;icons/icon_item_0085.dds.png;Alchimie
+3796;Volume de sang de troll;icons/quest/icon_item_quest038.dds.png;Alchimie
+3932;Plume de hibou;icons/quest/icon_item_quest129.dds.png;Alchimie
+3939;Volume de mercure;icons/icon_item_0165.dds.png;Alchimie
+3940;Plume de mouette;icons/quest/icon_item_quest129.dds.png;Alchimie
+4747;Certificat de qualité;icons/icon_item_0857.dds.png;Matériau
+1383;Pincée de poudre toxique;icons/icon_item_0089.dds.png;Alchimie
+688;Molaire de dragon;icons/icon_item_0189.dds.png;Alchimie
+7752;Queue de renard;icons/quest/icon_item_quest097.dds.png;Alchimie
+7757;Vieille étoffe;icons/icon_item_0065.dds.png;Tissu
+7760;Défense de sanglier;icons/icon_item_0189.dds.png;Alchimie
+7770;Tige de sarracénie;icons/quest/icon_item_quest166.dds.png;Alchimie
+7771;Glande de sarracénie;icons/icon_item_0080.dds.png;Alchimie
+7773;Chiffon fin;icons/icon_item_0065.dds.png;Tissu
+7774;Amas de mucus;icons/quest/icon_item_quest038.dds.png;Alchimie
+7775;Bande de cuir coriace;icons/icon_item_0049.dds.png;Peau
+7783;Souffle alizéen léger;icons/quest/icon_item_quest103.dds.png;Alchimie
+7784;Lien putride;icons/icon_item_0065.dds.png;Tissu
+7786;Souffle des Giflevents;icons/quest/icon_item_quest103.dds.png;Alchimie
+7801;Queue de Lige-marée;icons/icon_item_0105.dds.png;Alchimie
+7802;Écaille de Lige-marée;icons/icon_item_0053.dds.png;Alchimie
+7804;Aileron de Lige-marée;icons/icon_item_0109.dds.png;Alchimie
+7836;Queue de lézard;icons/icon_item_0180.dds.png;Alchimie
+7840;Plume en bec-rasoir;icons/icon_item_0170.dds.png;Alchimie
+7896;Plume de harpie;icons/icon_item_0170.dds.png;Alchimie
+7897;Griffe de harpie;icons/icon_item_0169.dds.png;Alchimie
+7909;Queue de crocodile;icons/quest/icon_item_quest159.dds.png;Alchimie
+7910;Dent de crocodile;icons/icon_item_0189.dds.png;Alchimie
+7922;Morceau d'ivoire;icons/icon_item_0189.dds.png;Alchimie
+7933;Poison de Puce de mer;icons/icon_item_0080.dds.png;Alchimie
+7940;Molaire de troll;icons/icon_item_0169.dds.png;Alchimie
+7945;Griffe d'Achassi;icons/icon_item_0169.dds.png;Alchimie
+7952;Croc de loup;icons/icon_item_0189.dds.png;Alchimie
+7963;Peau d'Achassi;icons/icon_item_0095.dds.png;Alchimie
+7976;Queue de scorpion;icons/icon_item_0180.dds.png;Alchimie
+7987;Plume de griffon;icons/quest/icon_item_quest129.dds.png;Alchimie
+7989;Griffe de griffon;icons/icon_item_0169.dds.png;Alchimie
+7999;Champignon vénéneux;icons/quest/icon_item_quest077.dds.png;Alchimie
+8011;Flacon d'eau polluée;icons/icon_item_0176.dds.png;Alchimie
+8041;Lingot de Delphinad;icons/icon_item_0871.dds.png;Métal
+8043;Sel brillant;icons/icon_item_0085.dds.png;Épices
+8049;Volume de vinaigre;icons/icon_item_0176.dds.png;Épices
+8068;Esprit mnésique;icons/quest/icon_item_quest103.dds.png;Alchimie
+8069;Essence mnésique;icons/icon_item_0082.dds.png;Alchimie
+8070;Esprit venimeux;icons/quest/icon_item_quest103.dds.png;Alchimie
+8071;Essence venimeuse;icons/icon_item_0082.dds.png;Alchimie
+8072;Esprit d'affliction;icons/quest/icon_item_quest103.dds.png;Alchimie
+8073;Essence d'affliction;icons/icon_item_0082.dds.png;Alchimie
+8074;Esprit curatif;icons/quest/icon_item_quest103.dds.png;Alchimie
+8075;Essence curative;icons/icon_item_0082.dds.png;Alchimie
+8248;Petite griffe;icons/icon_item_0169.dds.png;Alchimie
+8249;Grande griffe;icons/icon_item_0169.dds.png;Alchimie
+8250;Griffe pointue;icons/icon_item_0169.dds.png;Alchimie
+8251;Dent pointue;icons/icon_item_0189.dds.png;Alchimie
+8252;Dent aiguisée;icons/icon_item_0189.dds.png;Alchimie
+8253;Dent résistante;icons/icon_item_0189.dds.png;Alchimie
+8254;Étoffe déchirée;icons/icon_item_0065.dds.png;Tissu
+8255;Étoffe rapiécée;icons/icon_item_0065.dds.png;Tissu
+8256;Tissu;icons/icon_item_0356.dds.png;Tissu
+8257;Ficelle effilochée;icons/icon_item_0091.dds.png;Tissu
+8258;Ficelle épaisse;icons/icon_item_0091.dds.png;Tissu
+8259;Ficelle coriace;icons/icon_item_0091.dds.png;Tissu
+8260;Papier jauni;icons/icon_item_0232.dds.png;Papier
+8263;Cristal d'aurorine;icons/quest/icon_item_quest128.dds.png;Alchimie
+8264;Cristal-croissant;icons/quest/icon_item_quest128.dds.png;Alchimie
+8265;Cristal solaire;icons/quest/icon_item_quest128.dds.png;Alchimie
+8266;Essence d'aurorine;icons/quest/icon_item_quest021.dds.png;Alchimie
+8267;Essence-croissant;icons/quest/icon_item_quest021.dds.png;Alchimie
+8268;Essence solaire;icons/quest/icon_item_quest021.dds.png;Alchimie
+8269;Esprit d'aurorine;icons/icon_item_0162.dds.png;Alchimie
+8270;Esprit-croissant;icons/icon_item_0162.dds.png;Alchimie
+8271;Esprit solaire;icons/icon_item_0162.dds.png;Alchimie
+8272;Os décrépit;icons/icon_item_0181.dds.png;Alchimie
+8273;Os fendillé;icons/icon_item_0181.dds.png;Alchimie
+8274;Os dur;icons/icon_item_0181.dds.png;Alchimie
+8275;Crâne tombant en miettes;icons/quest/icon_item_quest123.dds.png;Alchimie
+8276;Crâne vénérable;icons/quest/icon_item_quest123.dds.png;Alchimie
+8277;Crâne étrange;icons/quest/icon_item_quest123.dds.png;Alchimie
+8278;Tissu effiloché;icons/icon_item_0065.dds.png;Tissu
+8279;Étoffe raide;icons/icon_item_0065.dds.png;Tissu
+8280;Étoffe douce;icons/icon_item_0065.dds.png;Tissu
+8281;Once de poudre chaotique;icons/icon_item_0090.dds.png;Alchimie
+8282;Once de poudre axiomatique;icons/icon_item_0090.dds.png;Alchimie
+8283;Once de poudre harmonique;icons/icon_item_0090.dds.png;Alchimie
+8284;Éclat chaotique;icons/quest/icon_item_quest125.dds.png;Alchimie
+8285;Éclat axiomatique;icons/quest/icon_item_quest125.dds.png;Alchimie
+8286;Éclat harmonique;icons/quest/icon_item_quest125.dds.png;Alchimie
+8287;Solution chaotique;icons/icon_item_0080.dds.png;Alchimie
+8288;Solution axiomatique;icons/icon_item_0080.dds.png;Alchimie
+8289;Solution harmonique;icons/icon_item_0080.dds.png;Alchimie
+8299;Corne brisée;icons/icon_item_0189.dds.png;Alchimie
+8300;Corne pointue;icons/icon_item_0189.dds.png;Alchimie
+8301;Corne acérée;icons/icon_item_0189.dds.png;Alchimie
+8302;Aile légère;icons/icon_item_0187.dds.png;Alchimie
+8303;Aile lourde;icons/icon_item_0187.dds.png;Alchimie
+8304;Aile résistante;icons/icon_item_0187.dds.png;Alchimie
+8305;Petite queue;icons/quest/icon_item_quest159.dds.png;Alchimie
+8306;Queue magique de démon;icons/quest/icon_item_quest159.dds.png;Alchimie
+8307;Queue magnifique;icons/quest/icon_item_quest097.dds.png;Alchimie
+8308;Cristal onirique;icons/quest/icon_item_quest015.dds.png;Alchimie
+8309;Cristal d'ombre;icons/quest/icon_item_quest015.dds.png;Alchimie
+8310;Cristal lumineux;icons/quest/icon_item_quest015.dds.png;Alchimie
+8311;Essence onirique;icons/quest/icon_item_quest021.dds.png;Alchimie
+8312;Essence d'ombre;icons/quest/icon_item_quest021.dds.png;Alchimie
+8313;Essence lumineuse;icons/quest/icon_item_quest021.dds.png;Alchimie
+8314;Esprit onirique;icons/quest/icon_item_quest171.dds.png;Alchimie
+8315;Esprit d'ombre;icons/quest/icon_item_quest171.dds.png;Alchimie
+8316;Esprit lumineux;icons/quest/icon_item_quest171.dds.png;Alchimie
+8318;Lingot de fer;icons/quest/icon_item_quest053.dds.png;Métal
+8319;Lingot résistant;icons/icon_item_0282.dds.png;Métal
+8320;Lingot de cuivre;icons/icon_item_0281.dds.png;Métal
+8324;Corail bleu océan;icons/icon_item_1758.dds.png;Matériau
+8325;Perle du couchant;icons/icon_item_1756.dds.png;Matériau
+8326;Couteau du Sel bleu;icons/icon_item_1750.dds.png;Special Material
+8337;Planche;icons/icon_item_0041.dds.png;Planche
+8338;Planche;icons/icon_item_0037.dds.png;Planche
+8339;Perche en bois;icons/icon_item_0038.dds.png;Planche
+8340;Sciure;icons/icon_item_0039.dds.png;Planche
+8341;Cheville en bois;icons/icon_item_0040.dds.png;Planche
+8342;Placage en bois;icons/icon_item_0037.dds.png;Planche
+8343;Brique de pierre;icons/icon_item_0283.dds.png;Brique de pierre
+8344;Tablette en pierre;icons/icon_item_0043.dds.png;Brique de pierre
+8345;Bourdon en pierre;icons/icon_item_0044.dds.png;Brique de pierre
+8346;Pincée de poussière de pierre;icons/icon_item_0045.dds.png;Brique de pierre
+8347;Pilier en pierre;icons/icon_item_0046.dds.png;Brique de pierre
+8348;Brique;icons/icon_item_0284.dds.png;Brique de pierre
+8349;Ficelle en cuir;icons/icon_item_0049.dds.png;Peau
+8350;Plate en cuir;icons/icon_item_0050.dds.png;Peau
+8352;Morceau de cuir souple;icons/icon_item_0285.dds.png;Peau
+8358;Laine;icons/icon_item_0065.dds.png;Tissu
+8359;Soie;icons/icon_item_0058.dds.png;Tissu
+8360;Coton pur;icons/icon_item_0056.dds.png;Tissu
+8361;Laine pure;icons/icon_item_0056.dds.png;Tissu
+8373;Orbe en verre;icons/icon_item_0067.dds.png;Verre
+8374;Tube en verre;icons/icon_item_0068.dds.png;Verre
+8377;Panneau en verre;icons/icon_item_0071.dds.png;Verre
+8378;Vitre;icons/icon_item_0071.dds.png;Verre
+8379;Boîte en verre;icons/icon_item_0073.dds.png;Verre
+8380;Miroir en bronze;icons/icon_item_0074.dds.png;Verre
+8381;Miroir en verre;icons/icon_item_0074.dds.png;Verre
+8386;Gomme douce;icons/icon_item_0163.dds.png;Caoutchouc
+8387;Arrêtoir en caoutchouc;icons/icon_item_0077.dds.png;Caoutchouc
+8388;Élastique;icons/icon_item_0078.dds.png;Caoutchouc
+8389;Caoutchouc dur;icons/icon_item_0077.dds.png;Caoutchouc
+8390;Tube en caoutchouc;icons/quest/icon_item_quest072.dds.png;Caoutchouc
+8391;Plaque de caoutchouc;icons/icon_item_0043.dds.png;Caoutchouc
+8394;Griffe de bête;icons/icon_item_0169.dds.png;Alchimie
+8395;Croc de bête;icons/icon_item_0189.dds.png;Alchimie
+8397;Écheveau;icons/icon_item_0091.dds.png;Tissu
+8399;Cristal céleste;icons/quest/icon_item_quest109.dds.png;Alchimie
+8400;Essence céleste;icons/quest/icon_item_quest109.dds.png;Alchimie
+8401;Esprit céleste;icons/quest/icon_item_quest109.dds.png;Alchimie
+8402;Os inerte;icons/icon_item_0181.dds.png;Alchimie
+8403;Crâne inerte;icons/quest/icon_item_quest123.dds.png;Alchimie
+8404;Once de poussière magique;icons/icon_item_0153.dds.png;Alchimie
+8405;Éclat magique;icons/icon_item_0039.dds.png;Alchimie
+8406;Solution magique;icons/icon_item_0084.dds.png;Alchimie
+8410;Corne de démon;icons/icon_item_0182.dds.png;Alchimie
+8411;Aile de démon;icons/icon_item_0187.dds.png;Alchimie
+8412;Queue de démon;icons/icon_item_0180.dds.png;Alchimie
+8413;Cristal illusoire;icons/quest/icon_item_quest116.dds.png;Alchimie
+8414;Essence illusoire;icons/quest/icon_item_quest116.dds.png;Alchimie
+8415;Esprit illusoire;icons/quest/icon_item_quest116.dds.png;Alchimie
+8661;Plan : boîte aux lettres hibou;icons/icon_item_0005.dds.png;Matériau
+53419;Esprit amoral;icons/quest/icon_item_quest009.dds.png;Matériau
+53814;Fragment d'essence de la Grande prairie;icons/icon_item_4948.dds.png;Matériau
+53815;Essence de la Grande prairie;icons/icon_item_4947.dds.png;Matériau
+53816;Morceau de cristal de la Grande prairie;icons/icon_item_4835.dds.png;Matériau
+53817;Cristal de la Grande prairie;icons/icon_item_4836.dds.png;Matériau
+8000026;Poussière de Gilda;icons/icon_item_2045.dds.png;Matériau
+8000134;Permis expansion terrain plus vendu;icons/icon_item_2984.dds.png;Matériau
+8000165;Essence d'Éclair pourpre;icons/icon_item_2994.dds.png;Matériau
+8000271;Charme de renivellement blanc;icons/icon_item_2738.dds.png;Enchancement Materials
+8000272;Charme reniv. blanc supérieur lié;icons/icon_item_2738.dds.png;Enchancement Materials
+8000487;Charme de renivellement vert lié;icons/icon_item_1917.dds.png;Enchancement Materials
+8000488;Charme de renivellement bleu;icons/icon_item_1916.dds.png;Enchancement Materials
+8000498;Permis restructuration obsolète;icons/icon_item_2985.dds.png;Matériau
+8000966;Cristal de Misagon;icons/icon_item_3390.dds.png;Alchimie
+8000999;Éclat de pierre de sérendipité lié;icons/icon_item_3399.dds.png;Enchancement Materials
+8001000;Pierre de sérendipité liée;icons/icon_item_3017.dds.png;Enchancement Materials
+8001002;Diamant prismatique en verre;icons/icon_item_1761.dds.png;Matériau
+8001035;Charme de renivellement blanc supérieur lié;icons/icon_item_2738.dds.png;Enchancement Materials
+8001094;Permis gestion de construction;icons/icon_item_3447.dds.png;Matériau
+8001130;Charme renivel. argenté lié;icons/icon_item_2738.dds.png;Enchancement Materials
+8001187;Éclat de chaudron daru;icons/icon_item_3497.dds.png;Matériau
+8001189;Lingot de fer;icons/icon_item_3498.dds.png;Métal
+8001190;Solution magique;icons/quest/icon_item_quest179.dds.png;Alchimie
+8001381;Emblème d'ancrage d'arme céleste;icons/icon_item_3505.dds.png;Enchancement Materials
+8001382;Emblème d'ancrage d'armure céleste;icons/icon_item_3506.dds.png;Enchancement Materials
+8001383;Emblème d'ancrage d'accessoire céleste;icons/icon_item_3507.dds.png;Enchancement Materials
+8001384;Charme d'ancrage d'arme céleste : 1.5x;icons/icon_item_3508.dds.png;Enchancement Materials
+8001385;Charme d'ancrage d'armure céleste : 1.5x;icons/icon_item_3509.dds.png;Enchancement Materials
+8001386;Charme d'ancrage d'accessoire céleste : 1.5x;icons/icon_item_3510.dds.png;Enchancement Materials
+8001387;Charme d'ancrage d'arme céleste : 2x;icons/icon_item_3508.dds.png;Enchancement Materials
+8001388;Charme d'ancrage d'armure céleste : 2x;icons/icon_item_3509.dds.png;Enchancement Materials
+8001389;Charme d'ancrage d'accessoire céleste : 2x;icons/icon_item_3510.dds.png;Enchancement Materials
+8001390;Emblème d'ancrage d'arme divine;icons/icon_item_3511.dds.png;Enchancement Materials
+8001391;Emblème d'ancrage d'armure divine;icons/icon_item_3512.dds.png;Enchancement Materials
+8001392;Emblème d'ancrage d'accessoire divin;icons/icon_item_3513.dds.png;Enchancement Materials
+8001393;Charme d'ancrage d'arme divine : 1.5x;icons/icon_item_3514.dds.png;Enchancement Materials
+8001394;Charme d'ancrage d'armure divine : 1.5x;icons/icon_item_3515.dds.png;Enchancement Materials
+8001395;Charme d'ancrage d'accessoire divin : 1.5x;icons/icon_item_3516.dds.png;Enchancement Materials
+8001396;Charme d'ancrage d'arme divine : 2x;icons/icon_item_3514.dds.png;Enchancement Materials
+8001397;Charme d'ancrage d'armure divine : 2x;icons/icon_item_3515.dds.png;Enchancement Materials
+8001398;Charme d'ancrage d'accessoire divin : 2x;icons/icon_item_3516.dds.png;Enchancement Materials
+8001399;Fragment d'ancrage d'arme céleste;icons/icon_item_3505.dds.png;Enchancement Materials
+8001400;Fragment d'ancrage d'armure céleste;icons/icon_item_3506.dds.png;Enchancement Materials
+8001401;Fragment d'ancrage access. céleste;icons/icon_item_3507.dds.png;Enchancement Materials
+8001402;Fragment d'ancrage d'arme divine;icons/icon_item_3511.dds.png;Enchancement Materials
+8001403;Fragment d'ancrage d'armure divine;icons/icon_item_3512.dds.png;Enchancement Materials
+8001404;Fragment d'ancrage d'accessoire divin;icons/icon_item_3513.dds.png;Enchancement Materials
+8001875;Pierre de sérendipité emballée;icons/icon_item_3017.dds.png;Enchancement Materials
+8001964;Médaillon de guerrier ancestral;icons/arcustom/ancestral_medal_1.dds.png;Matériau
+39780;Pierre de portail du couchant;icons/icon_item_2871.dds.png;Legendary Trophy
+39826;Lunarite de rafale : Entrechoc;icons/icon_item_1716.dds.png;Matériau
+39827;Lunarite délicate de rafale : Entrechoc;icons/icon_item_1719.dds.png;Matériau
+39828;Lunarite supérieure de rafale : Entrechoc;icons/icon_item_1722.dds.png;Matériau
+39829;Lunarite de la terre : Interception;icons/icon_item_1715.dds.png;Matériau
+39830;Lunarite délicate de la terre : Interception;icons/icon_item_1718.dds.png;Matériau
+39831;Lunarite supérieure de la terre : Interception;icons/icon_item_1721.dds.png;Matériau
+39885;Charme de renivellement vert lié expiré;icons/icon_item_1917.dds.png;Enchancement Materials
+40025;Parchemin resplendissant de renivellement d'accessoire;icons/icon_item_1696.dds.png;Enchancement Materials
+40026;Charme de renivellement vert lié;icons/icon_item_1917.dds.png;Enchancement Materials
+40027;Charme de renivellement bleu lié;icons/icon_item_1916.dds.png;Enchancement Materials
+40028;Charme de renivellement jaune lié;icons/icon_item_1848.dds.png;Enchancement Materials
+40029;Charme de renivellement rouge lié;icons/icon_item_1850.dds.png;Enchancement Materials
+40200;Tableau original : Dieux et Héros;icons/icon_item_3049.dds.png;Matériau
+40232;Déclaration d'indépendance;icons/icon_item_3140.dds.png;Papier
+40234;Permis d'indépendance;icons/icon_item_3141.dds.png;Papier
+40736;Éclat d'armure Frapperage;icons/icon_item_3148.dds.png;Legendary Trophy
+40809;Feu-follet de dague de soufre;icons/icon_item_dagger_0094.dds.png;Matériau
+40810;Feu-follet d'épée de soufre;icons/icon_item_sword_1h_0096.dds.png;Matériau
+40811;Feu-follet d'espadon de soufre;icons/icon_item_sword_2h_0074.dds.png;Matériau
+40812;Feu-follet de katana de soufre;icons/icon_item_blade_1h_0088.dds.png;Matériau
+40813;Feu-follet de nodachi de soufre;icons/icon_item_blade_2h_0075.dds.png;Matériau
+40814;Feu-follet de hache de soufre;icons/icon_item_axe_1h_0089.dds.png;Matériau
+40815;Feu-follet de bardiche de soufre;icons/icon_item_axe_2h_0056.dds.png;Matériau
+40816;Feu-follet de gourdin de soufre;icons/icon_item_mace_1h_0084.dds.png;Matériau
+40817;Feu-follet de grand gourdin de soufre;icons/icon_item_mace_2h_0066.dds.png;Matériau
+40818;Feu-follet de pilum de soufre;icons/icon_item_spear_1h_0086.dds.png;Matériau
+40819;Feu-follet de pertuisane de soufre;icons/icon_item_spear_2h_0071.dds.png;Matériau
+40820;Feu-follet de sceptre de soufre;icons/icon_item_staff_1h_0088.dds.png;Matériau
+40821;Feu-follet de bâton de soufre;icons/icon_item_staff_2h_0052.dds.png;Matériau
+40822;Feu-follet d'arc de soufre;icons/icon_item_bow_0091.dds.png;Matériau
+40823;Feu-follet de luth de soufre;icons/icon_item_ins_s_0052.dds.png;Matériau
+40824;Feu-follet de flûte de soufre;icons/icon_item_ins_w_0049.dds.png;Matériau
+40825;Feu-follet de bouclier de soufre;icons/icon_item_shield_0095.dds.png;Matériau
+40826;Feu-follet de capuche de soufre;icons/costume_hm/nu_m_hm_cloth199.dds.png;Matériau
+40827;Feu-follet de chemise de soufre;icons/costume_ar/nu_f_ar_cloth199.dds.png;Matériau
+40828;Feu-follet de pantalon de soufre;icons/costume_pt/nu_f_pt_cloth199.dds.png;Matériau
+40829;Feu-follet de gants de soufre;icons/costume_gv/nu_f_gv_cloth199.dds.png;Matériau
+40830;Feu-follet chaussures soufre;icons/costume_bo/nu_f_bo_cloth199.dds.png;Matériau
+40831;Feu-follet de casque de soufre;icons/costume_hm/nu_m_hm_leather199.dds.png;Matériau
+40832;Feu-follet de pourpoint de soufre;icons/costume_ar/nu_m_ar_leather199.dds.png;Matériau
+40833;Feu-follet de braies de soufre;icons/costume_pt/nu_f_pt_leather198.dds.png;Matériau
+40834;Feu-follet de poings de soufre;icons/costume_gv/nu_m_gv_leather199.dds.png;Matériau
+40835;Feu-follet de bottes de soufre;icons/costume_bo/nu_m_bo_leather199.dds.png;Matériau
+40836;Feu-follet de heaume de soufre;icons/costume_hm/nu_m_hm_metal210.dds.png;Matériau
+40837;Feu-follet de cuirasse de soufre;icons/costume_ar/nu_f_ar_metal215.dds.png;Matériau
+40838;Feu-follet de grèves de soufre;icons/costume_pt/nu_f_pt_metal216.dds.png;Matériau
+40839;Feu-follet de gantelets de soufre;icons/costume_gv/nu_m_gv_metal219.dds.png;Matériau
+40840;Feu-follet de solerets de soufre;icons/costume_bo/nu_f_bo_metal216.dds.png;Matériau
+40842;Lingot antique;icons/icon_item_0871.dds.png;Métal
+40901;482293 DO NOT TRANSLATE;icons/icon_item_tool.dds.png;Papier
+40902;Âme de Taris;icons/quest/icon_item_quest171.dds.png;Legendary Trophy
+40903;Éclat de hache Frapperage;icons/icon_item_axe_1h_0092.dds.png;Matériau
+40904;Éclat de hache Frapperage sup.;icons/icon_item_axe_1h_0093.dds.png;Matériau
+40916;Toile blanche;icons/icon_item_3104.dds.png;Papier
+40917;Chevalet vide;icons/icon_item_2204.dds.png;Papier
+41172;Parch. reniv. d'arme emballé;icons/icon_item_1268.dds.png;Enchancement Materials
+41173;Parch. de reniv. d'armure emballé;icons/icon_item_1269.dds.png;Enchancement Materials
+41174;Parch. reniv. d'access. emballé;icons/icon_item_1695.dds.png;Enchancement Materials
+41176;Parchemin resplendissant de renivellement d'arme emballé;icons/icon_item_1270.dds.png;Enchancement Materials
+41253;Éclat de pierre de sérendipité lié;icons/icon_item_3399.dds.png;Enchancement Materials
+42084;Emblème d'ancrage d'arme céleste;icons/icon_item_3505.dds.png;Enchancement Materials
+42085;Emblème d'ancrage d'armure céleste;icons/icon_item_3506.dds.png;Enchancement Materials
+42086;Emblème d'ancrage d'accessoire céleste;icons/icon_item_3507.dds.png;Enchancement Materials
+42090;Emblème d'ancrage d'arme divine;icons/icon_item_3511.dds.png;Enchancement Materials
+42091;Emblème d'ancrage d'armure divine;icons/icon_item_3512.dds.png;Enchancement Materials
+42092;Emblème d'ancrage d'accessoire divin;icons/icon_item_3513.dds.png;Enchancement Materials
+42096;Fragment d'ancrage d'arme céleste;icons/icon_item_3505.dds.png;Enchancement Materials
+42097;Fragment d'ancrage d'armure céleste;icons/icon_item_3506.dds.png;Enchancement Materials
+42098;Fragment d'ancrage access. céleste;icons/icon_item_3507.dds.png;Enchancement Materials
+42102;Fragment d'ancrage d'arme divine;icons/icon_item_3511.dds.png;Enchancement Materials
+42103;Fragment d'ancrage d'armure divine;icons/icon_item_3512.dds.png;Enchancement Materials
+42104;Fragment d'ancrage d'accessoire divin;icons/icon_item_3513.dds.png;Enchancement Materials
+42342;Feuille parfumée;icons/icon_item_3598.dds.png;Special Material
+42343;Graine royale;icons/icon_item_3600.dds.png;Special Material
+42824;Paq. de poutres pour pavillon emballé;icons/icon_item_1974.dds.png;Matériau
+43068;Vigne d'Auricloche;icons/icon_item_3882.dds.png;Matériau
+43069;Feuille de Soude maritime chantante;icons/icon_item_3883.dds.png;Matériau
+43128;Pièce d'armure maudite;icons/icon_item_3864.dds.png;Legendary Trophy
+43129;Morceau acide;icons/icon_item_3887.dds.png;Legendary Trophy
+43130;Fiole d'acide;icons/icon_item_3863.dds.png;Matériau
+43131;Armure maudite complète;icons/icon_item_3888.dds.png;Matériau
+43445;Cirage pour Gemme sélène;icons/icon_item_4001.dds.png;Matériau
+43448;Lunarite supérieure Lumiterre;icons/icon_item_1721.dds.png;Matériau
+43463;Lunarite supérieure Lumirafale;icons/icon_item_1722.dds.png;Matériau
+43468;Lunarite supérieure Lumicuivre;icons/icon_item_1720.dds.png;Matériau
+43469;Gemme sélène brute Lumifeu;icons/icon_item_3994.dds.png;Matériau
+43470;Gemme sélène brute Lumicuivre;icons/icon_item_3995.dds.png;Matériau
+43471;Gemme sélène brute Lumirafale;icons/icon_item_3996.dds.png;Matériau
+43472;Gemme sélène brute Lumisol;icons/icon_item_3997.dds.png;Matériau
+43473;Gemme sélène brute Lumiterre;icons/icon_item_3998.dds.png;Matériau
+43474;Oracle Lumiciel;icons/icon_item_3999.dds.png;Matériau
+43475;Gemme sélène brute Lumivague;icons/icon_item_4000.dds.png;Matériau
+43586;Lunarite délicate Lumicuivre;icons/icon_item_1717.dds.png;Matériau
+43802;Pièce d'armure maudite;icons/icon_item_3888.dds.png;Legendary Trophy
+43803;Bourse de poison acide;icons/icon_item_3863.dds.png;Legendary Trophy
+44059;Composant de Dague d'obsidienne enchantée;icons/icon_item_dagger_0094.dds.png;Matériau
+44060;Composant d'Épée d'obsidienne enchantée;icons/icon_item_sword_1h_0096.dds.png;Matériau
+44061;Composant d'Espadon d'obsidienne enchantée;icons/icon_item_sword_2h_0074.dds.png;Matériau
+44062;Composant de Katana d'obsidienne enchantée;icons/icon_item_blade_1h_0088.dds.png;Matériau
+44063;Composant de Nodachi d'obsidienne enchantée;icons/icon_item_blade_2h_0075.dds.png;Matériau
+44064;Composant de Hache d'obsidienne enchantée;icons/icon_item_axe_1h_0089.dds.png;Matériau
+44065;Composant de Bardiche d'obsidienne enchantée;icons/icon_item_axe_2h_0056.dds.png;Matériau
+44066;Composant de Gourdin d'obsidienne enchantée;icons/icon_item_mace_1h_0084.dds.png;Matériau
+44067;Composant de Grand gourdin d'obsidienne enchantée;icons/icon_item_mace_2h_0066.dds.png;Matériau
+44068;Composant de Pilum d'obsidienne enchantée;icons/icon_item_spear_1h_0086.dds.png;Matériau
+44069;Composant de Pertuisane d'obsidienne enchantée;icons/icon_item_spear_2h_0071.dds.png;Matériau
+44070;Composant de Sceptre d'obsidienne enchantée;icons/icon_item_staff_1h_0088.dds.png;Matériau
+44071;Composant de Bâton d'obsidienne enchantée;icons/icon_item_staff_2h_0052.dds.png;Matériau
+44072;Composant d'Arc d'obsidienne enchantée;icons/icon_item_bow_0091.dds.png;Matériau
+44073;Composant de Luth d'obsidienne enchantée;icons/icon_item_ins_s_0052.dds.png;Matériau
+44074;Composant de Flûte d'obsidienne enchantée;icons/icon_item_ins_w_0049.dds.png;Matériau
+44075;Composant de Bouclier d'obsidienne enchantée;icons/icon_item_shield_0095.dds.png;Matériau
+44076;Composant de Capuche d'obsidienne enchantée;icons/costume_hm/nu_m_hm_cloth199.dds.png;Matériau
+44077;Composant de Chemise d'obsidienne enchantée;icons/costume_ar/nu_f_ar_cloth199.dds.png;Matériau
+44078;Composant de Pantalon d'obsidienne enchantée;icons/costume_pt/nu_f_pt_cloth199.dds.png;Matériau
+44079;Composant de Gants d'obsidienne enchantée;icons/costume_gv/nu_f_gv_cloth199.dds.png;Matériau
+44080;Composant de Chaussures d'obsidienne enchantée;icons/costume_bo/nu_f_bo_cloth199.dds.png;Matériau
+44081;Composant de Casque d'obsidienne enchantée;icons/costume_hm/nu_m_hm_leather199.dds.png;Matériau
+44082;Composant de Pourpoint d'obsidienne enchantée;icons/costume_ar/nu_m_ar_leather199.dds.png;Matériau
+44083;Composant de Braies d'obsidienne enchantée;icons/costume_pt/nu_f_pt_leather198.dds.png;Matériau
+44084;Composant de Poings d'obsidienne enchantée;icons/costume_gv/nu_m_gv_leather199.dds.png;Matériau
+44085;Composant de Bottes d'obsidienne enchantée;icons/costume_bo/nu_m_bo_leather199.dds.png;Matériau
+44086;Composant de Heaume d'obsidienne enchantée;icons/costume_hm/nu_m_hm_metal210.dds.png;Matériau
+44087;Composant de Cuirasse d'obsidienne enchantée;icons/costume_ar/nu_f_ar_metal215.dds.png;Matériau
+44088;Composant de Grèves d'obsidienne enchantée;icons/costume_pt/nu_f_pt_metal216.dds.png;Matériau
+44089;Composant de Gantelets d'obsidienne enchantée;icons/costume_gv/nu_m_gv_metal219.dds.png;Matériau
+44090;Composant de Solerets d'obsidienne enchantée;icons/costume_bo/nu_f_bo_metal216.dds.png;Matériau
+44091;Composant de Dague d'obsidienne envoûtée;icons/icon_item_dagger_0094.dds.png;Matériau
+44092;Composant d'Épée d'obsidienne envoûtée;icons/icon_item_sword_1h_0096.dds.png;Matériau
+44093;Composant d'Espadon d'obsidienne envoûtée;icons/icon_item_sword_2h_0074.dds.png;Matériau
+44094;Composant de Katana d'obsidienne envoûtée;icons/icon_item_blade_1h_0088.dds.png;Matériau
+44095;Composant de Nodachi d'obsidienne envoûtée;icons/icon_item_blade_2h_0075.dds.png;Matériau
+44096;Composant de Hache d'obsidienne envoûtée;icons/icon_item_axe_1h_0089.dds.png;Matériau
+44097;Composant de Bardiche d'obsidienne envoûtée;icons/icon_item_axe_2h_0056.dds.png;Matériau
+44098;Composant de Gourdin d'obsidienne envoûtée;icons/icon_item_mace_1h_0084.dds.png;Matériau
+44099;Composant de Grand gourdin d'obsidienne envoûtée;icons/icon_item_mace_2h_0066.dds.png;Matériau
+44100;Composant de Pilum d'obsidienne envoûtée;icons/icon_item_spear_1h_0086.dds.png;Matériau
+44101;Composant de Pertuisane d'obsidienne envoûtée;icons/icon_item_spear_2h_0071.dds.png;Matériau
+44102;Composant de Sceptre d'obsidienne envoûtée;icons/icon_item_staff_1h_0088.dds.png;Matériau
+44103;Composant de Bâton d'obsidienne envoûtée;icons/icon_item_staff_2h_0052.dds.png;Matériau
+44104;Composant d'Arc d'obsidienne envoûtée;icons/icon_item_bow_0091.dds.png;Matériau
+44105;Composant de Luth d'obsidienne envoûtée;icons/icon_item_ins_s_0052.dds.png;Matériau
+44106;Composant de Flûte d'obsidienne envoûtée;icons/icon_item_ins_w_0049.dds.png;Matériau
+44107;Composant de Bouclier d'obsidienne envoûtée;icons/icon_item_shield_0095.dds.png;Matériau
+44108;Composant de Capuche d'obsidienne envoûtée;icons/costume_hm/nu_m_hm_cloth199.dds.png;Matériau
+44109;Composant de Chemise d'obsidienne envoûtée;icons/costume_ar/nu_f_ar_cloth199.dds.png;Matériau
+44110;Composant de Pantalon d'obsidienne envoûtée;icons/costume_pt/nu_f_pt_cloth199.dds.png;Matériau
+44111;Composant de Gants d'obsidienne envoûtée;icons/costume_gv/nu_f_gv_cloth199.dds.png;Matériau
+44112;Composant de Chaussures d'obsidienne envoûtée;icons/costume_bo/nu_f_bo_cloth199.dds.png;Matériau
+44113;Composant de Casque d'obsidienne envoûtée;icons/costume_hm/nu_m_hm_leather199.dds.png;Matériau
+44114;Composant de Pourpoint d'obsidienne envoûtée;icons/costume_ar/nu_m_ar_leather199.dds.png;Matériau
+44115;Composant de Braies d'obsidienne envoûtée;icons/costume_pt/nu_f_pt_leather198.dds.png;Matériau
+44116;Composant de Poings d'obsidienne envoûtée;icons/costume_gv/nu_m_gv_leather199.dds.png;Matériau
+44117;Composant de Bottes d'obsidienne envoûtée;icons/costume_bo/nu_m_bo_leather199.dds.png;Matériau
+44118;Composant de Heaume d'obsidienne envoûtée;icons/costume_hm/nu_m_hm_metal210.dds.png;Matériau
+44119;Composant de Cuirasse d'obsidienne envoûtée;icons/costume_ar/nu_f_ar_metal215.dds.png;Matériau
+44120;Composant de Grèves d'obsidienne envoûtée;icons/costume_pt/nu_f_pt_metal216.dds.png;Matériau
+44121;Composant de Gantelets d'obsidienne envoûtée;icons/costume_gv/nu_m_gv_metal219.dds.png;Matériau
+44122;Composant de Solerets d'obsidienne envoûtée;icons/costume_bo/nu_f_bo_metal216.dds.png;Matériau
+44589;Lunarite Lumisol supérieure;icons/icon_item_4160.dds.png;Matériau
+44864;Mâchoire de Titan Ailes de foudre robuste;icons/icon_item_4202.dds.png;Legendary Trophy
+44913;Éclat de cœur de dragon;icons/icon_item_4260.dds.png;Legendary Trophy
+44914;Cœur de Claque-flamme;icons/icon_item_4257.dds.png;Matériau
+44915;Cœur de Chante-vent;icons/icon_item_4258.dds.png;Matériau
+44916;Cœur de Gronde-terre;icons/icon_item_4259.dds.png;Legendary Trophy
+45045;Fragment de faille spatio-temporelle;icons/icon_item_4268.dds.png;Legendary Trophy
+45046;Fluide de corps noyé;icons/icon_item_4269.dds.png;Legendary Trophy
+45047;Aileron de requin;icons/icon_item_4270.dds.png;Legendary Trophy
+45048;Queue de centaure;icons/icon_item_4271.dds.png;Legendary Trophy
+45049;Corne de minotaure;icons/icon_item_4272.dds.png;Legendary Trophy
+45050;Crochet de vipère bicéphale;icons/icon_item_4273.dds.png;Legendary Trophy
+45051;Âme de revenant;icons/icon_item_4274.dds.png;Legendary Trophy
+45052;Peau de yéti;icons/icon_item_4275.dds.png;Legendary Trophy
+45053;Fragment d'arme de Lame fantôme;icons/icon_item_4276.dds.png;Legendary Trophy
+45054;Fragment de Vyrava;icons/icon_item_4277.dds.png;Matériau
+45198;Bâton d'Alexander;icons/icon_item_staff_2h_0032.dds.png;Legendary Trophy
+45602;Givre sélène fendillé scellé;icons/icon_item_0827.dds.png;Enchancement Materials
+45603;Givre sélène entier scellé;icons/icon_item_0828.dds.png;Enchancement Materials
+45604;Givre sélène sans défaut scellé;icons/icon_item_0829.dds.png;Enchancement Materials
+45605;Givre sélène probe scellé;icons/icon_item_0835.dds.png;Enchancement Materials
+45606;Givre sélène éminent scellé;icons/icon_item_0836.dds.png;Enchancement Materials
+45624;Givre sélène auguste scellé;icons/icon_item_0835.dds.png;Enchancement Materials
+45732;Parchemin de décristallisation;icons/icon_item_4408.dds.png;Enchancement Materials
+45914;Trempe solaire;icons/icon_item_2070.dds.png;Enchancement Materials
+45915;Trempe lunaire;icons/icon_item_2069.dds.png;Enchancement Materials
+45916;Trempe solaire resplendissante;icons/icon_item_2070.dds.png;Enchancement Materials
+45917;Trempe lunaire resplendissante;icons/icon_item_2069.dds.png;Enchancement Materials
+45918;Charme de trempe resplendissant;icons/icon_item_4002.dds.png;Enchancement Materials
+45979;Charme de trempe;icons/icon_item_4001.dds.png;Enchancement Materials
+46024;Charme de trempe resplendissant lié;icons/icon_item_4002.dds.png;Enchancement Materials
+46025;Charme de trempe lié;icons/icon_item_4001.dds.png;Enchancement Materials
+46026;Charme de trempe inférieur;icons/icon_item_4001.dds.png;Enchancement Materials
+46067;Éclat de la Bibliothèque abyssale;icons/icon_item_0854.dds.png;Legendary Trophy
+46129;Alambic de récupération emballé;icons/icon_item_3293.dds.png;Matériau
+46151;Charme sélène de rang 1;icons/icon_item_4467.dds.png;Enchancement Materials
+46152;Charme sélène de rang 2;icons/icon_item_4467.dds.png;Enchancement Materials
+46156;Lunarite lumi supérieure;icons/icon_item_4469.dds.png;Alchimie
+46157;Lunarite délicate lumi;icons/icon_item_4470.dds.png;Alchimie
+46420;Charme sélène de rang 3;icons/icon_item_4467.dds.png;Enchancement Materials
+46421;Charme sélène de rang 4;icons/icon_item_4468.dds.png;Enchancement Materials
+46422;Charme sélène de rang 5;icons/icon_item_4468.dds.png;Enchancement Materials
+46428;Charme sélène de Daru;icons/icon_item_4467.dds.png;Enchancement Materials
+46574;Éclat d'arête vertébrale du dragon rouge;icons/icon_item_4522.dds.png;Legendary Trophy
+46682;Pierre de sérendipité liée;icons/icon_item_3017.dds.png;Enchancement Materials
+47115;Bourse des Épices moulues;icons/icon_item_1763.dds.png;Matériau
+47116;Bourse des Primeurs hachées;icons/icon_item_1765.dds.png;Matériau
+47117;Bourse des Céréales moulues;icons/icon_item_1769.dds.png;Matériau
+47118;Bourse de Purée du verger;icons/icon_item_1759.dds.png;Matériau
+47119;Bourse des Fleurs séchées;icons/icon_item_1762.dds.png;Matériau
+47120;Bourse de Poudre médicinale;icons/icon_item_1768.dds.png;Matériau
+47347;Éclat du Cœur d'Ayanad Abyssal;icons/icon_item_4629.dds.png;Legendary Trophy
+47581;Lunarite Lumiconstante;icons/icon_item_4211.dds.png;Alchimie
+47588;Charme sélène Lumiconstante : Traumatisme;icons/icon_item_1559.dds.png;Enchancement Materials
+47589;Charme sélène Lumiconstante : Cauchemars;icons/icon_item_1559.dds.png;Enchancement Materials
+47592;Charme sélène Lumiconstante : Stase;icons/icon_item_1559.dds.png;Enchancement Materials
+47593;Charme sélène Lumiconstante : Impact;icons/icon_item_1559.dds.png;Enchancement Materials
+47594;Charme sélène Lumiconstante : Échappez-vous;icons/icon_item_1559.dds.png;Enchancement Materials
+47595;Charme sélène Lumiconstante : Déplacement;icons/icon_item_1559.dds.png;Enchancement Materials
+47929;Caisse de Gemme sélène liée;icons/quest/icon_item_quest169.dds.png;Enchancement Materials
+35526;Matériaux de clipper;icons/icon_item_0384.dds.png;Matériau
+35527;Matériaux de goélette marchande;icons/icon_item_0384.dds.png;Matériau
+35528;Matér. de petit navire de guerre;icons/icon_item_0384.dds.png;Matériau
+35529;Matér. de navire de guerre moyen;icons/icon_item_0384.dds.png;Matériau
+35885;Topaze possédé;icons/quest/icon_item_quest007.dds.png;Matériau
+35887;Éclat d'os;icons/icon_item_0177.dds.png;Matériau
+35888;Sorcegemme interdite;icons/quest/icon_item_quest014.dds.png;Matériau
+35889;Orbe d'ombre;icons/quest/icon_item_quest021.dds.png;Matériau
+35895;Œil de Léviathan;icons/icon_item_0184.dds.png;Matériau
+36602;Charme de renivellement jaune supérieur lié;icons/icon_item_1849.dds.png;Enchancement Materials
+36604;Charme de renivellement rouge supérieur lié;icons/icon_item_1851.dds.png;Enchancement Materials
+36605;Parchemin resplendissant de renivellement d'arme lié;icons/icon_item_1270.dds.png;Enchancement Materials
+36606;Parchemin resplendissant de renivellement d'armure lié;icons/icon_item_1271.dds.png;Enchancement Materials
+36867;Charme de renivellement rouge lié;icons/icon_item_1850.dds.png;Enchancement Materials
+36905;Ticket cadeau;icons/quest/icon_item_quest023.dds.png;Matériau
+37554;Charme de renivellement vert lié;icons/icon_item_1917.dds.png;Enchancement Materials
+37893;Paquet de poutres en bois;icons/icon_item_1974.dds.png;Matériau
+37894;Paquet d'outils de construction;icons/icon_item_1977.dds.png;Matériau
+37895;Paquet de touches finales;icons/icon_item_1976.dds.png;Matériau
+37896;Paquet de briques de construction;icons/icon_item_1975.dds.png;Matériau
+38087;Parchemin de renivellement d'accessoire pour familier;icons/icon_item_1695.dds.png;Enchancement Materials
+38600;Parchemin de renivellement d'arme lié;icons/icon_item_1268.dds.png;Enchancement Materials
+38601;Parchemin de renivellement d'armure lié;icons/icon_item_1269.dds.png;Enchancement Materials
+38752;Charme de renivellement violet;icons/icon_item_2736.dds.png;Enchancement Materials
+38754;Charme de renivellement orange;icons/icon_item_2737.dds.png;Enchancement Materials
+38757;Charme de renivellement blanc;icons/icon_item_2738.dds.png;Enchancement Materials
+38758;Charme de renivellement blanc supérieur;icons/icon_item_2738.dds.png;Enchancement Materials
+38814;Pierre de puissance brumeuse;icons/icon_item_2727.dds.png;Matériau
+38815;Pierre de force solaire;icons/icon_item_2728.dds.png;Matériau
+38835;Feu-follet de mana de métal à une main;icons/icon_item_2740.dds.png;Matériau
+38836;Feu-follet de mana de métal à deux mains;icons/icon_item_2741.dds.png;Matériau
+38837;Feu-follet de mana de bois;icons/icon_item_2743.dds.png;Matériau
+38838;Feu-follet de mana de bois à deux mains;icons/icon_item_dagger_0027.dds.png;Matériau
+38839;Feu-follet de mana musical;icons/icon_item_2744.dds.png;Matériau
+38840;Grand Feu-follet de mana de bijou;icons/icon_item_0157.dds.png;Matériau
+38841;Petit Feu-follet de mana de bijou;icons/icon_item_0288.dds.png;Matériau
+38842;Feu-follet de mana d'anneau;icons/icon_item_dagger_0027.dds.png;Matériau
+38843;Feu-follet de mana de tissu;icons/icon_item_2745.dds.png;Matériau
+38844;Feu-follet de mana de cuir;icons/icon_item_0285.dds.png;Matériau
+38845;Feu-follet de mana de plates;icons/icon_item_2746.dds.png;Matériau
+39097;Parch. reniv. d'accessoire lié;icons/icon_item_1695.dds.png;Enchancement Materials
+39100;Parch. : reniv. acc. familier lié;icons/icon_item_1695.dds.png;Enchancement Materials
+39102;Charme de renivellement argenté;icons/icon_item_2738.dds.png;Enchancement Materials
+39424;Pierre de sérendipité emballée;icons/icon_item_3017.dds.png;Enchancement Materials
+31727;Ticket du mirage;icons/quest/icon_item_quest023.dds.png;Matériau
+31728;Ticket du mirage VIP;icons/quest/icon_item_quest023.dds.png;Matériau
+31809;Perle prismatique;icons/icon_item_1760.dds.png;Matériau
+31810;Diamant prismatique;icons/icon_item_1761.dds.png;Special Material
+31819;Pousse d'arbuste à gemmes pétrifié;icons/icon_item_1701.dds.png;Matériau
+31820;Racine de cactus de corail;icons/icon_item_1699.dds.png;Matériau
+31821;Fronde de fougère de toundra;icons/icon_item_1698.dds.png;Matériau
+31822;Tige de tête-de-violon violette;icons/icon_item_1697.dds.png;Matériau
+31823;Herbe épineuse séchée;icons/icon_item_1700.dds.png;Matériau
+31824;Moût d'or des brumes;icons/icon_item_1702.dds.png;Matériau
+31927;Parchemin resplendissant de renivellement d'accessoire;icons/icon_item_1696.dds.png;Enchancement Materials
+31928;Parchemin de renivellement d'accessoire;icons/icon_item_1695.dds.png;Enchancement Materials
+31974;Charme de renivellement jaune;icons/icon_item_1848.dds.png;Enchancement Materials
+31975;Charme de renivellement jaune supérieur;icons/icon_item_1848.dds.png;Enchancement Materials
+31976;Charme de renivellement rouge;icons/icon_item_1850.dds.png;Enchancement Materials
+31977;Charme de renivellement rouge supérieur;icons/icon_item_1851.dds.png;Enchancement Materials
+32038;Feuille de mana terrestre;icons/icon_item_1781.dds.png;Special Material
+32060;Fragment de plan de costume d'Ayanad;icons/icon_item_1146.dds.png;Legendary Trophy
+32061;Écheveau enchanté;icons/icon_item_0091.dds.png;Legendary Trophy
+32062;Larme de disciple;icons/quest/icon_item_quest173.dds.png;Legendary Trophy
+32103;Essence d'archeum onyx;icons/icon_item_4457.dds.png;Special Material
+32104;Stabilisateur de sel gemme;icons/icon_item_1757.dds.png;Matériau
+32105;Stabilisateur de cristal;icons/icon_item_1755.dds.png;Matériau
+32106;Stabilisateur d'essence de dragon;icons/icon_item_1168.dds.png;Special Material
+32575;Lunarite de rafale : Percée;icons/icon_item_1716.dds.png;Matériau
+32576;Lunarite supérieure de rafale : Percée;icons/icon_item_1722.dds.png;Matériau
+32578;Lunarite délicate de rafale : Percée;icons/icon_item_1719.dds.png;Matériau
+34238;Papier à lettre vierge;icons/icon_item_0233.dds.png;Papier
+34239;Lettre manuscrite affectueuse;icons/quest/icon_item_quest023.dds.png;Papier
+34323;Charme de renivellement bleu;icons/icon_item_1916.dds.png;Enchancement Materials
+34563;Charme de renivellement vert;icons/icon_item_1917.dds.png;Enchancement Materials
+34724;Obsidienne malveillante;icons/icon_item_1932.dds.png;Matériau
+34725;Obsidienne hantée;icons/icon_item_1933.dds.png;Matériau
+34726;Joyau souillé;icons/icon_item_1934.dds.png;Matériau
+34727;Aigue-marine rituelle;icons/icon_item_1935.dds.png;Matériau
+34728;Cristal de soufre;icons/icon_item_1936.dds.png;Matériau
+34730;Flocons de saumure;icons/quest/icon_item_quest011.dds.png;Matériau
+34731;Plomb dense;icons/icon_item_1938.dds.png;Matériau
+34733;Recherche d'Herzan;icons/icon_item_1947.dds.png;Matériau
+34734;Grimoire d'Inakos;icons/icon_item_1962.dds.png;Matériau
+34735;Croquis de Ruthart;icons/icon_item_0065.dds.png;Matériau
+34736;Béryl usé;icons/icon_item_1940.dds.png;Matériau
+34738;Crâne de pygmée;icons/quest/icon_item_quest123.dds.png;Matériau
+34739;Statue d'ouroboros;icons/icon_item_1941.dds.png;Matériau
+34750;Fragment de pierre de yaksa;icons/icon_item_0366.dds.png;Matériau
+34751;Corne d'Hanure;icons/icon_item_1955.dds.png;Legendary Trophy
+34752;Brasier de Vyrava;icons/icon_item_1956.dds.png;Legendary Trophy
+34753;Balance de Jola;icons/icon_item_1957.dds.png;Legendary Trophy
+34754;Fragment d'armure de fer;icons/icon_item_1958.dds.png;Legendary Trophy
+34755;Essence de cauchemar;icons/icon_item_1945.dds.png;Legendary Trophy
+34756;Archives du Jardin;icons/icon_item_1959.dds.png;Legendary Trophy
+34757;Boussole d'aventurier expérimenté;icons/icon_item_1960.dds.png;Legendary Trophy
+34758;Couronne de Nazar;icons/icon_item_1949.dds.png;Legendary Trophy
+34759;Poche d'encre du Kraken;icons/icon_item_1961.dds.png;Legendary Trophy
+34760;Relique pourpre d'Anthalon;icons/icon_item_1946.dds.png;Legendary Trophy
+34761;Larme amère;icons/quest/icon_item_quest139.dds.png;Legendary Trophy
+34762;Sang de vœu féroce;icons/quest/icon_item_quest028.dds.png;Legendary Trophy
+34773;Paquet de poutres en bois non standard;icons/icon_item_1974.dds.png;Matériau
+34774;Paquet d'outils de construction non standard;icons/icon_item_1977.dds.png;Matériau
+34775;Paquet de touches finales non standard;icons/icon_item_1976.dds.png;Matériau
+34776;Paquet de briques de construction non standard;icons/icon_item_1975.dds.png;Matériau
+35060;Troncs majestueux;icons/icon_item_0568.dds.png;Planche
+35117;Alambic de restauration emballé;icons/icon_item_2039.dds.png;Matériau
+35390;Paq. de poutres pour pavillon;icons/icon_item_1974.dds.png;Matériau
+27540;Certificat de néophyte;icons/icon_item_0857.dds.png;Matériau
+27541;Certificat d'artificier;icons/icon_item_0857.dds.png;Matériau
+27542;Certificat de fabricant;icons/icon_item_0857.dds.png;Matériau
+27543;Certificat de conquérant;icons/icon_item_0857.dds.png;Matériau
+27544;Plan d'assemblage de paquet basique;icons/icon_item_1125.dds.png;Matériau
+27546;Solution instable;icons/icon_item_0290.dds.png;Alchimie
+27652;Plan d'assemblage de paquet;icons/icon_item_1125.dds.png;Matériau
+28187;Pierre fortensel;icons/icon_item_2729.dds.png;Matériau
+28188;Cristal abyssal;icons/icon_item_1235.dds.png;Alchimie
+28189;Éclat abyssal;icons/icon_item_1236.dds.png;Alchimie
+28219;Essence de foudre brillante;icons/icon_item_0991.dds.png;Matériau
+28296;Parchemin resplendissant de renivellement d'arme;icons/icon_item_1270.dds.png;Enchancement Materials
+28297;Parchemin resplendissant de renivellement d'armure;icons/icon_item_1271.dds.png;Enchancement Materials
+28298;Parchemin de renivellement d'arme;icons/icon_item_1268.dds.png;Enchancement Materials
+28299;Parchemin de renivellement d'armure;icons/icon_item_1269.dds.png;Enchancement Materials
+28305;Parchemin de renivellement vierge;icons/icon_item_1267.dds.png;Special Material
+28449;Certificat de pur-sang;icons/icon_item_0857.dds.png;Matériau
+28874;Cheveux de Morpheus;icons/icon_item_0033.dds.png;Legendary Trophy
+28914;Morceau de parchemin de l'espace-temps;icons/quest/icon_item_quest016.dds.png;Legendary Trophy
+28969;Lingot de sol-crête brûlant;icons/icon_item_1347.dds.png;Métal
+28970;Morceau de cuir d'esprit du vent brûlant;icons/icon_item_1348.dds.png;Peau
+28971;Tissu de Tissenuage brûlant;icons/icon_item_1346.dds.png;Tissu
+28973;Carcanet des Guivrelin;icons/icon_item_1352.dds.png;Matériau
+28974;Os de dragon abîmé;icons/icon_item_1353.dds.png;Matériau
+28975;Braises éternelles;icons/icon_item_1354.dds.png;Matériau
+28976;Écaille endurcie de dragon rouge;icons/icon_item_1340.dds.png;Matériau
+28977;Cœur de dragon rouge;icons/icon_item_1341.dds.png;Matériau
+28978;Crête dorsale de dragon rouge;icons/icon_item_1342.dds.png;Legendary Trophy
+28979;Écume d'Arcadia;icons/icon_item_1355.dds.png;Legendary Trophy
+28980;Faveur de Dahuta;icons/icon_item_1357.dds.png;Matériau
+28981;Remous incessant;icons/icon_item_1356.dds.png;Matériau
+28982;Esprit dérangé;icons/icon_item_1358.dds.png;Legendary Trophy
+28983;Prototype de bandeau gemme-vive;icons/costume_hm/nu_m_hm_cloth164.dds.png;Matériau
+28984;Prototype de tricorne de tempête en mer;icons/costume_hm/nu_m_hm_leather217.dds.png;Matériau
+28985;Prototype de lunettes embuées de fin limier;icons/costume_hm/nu_m_hm_metal208.dds.png;Matériau
+28986;Parchemin de l'espace-temps;icons/icon_item_0004.dds.png;Legendary Trophy
+29165;Remous apaisé;icons/icon_item_1356.dds.png;Matériau
+29211;Remous incessant;icons/icon_item_1356.dds.png;Matériau
+29212;Plume de poule épanouie;icons/icon_item_0170.dds.png;Matériau
+29213;Braises éternelles cendreuses;icons/icon_item_1354.dds.png;Matériau
+29214;Os de dragon abîmé brûlant;icons/icon_item_1353.dds.png;Matériau
+29215;Totem de minotaure;icons/icon_item_1352.dds.png;Matériau
+29216;Écume glacée;icons/icon_item_1355.dds.png;Legendary Trophy
+29217;Larmes de yéti;icons/icon_item_1352.dds.png;Matériau
+29218;Larmes de yéti taillées;icons/icon_item_1352.dds.png;Matériau
+29219;Pendentif en os calcinés;icons/icon_item_1342.dds.png;Matériau
+29220;Plume de harpie chargée de haine;icons/icon_item_1352.dds.png;Matériau
+29221;Plume en cristal;icons/icon_item_1352.dds.png;Matériau
+29222;Collier de berceau fantôme;icons/icon_item_1352.dds.png;Matériau
+29238;Planche de bois d'abattage de Nuri brûlant;icons/icon_item_3210.dds.png;Planche
+29280;Morceau de cire;icons/icon_item_1401.dds.png;Alchimie
+29304;Fromage des champs;icons/icon_item_0225.dds.png;Matériau
+29305;Miel prospère;icons/icon_item_1399.dds.png;Matériau
+29306;Herbes séchées;icons/icon_item_1400.dds.png;Matériau
+29499;Bâton d'Alexander;icons/icon_item_staff_2h_0032.dds.png;Legendary Trophy
+29511;Œil de Kraken;icons/icon_item_0184.dds.png;Legendary Trophy
+29512;Cœur d'Hanure;icons/quest/icon_item_quest198.dds.png;Legendary Trophy
+29513;Bâton d'Anthalon;icons/icon_item_staff_2h_0003.dds.png;Legendary Trophy
+29514;Pierre d'âme de Chien de Kyrios;icons/quest/icon_item_quest021.dds.png;Legendary Trophy
+29515;Pierre de mana de Vyrava;icons/quest/icon_item_quest073.dds.png;Legendary Trophy
+29612;Éclat d'os de dragon;icons/icon_item_1353.dds.png;Matériau
+29767;Certificat d'ours pur-sang;icons/icon_item_0857.dds.png;Matériau
+30002;Anneau de Meina;icons/icon_item_ring_0004.dds.png;Legendary Trophy
+30003;Anneau de Glenn;icons/icon_item_ring_0004.dds.png;Legendary Trophy
+30004;Volant écailleux de Jola;icons/icon_item_0053.dds.png;Legendary Trophy
+30174;Tissu fragile;icons/icon_item_0058.dds.png;Tissu
+30176;Tissu uni;icons/icon_item_0356.dds.png;Tissu
+30628;Bûches d'abondance;icons/icon_item_0568.dds.png;Planche
+30898;Primeurs hachées;icons/icon_item_1765.dds.png;Special Material
+30899;Purée du verger;icons/icon_item_1759.dds.png;Special Material
+30900;Fleurs séchées;icons/icon_item_1762.dds.png;Special Material
+30901;Épices moulues;icons/icon_item_1763.dds.png;Special Material
+30902;Céréales moulues;icons/icon_item_1769.dds.png;Special Material
+30903;Poudre médicinale;icons/icon_item_1768.dds.png;Special Material
+30905;Viande dégraissée;icons/icon_item_1764.dds.png;Special Material
+31009;Lunarite de feu;icons/icon_item_1561.dds.png;Matériau
+31010;Lunarite supérieure Lumifeu;icons/icon_item_1565.dds.png;Matériau
+31011;Lunarite délicate Lumifeu;icons/icon_item_1563.dds.png;Matériau
+31012;Lunarite des vagues;icons/icon_item_1562.dds.png;Matériau
+31013;Lunarite supérieure Lumivague;icons/icon_item_1566.dds.png;Matériau
+31014;Lunarite délicate Lumivague;icons/icon_item_1564.dds.png;Matériau
+31015;Lunarite de rafale : Perforation;icons/icon_item_1716.dds.png;Matériau
+31016;Lunarite de rafale : Colère;icons/icon_item_1716.dds.png;Matériau
+31017;Lunarite de rafale : Sérénité;icons/icon_item_1716.dds.png;Matériau
+31018;Lunarite de rafale : Constance;icons/icon_item_1716.dds.png;Matériau
+31019;Lunarite de rafale : Torrent;icons/icon_item_1716.dds.png;Matériau
+31020;Lunarite de rafale : Fidélité;icons/icon_item_1716.dds.png;Matériau
+31021;Lunarite de rafale : Fureur;icons/icon_item_1716.dds.png;Matériau
+31022;Lunarite de rafale : Réconfort;icons/icon_item_1716.dds.png;Matériau
+31023;Lunarite de rafale : Consolation;icons/icon_item_1716.dds.png;Matériau
+31024;Lunarite de rafale : Surpuissance;icons/icon_item_1716.dds.png;Matériau
+31025;Lunarite de rafale : Agressivité;icons/icon_item_1716.dds.png;Matériau
+31026;Lunarite de rafale : Pitié;icons/icon_item_1716.dds.png;Matériau
+31027;Lunarite de rafale : Bienveillance;icons/icon_item_1716.dds.png;Matériau
+31028;Lunarite de rafale : Tempête;icons/icon_item_1716.dds.png;Matériau
+31029;Lunarite de rafale : Destruction;icons/icon_item_1716.dds.png;Matériau
+31030;Lunarite de rafale : Devin;icons/icon_item_1716.dds.png;Matériau
+31031;Lunarite de rafale : Maîtrise;icons/icon_item_1716.dds.png;Matériau
+31032;Lunarite supérieure de rafale : Perforation;icons/icon_item_1722.dds.png;Matériau
+31033;Lunarite supérieure de rafale : Colère;icons/icon_item_1722.dds.png;Matériau
+31034;Lunarite supérieure de rafale : Sérénité;icons/icon_item_1722.dds.png;Matériau
+31035;Lunarite supérieure de rafale : Constance;icons/icon_item_1722.dds.png;Matériau
+31036;Lunarite supérieure de rafale : Torrent;icons/icon_item_1722.dds.png;Matériau
+31037;Lunarite supérieure de rafale : Fidélité;icons/icon_item_1722.dds.png;Matériau
+31038;Lunarite supérieure de rafale : Fureur;icons/icon_item_1722.dds.png;Matériau
+31039;Lunarite supérieure de rafale : Réconfort;icons/icon_item_1722.dds.png;Matériau
+31040;Lunarite supérieure de rafale : Consolation;icons/icon_item_1722.dds.png;Matériau
+31041;Lunarite supérieure de rafale : Surpuissance;icons/icon_item_1722.dds.png;Matériau
+31042;Lunarite supérieure de rafale : Agressivité;icons/icon_item_1722.dds.png;Matériau
+31043;Lunarite supérieure de rafale : Pitié;icons/icon_item_1722.dds.png;Matériau
+31044;Lunarite supérieure de rafale : Bienveillance;icons/icon_item_1722.dds.png;Matériau
+31045;Lunarite supérieure de rafale : Tempête;icons/icon_item_1722.dds.png;Matériau
+31046;Lunarite supérieure de rafale : Destruction;icons/icon_item_1722.dds.png;Matériau
+31047;Lunarite supérieure de rafale : Devin;icons/icon_item_1722.dds.png;Matériau
+31048;Lunarite supérieure de rafale : Maîtrise;icons/icon_item_1722.dds.png;Matériau
+31049;Lunarite délicate de rafale : Perforation;icons/icon_item_1719.dds.png;Matériau
+31050;Lunarite délicate de rafale : Colère;icons/icon_item_1719.dds.png;Matériau
+31051;Lunarite délicate de rafale : Sérénité;icons/icon_item_1719.dds.png;Matériau
+31052;Lunarite délicate de rafale : Constance;icons/icon_item_1719.dds.png;Matériau
+31053;Lunarite délicate de rafale : Torrent;icons/icon_item_1719.dds.png;Matériau
+31054;Lunarite délicate de rafale : Fidélité;icons/icon_item_1719.dds.png;Matériau
+31055;Lunarite délicate de rafale : Fureur;icons/icon_item_1719.dds.png;Matériau
+31056;Lunarite délicate de rafale : Réconfort;icons/icon_item_1719.dds.png;Matériau
+31057;Lunarite délicate de rafale : Consolation;icons/icon_item_1719.dds.png;Matériau
+31058;Lunarite délicate de rafale : Surpuissance;icons/icon_item_1719.dds.png;Matériau
+31059;Lunarite délicate de rafale : Agressivité;icons/icon_item_1719.dds.png;Matériau
+31060;Lunarite délicate de rafale : Pitié;icons/icon_item_1719.dds.png;Matériau
+31061;Lunarite délicate de rafale : Bienveillance;icons/icon_item_1719.dds.png;Matériau
+31062;Lunarite délicate de rafale : Tempête;icons/icon_item_1719.dds.png;Matériau
+31063;Lunarite délicate de rafale : Destruction;icons/icon_item_1719.dds.png;Matériau
+31064;Lunarite délicate de rafale : Devin;icons/icon_item_1719.dds.png;Matériau
+31065;Lunarite délicate de rafale : Maîtrise;icons/icon_item_1719.dds.png;Matériau
+31066;Lunarite de la terre : Ésotérisme;icons/icon_item_1715.dds.png;Matériau
+31067;Lunarite de la terre : Finesse;icons/icon_item_1715.dds.png;Matériau
+31068;Lunarite de la terre : Effervescence;icons/icon_item_1715.dds.png;Matériau
+31069;Lunarite de la terre : Célérité;icons/icon_item_1715.dds.png;Matériau
+31070;Lunarite de la terre : Barrage;icons/icon_item_1715.dds.png;Matériau
+31071;Lunarite de la terre : Vitalité;icons/icon_item_1715.dds.png;Matériau
+31072;Lunarite supérieure de la terre : Ésotérisme;icons/icon_item_1721.dds.png;Matériau
+31073;Lunarite supérieure de la terre : Finesse;icons/icon_item_1721.dds.png;Matériau
+31074;Lunarite supérieure de la terre : Effervescence;icons/icon_item_1721.dds.png;Matériau
+31075;Lunarite supérieure de la terre : Célérité;icons/icon_item_1721.dds.png;Matériau
+31076;Lunarite supérieure de la terre : Barrage;icons/icon_item_1721.dds.png;Matériau
+31077;Lunarite supérieure de la terre : Vitalité;icons/icon_item_1721.dds.png;Matériau
+31078;Lunarite délicate de la terre : Ésotérisme;icons/icon_item_1718.dds.png;Matériau
+31079;Lunarite délicate de la terre : Finesse;icons/icon_item_1718.dds.png;Matériau
+31080;Lunarite délicate de la terre : Effervescence;icons/icon_item_1718.dds.png;Matériau
+31081;Lunarite délicate de la terre : Célérité;icons/icon_item_1718.dds.png;Matériau
+31082;Lunarite délicate de la terre : Barrage;icons/icon_item_1718.dds.png;Matériau
+31083;Lunarite délicate de la terre : Vitalité;icons/icon_item_1718.dds.png;Matériau
+17774;Lingot d'argent;icons/icon_item_0325.dds.png;Métal précieux
+17775;Lingot d'or;icons/icon_item_0324.dds.png;Métal précieux
+17776;Lingot d'archeum;icons/icon_item_0282.dds.png;Métal
+17803;Mât résistant;icons/icon_item_0036.dds.png;Planche
+18431;Larmes d'Haje;icons/icon_item_0306.dds.png;Matériau
+18432;Suée d'instrospection;icons/icon_item_0298.dds.png;Matériau
+19020;Essence de brise marine;icons/icon_item_0079.dds.png;Alchimie
+19034;Kit pour bourse de récupération;icons/quest/icon_item_quest026.dds.png;Matériau
+19402;Pigment de petite feuille;icons/icon_item_0641.dds.png;Alchemy Oil
+19403;Pigment de tige douce;icons/icon_item_0642.dds.png;Alchemy Oil
+19404;Pigment de pétale parfumé;icons/icon_item_0643.dds.png;Alchemy Oil
+19407;Bouteille d'huile soyeuse visqueuse;icons/icon_item_0649.dds.png;Alchemy Oil
+19408;Huile émulsionnée;icons/icon_item_0650.dds.png;Alchemy Oil
+19409;Bouteille d'huile fortement colorée;icons/icon_item_0651.dds.png;Alchemy Oil
+19410;Cirage brut;icons/icon_item_0645.dds.png;Alchemy Oil
+19411;Cirage non collant;icons/icon_item_0646.dds.png;Alchemy Oil
+19412;Cirage arc-en-ciel;icons/icon_item_0647.dds.png;Alchemy Oil
+19413;Poignée légère;icons/icon_item_dagger_0001.dds.png;Matériau
+19414;Poignée dure;icons/icon_item_dagger_0003.dds.png;Matériau
+19415;Poignée solide;icons/icon_item_dagger_0007.dds.png;Matériau
+19416;Armature de bouclier légère;icons/icon_item_shield_0001.dds.png;Matériau
+19417;Armature de bouclier dure;icons/icon_item_shield_0003.dds.png;Matériau
+19418;Armature de bouclier solide;icons/icon_item_shield_0002.dds.png;Matériau
+19419;Sac droit;icons/icon_item_spear_1h_0001.dds.png;Matériau
+19420;Sac lisse;icons/icon_item_spear_2h_0001.dds.png;Matériau
+19421;Sac résistant;icons/icon_item_spear_2h_0002.dds.png;Matériau
+19422;Armature d'arc droite;icons/icon_item_bow_0001.dds.png;Matériau
+19423;Armature d'arc lisse;icons/icon_item_bow_0004.dds.png;Matériau
+19424;Armature d'arc résistante;icons/icon_item_bow_0005.dds.png;Matériau
+19425;Bourdon brut;icons/icon_item_staff_1h_0001.dds.png;Matériau
+19426;Bourdon délicat;icons/icon_item_staff_1h_0003.dds.png;Matériau
+19427;Bourdon ancien;icons/icon_item_staff_1h_0004.dds.png;Matériau
+19428;Armature brute d'instrument;icons/icon_item_0037.dds.png;Matériau
+19429;Manche de canne à pêche en bambou;icons/icon_item_1127.dds.png;Matériau
+19430;Scion de canne à pêche en acier;icons/icon_item_1128.dds.png;Matériau
+19448;Pigment de petite racine;icons/icon_item_0640.dds.png;Alchemy Oil
+19449;Bouteille d'huile de petite graine;icons/icon_item_0648.dds.png;Alchemy Oil
+19450;Cirage opaque;icons/icon_item_0644.dds.png;Alchemy Oil
+19451;Scion de canne à pêche en acier souple;icons/icon_item_1129.dds.png;Matériau
+19452;Sac rudimentaire;icons/icon_item_spear_1h_0001.dds.png;Matériau
+19453;Manche de canne à pêche doré;icons/icon_item_1130.dds.png;Matériau
+19454;Poignée rudimentaire;icons/icon_item_dagger_0001.dds.png;Matériau
+19455;Bourdon rudimentaire;icons/icon_item_staff_1h_0001.dds.png;Matériau
+19456;Manche de canne à pêche en archeum;icons/icon_item_1131.dds.png;Matériau
+19467;Canon de tank;icons/icon_item_0213.dds.png;Matériau
+19477;Boîte à outil d'artisanat;icons/quest/icon_item_quest070.dds.png;Matériau
+20174;Bouteille d'huile figée;icons/quest/icon_item_quest148.dds.png;Matériau
+23710;Sourire de Nui;icons/icon_item_0657.dds.png;Métal
+23711;Flammes de Delphinad;icons/icon_item_0656.dds.png;Métal précieux
+23712;Archeum sanglant;icons/icon_item_0658.dds.png;Métal précieux
+23838;Poison de méduse;icons/icon_item_0205.dds.png;Matériau
+24911;Lunarite;icons/icon_item_0848.dds.png;Alchimie
+24912;Lunarite délicate;icons/icon_item_0849.dds.png;Alchimie
+24913;Lunarite supérieure;icons/icon_item_0850.dds.png;Alchimie
+24914;Lunarite primordiale;icons/icon_item_0851.dds.png;Alchimie
+26357;Fumier de vache;icons/quest/icon_item_quest066.dds.png;Matériau
+26853;Livre d'Auroria;icons/icon_item_0976.dds.png;Matériau
+27278;Morceau de papier;icons/icon_item_0233.dds.png;Special Material
+14939;Bouteille d'huile d'amande;icons/icon_item_0309.dds.png;Huile de cuisson
+14940;Bouteille d'huile de noix de coco;icons/icon_item_0309.dds.png;Huile de cuisson
+14941;Bouteille d'huile de sésame;icons/icon_item_0309.dds.png;Huile de cuisson
+14942;Bouteille d'huile de maïs;icons/icon_item_0309.dds.png;Huile de cuisson
+14943;Sauce aux huîtres;icons/icon_item_0176.dds.png;Épices
+14944;Volume de vinaigre de pomme;icons/icon_item_0176.dds.png;Épices
+14945;Volume de vinaigre de vin;icons/icon_item_0176.dds.png;Épices
+14946;Volume de vinaigre de noix de coco;icons/icon_item_0176.dds.png;Épices
+14947;Volume de vinaigre de grain fermenté;icons/icon_item_0176.dds.png;Épices
+14970;Bouteille d'huile de cochon;icons/icon_item_0309.dds.png;Huile de cuisson
+15292;Once de terre lunaire souillée;icons/quest/icon_item_quest104.dds.png;Alchimie
+15304;Sang-bleu gelé;icons/icon_item_0205.dds.png;Alchimie
+15314;Plume colorée;icons/quest/icon_item_quest129.dds.png;Alchimie
+15315;Plume brillante;icons/quest/icon_item_quest129.dds.png;Alchimie
+15318;Crâne de défunt;icons/quest/icon_item_quest123.dds.png;Alchimie
+15320;Éclat de verre scintillant;icons/quest/icon_item_quest121.dds.png;Alchimie
+15323;Ongle de gobelin;icons/quest/icon_item_quest112.dds.png;Alchimie
+15324;Dent d'ogre;icons/quest/icon_item_quest112.dds.png;Alchimie
+15331;Talisman d'orc sage;icons/quest/icon_item_quest170.dds.png;Alchimie
+15332;Talisman d'orc courageux;icons/quest/icon_item_quest170.dds.png;Alchimie
+15334;Corne de minotaure;icons/quest/icon_item_quest111.dds.png;Alchimie
+15335;Sabot de minotaure;icons/quest/icon_item_quest069.dds.png;Alchimie
+15337;Œil de basilic;icons/icon_item_0184.dds.png;Alchimie
+15338;Cœur de pierre palpitant;icons/quest/icon_item_quest028.dds.png;Alchimie
+15341;Pince;icons/icon_item_0173.dds.png;Alchimie
+15343;Plume rectrice de griffon;icons/quest/icon_item_quest129.dds.png;Alchimie
+15344;Sabot de girafe;icons/quest/icon_item_quest069.dds.png;Alchimie
+15367;Essence mortelle sinistre;icons/quest/icon_item_quest171.dds.png;Alchimie
+15369;Grande toile;icons/quest/icon_item_quest020.dds.png;Alchimie
+15375;Glande de limon;icons/icon_item_0205.dds.png;Alchimie
+15378;Griffe de puma;icons/quest/icon_item_quest112.dds.png;Alchimie
+15383;Œil de kraken;icons/icon_item_0184.dds.png;Legendary Trophy
+15386;Feuille brillante;icons/quest/icon_item_quest168.dds.png;Alchimie
+15387;Glande à venin de scorpion;icons/icon_item_0205.dds.png;Alchimie
+15392;Griffe de tigre;icons/quest/icon_item_quest112.dds.png;Alchimie
+15415;Mue de mante;icons/icon_item_0172.dds.png;Alchimie
+15418;Racine de dionée;icons/icon_item_0151.dds.png;Alchimie
+15419;Tige de rafflésie;icons/quest/icon_item_quest166.dds.png;Alchimie
+15420;Racine de mandragore;icons/icon_item_0151.dds.png;Alchimie
+15421;Couteau ensanglanté;icons/quest/icon_item_quest161.dds.png;Alchimie
+15424;Écaille de vipère bicéphale;icons/icon_item_0096.dds.png;Alchimie
+15435;Mirage disloqué;icons/icon_item_0159.dds.png;Alchimie
+15436;Souvenir balayé;icons/icon_item_0157.dds.png;Alchimie
+15437;Sarbacane de Chlorolien;icons/quest/icon_item_quest033.dds.png;Alchimie
+15441;Plume de faucon;icons/icon_item_0170.dds.png;Alchimie
+15442;Plume d'hippogryphe;icons/icon_item_0170.dds.png;Alchimie
+15445;Griffe de hibou;icons/quest/icon_item_quest112.dds.png;Alchimie
+15447;Serre de corbeau;icons/quest/icon_item_quest112.dds.png;Alchimie
+15449;Griffe en bec-rasoir;icons/quest/icon_item_quest112.dds.png;Alchimie
+15452;Griffe de lion des neiges;icons/quest/icon_item_quest112.dds.png;Alchimie
+15453;Griffe de coyote;icons/quest/icon_item_quest112.dds.png;Alchimie
+15454;Plume de corbeau;icons/icon_item_0170.dds.png;Alchimie
+15458;Croc de coyote;icons/icon_item_0189.dds.png;Alchimie
+15464;Croc de tigre;icons/icon_item_0189.dds.png;Alchimie
+15467;Croc de lion des neiges;icons/icon_item_0189.dds.png;Alchimie
+15488;Carapace de tortue;icons/quest/icon_item_quest155.dds.png;Alchimie
+15490;Carapace de homard;icons/quest/icon_item_quest155.dds.png;Alchimie
+15508;Essence mortelle;icons/quest/icon_item_quest173.dds.png;Alchimie
+15512;Aile de chimère;icons/icon_item_0187.dds.png;Alchimie
+15513;Délicate aile d'insecte;icons/icon_item_0187.dds.png;Alchimie
+15514;Dard d'abeille;icons/quest/icon_item_quest041.dds.png;Alchimie
+15526;Souvenir arraché;icons/quest/icon_item_quest122.dds.png;Alchimie
+15530;Sabot de chevreuil;icons/quest/icon_item_quest069.dds.png;Alchimie
+15531;Sabot de buffle;icons/quest/icon_item_quest069.dds.png;Alchimie
+15621;Prisme luisant;icons/icon_item_0296.dds.png;Alchimie
+15632;Lingot d'Anya;icons/icon_item_1167.dds.png;Métal
+15711;Œuf doré;icons/icon_item_1440.dds.png;Matériau
+15715;Pincée de poudre à canon;icons/quest/icon_item_quest019.dds.png;Matériau
+15730;Caoutchouc naturel;icons/icon_item_5201.dds.png;Caoutchouc
+15765;Pousse de bambou;icons/icon_item_1443.dds.png;Matériau
+16321;Pierre résistante;icons/icon_item_0349.dds.png;Brique de pierre
+16323;Pierre d'étoile montante;icons/icon_item_0351.dds.png;Brique de pierre
+16324;Planche de bois délicat;icons/icon_item_0346.dds.png;Planche
+16325;Lingot de sol-crête;icons/icon_item_0280.dds.png;Métal
+16326;Planche de bois d'abattage de Nuri;icons/icon_item_0348.dds.png;Planche
+16327;Cuir;icons/icon_item_0352.dds.png;Peau
+16328;Morceau de cuir délicat;icons/icon_item_0353.dds.png;Peau
+16330;Morceau de cuir d'esprit du vent;icons/icon_item_0355.dds.png;Peau
+16344;Tissu magnifiquement coloré;icons/icon_item_0357.dds.png;Tissu
+16346;Tissu de Tissenuage;icons/icon_item_0359.dds.png;Tissu
+48124;Emblème d'ancrage d'arme épique;icons/icon_item_3511.dds.png;Enchancement Materials
+48125;Emblème d'ancrage d'armure épique;icons/icon_item_3512.dds.png;Enchancement Materials
+48126;Emblème d'ancrage d'accessoire épique;icons/icon_item_3513.dds.png;Enchancement Materials
+48130;Fragment d'ancrage d'arme épique;icons/icon_item_3511.dds.png;Enchancement Materials
+48131;Fragment d'ancrage d'armure épique;icons/icon_item_3512.dds.png;Enchancement Materials
+48132;Fragment d'ancrage d'accessoire épique;icons/icon_item_3513.dds.png;Enchancement Materials
+48406;Cristal d'âme du Léviathan;icons/icon_item_4770.dds.png;Legendary Trophy
+48407;Cristal d'âme du Dragon noir;icons/icon_item_4771.dds.png;Legendary Trophy
+48408;Cristal d'âme de Charybde;icons/icon_item_4772.dds.png;Legendary Trophy
+48409;Cristal d'âme d'Anthalon;icons/icon_item_4773.dds.png;Legendary Trophy
+48450;Caisse de charme de trempe lié;icons/quest/icon_item_quest169.dds.png;Enchancement Materials
+48521;Trempe solaire resplendissante lié;icons/icon_item_2070.dds.png;Enchancement Materials
+48522;Trempe lunaire resplendissante lié;icons/icon_item_2069.dds.png;Enchancement Materials
+48813;Croc de Charybde;icons/icon_item_4812.dds.png;Legendary Trophy
+48814;Peau de Charybde;icons/icon_item_4813.dds.png;Legendary Trophy
+48858;Charme de trempe d'arme lié;icons/icon_item_4001.dds.png;Enchancement Materials
+48859;Charme de trempe d'armure lié;icons/icon_item_4815.dds.png;Enchancement Materials
+48860;Charme de trempe d'arme resplendissant lié;icons/icon_item_4002.dds.png;Enchancement Materials
+48861;Charme de trempe d'armure resplendissant lié;icons/icon_item_4816.dds.png;Enchancement Materials
+48862;Charme d'ancrage de trempe d'arme;icons/icon_item_4817.dds.png;Enchancement Materials
+48863;Charme d'ancrage de trempe d'armure;icons/icon_item_4818.dds.png;Enchancement Materials
+48864;Charme d'ancrage de trempe d'arme resplendissant;icons/icon_item_4819.dds.png;Enchancement Materials
+48865;Charme d'ancrage de trempe d'armure resplendissant;icons/icon_item_4820.dds.png;Enchancement Materials
+48866;Charme de trempe d'arme;icons/icon_item_4001.dds.png;Enchancement Materials
+48867;Charme de trempe d'armure;icons/icon_item_4815.dds.png;Enchancement Materials
+48868;Charme de trempe d'arme resplendissant;icons/icon_item_4002.dds.png;Enchancement Materials
+48869;Charme de trempe d'armure resplendissant;icons/icon_item_4816.dds.png;Enchancement Materials
+48885;Charme d'ancrage de trempe d'arme lié;icons/icon_item_4817.dds.png;Enchancement Materials
+48886;Charme d'ancrage de trempe d'armure lié;icons/icon_item_4818.dds.png;Enchancement Materials
+48893;Charme d'ancrage de trempe d'arme resplendissant lié;icons/icon_item_4819.dds.png;Enchancement Materials
+48894;Charme d'ancrage de trempe d'armure resplendissant lié;icons/icon_item_4820.dds.png;Enchancement Materials
+48903;Boîte de charme d'ancrage de trempe liée;icons/icon_item_3282.dds.png;Enchancement Materials
+48904;Boîte de charme de trempe resplendissant liée;icons/icon_item_3278.dds.png;Enchancement Materials
+48905;Boîte de charme de trempe liée;icons/icon_item_3279.dds.png;Enchancement Materials
+48994;Alambic de restauration;icons/icon_item_2039.dds.png;Matériau
+49002;Alambic de récupération;icons/icon_item_3293.dds.png;Matériau
+49239;Orbe d'Archeum vif;icons/icon_item_4790.dds.png;Matériau
+49695;Manaréacteur du Gardien;icons/icon_item_4947.dds.png;Legendary Trophy
+49770;Éclat de mana du Gardien;icons/icon_item_4948.dds.png;Legendary Trophy
+49775;Charme sélène de rang 6;icons/icon_item_4468.dds.png;Enchancement Materials
+50177;Anneau d'Implacable Glenn;icons/icon_item_ring_0004.dds.png;Legendary Trophy
+50178;Anneau de Meina vicieux;icons/icon_item_ring_0004.dds.png;Legendary Trophy
+50180;Volant radieux de Jola;icons/icon_item_0053.dds.png;Legendary Trophy
+50415;Cristal d'âme voilé;icons/icon_item_5019.dds.png;Legendary Trophy
+50529;Caisse de Trempe;icons/icon_item_2273.dds.png;Enchancement Materials
+50537;Caisse de Givre sélène probe;icons/quest/icon_item_quest169.dds.png;Enchancement Materials
+50546;Parties de Risopode;icons/icon_item_0060.dds.png;Legendary Trophy
+50684;Pochette de Résilience non-identifiée;icons/icon_item_5001.dds.png;Matériau
+50730;Caisse de Charme de trempe resplendissant liée;icons/icon_item_2374.dds.png;Enchancement Materials
+51583;Trempes solaires;icons/icon_item_2070.dds.png;Enchancement Materials
+51584;Trempes lunaires;icons/icon_item_2069.dds.png;Enchancement Materials
+51594;Puissance de Gedlon;icons/icon_item_5140.dds.png;Enchancement Materials
+51595;Résilience d'Herstan;icons/icon_item_5141.dds.png;Enchancement Materials
+51596;Sagesse de Yordan;icons/icon_item_5142.dds.png;Enchancement Materials
+51597;Rune d'Ewan Rang 1;icons/icon_item_5143.dds.png;Enchancement Materials
+51598;Rune d'Ewan Rang 2;icons/icon_item_5143.dds.png;Enchancement Materials
+51599;Rune d'Ewan Rang 3;icons/icon_item_5143.dds.png;Enchancement Materials
+51601;Écaille de serpent;icons/icon_item_0096.dds.png;Enchancement Materials
+51602;Essence de demi-dieu;icons/icon_item_5145.dds.png;Enchancement Materials
+52138;Caisse de Trempe;icons/icon_item_1176.dds.png;Enchancement Materials
+8002845;Trempe solaire resplendissante lié;icons/icon_item_2070.dds.png;Enchancement Materials
+8002846;Trempe lunaire resplendissante lié;icons/icon_item_2069.dds.png;Enchancement Materials
+8002967;Alambic de restauration lié;icons/icon_item_2039.dds.png;Matériau
+8003194;Ticket de trempe resplendissante;icons/icon_item_2799.dds.png;Enchancement Materials
+9000154;Serendipity Stone;icons/icon_item_3017.dds.png;Enchancement Materials
+9000155;Dark Sealstone;icons/icon_item_2969.dds.png;Alchimie
+9000156;Evil Sealstone;icons/icon_item_2968.dds.png;Alchimie
+9000157;Venom Sealstone;icons/icon_item_2967.dds.png;Alchimie
+9000158;Bloody Sealstone;icons/icon_item_2966.dds.png;Alchimie
+9000159;Uncertainty Sealstone;icons/icon_item_3150.dds.png;Alchimie
+9000279;Stranger's Sealstone;icons/icon_item_3621.dds.png;Alchimie
+9000823;Shining Fragment;icons/icon_item_1782.dds.png;Alchimie
+9001065;Eternal Breath;icons/icon_item_0658.dds.png;Matériau
+9001351;Magellan's Compass Shard;icons/icon_item_1960.dds.png;Matériau
+9001352;Magellan's Compass Shard;icons/icon_item_1960.dds.png;Matériau
+9001353;Magellan's Compass Shard;icons/icon_item_1960.dds.png;Matériau
+9001424;Decrystallization Scroll Fragment;icons/icon_item_4408.dds.png;Enchancement Materials
+9001532;Solar Temper Pack;icons/icon_item_2070.dds.png;Enchancement Materials
+9001533;Lesser Tempering Crystal Pack;icons/icon_item_4001.dds.png;Enchancement Materials
+9001534;Lunar Temper Pack;icons/icon_item_2069.dds.png;Enchancement Materials
+9001876;Alexander's Staff;icons/icon_item_staff_2h_0032.dds.png;Legendary Trophy
+9001920;Wrapped Serendipity Stone;icons/icon_item_3017.dds.png;Enchancement Materials
+9001921;Charred Hull Wood;icons/arcustom/custom_speedcar_craft_item_1.dds.png;Legendary Trophy
+9001922;Titanweave Feather Silk;icons/arcustom/custom_speedcar_craft_item_3.dds.png;Legendary Trophy
+9001923;Onyx Motor Oil;icons/arcustom/custom_speedcar_craft_item_4.dds.png;Legendary Trophy
+9001924;Eternal Tree's Living Fibre;icons/arcustom/custom_speedcar_craft_item_5.dds.png;Legendary Trophy
+9001925;Indestructible Sea Rubber;icons/arcustom/custom_speedcar_craft_item_2.dds.png;Legendary Trophy
+9001929;Wrapped Serendipity Stone Shard;icons/icon_item_3399.dds.png;Enchancement Materials
+9001936;Bound Lunar Temper Pack;icons/icon_item_2069.dds.png;Enchancement Materials
+9001937;Bound Solar Temper Pack;icons/icon_item_2070.dds.png;Enchancement Materials
+9001938;Bound Lesser Tempering Crystal Pack;icons/icon_item_4001.dds.png;Enchancement Materials
+9002049;Bound Armor Anchoring Tempering Charm;icons/icon_item_4818.dds.png;Enchancement Materials
+9002050;Bound Weapon Anchoring Tempering Charm;icons/icon_item_4817.dds.png;Enchancement Materials
+9002355;Sealed Superior Glow Lunarite;icons/icon_item_4469.dds.png;Alchimie
+9002972;Bound Serendipity Stone Fragment;icons/icon_item_3399.dds.png;Enchancement Materials
+9003053;Sealed Honorhewn Lunafrost;icons/icon_item_0835.dds.png;Enchancement Materials
+9003812;Heroes Serendipity Stone;icons/arcustom/ancestral_medal_2.dds.png;Enchancement Materials
