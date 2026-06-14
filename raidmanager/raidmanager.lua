@@ -1271,13 +1271,21 @@ local function KickBannedClasses()
 end
 
 local function CreateWindowBackground(window)
+	if type(SettingWindowSkin) == "function" then
+		local ok = pcall(function()
+			SettingWindowSkin(window)
+		end)
+		if ok then
+			return nil
+		end
+	end
 	local bg = window:CreateDrawable("ui/common/default.dds", "main_bg", "background")
 	if bg ~= nil and bg.AddAnchor ~= nil then
 		bg:AddAnchor("TOPLEFT", window, -5, -5)
 		bg:AddAnchor("BOTTOMRIGHT", window, 5, 5)
 		return bg
 	end
-	bg = window:CreateColorDrawable(0.92, 0.86, 0.66, 0.95, "background")
+	bg = window:CreateColorDrawable(0.15, 0.15, 0.15, 0.90, "background")
 	bg:AddAnchor("TOPLEFT", window, 0, 0)
 	bg:AddAnchor("BOTTOMRIGHT", window, 0, 0)
 	return bg
@@ -1288,16 +1296,21 @@ local function CreateQuestStylePanel(parent, id, left, top, right, bottom, alpha
 	holder:AddAnchor("TOPLEFT", parent, left, top)
 	holder:AddAnchor("BOTTOMRIGHT", parent, right, bottom)
 	local ok, bg = pcall(function()
+		local drawable = holder:CreateDrawable("ui/common/default.dds", "common_bg", "background")
+		if drawable ~= nil and drawable.SetTextureColor ~= nil then
+			drawable:SetTextureColor("bg_02")
+			return drawable
+		end
 		if type(CreateContentBackground) == "function" then
 			return CreateContentBackground(holder, "TYPE11", "bg_02", "background")
 		end
-		return nil
+		return drawable
 	end)
 	if ok and bg ~= nil then
 		bg:AddAnchor("TOPLEFT", holder, 0, 0)
 		bg:AddAnchor("BOTTOMRIGHT", holder, 0, 0)
 	else
-		bg = holder:CreateColorDrawable(0.74, 0.64, 0.43, alpha or 0.20, "background")
+		bg = holder:CreateColorDrawable(0.78, 0.73, 0.58, alpha or 0.18, "background")
 		bg:AddAnchor("TOPLEFT", holder, 0, 0)
 		bg:AddAnchor("BOTTOMRIGHT", holder, 0, 0)
 	end
@@ -1310,21 +1323,36 @@ local function StyleLabel(label, fontSize, align)
 	if label.style.SetColorByKey ~= nil then
 		label.style:SetColorByKey("default")
 	else
-		label.style:SetColor(0.35, 0.18, 0.02, 1)
+		label.style:SetColor(1, 1, 1, 1)
+	end
+end
+
+local function SetDefaultTextColor(widget)
+	if widget == nil or widget.style == nil then
+		return
+	end
+	if widget.style.SetColorByKey ~= nil then
+		widget.style:SetColorByKey("default")
+	else
+		widget.style:SetColor(1, 1, 1, 1)
 	end
 end
 
 local function CreateFlatButton(parent, name, text, x, y, width, onClick)
-	local button = parent:CreateChildWidget("label", name, 0, true)
+	local button = parent:CreateChildWidget("button", name, 0, true)
+	if button.SetStyle ~= nil then
+		button:SetStyle("text_default")
+	end
+	if button.SetAutoResize ~= nil then
+		button:SetAutoResize(false)
+	end
+	if button.SetInset ~= nil then
+		button:SetInset(0, 0, 0, 0)
+	end
 	button:SetExtent(width, BUTTON_HEIGHT)
 	button:AddAnchor("TOPLEFT", parent, x, y)
 	button:SetText(text)
-	button.style:SetAlign(ALIGN_CENTER)
-	button.style:SetFontSize(12)
-	button.style:SetColor(0.35, 0.18, 0.02, 1)
-	local bg = button:CreateColorDrawable(0.76, 0.59, 0.32, 0.30, "background")
-	bg:AddAnchor("TOPLEFT", button, 0, 0)
-	bg:AddAnchor("BOTTOMRIGHT", button, 0, 0)
+	StyleLabel(button, 12, ALIGN_CENTER)
 	button:SetHandler("OnClick", onClick)
 	return button
 end
@@ -1337,9 +1365,12 @@ local function CreateInput(parent, name, x, y, width, guideText)
 	edit:AddAnchor("TOPLEFT", parent, x, y)
 	edit:SetMaxTextLength(100)
 	edit:SetGuideText(guideText or "")
-	local bg = parent:CreateColorDrawable(0.55, 0.40, 0.18, 0.18, "background")
-	bg:SetExtent(width, BUTTON_HEIGHT)
-	bg:AddAnchor("TOPLEFT", parent, x, y)
+	local bg = edit:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
+	if bg == nil then
+		bg = parent:CreateColorDrawable(0.78, 0.73, 0.58, 0.16, "background")
+	end
+	bg:AddAnchor("TOPLEFT", edit, 0, 0)
+	bg:AddAnchor("BOTTOMRIGHT", edit, 0, 0)
 	return edit
 end
 
@@ -1352,7 +1383,7 @@ local function ShowSection(section)
 		if id == section then
 			button.style:SetColor(0.04, 0.50, 0.08, 1)
 		else
-			button.style:SetColor(0.35, 0.18, 0.02, 1)
+			SetDefaultTextColor(button)
 		end
 	end
 	if sectionTitle ~= nil then
@@ -1387,7 +1418,7 @@ local function RefreshKickRows()
 			if state.selectedKickIndex == entryIndex then
 				row.style:SetColor(0.04, 0.50, 0.08, 1)
 			else
-				row.style:SetColor(0.35, 0.18, 0.02, 1)
+				SetDefaultTextColor(row)
 			end
 		else
 			row.entryIndex = nil
@@ -1518,7 +1549,7 @@ local function CreateBuffcheckSection(parent)
 	end
 
 	local resultTop = 216
-	local resultBg = panel:CreateColorDrawable(0.76, 0.59, 0.32, 0.10, "background")
+	local resultBg = panel:CreateColorDrawable(0.78, 0.73, 0.58, 0.10, "background")
 	resultBg:SetExtent(455, 174)
 	resultBg:AddAnchor("TOPLEFT", panel, 18, resultTop)
 
@@ -1713,7 +1744,7 @@ local function CreateLootSection(parent)
 	percentHeader:SetText("exp_mul")
 	StyleLabel(percentHeader, 12, ALIGN_LEFT)
 
-	local resultBg = panel:CreateColorDrawable(0.76, 0.59, 0.32, 0.10, "background")
+	local resultBg = panel:CreateColorDrawable(0.78, 0.73, 0.58, 0.10, "background")
 	resultBg:SetExtent(455, 310)
 	resultBg:AddAnchor("TOPLEFT", panel, 18, 78)
 
@@ -1768,7 +1799,7 @@ local function CreateGearCheckSection(parent)
 	header:SetText("Players with Dawnsdrop, Yata Mask, or Swimfins")
 	StyleLabel(header, 12, ALIGN_LEFT)
 
-	local resultBg = panel:CreateColorDrawable(0.76, 0.59, 0.32, 0.10, "background")
+	local resultBg = panel:CreateColorDrawable(0.78, 0.73, 0.58, 0.10, "background")
 	resultBg:SetExtent(455, 310)
 	resultBg:AddAnchor("TOPLEFT", panel, 18, 78)
 
@@ -1807,7 +1838,7 @@ local function CreateMainWindow()
 	title:SetText("RaidManager")
 	title.style:SetFontSize(22)
 	title.style:SetAlign(ALIGN_CENTER)
-	title.style:SetColor(0.35, 0.18, 0.02, 1)
+	SetDefaultTextColor(title)
 
 	local closeButton = mainWindow:CreateChildWidget("button", "raidManagerClose", 0, true)
 	closeButton:AddAnchor("TOPRIGHT", mainWindow, 3, -3)
