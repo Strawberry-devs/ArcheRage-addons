@@ -2889,18 +2889,41 @@ local function ReadAuctionPrice(info, expectedName)
 	end
 
 	local fields = {
+		"directPriceStr",
+		"directPrice",
 		"bidPriceStr",
 		"bidPrice",
 	}
 
 	for _, field in ipairs(fields) do
 		local parsed = ParseCopper(info[field])
+		local stackCount = ReadStack(info)
+		local isPartialSale = tonumber(info.minStack or 0) > 0 and tonumber(info.maxStack or 0) > 0
+
+		if parsed ~= nil and parsed > 0 and stackCount > 1 then
+			if isPartialSale and X2Auction ~= nil and type(X2Auction.GetPartitionPriceByCount) == "function" then
+				local ok, unitPrice = pcall(function()
+					return X2Auction:GetPartitionPriceByCount(info[field], stackCount, 1)
+				end)
+				local unitCopper = ok and ParseCopper(unitPrice) or nil
+				if unitCopper ~= nil and unitCopper > 0 then
+					parsed = unitCopper
+				else
+					parsed = math.ceil(parsed / stackCount)
+				end
+			else
+				parsed = math.ceil(parsed / stackCount)
+			end
+		end
+
 		DebugPrice(
 			string.format(
-				"auction row name=%s expected=%s field=%s raw=%s parsed=%s",
+				"auction row name=%s expected=%s field=%s stack=%s partial=%s raw=%s unit=%s",
 				tostring(info.name),
 				tostring(expectedName),
 				tostring(field),
+				tostring(stackCount),
+				tostring(isPartialSale),
 				tostring(info[field]),
 				tostring(parsed)
 			)
