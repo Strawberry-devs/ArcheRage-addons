@@ -115,4 +115,14 @@ naServerEvents = {
 	[eventsName[locale].Maintenance] = {
 		{ times = { { hour = 7, minute = 0, duration = 40 } }, days = { 3 } },
 	},
+	[eventsName[locale].Watermelon] = {
+		{
+			times = {
+				{ hour = 0, minute = 0, duration = 5 },
+				{ hour = 14, minute = 0, duration = 5 },
+				{ hour = 19, minute = 0, duration = 5 },
+			},
+			days = { 1, 2, 3, 4, 5, 6, 7 },
+		},
+	},
 }
