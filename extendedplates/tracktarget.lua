@@ -28,6 +28,7 @@ ADDON:ImportAPI(API_TYPE.ACHIEVEMENT.id)
 ADDON:ImportAPI(API_TYPE.UNIT.id)
 ADDON:ImportAPI(API_TYPE.LOCALE.id)
 ADDON:ImportAPI(API_TYPE.EQUIPMENT.id)
+ADDON:ImportAPI(API_TYPE.SKILL.id)
 
 local shared = TargetDebuffTrackerShared
 local AA_DEBUG = false
@@ -259,6 +260,7 @@ local cdt = {
 	recordButton = nil,
 	showButton = nil,
 	lockButton = nil,
+	trackedTitleLabel = nil,
 	window = nil,
 	background = nil,
 	recentRows = {},
@@ -277,6 +279,14 @@ local cdt = {
 	timerIconSize = 28,
 	timerFontSize = 13,
 	timerSpacing = 0,
+	hasWindowPos = false,
+	previewTimers = {
+		{ icon = "ui/icon/icon_skill_will05.dds", text = "45" },
+		{ icon = "ui/icon/icon_skill_basic06.dds", text = "30" },
+		{ icon = "ui/icon/icon_skill_buff26.dds", text = "18" },
+		{ icon = "ui/icon/arcustom/ravenspine_skill5.dds", text = "12" },
+		{ icon = "ui/icon/icon_skill_fight01.dds", text = "0.8" },
+	},
 	clock = 0,
 	lastRefresh = 0,
 	saveKey = "extendedplates_cooldowntracker",
@@ -386,12 +396,26 @@ function cdt.CanonicalSpellName(name)
 	return name
 end
 
-function cdt.GetSpellIcon(name)
+function cdt.GetSpellIconById(abilityId)
+	local skillIconsById = ExtendedPlatesSkillIconsById
+	local abilityIdText = tostring(abilityId or "")
+	if abilityIdText ~= "" and type(skillIconsById) == "table" and skillIconsById[abilityIdText] ~= nil then
+		return cdt.NormalizeIconPath(skillIconsById[abilityIdText])
+	end
+	return nil
+end
+
+function cdt.GetSpellIcon(name, abilityId)
+	local iconById = cdt.GetSpellIconById(abilityId)
+	if iconById ~= nil then
+		return iconById
+	end
+
 	local skillIcons = ExtendedPlatesSkillIcons
+	local normalized = cdt.NormalizeSpellName(name)
 	if type(skillIcons) ~= "table" then
 		return cdt.defaultIcon
 	end
-	local normalized = cdt.NormalizeSpellName(name)
 	return cdt.NormalizeIconPath(skillIcons[normalized] or skillIcons[string.lower(normalized)] or cdt.defaultIcon)
 end
 
@@ -410,6 +434,25 @@ function cdt.NormalizeIconPath(iconPath)
 		iconPath = "ui/icon/" .. iconPath
 	end
 	return iconPath
+end
+
+function cdt.IsBadIcon(iconPath)
+	iconPath = tostring(iconPath or "")
+	return iconPath == "" or string.find(iconPath, "_bad", 1, true) ~= nil
+end
+
+function cdt.ResolveSkillIcon(name, abilityId, savedIcon, customIcon)
+	if customIcon and not cdt.IsBadIcon(savedIcon) then
+		return cdt.NormalizeIconPath(savedIcon)
+	end
+	local iconById = cdt.GetSpellIconById(abilityId)
+	if iconById ~= nil then
+		return iconById
+	end
+	if not cdt.IsBadIcon(savedIcon) then
+		return cdt.NormalizeIconPath(savedIcon)
+	end
+	return cdt.GetSpellIcon(name, abilityId)
 end
 
 function cdt.ClampTrackedOffset()
@@ -433,6 +476,7 @@ function cdt.SetTrackedIcon(index, iconPath)
 		return
 	end
 	entry.icon = cdt.NormalizeIconPath(iconPath)
+	entry.customIcon = true
 	cdt.SaveSettings()
 	cdt.RefreshSettingsWindow()
 	cdt.RefreshTimerWindow()
@@ -440,17 +484,25 @@ end
 
 function cdt.GetIconLookupResults(query)
 	local results = {}
-	local icons = ExtendedPlatesSkillIcons
+	local namesById = ExtendedPlatesSkillNamesById
+	local iconsById = ExtendedPlatesSkillIconsById
 	query = string.lower(cdt.NormalizeSpellName(query))
-	if type(icons) ~= "table" or query == "" then
+	if type(namesById) ~= "table" or type(iconsById) ~= "table" or query == "" then
 		return results
 	end
-	for skillName, iconPath in pairs(icons) do
+	for skillId, skillName in pairs(namesById) do
+		local iconPath = iconsById[skillId]
 		local lowerName = string.lower(tostring(skillName or ""))
 		local lowerPath = string.lower(tostring(iconPath or ""))
-		if string.find(lowerName, query, 1, true) ~= nil or string.find(lowerPath, query, 1, true) ~= nil then
+		local lowerId = string.lower(tostring(skillId or ""))
+		if
+			string.find(lowerName, query, 1, true) ~= nil
+			or string.find(lowerPath, query, 1, true) ~= nil
+			or string.find(lowerId, query, 1, true) ~= nil
+		then
 			results[#results + 1] = {
-				name = tostring(skillName),
+				id = tostring(skillId),
+				name = tostring(skillId) .. " " .. tostring(skillName),
 				icon = cdt.NormalizeIconPath(iconPath),
 				path = cdt.NormalizeIconPath(iconPath),
 			}
@@ -505,8 +557,8 @@ function cdt.SaveSettings()
 			tracked[#tracked + 1] = {
 				name = entry.name,
 				abilityId = entry.abilityId,
-				icon = cdt.NormalizeIconPath(entry.icon or cdt.GetSpellIcon(entry.name)),
-				cooldown = tonumber(entry.cooldown) or 30,
+				icon = cdt.ResolveSkillIcon(entry.name, entry.abilityId, entry.icon, entry.customIcon),
+				customIcon = entry.customIcon and true or false,
 			}
 		end
 	end
@@ -558,8 +610,8 @@ function cdt.LoadSettings()
 				cdt.tracked[#cdt.tracked + 1] = {
 					name = name,
 					abilityId = entry.abilityId,
-					icon = cdt.NormalizeIconPath(entry.icon or cdt.GetSpellIcon(name)),
-					cooldown = math.max(1, math.floor(tonumber(entry.cooldown) or 30)),
+					icon = cdt.ResolveSkillIcon(name, entry.abilityId, entry.icon, entry.customIcon),
+					customIcon = entry.customIcon and true or false,
 				}
 			end
 		end
@@ -573,10 +625,10 @@ end
 
 function cdt.LoadWindowPos()
 	local pos = ADDON:LoadData(cdt.posKey)
-	if pos ~= nil then
-		return tonumber(pos.x) or 0, tonumber(pos.y) or 0
+	if type(pos) == "table" and pos.x ~= nil and pos.y ~= nil then
+		return tonumber(pos.x) or 0, tonumber(pos.y) or 0, true
 	end
-	return 0, 0
+	return 0, 0, false
 end
 
 function cdt.CenterWindow()
@@ -585,6 +637,30 @@ function cdt.CenterWindow()
 	end
 	cdt.window:RemoveAllAnchors()
 	cdt.window:AddAnchor("CENTER", "UIParent", 0, 0)
+end
+
+function cdt.ShowTimerWindow()
+	if cdt.window == nil then
+		return
+	end
+	if not cdt.hasWindowPos then
+		cdt.CenterWindow()
+	end
+	cdt.window:Show(true)
+end
+
+function cdt.ClearSavedCooldowns()
+	cdt.recent = {}
+	cdt.tracked = {}
+	cdt.active = {}
+	cdt.trackedOffset = 0
+	cdt.iconLookupTargetIndex = nil
+	if cdt.iconLookupWindow ~= nil then
+		cdt.iconLookupWindow:Show(false)
+	end
+	cdt.SaveSettings()
+	cdt.RefreshSettingsWindow()
+	cdt.RefreshTimerWindow()
 end
 
 function cdt.ApplyTimerLayout()
@@ -626,6 +702,25 @@ function cdt.AdjustTimerLayout(kind, delta)
 	end
 	cdt.ApplyTimerLayout()
 	cdt.SaveSettings()
+end
+
+function cdt.FormatRemainingTime(remainingMs)
+	if remainingMs <= 1000 then
+		return string.format("%.1f", math.max(0, math.floor(remainingMs / 100) / 10))
+	end
+	return tostring(math.ceil(remainingMs / 1000))
+end
+
+function cdt.FormatSpellLabel(entry)
+	if entry == nil then
+		return ""
+	end
+	local name = tostring(entry.name or "")
+	local abilityId = tostring(entry.abilityId or "")
+	if abilityId ~= "" then
+		return abilityId .. " " .. name
+	end
+	return name
 end
 
 local function DrawLinesButtonText()
@@ -807,7 +902,10 @@ function cdt.AddRecent(name, abilityId)
 	end
 
 	for i = #cdt.recent, 1, -1 do
-		if cdt.recent[i].name == name then
+		local recentEntry = cdt.recent[i]
+		local sameId = abilityId ~= nil and recentEntry ~= nil and tostring(recentEntry.abilityId or "") == tostring(abilityId)
+		local sameNameWithoutIds = abilityId == nil and recentEntry ~= nil and recentEntry.abilityId == nil and recentEntry.name == name
+		if sameId or sameNameWithoutIds then
 			table.remove(cdt.recent, i)
 		end
 	end
@@ -815,7 +913,7 @@ function cdt.AddRecent(name, abilityId)
 	table.insert(cdt.recent, 1, {
 		name = name,
 		abilityId = abilityId,
-		icon = cdt.NormalizeIconPath(cdt.GetSpellIcon(name)),
+		icon = cdt.NormalizeIconPath(cdt.GetSpellIcon(name, abilityId)),
 	})
 	while #cdt.recent > 5 do
 		table.remove(cdt.recent)
@@ -827,16 +925,21 @@ function cdt.AddTrackedFromRecent(entry)
 	if entry == nil or entry.name == nil or entry.name == "" then
 		return
 	end
-	if cdt.FindTracked(entry.name) ~= nil then
+	if entry.abilityId ~= nil and cdt.FindTrackedByCast(entry.name, entry.abilityId) ~= nil then
+		return
+	end
+	if entry.abilityId == nil and cdt.FindTracked(entry.name) ~= nil then
 		return
 	end
 	cdt.tracked[#cdt.tracked + 1] = {
 		name = entry.name,
 		abilityId = entry.abilityId,
-		icon = cdt.NormalizeIconPath(entry.icon or cdt.GetSpellIcon(entry.name)),
-		cooldown = 30,
+		icon = cdt.ResolveSkillIcon(entry.name, entry.abilityId, entry.icon, entry.customIcon),
+		customIcon = entry.customIcon and true or false,
 	}
 	cdt.SaveSettings()
+	cdt.Trigger(entry.name, entry.abilityId)
+	cdt.RefreshTimerWindow()
 	cdt.lastRefresh = 0
 end
 
@@ -853,21 +956,116 @@ function cdt.RemoveTracked(index)
 	cdt.lastRefresh = 0
 end
 
+function cdt.CooldownValueToMs(value)
+	if value == nil then
+		return nil
+	end
+	if type(value) == "number" then
+		if value <= 0 then
+			return nil
+		end
+		return value
+	end
+	if type(value) == "table" then
+		local keys = {
+			"remaining",
+			"remainTime",
+			"remain_time",
+			"cooldown",
+			"cooldownTime",
+			"left",
+			"timeLeft",
+			"time",
+		}
+		for i = 1, #keys do
+			local parsed = cdt.CooldownValueToMs(value[keys[i]])
+			if parsed ~= nil then
+				return parsed
+			end
+		end
+	end
+	return nil
+end
+
+function cdt.CooldownResultsToMs(...)
+	local values = { ... }
+	for i = 1, #values do
+		local parsed = cdt.CooldownValueToMs(values[i])
+		if parsed ~= nil then
+			return parsed
+		end
+		if type(values[i]) == "number" then
+			return nil
+		end
+	end
+	return nil
+end
+
+function cdt.QuerySkillCooldownMs(skillId)
+	if X2Skill == nil or skillId == nil then
+		return nil, nil
+	end
+	local numericId = tonumber(skillId)
+	if numericId == nil then
+		return nil, nil
+	end
+
+	local ok, result1, result2, result3, result4 = pcall(function()
+		return X2Skill:GetCooldown(numericId, true)
+	end)
+	local parsed = ok and cdt.CooldownResultsToMs(result1, result2, result3, result4) or nil
+	if parsed ~= nil then
+		return parsed, "skill"
+	end
+
+	local mateTypes = {}
+	if MATE_TYPE_RIDE ~= nil then
+		mateTypes[#mateTypes + 1] = MATE_TYPE_RIDE
+	end
+	if MATE_TYPE_BATTLE ~= nil then
+		mateTypes[#mateTypes + 1] = MATE_TYPE_BATTLE
+	end
+	for i = 1, #mateTypes do
+		local mateType = mateTypes[i]
+		local mateOk, mateResult1, mateResult2, mateResult3, mateResult4 = pcall(function()
+			return X2Skill:GetMateCooldown(numericId, true, mateType)
+		end)
+		local mateParsed = mateOk and cdt.CooldownResultsToMs(mateResult1, mateResult2, mateResult3, mateResult4) or nil
+		if mateParsed ~= nil then
+			return mateParsed, "mate"
+		end
+	end
+
+	return nil, nil
+end
+
 function cdt.Trigger(name, abilityId)
 	local entry = cdt.FindTrackedByCast(name, abilityId)
 	if entry == nil then
 		cdt.Debug("no tracked match id=" .. tostring(abilityId) .. " name=" .. tostring(name))
 		return false
 	end
-	local duration = math.max(1, math.floor(tonumber(entry.cooldown) or 30))
+	local apiCooldownMs, cooldownSource = cdt.QuerySkillCooldownMs(entry.abilityId or abilityId)
 	local key = tostring(entry.abilityId or abilityId or entry.name)
 	cdt.active[key] = {
 		name = entry.name or name,
-		icon = cdt.NormalizeIconPath(entry.icon or cdt.GetSpellIcon(name)),
-		duration = duration,
-		expiresAt = cdt.clock + (duration * 1000),
+		skillId = entry.abilityId or abilityId,
+		icon = cdt.ResolveSkillIcon(name, entry.abilityId or abilityId, entry.icon, entry.customIcon),
+		source = cooldownSource or "skill",
+		pendingUntil = cdt.clock + 500,
 	}
-	cdt.Debug("triggered id=" .. tostring(abilityId) .. " name=" .. tostring(entry.name) .. " duration=" .. tostring(duration))
+	if apiCooldownMs == nil then
+		cdt.Debug("pending api cooldown id=" .. tostring(abilityId) .. " name=" .. tostring(entry.name))
+		return true
+	end
+	cdt.Debug(
+		"triggered id="
+			.. tostring(abilityId)
+			.. " name="
+			.. tostring(entry.name)
+			.. " source="
+			.. tostring(cooldownSource or "skill")
+	)
 	return true
 end
 
@@ -1704,9 +1902,8 @@ cdt.settingsButton:SetHandler("OnClick", function()
 	if cdt.settingsWindow ~= nil then
 		cdt.settingsWindow:Show(true)
 	end
-	if cdt.showWindow and cdt.window ~= nil then
-		cdt.CenterWindow()
-		cdt.window:Show(true)
+	if cdt.showWindow then
+		cdt.ShowTimerWindow()
 	end
 end)
 
@@ -1754,8 +1951,9 @@ cdt.iconLookupWindow:Show(false)
 
 cdt.window = CreateEmptyWindow("extendedPlatesCooldownTrackerWindow", "UIParent")
 cdt.window:SetExtent(290, 34)
-local cooldownX, cooldownY = cdt.LoadWindowPos()
-if cooldownX ~= 0 or cooldownY ~= 0 then
+local cooldownX, cooldownY, hasCooldownPos = cdt.LoadWindowPos()
+cdt.hasWindowPos = hasCooldownPos
+if cdt.hasWindowPos then
 	cdt.window:AddAnchor("TOPLEFT", "UIParent", cooldownX, cooldownY)
 else
 	cdt.window:AddAnchor("CENTER", "UIParent", 0, 0)
@@ -1770,6 +1968,7 @@ cdt.window:SetHandler("OnDragStop", function(self)
 	local offsetX, offsetY = self:GetOffset()
 	local uiScale = UIParent:GetUIScale() or 1.0
 	cdt.SaveWindowPos(offsetX * uiScale, offsetY * uiScale)
+	cdt.hasWindowPos = true
 end)
 cdt.background = cdt.window:CreateColorDrawable(0.12, 0.12, 0.12, 0.60, "background")
 cdt.background:AddAnchor("TOPLEFT", cdt.window, 0, 0)
@@ -3083,6 +3282,12 @@ function cdt.RefreshSettingsWindow()
 	if cdt.lockButton ~= nil then
 		cdt.lockButton:SetText("Lock Timer [" .. (cdt.lockWindow and "ON" or "OFF") .. "]")
 	end
+	if cdt.trackedTitleLabel ~= nil then
+		local totalTracked = #cdt.tracked
+		local visibleCount = #cdt.trackedRows
+		local displayedEnd = math.min(totalTracked, cdt.trackedOffset + visibleCount)
+		cdt.trackedTitleLabel:SetText("Tracked cooldowns " .. tostring(displayedEnd) .. "/" .. tostring(totalTracked))
+	end
 
 	for i = 1, #cdt.recentRows do
 		local row = cdt.recentRows[i]
@@ -3090,7 +3295,7 @@ function cdt.RefreshSettingsWindow()
 		row.entry = entry
 		if entry ~= nil then
 			SetRowIcon(row.icon, entry.icon)
-			row.label:SetText(entry.name)
+			row.label:SetText(cdt.FormatSpellLabel(entry))
 			row.button:Show(true)
 			row:Show(true)
 		else
@@ -3110,41 +3315,19 @@ function cdt.RefreshSettingsWindow()
 		row.entry = entry
 		if entry ~= nil then
 			SetRowIcon(row.icon, entry.icon)
-			row.label:SetText(entry.name)
-			if row.editingName ~= entry.name then
-				row.isEditing = false
-				row.editingName = entry.name
-			end
-			if row.isEditing ~= true then
-				row.edit.suppressChange = true
-				row.edit:SetText(tostring(math.floor(tonumber(entry.cooldown) or 30)))
-				row.edit.suppressChange = false
-			end
+			row.label:SetText(cdt.FormatSpellLabel(entry))
 			row.button:Show(true)
-			if row.saveButton ~= nil then
-				row.saveButton:Show(true)
-			end
 			if row.iconLookupButton ~= nil then
 				row.iconLookupButton:Show(true)
 			end
-			row.edit:Show(true)
 			row:Show(true)
 		else
 			SetRowIcon(row.icon, nil)
 			row.label:SetText("")
-			row.isEditing = false
-			row.editingName = nil
-			row.edit.suppressChange = true
-			row.edit:SetText("")
-			row.edit.suppressChange = false
 			row.button:Show(false)
-			if row.saveButton ~= nil then
-				row.saveButton:Show(false)
-			end
 			if row.iconLookupButton ~= nil then
 				row.iconLookupButton:Show(false)
 			end
-			row.edit:Show(false)
 			row:Show(false)
 		end
 	end
@@ -3348,10 +3531,7 @@ do
 	cdt.showButton:SetHandler("OnClick", function()
 		cdt.showWindow = not cdt.showWindow
 		if cdt.showWindow then
-			cdt.CenterWindow()
-			if cdt.window ~= nil then
-				cdt.window:Show(true)
-			end
+			cdt.ShowTimerWindow()
 		end
 		cdt.SaveSettings()
 		cdt.RefreshSettingsWindow()
@@ -3388,6 +3568,14 @@ do
 	makeTimerLayoutButton("timerFontMinusButton", "-Font", 256, 84, "font", -1)
 	makeTimerLayoutButton("timerSpacePlusButton", "+Space", 16, 112, "space", 1)
 	makeTimerLayoutButton("timerSpaceMinusButton", "-Space", 96, 112, "space", -1)
+	local clearCooldownsButton = cdt.settingsWindow:CreateChildWidget("button", "clearCooldownsButton", 0, true)
+	ApplyLocalButtonStyle(clearCooldownsButton)
+	clearCooldownsButton:SetExtent(96, 24)
+	clearCooldownsButton:AddAnchor("TOPLEFT", cdt.settingsWindow, 176, 112)
+	clearCooldownsButton:SetText("Clear CDs")
+	clearCooldownsButton:SetHandler("OnClick", function()
+		cdt.ClearSavedCooldowns()
+	end)
 
 	local recentTitle = cdt.settingsWindow:CreateChildWidget("label", "recentTitle", 0, true)
 	recentTitle:AddAnchor("TOPLEFT", cdt.settingsWindow, 16, 146)
@@ -3420,16 +3608,16 @@ do
 		cdt.recentRows[i] = row
 	end
 
-	local trackedTitle = cdt.settingsWindow:CreateChildWidget("label", "trackedTitle", 0, true)
-	trackedTitle:AddAnchor("TOPLEFT", cdt.settingsWindow, 16, 298)
-	trackedTitle:SetExtent(390, 20)
-	ApplyLocalLabelStyle(trackedTitle, 14, ALIGN_LEFT, 0.96, 0.90, 0.78)
-	SetWidgetTextColorByKey(trackedTitle, "brown")
-	trackedTitle:SetText("Tracked cooldowns")
-	trackedTitle:SetHandler("OnWheelUp", function()
+	cdt.trackedTitleLabel = cdt.settingsWindow:CreateChildWidget("label", "trackedTitle", 0, true)
+	cdt.trackedTitleLabel:AddAnchor("TOPLEFT", cdt.settingsWindow, 16, 298)
+	cdt.trackedTitleLabel:SetExtent(390, 20)
+	ApplyLocalLabelStyle(cdt.trackedTitleLabel, 14, ALIGN_LEFT, 0.96, 0.90, 0.78)
+	SetWidgetTextColorByKey(cdt.trackedTitleLabel, "brown")
+	cdt.trackedTitleLabel:SetText("Tracked cooldowns")
+	cdt.trackedTitleLabel:SetHandler("OnWheelUp", function()
 		cdt.ScrollTracked(-1)
 	end)
-	trackedTitle:SetHandler("OnWheelDown", function()
+	cdt.trackedTitleLabel:SetHandler("OnWheelDown", function()
 		cdt.ScrollTracked(1)
 	end)
 
@@ -3448,7 +3636,7 @@ do
 		row.icon:AddAnchor("LEFT", row, 0, 0)
 		row.label = row:CreateChildWidget("label", "trackedLabel", 0, true)
 		row.label:AddAnchor("TOPLEFT", row, 28, 4)
-		row.label:SetExtent(160, 20)
+		row.label:SetExtent(250, 20)
 		ApplyLocalLabelStyle(row.label, 13, ALIGN_LEFT, 1, 1, 1)
 		SetWidgetTextColorByKey(row.label, "default")
 		row.label:SetHandler("OnWheelUp", function()
@@ -3457,63 +3645,10 @@ do
 		row.label:SetHandler("OnWheelDown", function()
 			cdt.ScrollTracked(1)
 		end)
-		row.edit = CreateLocalEditBox(row, "cooldownSecondsEdit", 50)
-		row.edit:AddAnchor("TOPLEFT", row, 194, 1)
-		row.edit:SetHandler("OnWheelUp", function()
-			cdt.ScrollTracked(-1)
-		end)
-		row.edit:SetHandler("OnWheelDown", function()
-			cdt.ScrollTracked(1)
-		end)
-		row.edit:SetHandler("OnTextChanged", function(self)
-			if self.suppressChange then
-				return
-			end
-			row.isEditing = true
-			if row.entry ~= nil then
-				row.editingName = row.entry.name
-			end
-		end)
-		local function saveCooldownValue()
-			local entry = row.entry
-			if entry == nil then
-				return
-			end
-			local value = tonumber(tostring(row.edit:GetText() or ""):match("%d+"))
-			if value ~= nil and value > 0 then
-				entry.cooldown = math.floor(value)
-				row.isEditing = false
-				row.editingName = entry.name
-				cdt.SaveSettings()
-				cdt.RefreshSettingsWindow()
-			else
-				row.isEditing = false
-				row.edit.suppressChange = true
-				row.edit:SetText(tostring(math.floor(tonumber(entry.cooldown) or 30)))
-				row.edit.suppressChange = false
-			end
-		end
-		row.edit:SetHandler("OnEnterPressed", function(self)
-			saveCooldownValue()
-			self:ClearFocus()
-		end)
-		row.saveButton = row:CreateChildWidget("button", "saveCooldownButton", 0, true)
-		ApplyLocalButtonStyle(row.saveButton)
-		row.saveButton:SetExtent(48, 22)
-		row.saveButton:AddAnchor("TOPLEFT", row, 250, 3)
-		row.saveButton:SetText("Save")
-		row.saveButton:SetHandler("OnClick", saveCooldownValue)
-		row.saveButton:SetHandler("OnWheelUp", function()
-			cdt.ScrollTracked(-1)
-		end)
-		row.saveButton:SetHandler("OnWheelDown", function()
-			cdt.ScrollTracked(1)
-		end)
-		row.saveButton:SetExtent(30, 22)
 		row.iconLookupButton = row:CreateChildWidget("button", "iconLookupButton", 0, true)
 		ApplyLocalButtonStyle(row.iconLookupButton)
 		row.iconLookupButton:SetExtent(44, 22)
-		row.iconLookupButton:AddAnchor("TOPLEFT", row, 294, 3)
+		row.iconLookupButton:AddAnchor("TOPLEFT", row, 306, 3)
 		row.iconLookupButton:SetText("Icon")
 		row.iconLookupButton:SetHandler("OnClick", function()
 			if row.entry ~= nil then
@@ -3996,15 +4131,18 @@ function cdt.RefreshTimerWindow()
 
 	local active = {}
 	for name, timer in pairs(cdt.active) do
-		local remainingMs = (timer.expiresAt or 0) - cdt.clock
-		if remainingMs > 0 then
+		local remainingMs = nil
+		if timer.skillId ~= nil then
+			remainingMs = cdt.QuerySkillCooldownMs(timer.skillId)
+		end
+		if remainingMs ~= nil and remainingMs > 0 then
 			active[#active + 1] = {
 				name = name,
 				icon = timer.icon,
 				remainingMs = remainingMs,
 				key = tostring(name),
 			}
-		else
+		elseif timer.pendingUntil == nil or cdt.clock > timer.pendingUntil then
 			cdt.active[name] = nil
 		end
 	end
@@ -4020,7 +4158,13 @@ function cdt.RefreshTimerWindow()
 		local entry = active[i]
 		if entry ~= nil then
 			SetRowIcon(row.icon, entry.icon)
-			row.label:SetText(tostring(math.ceil(entry.remainingMs / 1000)))
+			row.label:SetText(cdt.FormatRemainingTime(entry.remainingMs))
+			row.label:Show(true)
+			row:Show(true)
+		elseif not cdt.lockWindow and #active == 0 and cdt.previewTimers[i] ~= nil then
+			local preview = cdt.previewTimers[i]
+			SetRowIcon(row.icon, preview.icon)
+			row.label:SetText(preview.text)
 			row.label:Show(true)
 			row:Show(true)
 		else

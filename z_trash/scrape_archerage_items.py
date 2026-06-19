@@ -7,6 +7,7 @@ import argparse
 import html
 import re
 import sys
+import time
 from dataclasses import dataclass, field
 from html.parser import HTMLParser
 from pathlib import Path
@@ -21,6 +22,16 @@ DEFAULT_CRAFT_URLS = [
     "https://wiki.archerage.to/ru-en/db/crafts/group/10000",
     "https://wiki.archerage.to/ru-en/db/crafts/group/8000000",
     "https://wiki.archerage.to/ru-en/db/crafts/group/9000000",
+]
+DEFAULT_SKILL_URLS = [
+    "https://wiki.archerage.to/ru-en/db/skills/group/0",
+    "https://wiki.archerage.to/ru-en/db/skills/group/10000",
+    "https://wiki.archerage.to/ru-en/db/skills/group/20000",
+    "https://wiki.archerage.to/ru-en/db/skills/group/30000",
+    "https://wiki.archerage.to/ru-en/db/skills/group/40000",
+    "https://wiki.archerage.to/ru-en/db/skills/group/50000",
+    "https://wiki.archerage.to/ru-en/db/skills/group/8000000",
+    "https://wiki.archerage.to/ru-en/db/skills/group/9000000",
 ]
 
 
@@ -228,6 +239,84 @@ def write_crafts_lua(crafts: Iterable[tuple[str, str]], item_types: dict[str, st
     return len(merged)
 
 
+def parse_skill_rows(source_html: str) -> list[tuple[str, str, str]]:
+    pattern = re.compile(
+        r'<tr>\s*<td>\s*<a href="/ru-en/db/skills/(\d+)".*?</td>\s*'
+        r'<td>\s*<a href="/ru-en/db/skills/\1".*?<img[^>]+src="([^"]+)".*?</td>\s*'
+        r'<td>\s*<a href="/ru-en/db/skills/\1"[^>]*>\s*(.*?)\s*</a>',
+        re.IGNORECASE | re.DOTALL,
+    )
+    rows: list[tuple[str, str, str]] = []
+    for skill_id, icon_src, raw_name in pattern.findall(source_html):
+        clean_name = " ".join(html.unescape(re.sub(r"<[^>]+>", "", raw_name)).split())
+        if clean_name:
+            rows.append((skill_id, clean_name, normalize_icon_path([icon_src])))
+    return rows
+
+
+def is_bad_icon(icon_path: str) -> bool:
+    return icon_path == "" or "_bad" in icon_path
+
+
+def repair_skill_icon(skill_id: str) -> str:
+    source_html = fetch_html(f"https://wiki.archerage.to/ru-en/db/skills/{skill_id}")
+    for icon_name in re.findall(r"/static/images/icons/([^\"']+?\.dds\.png)", source_html):
+        if "_bad" not in icon_name:
+            return f"icons/{icon_name}"
+    return ""
+
+
+def write_skills_lua(skills: Iterable[tuple[str, str, str]], output: Path, repair_bad: bool = True) -> int:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    by_id: dict[str, dict[str, str]] = {}
+    for skill_id, name, icon_path in skills:
+        by_id[skill_id] = {
+            "name": name,
+            "icon": icon_path,
+        }
+
+    if repair_bad:
+        for skill_id in sorted(by_id, key=lambda value: int(value)):
+            if is_bad_icon(by_id[skill_id]["icon"]):
+                repaired = repair_skill_icon(skill_id)
+                if repaired:
+                    by_id[skill_id]["icon"] = repaired
+                time.sleep(1.0)
+
+    by_name: dict[str, str] = {}
+    ids_by_name: dict[str, list[str]] = {}
+    for skill_id in sorted(by_id, key=lambda value: int(value)):
+        name = by_id[skill_id]["name"]
+        icon = by_id[skill_id]["icon"]
+        ids_by_name.setdefault(name, []).append(skill_id)
+        if name not in by_name or (is_bad_icon(by_name[name]) and not is_bad_icon(icon)):
+            by_name[name] = icon
+
+    with output.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write("-- Generated from https://wiki.archerage.to/ru-en/db/skills/group/*\n")
+        handle.write("ExtendedPlatesSkillIconsById = {\n")
+        for skill_id in sorted(by_id, key=lambda value: int(value)):
+            handle.write(f"\t[{lua_quote(skill_id)}] = {lua_quote(by_id[skill_id]['icon'])},\n")
+        handle.write("}\n\n")
+
+        handle.write("ExtendedPlatesSkillNamesById = {\n")
+        for skill_id in sorted(by_id, key=lambda value: int(value)):
+            handle.write(f"\t[{lua_quote(skill_id)}] = {lua_quote(by_id[skill_id]['name'])},\n")
+        handle.write("}\n\n")
+
+        handle.write("ExtendedPlatesSkillIdsByName = {\n")
+        for name in sorted(ids_by_name):
+            ids = ", ".join(lua_quote(skill_id) for skill_id in ids_by_name[name])
+            handle.write(f"\t[{lua_quote(name)}] = {{ {ids} }},\n")
+        handle.write("}\n\n")
+
+        handle.write("ExtendedPlatesSkillIcons = {\n")
+        for name in sorted(by_name):
+            handle.write(f"\t[{lua_quote(name)}] = {lua_quote(by_name[name])},\n")
+        handle.write("}\n")
+    return len(by_id)
+
+
 def build_arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         description="Scrape ArcheRage wiki item IDs, names, and icon paths."
@@ -281,6 +370,22 @@ def build_arg_parser() -> argparse.ArgumentParser:
         default=Path(__file__).with_name("materials_en_raw.csv"),
         help="Optional semicolon CSV with item id and name columns to add itemType values.",
     )
+    parser.add_argument(
+        "--skills-lua",
+        action="store_true",
+        help="Export ExtendedPlates skill icon maps with skillId keys and name fallback keys.",
+    )
+    parser.add_argument(
+        "--skill-url",
+        action="append",
+        default=[],
+        help="Skill group URL to include. May be passed multiple times.",
+    )
+    parser.add_argument(
+        "--no-repair-bad-skill-icons",
+        action="store_true",
+        help="Do not fetch individual skill pages to repair _bad skill icons.",
+    )
     return parser
 
 
@@ -297,6 +402,20 @@ def main() -> int:
         item_types = read_item_type_csv(args.item_type_csv)
         count = write_crafts_lua(crafts, item_types, args.output)
         print(f"Wrote craft index rows: {count}")
+        print(f"Output: {args.output}")
+        return 0
+
+    if args.skills_lua:
+        urls = args.skill_url or DEFAULT_SKILL_URLS
+        skills: list[tuple[str, str, str]] = []
+        for url in urls:
+            source_html = fetch_html(url)
+            rows = parse_skill_rows(source_html)
+            print(f"{url}: {len(rows)} skill rows")
+            skills.extend(rows)
+            time.sleep(1.0)
+        count = write_skills_lua(skills, args.output, repair_bad=not args.no_repair_bad_skill_icons)
+        print(f"Wrote skill icon rows: {count}")
         print(f"Output: {args.output}")
         return 0
 
