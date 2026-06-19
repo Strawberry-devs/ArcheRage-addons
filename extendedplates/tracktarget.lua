@@ -260,6 +260,7 @@ local cdt = {
 	recordButton = nil,
 	showButton = nil,
 	lockButton = nil,
+	orientationButton = nil,
 	trackedTitleLabel = nil,
 	window = nil,
 	background = nil,
@@ -279,6 +280,7 @@ local cdt = {
 	timerIconSize = 28,
 	timerFontSize = 13,
 	timerSpacing = 0,
+	timerVertical = false,
 	hasWindowPos = false,
 	previewTimers = {
 		{ icon = "ui/icon/icon_skill_will05.dds", text = "45" },
@@ -572,6 +574,7 @@ function cdt.SaveSettings()
 		timerIconSize = cdt.timerIconSize,
 		timerFontSize = cdt.timerFontSize,
 		timerSpacing = cdt.timerSpacing,
+		timerVertical = cdt.timerVertical,
 		tracked = tracked,
 	})
 end
@@ -592,6 +595,9 @@ function cdt.LoadSettings()
 	end
 	if stored.lockWindow ~= nil then
 		cdt.lockWindow = stored.lockWindow and true or false
+	end
+	if stored.timerVertical ~= nil then
+		cdt.timerVertical = stored.timerVertical and true or false
 	end
 	if tonumber(stored.timerIconSize) ~= nil then
 		cdt.timerIconSize = math.max(16, math.min(64, math.floor(tonumber(stored.timerIconSize))))
@@ -676,12 +682,21 @@ function cdt.ApplyTimerLayout()
 
 	local count = #cdt.timerRows
 	local width = 8 + (count * size) + (math.max(0, count - 1) * spacing)
-	cdt.window:SetExtent(width, size + 6)
+	local height = size + 6
+	if cdt.timerVertical then
+		width = size + 8
+		height = 6 + (count * size) + (math.max(0, count - 1) * spacing)
+	end
+	cdt.window:SetExtent(width, height)
 	for i = 1, count do
 		local row = cdt.timerRows[i]
 		row:SetExtent(size, size)
 		row:RemoveAllAnchors()
-		row:AddAnchor("TOPLEFT", cdt.window, 4 + ((i - 1) * (size + spacing)), 3)
+		if cdt.timerVertical then
+			row:AddAnchor("TOPLEFT", cdt.window, 4, 3 + ((i - 1) * (size + spacing)))
+		else
+			row:AddAnchor("TOPLEFT", cdt.window, 4 + ((i - 1) * (size + spacing)), 3)
+		end
 		row.icon:SetExtent(size, size)
 		row.icon:RemoveAllAnchors()
 		row.icon:AddAnchor("CENTER", row, 0, 0)
@@ -3282,6 +3297,9 @@ function cdt.RefreshSettingsWindow()
 	if cdt.lockButton ~= nil then
 		cdt.lockButton:SetText("Lock Timer [" .. (cdt.lockWindow and "ON" or "OFF") .. "]")
 	end
+	if cdt.orientationButton ~= nil then
+		cdt.orientationButton:SetText(cdt.timerVertical and "Vertical" or "Horizontal")
+	end
 	if cdt.trackedTitleLabel ~= nil then
 		local totalTracked = #cdt.tracked
 		local visibleCount = #cdt.trackedRows
@@ -3575,6 +3593,17 @@ do
 	clearCooldownsButton:SetText("Clear CDs")
 	clearCooldownsButton:SetHandler("OnClick", function()
 		cdt.ClearSavedCooldowns()
+	end)
+	cdt.orientationButton = cdt.settingsWindow:CreateChildWidget("button", "timerOrientationButton", 0, true)
+	ApplyLocalButtonStyle(cdt.orientationButton)
+	cdt.orientationButton:SetExtent(124, 24)
+	cdt.orientationButton:AddAnchor("TOPLEFT", cdt.settingsWindow, 284, 112)
+	cdt.orientationButton:SetHandler("OnClick", function()
+		cdt.timerVertical = not cdt.timerVertical
+		cdt.ApplyTimerLayout()
+		cdt.SaveSettings()
+		cdt.RefreshSettingsWindow()
+		cdt.RefreshTimerWindow()
 	end)
 
 	local recentTitle = cdt.settingsWindow:CreateChildWidget("label", "recentTitle", 0, true)
