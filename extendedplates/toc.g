@@ -5,6 +5,7 @@
 ../globals/window.lua
 ../globals/classmappings.lua
 shared.lua
+skill_icons.lua
 enemy.lua
 self.lua
 selfhidden.lua
