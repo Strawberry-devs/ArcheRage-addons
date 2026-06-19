@@ -119,6 +119,7 @@ naServerEvents = {
 		{
 			times = {
 				{ hour = 0, minute = 0, duration = 5 },
+				{ hour = 8, minute = 0, duration = 5 },
 				{ hour = 14, minute = 0, duration = 5 },
 				{ hour = 19, minute = 0, duration = 5 },
 			},
