@@ -123,6 +123,7 @@ local state = {
 	activeSection = "autokick",
 	selectedKickIndex = nil,
 	selectedClassIndex = nil,
+	selectedBannedClassIndex = nil,
 	kickPage = 1,
 	scanElapsed = SCAN_INTERVAL_MS,
 	distanceElapsed = DISTANCE_SCAN_INTERVAL_MS,
@@ -152,7 +153,11 @@ local buffMissingRows = {}
 local buffMissingResults = {}
 local buffMissingOffset = 1
 local bannedClassInput
+local bannedClassDropdown
 local bannedClassLabel
+local bannedClassRemoveButton
+local bannedClassRows = {}
+local allClassNames
 local fixgardenButton
 local distanceKickButton
 local distanceKickInput
@@ -1183,6 +1188,119 @@ local function IsBannedClass(className)
 	return false
 end
 
+local function GetAllClassNames()
+	if allClassNames ~= nil then
+		return allClassNames
+	end
+	allClassNames = {}
+	local seen = {}
+	for first = 1, 14 do
+		for second = first + 1, 14 do
+			for third = second + 1, 14 do
+				local key = string.format("name_%d_%d_%d", first, second, third)
+				local className = X2Locale:LocalizeUiText(COMBINED_ABILITY_NAME_TEXT, key, "")
+				if className ~= nil and className ~= "" and className ~= key then
+					local normalized = Normalize(className)
+					if normalized ~= "" and not seen[normalized] then
+						seen[normalized] = true
+						table.insert(allClassNames, className)
+					end
+				end
+			end
+		end
+	end
+	table.sort(allClassNames)
+	return allClassNames
+end
+
+local function FindClassSuggestions(query, limit)
+	local suggestions = {}
+	local normalizedQuery = Normalize(query)
+	if normalizedQuery == "" then
+		return suggestions
+	end
+	local classes = GetAllClassNames()
+	for _, className in ipairs(classes) do
+		if string.find(Normalize(className), normalizedQuery, 1, true) == 1 then
+			table.insert(suggestions, className)
+			if #suggestions >= limit then
+				return suggestions
+			end
+		end
+	end
+	for _, className in ipairs(classes) do
+		if string.find(Normalize(className), normalizedQuery, 1, true) ~= nil then
+			local duplicate = false
+			for _, existing in ipairs(suggestions) do
+				if existing == className then
+					duplicate = true
+					break
+				end
+			end
+			if not duplicate then
+				table.insert(suggestions, className)
+				if #suggestions >= limit then
+					return suggestions
+				end
+			end
+		end
+	end
+	return suggestions
+end
+
+local function ResolveClassName(input)
+	local normalizedInput = Normalize(input)
+	if normalizedInput == "" then
+		return nil
+	end
+	for _, className in ipairs(GetAllClassNames()) do
+		if Normalize(className) == normalizedInput then
+			return className
+		end
+	end
+	local suggestions = FindClassSuggestions(input, 1)
+	return suggestions[1] or Trim(input)
+end
+
+local function RefreshBannedClassRows()
+	if bannedClassLabel ~= nil then
+		bannedClassLabel:SetText(string.format("Banned classes: %d", #state.settings.bannedClasses))
+	end
+	for index = 1, #bannedClassRows do
+		local rowEntry = bannedClassRows[index]
+		local className = state.settings.bannedClasses[index]
+		if rowEntry ~= nil and rowEntry.label ~= nil and className ~= nil then
+			local row = rowEntry.label
+			row.entryIndex = index
+			row:SetText(className)
+			row:Show(true)
+			if rowEntry.removeButton ~= nil then
+				rowEntry.removeButton.entryIndex = index
+				rowEntry.removeButton:Show(true)
+			end
+			if state.selectedBannedClassIndex == index then
+				row.style:SetColor(0.04, 0.50, 0.08, 1)
+			elseif row.style.SetColorByKey ~= nil then
+				row.style:SetColorByKey("default")
+			else
+				row.style:SetColor(1, 1, 1, 1)
+			end
+		elseif rowEntry ~= nil and rowEntry.label ~= nil then
+			local row = rowEntry.label
+			row.entryIndex = nil
+			row:SetText("")
+			row:Show(false)
+			if rowEntry.removeButton ~= nil then
+				rowEntry.removeButton.entryIndex = nil
+				rowEntry.removeButton:Show(false)
+			end
+		end
+	end
+	if bannedClassRemoveButton ~= nil then
+		bannedClassRemoveButton:Show(true)
+	end
+end
+
 local function RefreshClassRows()
 	for index = 1, VISIBLE_ROWS do
 		local row = classRows[index]
@@ -1238,8 +1356,8 @@ local function CheckClasses()
 end
 
 local function AddBannedClass()
-	local className = Trim(bannedClassInput:GetText())
-	if className == "" then
+	local className = ResolveClassName(bannedClassInput:GetText())
+	if className == nil or className == "" then
 		SetStatus("Enter a class name.")
 		return
 	end
@@ -1251,10 +1369,45 @@ local function AddBannedClass()
 	table.sort(state.settings.bannedClasses)
 	SaveSettings()
 	bannedClassInput:Clear()
-	if bannedClassLabel ~= nil then
-		bannedClassLabel:SetText("Banned: " .. table.concat(state.settings.bannedClasses, ", "))
+	state.selectedBannedClassIndex = nil
+	if bannedClassDropdown ~= nil then
+		bannedClassDropdown:HidePreview()
 	end
+	RefreshBannedClassRows()
 	SetStatus("Added banned class: " .. className)
+end
+
+local function RemoveBannedClassAt(index)
+	if index == nil or state.settings.bannedClasses[index] == nil then
+		return false
+	end
+	local removed = state.settings.bannedClasses[index]
+	table.remove(state.settings.bannedClasses, index)
+	state.selectedBannedClassIndex = nil
+	SaveSettings()
+	bannedClassInput:Clear()
+	RefreshBannedClassRows()
+	SetStatus("Removed banned class: " .. tostring(removed))
+	return true
+end
+
+local function RemoveBannedClass()
+	local index = state.selectedBannedClassIndex
+	if index == nil then
+		local typedClassName = ResolveClassName(bannedClassInput:GetText())
+		local normalizedTyped = Normalize(typedClassName)
+		if normalizedTyped ~= "" then
+			for classIndex, className in ipairs(state.settings.bannedClasses) do
+				if Normalize(className) == normalizedTyped then
+					index = classIndex
+					break
+				end
+			end
+		end
+	end
+	if not RemoveBannedClassAt(index) then
+		SetStatus("Select or type a banned class to remove.")
+	end
 end
 
 local function KickBannedClasses()
@@ -1374,6 +1527,86 @@ local function CreateInput(parent, name, x, y, width, guideText)
 	return edit
 end
 
+local function CreateClassDropdown(parent, edit, width)
+	local dropdown = parent:CreateChildWidget("emptywidget", "raidManagerClassDropdown", 0, true)
+	dropdown:SetExtent(width, 74)
+	dropdown:AddAnchor("TOPLEFT", edit, "BOTTOMLEFT", 0, 1)
+	dropdown:Show(false)
+
+	local bg = dropdown:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
+	if bg == nil then
+		bg = parent:CreateColorDrawable(0.78, 0.73, 0.58, 0.16, "background")
+	end
+	bg:AddAnchor("TOPLEFT", dropdown, 0, 0)
+	bg:AddAnchor("BOTTOMRIGHT", dropdown, 0, 0)
+
+	dropdown.rows = {}
+	for i = 1, 3 do
+		local row = dropdown:CreateChildWidget("label", "raidManagerClassDropdownRow" .. i, i, true)
+		row:SetExtent(width - 10, 22)
+		row:AddAnchor("TOPLEFT", dropdown, 5, 3 + ((i - 1) * 23))
+		StyleLabel(row, 12, ALIGN_LEFT)
+
+		local rowBg = row:CreateDrawable("ui/common/default.dds", "editbox_df", "background")
+		if rowBg == nil then
+			rowBg = row:CreateColorDrawable(0.78, 0.73, 0.58, 0.16, "background")
+		end
+		rowBg:AddAnchor("TOPLEFT", row, 0, 0)
+		rowBg:AddAnchor("BOTTOMRIGHT", row, 0, 0)
+		rowBg:SetVisible(false)
+		row.rowBg = rowBg
+
+		row:SetHandler("OnClick", function(self)
+			if self.className == nil then
+				return
+			end
+			bannedClassInput:SetText(self.className)
+			dropdown:HidePreview()
+		end)
+		row:SetHandler("OnEnter", function(self)
+			self.rowBg:SetVisible(true)
+		end)
+		row:SetHandler("OnLeave", function(self)
+			self.rowBg:SetVisible(false)
+		end)
+
+		dropdown.rows[i] = row
+	end
+
+	function dropdown:HidePreview()
+		self:Show(false)
+		for _, row in ipairs(self.rows) do
+			row.className = nil
+			row:SetText("")
+			row:Show(false)
+		end
+	end
+
+	function dropdown:Update(query)
+		local suggestions = FindClassSuggestions(query, 3)
+		for i = 1, 3 do
+			local row = self.rows[i]
+			local className = suggestions[i]
+			if className ~= nil then
+				row.className = className
+				row:SetText(className)
+				row:Show(true)
+			else
+				row.className = nil
+				row:SetText("")
+				row:Show(false)
+			end
+		end
+		if #suggestions > 0 and self.Raise ~= nil then
+			self:Raise()
+		end
+		self:Show(#suggestions > 0)
+	end
+
+	dropdown:HidePreview()
+	return dropdown
+end
+
 local function ShowSection(section)
 	state.activeSection = section
 	for id, widget in pairs(sectionWidgets) do
@@ -1390,6 +1623,7 @@ local function ShowSection(section)
 		sectionTitle:SetText(section)
 	end
 	if section == "classes" then
+		RefreshBannedClassRows()
 		RefreshClassRows()
 	end
 end
@@ -1615,21 +1849,57 @@ local function CreateClassesSection(parent)
 	CreateFlatButton(panel, "raidManagerClassesCheck", "Check Classes", 18, 18, 112, CheckClasses)
 	CreateFlatButton(panel, "raidManagerClassesKick", "Kick Banned Classes", 140, 18, 150, KickBannedClasses)
 	bannedClassInput = CreateInput(panel, "raidManagerBannedClassInput", 18, 58, 180, "Class name")
+	bannedClassDropdown = CreateClassDropdown(panel, bannedClassInput, 180)
+	bannedClassInput:SetHandler("OnTextChanged", function()
+		if bannedClassDropdown ~= nil then
+			bannedClassDropdown:Update(bannedClassInput:GetText())
+		end
+	end)
 	CreateFlatButton(panel, "raidManagerBannedClassAdd", "Ban Class", 208, 58, 84, AddBannedClass)
+	bannedClassRemoveButton =
+		CreateFlatButton(panel, "raidManagerBannedClassRemove", "Remove Class", 302, 58, 104, RemoveBannedClass)
 
 	bannedClassLabel = panel:CreateChildWidget("label", "raidManagerBannedClassesLabel", 0, true)
-	bannedClassLabel:SetExtent(450, 40)
+	bannedClassLabel:SetExtent(180, 20)
 	bannedClassLabel:AddAnchor("TOPLEFT", panel, 18, 92)
-	bannedClassLabel:SetText("Banned: " .. table.concat(state.settings.bannedClasses, ", "))
 	StyleLabel(bannedClassLabel, 12, ALIGN_LEFT)
+
+	for rowIndex = 1, 5 do
+		local rowNumber = rowIndex
+		local row = panel:CreateChildWidget("label", "raidManagerBannedClassRow" .. rowIndex, rowIndex, true)
+		row:SetExtent(180, ROW_HEIGHT)
+		row:AddAnchor("TOPLEFT", panel, 18, 116 + ((rowIndex - 1) * ROW_HEIGHT))
+		StyleLabel(row, 12, ALIGN_LEFT)
+		row:SetHandler("OnClick", function(self)
+			state.selectedBannedClassIndex = self.entryIndex
+			RefreshBannedClassRows()
+		end)
+		local removeButton = CreateFlatButton(
+			panel,
+			"raidManagerBannedClassMinus" .. rowIndex,
+			"-",
+			208,
+			115 + ((rowIndex - 1) * ROW_HEIGHT),
+			24,
+			function()
+				RemoveBannedClassAt(rowNumber)
+			end
+		)
+		removeButton:Show(false)
+		bannedClassRows[rowIndex] = {
+			label = row,
+			removeButton = removeButton,
+		}
+	end
 
 	for rowIndex = 1, VISIBLE_ROWS do
 		local row = panel:CreateChildWidget("label", "raidManagerClassRow" .. rowIndex, rowIndex, true)
 		row:SetExtent(420, ROW_HEIGHT)
-		row:AddAnchor("TOPLEFT", panel, 18, 138 + ((rowIndex - 1) * ROW_HEIGHT))
+		row:AddAnchor("TOPLEFT", panel, 18, 236 + ((rowIndex - 1) * ROW_HEIGHT))
 		StyleLabel(row, 12, ALIGN_LEFT)
 		classRows[rowIndex] = row
 	end
+	RefreshBannedClassRows()
 	RefreshClassRows()
 end
 
