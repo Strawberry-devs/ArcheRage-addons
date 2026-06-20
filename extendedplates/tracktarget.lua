@@ -251,6 +251,7 @@ local tracktargetDistanceBackground = nil
 local cdt = {
 	enabled = false,
 	recording = false,
+	recordingAutoPaused = false,
 	debug = false,
 	showWindow = false,
 	lockWindow = false,
@@ -271,6 +272,11 @@ local cdt = {
 	recent = {},
 	tracked = {},
 	active = {},
+	loggedSkillResolutions = {},
+	loggedSkillResolutionMisses = {},
+	skillIdCandidateCache = {},
+	skillIdResolutionCache = {},
+	settingsWindowVisible = false,
 	trackedOffset = 0,
 	iconLookupTargetIndex = nil,
 	iconLookupWindow = nil,
@@ -421,6 +427,117 @@ function cdt.GetSpellIcon(name, abilityId)
 	return cdt.NormalizeIconPath(skillIcons[normalized] or skillIcons[string.lower(normalized)] or cdt.defaultIcon)
 end
 
+function cdt.GetSkillIdCandidatesByName(name)
+	local idsByName = ExtendedPlatesSkillIdsByName
+	local normalized = cdt.NormalizeSpellName(name)
+	local canonical = cdt.CanonicalSpellName(normalized)
+	if type(idsByName) ~= "table" or normalized == "" then
+		return {}
+	end
+	if cdt.skillIdCandidateCache[canonical] ~= nil then
+		return cdt.skillIdCandidateCache[canonical]
+	end
+
+	local exact = idsByName[normalized]
+	if type(exact) == "table" then
+		local candidates = {}
+		for i = 1, #exact do
+			candidates[#candidates + 1] = exact[i]
+		end
+		cdt.skillIdCandidateCache[canonical] = candidates
+		return candidates
+	end
+
+	cdt.skillIdCandidateCache[canonical] = {}
+	return cdt.skillIdCandidateCache[canonical]
+end
+
+function cdt.LogSkillResolution(rawId, skillId, name, reason)
+	local key = tostring(rawId or "") .. ">" .. tostring(skillId or "")
+	if cdt.loggedSkillResolutions[key] == true then
+		return
+	end
+	cdt.Debug(
+		tostring(reason)
+			.. " id "
+			.. tostring(rawId)
+			.. " -> skill "
+			.. tostring(skillId)
+			.. " for "
+			.. tostring(name)
+	)
+	cdt.loggedSkillResolutions[key] = true
+end
+
+function cdt.LogSkillResolutionMiss(rawId, name, candidates)
+	local key = tostring(rawId or "") .. ":" .. cdt.CanonicalSpellName(name)
+	if cdt.loggedSkillResolutionMisses[key] == true then
+		return
+	end
+	local candidateText = ""
+	for i = 1, math.min(#candidates, 5) do
+		if candidateText ~= "" then
+			candidateText = candidateText .. ","
+		end
+		candidateText = candidateText .. tostring(candidates[i])
+	end
+	if candidateText == "" then
+		candidateText = "none"
+	end
+	cdt.Debug(
+		"no cooldown skill mapping for id "
+			.. tostring(rawId)
+			.. " name="
+			.. tostring(name)
+			.. " candidates="
+			.. candidateText
+	)
+	cdt.loggedSkillResolutionMisses[key] = true
+end
+
+function cdt.ResolveCooldownSkillId(abilityId, name, logMiss)
+	local rawId = tostring(abilityId or "")
+	if rawId == "" then
+		return abilityId
+	end
+
+	local canonicalName = cdt.CanonicalSpellName(name)
+	local cacheKey = rawId .. ":" .. canonicalName
+	if cdt.skillIdResolutionCache[cacheKey] ~= nil then
+		return cdt.skillIdResolutionCache[cacheKey]
+	end
+
+	local rawName = nil
+	if type(ExtendedPlatesSkillNamesById) == "table" then
+		rawName = ExtendedPlatesSkillNamesById[rawId]
+	end
+	if rawName ~= nil and cdt.CanonicalSpellName(rawName) == canonicalName then
+		cdt.skillIdResolutionCache[cacheKey] = abilityId
+		return abilityId
+	end
+
+	local candidates = cdt.GetSkillIdCandidatesByName(name)
+	if #candidates == 1 and tostring(candidates[1] or "") ~= rawId then
+		cdt.LogSkillResolution(rawId, candidates[1], name, "same-name candidate mapped")
+		cdt.skillIdResolutionCache[cacheKey] = candidates[1]
+		return candidates[1]
+	end
+
+	cdt.Debug(
+		"no skill-id mapping raw="
+			.. rawId
+			.. " name="
+			.. tostring(name)
+			.. " candidates="
+			.. tostring(#candidates)
+	)
+	if logMiss == true then
+		cdt.LogSkillResolutionMiss(rawId, name, candidates)
+	end
+	cdt.skillIdResolutionCache[cacheKey] = abilityId
+	return abilityId
+end
+
 function cdt.NormalizeIconPath(iconPath)
 	iconPath = tostring(iconPath or "")
 	if iconPath == "" then
@@ -568,7 +685,7 @@ function cdt.SaveSettings()
 	ADDON:ClearData(cdt.saveKey)
 	ADDON:SaveData(cdt.saveKey, {
 		enabled = cdt.enabled,
-		recording = cdt.recording,
+		recording = cdt.recording or cdt.recordingAutoPaused,
 		showWindow = cdt.showWindow,
 		lockWindow = cdt.lockWindow,
 		timerIconSize = cdt.timerIconSize,
@@ -588,7 +705,8 @@ function cdt.LoadSettings()
 		cdt.enabled = stored.enabled and true or false
 	end
 	if stored.recording ~= nil then
-		cdt.recording = stored.recording and true or false
+		cdt.recording = false
+		cdt.recordingAutoPaused = stored.recording and true or false
 	end
 	if stored.showWindow ~= nil then
 		cdt.showWindow = stored.showWindow and true or false
@@ -613,10 +731,11 @@ function cdt.LoadSettings()
 			local entry = stored.tracked[i]
 			local name = cdt.NormalizeSpellName(entry and entry.name)
 			if name ~= "" then
+				local abilityId = cdt.ResolveCooldownSkillId(entry.abilityId, name)
 				cdt.tracked[#cdt.tracked + 1] = {
 					name = name,
-					abilityId = entry.abilityId,
-					icon = cdt.ResolveSkillIcon(name, entry.abilityId, entry.icon, entry.customIcon),
+					abilityId = abilityId,
+					icon = cdt.ResolveSkillIcon(name, abilityId, entry.icon, entry.customIcon),
 					customIcon = entry.customIcon and true or false,
 				}
 			end
@@ -635,6 +754,46 @@ function cdt.LoadWindowPos()
 		return tonumber(pos.x) or 0, tonumber(pos.y) or 0, true
 	end
 	return 0, 0, false
+end
+
+function cdt.SyncRecordingWithSettingsWindow()
+	if cdt.settingsWindow == nil then
+		return
+	end
+	local visible = cdt.settingsWindow:IsVisible()
+	if visible == cdt.settingsWindowVisible then
+		return
+	end
+
+	cdt.settingsWindowVisible = visible
+	if visible then
+		if cdt.recordingAutoPaused then
+			cdt.recording = true
+			cdt.recordingAutoPaused = false
+			cdt.RefreshSettingsWindow()
+		end
+	elseif cdt.recording then
+		cdt.recording = false
+		cdt.recordingAutoPaused = true
+		cdt.SaveSettings()
+		cdt.RefreshSettingsWindow()
+	end
+end
+
+function cdt.ShowSettingsWindow()
+	if cdt.settingsWindow == nil then
+		return
+	end
+	cdt.settingsWindow:Show(true)
+	cdt.SyncRecordingWithSettingsWindow()
+end
+
+function cdt.HideSettingsWindow()
+	if cdt.settingsWindow == nil then
+		return
+	end
+	cdt.settingsWindow:Show(false)
+	cdt.SyncRecordingWithSettingsWindow()
 end
 
 function cdt.CenterWindow()
@@ -910,10 +1069,13 @@ function cdt.FindTrackedByCast(name, abilityId)
 	return nil, nil
 end
 
-function cdt.AddRecent(name, abilityId)
+function cdt.AddRecent(name, abilityId, alreadyResolved)
 	name = cdt.NormalizeSpellName(name)
 	if name == "" then
 		return
+	end
+	if alreadyResolved ~= true then
+		abilityId = cdt.ResolveCooldownSkillId(abilityId, name)
 	end
 
 	for i = #cdt.recent, 1, -1 do
@@ -1914,9 +2076,7 @@ SetSecondaryButtonExtent(cdt.settingsButton)
 cdt.settingsButton:AddAnchor("TOPLEFT", managerWindow, SECONDARY_BUTTON_X, LowerLeftButtonY(14))
 cdt.settingsButton:SetText("...")
 cdt.settingsButton:SetHandler("OnClick", function()
-	if cdt.settingsWindow ~= nil then
-		cdt.settingsWindow:Show(true)
-	end
+	cdt.ShowSettingsWindow()
 	if cdt.showWindow then
 		cdt.ShowTimerWindow()
 	end
@@ -3520,7 +3680,7 @@ do
 	title:SetText("Cooldown Tracker")
 
 	CreateCloseButton(cdt.settingsWindow, "closeButton", function()
-		cdt.settingsWindow:Show(false)
+		cdt.HideSettingsWindow()
 	end)
 
 	cdt.settingsWindow:EnableDrag(true)
@@ -3538,6 +3698,7 @@ do
 	cdt.recordButton:AddAnchor("TOPLEFT", cdt.settingsWindow, 16, 48)
 	cdt.recordButton:SetHandler("OnClick", function()
 		cdt.recording = not cdt.recording
+		cdt.recordingAutoPaused = false
 		cdt.SaveSettings()
 		cdt.RefreshSettingsWindow()
 	end)
@@ -4241,8 +4402,12 @@ function cdt.OnCombatMessage(
 	end
 
 	cdt.Debug("player cast event=" .. tostring(eventType) .. " id=" .. tostring(abilityId) .. " name=" .. tostring(name))
+	if not cdt.recording and not cdt.enabled and not cdt.showWindow then
+		return
+	end
+	abilityId = cdt.ResolveCooldownSkillId(abilityId, name, true)
 	if cdt.recording then
-		cdt.AddRecent(name, abilityId)
+		cdt.AddRecent(name, abilityId, true)
 	end
 	if cdt.enabled or cdt.showWindow then
 		cdt.Trigger(name, abilityId)
@@ -4255,6 +4420,7 @@ drawLinesUpdater:Show(true)
 function drawLinesUpdater:OnUpdate(dt)
 	cdt.clock = cdt.clock + dt
 	drawLinesDebugElapsed = drawLinesDebugElapsed + dt
+	cdt.SyncRecordingWithSettingsWindow()
 	if showTracktargetAggro and tracktargetAggroWindow ~= nil then
 		local name = X2Unit:UnitName("watchtargettarget") or "none"
 		tracktargetAggroLabel:SetText(name)
