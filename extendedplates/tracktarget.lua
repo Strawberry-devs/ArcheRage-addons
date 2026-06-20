@@ -256,6 +256,9 @@ local cdt = {
 	showWindow = false,
 	lockWindow = false,
 	settingsWindow = nil,
+	addByIdWindow = nil,
+	addByIdEdit = nil,
+	addByIdMessage = nil,
 	button = nil,
 	settingsButton = nil,
 	recordButton = nil,
@@ -895,6 +898,89 @@ function cdt.FormatSpellLabel(entry)
 		return abilityId .. " " .. name
 	end
 	return name
+end
+
+function cdt.GetSkillNameById(skillId)
+	local skillIdText = tostring(skillId or "")
+	if skillIdText == "" then
+		return nil
+	end
+	if type(ExtendedPlatesSkillNamesById) == "table" then
+		local name = cdt.NormalizeSpellName(ExtendedPlatesSkillNamesById[skillIdText])
+		if name ~= "" then
+			return name
+		end
+	end
+	if X2Skill ~= nil and X2Skill.Info ~= nil then
+		local ok, info = pcall(function()
+			return X2Skill:Info(tonumber(skillIdText) or skillIdText)
+		end)
+		if ok and type(info) == "table" then
+			local name = cdt.NormalizeSpellName(info.name)
+			if name ~= "" then
+				return name
+			end
+		end
+	end
+	return nil
+end
+
+function cdt.UpdateAddByIdPreview()
+	if cdt.addByIdEdit == nil or cdt.addByIdMessage == nil then
+		return
+	end
+	local skillId = tostring(cdt.addByIdEdit:GetText() or ""):match("^%s*(.-)%s*$")
+	if skillId == "" then
+		cdt.addByIdMessage:SetText("")
+		return
+	end
+	if not skillId:match("^%d+$") then
+		cdt.addByIdMessage:SetText("Enter a numeric skill ID.")
+		return
+	end
+	local name = cdt.GetSkillNameById(skillId)
+	if name == nil then
+		cdt.addByIdMessage:SetText("No skill found for " .. skillId)
+		return
+	end
+	cdt.addByIdMessage:SetText(skillId .. " " .. name)
+end
+
+function cdt.AddTrackedById(skillId)
+	skillId = tostring(skillId or ""):match("^%s*(.-)%s*$")
+	if skillId == "" or not skillId:match("^%d+$") then
+		if cdt.addByIdMessage ~= nil then
+			cdt.addByIdMessage:SetText("Enter a numeric skill ID.")
+		end
+		return
+	end
+	local name = cdt.GetSkillNameById(skillId)
+	if name == nil then
+		if cdt.addByIdMessage ~= nil then
+			cdt.addByIdMessage:SetText("No skill found for " .. skillId)
+		end
+		return
+	end
+	if cdt.FindTrackedByCast(name, skillId) ~= nil then
+		if cdt.addByIdMessage ~= nil then
+			cdt.addByIdMessage:SetText("Already tracked: " .. skillId .. " " .. name)
+		end
+		return
+	end
+	local icon = cdt.ResolveSkillIcon(name, skillId, nil, false)
+	cdt.tracked[#cdt.tracked + 1] = {
+		name = name,
+		abilityId = skillId,
+		icon = icon,
+		customIcon = false,
+	}
+	cdt.SaveSettings()
+	cdt.Trigger(name, skillId)
+	cdt.RefreshSettingsWindow()
+	cdt.RefreshTimerWindow()
+	if cdt.addByIdMessage ~= nil then
+		cdt.addByIdMessage:SetText("Added " .. skillId .. " " .. name)
+	end
 end
 
 local function DrawLinesButtonText()
@@ -2123,6 +2209,12 @@ cdt.iconLookupWindow:SetCloseOnEscape(true)
 cdt.iconLookupWindow:AddAnchor("CENTER", "UIParent", -180, 0)
 cdt.iconLookupWindow:SetExtent(460, 360)
 cdt.iconLookupWindow:Show(false)
+
+cdt.addByIdWindow = CreateEmptyWindow("extendedPlatesCooldownAddByIdWindow", "UIParent")
+cdt.addByIdWindow:SetCloseOnEscape(true)
+cdt.addByIdWindow:AddAnchor("CENTER", "UIParent", -120, 40)
+cdt.addByIdWindow:SetExtent(300, 160)
+cdt.addByIdWindow:Show(false)
 
 cdt.window = CreateEmptyWindow("extendedPlatesCooldownTrackerWindow", "UIParent")
 cdt.window:SetExtent(290, 34)
@@ -3670,6 +3762,62 @@ do
 end
 
 do
+	CreateWindowBackground(cdt.addByIdWindow)
+
+	local title = cdt.addByIdWindow:CreateChildWidget("label", "title", 0, true)
+	title:AddAnchor("TOPLEFT", cdt.addByIdWindow, 16, 12)
+	title:SetExtent(200, 24)
+	ApplyLocalLabelStyle(title, 18, ALIGN_LEFT, 1, 0.97, 0.92)
+	SetWidgetTextColorByKey(title, "brown")
+	title:SetText("Add Cooldown")
+
+	CreateCloseButton(cdt.addByIdWindow, "closeButton", function()
+		cdt.addByIdWindow:Show(false)
+	end)
+
+	cdt.addByIdWindow:EnableDrag(true)
+	cdt.addByIdWindow:SetHandler("OnDragStart", function(self)
+		self:StartMoving()
+		return true
+	end)
+	cdt.addByIdWindow:SetHandler("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+	end)
+
+	local idLabel = cdt.addByIdWindow:CreateChildWidget("label", "idLabel", 0, true)
+	idLabel:AddAnchor("TOPLEFT", cdt.addByIdWindow, 16, 50)
+	idLabel:SetExtent(70, 22)
+	ApplyLocalLabelStyle(idLabel, 13, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(idLabel, "default")
+	idLabel:SetText("Skill ID")
+
+	cdt.addByIdEdit = CreateLocalEditBox(cdt.addByIdWindow, "cooldownAddByIdEdit", 180)
+	cdt.addByIdEdit:AddAnchor("TOPLEFT", cdt.addByIdWindow, 90, 44)
+	cdt.addByIdEdit:SetHandler("OnTextChanged", function()
+		cdt.UpdateAddByIdPreview()
+	end)
+	cdt.addByIdEdit:SetHandler("OnEnterPressed", function()
+		cdt.AddTrackedById(cdt.addByIdEdit:GetText())
+	end)
+
+	cdt.addByIdMessage = cdt.addByIdWindow:CreateChildWidget("label", "message", 0, true)
+	cdt.addByIdMessage:AddAnchor("TOPLEFT", cdt.addByIdWindow, 16, 82)
+	cdt.addByIdMessage:SetExtent(260, 22)
+	ApplyLocalLabelStyle(cdt.addByIdMessage, 12, ALIGN_LEFT, 1, 1, 1)
+	SetWidgetTextColorByKey(cdt.addByIdMessage, "default")
+	cdt.addByIdMessage:SetText("")
+
+	local submitButton = cdt.addByIdWindow:CreateChildWidget("button", "submitButton", 0, true)
+	ApplyLocalButtonStyle(submitButton)
+	submitButton:SetExtent(86, 26)
+	submitButton:AddAnchor("BOTTOM", cdt.addByIdWindow, 0, -18)
+	submitButton:SetText("Add")
+	submitButton:SetHandler("OnClick", function()
+		cdt.AddTrackedById(cdt.addByIdEdit:GetText())
+	end)
+end
+
+do
 	CreateWindowBackground(cdt.settingsWindow)
 
 	local title = cdt.settingsWindow:CreateChildWidget("label", "title", 0, true)
@@ -3678,6 +3826,19 @@ do
 	ApplyLocalLabelStyle(title, 18, ALIGN_LEFT, 1, 0.97, 0.92)
 	SetWidgetTextColorByKey(title, "brown")
 	title:SetText("Cooldown Tracker")
+
+	local cooldownAddByIdButton = cdt.settingsWindow:CreateChildWidget("button", "cooldownAddByIdButton", 0, true)
+	ApplyLocalButtonStyle(cooldownAddByIdButton)
+	cooldownAddByIdButton:SetExtent(76, 24)
+	cooldownAddByIdButton:AddAnchor("TOPRIGHT", cdt.settingsWindow, -42, 12)
+	cooldownAddByIdButton:SetText("Add ID")
+	cooldownAddByIdButton:SetHandler("OnClick", function()
+		if cdt.addByIdWindow ~= nil then
+			cdt.addByIdEdit:SetText("")
+			cdt.addByIdMessage:SetText("")
+			cdt.addByIdWindow:Show(true)
+		end
+	end)
 
 	CreateCloseButton(cdt.settingsWindow, "closeButton", function()
 		cdt.HideSettingsWindow()
