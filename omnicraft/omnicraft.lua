@@ -187,6 +187,9 @@ local DEBUG_BAD = false
 
 OmniCraftCommerceHoldDirection = 0
 OmniCraftCommerceHoldNextAt = 0
+if OmniCraftIncludeOwnedInTotals == nil then
+	OmniCraftIncludeOwnedInTotals = true
+end
 
 local function Chat(message)
 	pcall(function()
@@ -816,6 +819,13 @@ local function CreateButton(parent, name, text, x, y, width, onClick)
 	button:SetHandler("OnClick", onClick)
 	button:SetWidth(width)
 	return button
+end
+
+function OmniCraft_UpdateOwnedToggleButton()
+	if mainWindow == nil or mainWindow.ownedToggleButton == nil then
+		return
+	end
+	mainWindow.ownedToggleButton:SetText(OmniCraftIncludeOwnedInTotals and "+ Owned" or "- Owned")
 end
 
 local function CreateSmallButton(parent, name, text, x, y, onClick)
@@ -1576,41 +1586,43 @@ local function CalculateEconomy()
 	)
 
 	for _, entry in ipairs(visible.shop or {}) do
-		local need = entry.need or 0
-		if need > 0 then
+		local qty = OmniCraftIncludeOwnedInTotals and (entry.need or 0) or (entry.buy or 0)
+		if qty > 0 then
 			local unit = GetAuctionUnitPrice(entry.item)
 			DebugPrice(
 				string.format(
-					"shop item=%s need=%s have=%s buy=%s unit=%s",
+					"shop item=%s need=%s have=%s buy=%s priced=%s unit=%s",
 					tostring(entry.item),
 					tostring(entry.need),
 					tostring(entry.have),
 					tostring(entry.buy),
+					tostring(qty),
 					tostring(unit)
 				)
 			)
 			if unit == nil or unit <= 0 then
 				missingPrices[#missingPrices + 1] = entry.item
 			else
-				piecingCostTotal = piecingCostTotal + (need * unit)
+				piecingCostTotal = piecingCostTotal + (qty * unit)
 			end
 		end
 	end
 
 	for _, entry in ipairs(visible.vendor or {}) do
-		local need = entry.need or 0
-		if need > 0 then
+		local qty = OmniCraftIncludeOwnedInTotals and (entry.need or 0) or (entry.buy or 0)
+		if qty > 0 then
 			DebugPrice(
 				string.format(
-					"vendor item=%s need=%s have=%s buy=%s unit=%s",
+					"vendor item=%s need=%s have=%s buy=%s priced=%s unit=%s",
 					tostring(entry.item),
 					tostring(entry.need),
 					tostring(entry.have),
 					tostring(entry.buy),
+					tostring(qty),
 					tostring(GetVendorUnitPrice(entry.item))
 				)
 			)
-			piecingCostTotal = piecingCostTotal + (need * GetVendorUnitPrice(entry.item))
+			piecingCostTotal = piecingCostTotal + (qty * GetVendorUnitPrice(entry.item))
 		end
 	end
 
@@ -2148,7 +2160,23 @@ local function RenderBuyTotalWindow()
 			row.need:Show(true)
 			row.have:Show(true)
 			row.buy:Show(true)
-			if (entry.buy or 0) <= 0 then
+			local hasOwned = (entry.have or 0) > 0
+			if OmniCraftIncludeOwnedInTotals then
+				SetTextColorByKey(row.item, "default")
+				SetTextColorByKey(row.need, "default")
+				SetTextColorByKey(row.have, "default")
+			elseif hasOwned then
+				SetTextColor(row.item, MISSING_RED)
+				SetTextColor(row.need, MISSING_RED)
+				SetTextColor(row.have, MISSING_RED)
+			else
+				SetTextColorByKey(row.item, "default")
+				SetTextColorByKey(row.need, "default")
+				SetTextColorByKey(row.have, "default")
+			end
+			if not OmniCraftIncludeOwnedInTotals and hasOwned then
+				SetTextColor(row.buy, MISSING_RED)
+			elseif (entry.buy or 0) <= 0 then
 				SetTextColorByKey(row.buy, "default")
 			else
 				SetTextColorByKey(row.buy, "brown")
@@ -2158,6 +2186,10 @@ local function RenderBuyTotalWindow()
 			row.need:SetText("")
 			row.have:SetText("")
 			row.buy:SetText("")
+			SetTextColorByKey(row.item, "default")
+			SetTextColorByKey(row.need, "default")
+			SetTextColorByKey(row.have, "default")
+			SetTextColorByKey(row.buy, "default")
 			row.item:Show(false)
 			row.need:Show(false)
 			row.have:Show(false)
@@ -2704,6 +2736,15 @@ local function CreateMainWindow()
 		ApplyCount()
 	end)
 	CreateTradeTargetControl(mainWindow)
+	mainWindow.ownedToggleButton = CreateButton(mainWindow, "omniCraftOwnedToggle", "+ Owned", 224, 80, 80, function()
+		OmniCraftIncludeOwnedInTotals = not OmniCraftIncludeOwnedInTotals
+		OmniCraft_UpdateOwnedToggleButton()
+		RecomputePlan()
+		if buyTotalWindow ~= nil and buyTotalWindow:IsVisible() then
+			RenderBuyTotalWindow()
+		end
+	end)
+	OmniCraft_UpdateOwnedToggleButton()
 	CreateButton(mainWindow, "omniCraftBuyTotal", "Buy Total", 312, 80, 84, ShowBuyTotalWindow)
 	CreateButton(mainWindow, "omniCraftGoBuy", "Go to Buy", 404, 80, 76, StartShopping)
 	CreateButton(mainWindow, "omniCraftNext", "Next", 488, 80, 54, NextShoppingStep)
