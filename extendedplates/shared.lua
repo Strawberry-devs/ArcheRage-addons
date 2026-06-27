@@ -180,7 +180,6 @@ local function ensureUiState()
 	}
 
 	if type(saved) == "table" then
-		shared.uiState.filterTrackedOnly = saved.filterTrackedOnly ~= false
 		if saved.activeScope == "target" or saved.activeScope == "self" then
 			shared.uiState.activeScope = saved.activeScope
 		end
@@ -274,12 +273,18 @@ local function ensureUiState()
 		end
 		shared.uiState.target.hidden = false
 	end
+	shared.uiState.filterTrackedOnly = true
+	if type(saved) == "table" and saved.filterTrackedOnly == false and ADDON ~= nil then
+		ADDON:ClearData(shared.dataKeys.ui)
+		ADDON:SaveData(shared.dataKeys.ui, shared.uiState)
+	end
 
 	return shared.uiState
 end
 
 function shared.SaveUiState()
 	local uiState = ensureUiState()
+	uiState.filterTrackedOnly = true
 	if ADDON ~= nil then
 		ADDON:ClearData(shared.dataKeys.ui)
 		ADDON:SaveData(shared.dataKeys.ui, uiState)
@@ -696,10 +701,6 @@ function shared.ShouldDisplay(scope, effectType, effectId)
 	local uiState = ensureUiState()
 	if uiState[scope] == nil or uiState[scope][effectType] ~= true then
 		return false
-	end
-
-	if uiState.filterTrackedOnly ~= true then
-		return true
 	end
 
 	return shared.IsTracked(scope, effectType, effectId)
