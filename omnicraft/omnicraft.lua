@@ -2525,7 +2525,7 @@ local function CreateTradeTargetControl(parent)
 	if tradeTargetButton ~= nil then
 		return
 	end
-	tradeTargetButton = CreateButton(parent, "omniCraftTradeTarget", "To: -", 214, 80, 90, function()
+	tradeTargetButton = CreateButton(parent, "omniCraftTradeTarget", "To: -", 224, 63, 80, function()
 		if tradeTargetDropdown ~= nil then
 			tradeTargetDropdown:Show(not tradeTargetDropdown:IsVisible())
 			if tradeTargetDropdown:IsVisible() and tradeTargetDropdown.Raise ~= nil then
