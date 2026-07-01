@@ -617,10 +617,16 @@ local function CreateMainWindow()
 	end)
 
 	local title = mainWindow:CreateChildWidget("label", "lootrTitle", 0, true)
-	title:SetExtent(240, 24)
+	title:SetExtent(58, 24)
 	title:AddAnchor("TOPLEFT", mainWindow, 18, 14)
 	title:SetText("Lootr")
 	StyleLabel(title, 18, ALIGN_LEFT, COLOR_TEXT)
+
+	local warning = mainWindow:CreateChildWidget("label", "lootrWarning", 0, true)
+	warning:SetExtent(620, 20)
+	warning:AddAnchor("TOPLEFT", mainWindow, 78, 17)
+	warning:SetText("Numbers are from 10.2. ArcheRage custom not included. Some bosses you have to x10.")
+	StyleLabel(warning, 12, ALIGN_LEFT, COLOR_ORANGE)
 
 	CreateCloseButton(mainWindow, "lootrClose", function()
 		mainWindow:Show(false)
