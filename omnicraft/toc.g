@@ -5,4 +5,6 @@
 ../globals/window.lua
 ../globals/craftids.lua
 ../globals/packbaseprices.lua
+../globals/kr_craftids.lua
+../globals/kr_packbaseprices.lua
 omnicraft.lua

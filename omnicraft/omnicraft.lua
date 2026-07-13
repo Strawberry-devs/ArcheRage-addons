@@ -30,6 +30,28 @@ ADDON:ImportAPI(API_TYPE.CRAFT.id)
 ADDON:ImportAPI(API_TYPE.ITEM.id)
 ADDON:ImportAPI(API_TYPE.STORE.id)
 ADDON:ImportAPI(API_TYPE.ABILITY.id)
+ADDON:ImportAPI(API_TYPE.LOCALE.id)
+
+OmniCraftClientLocale = X2Locale ~= nil
+	and type(X2Locale.GetLocale) == "function"
+	and tostring(X2Locale:GetLocale()):lower()
+	or ""
+OmniCraftIsKoreanClient = OmniCraftClientLocale:sub(1, 2) == "ko"
+
+if OmniCraftIsKoreanClient then
+	if type(KROmniCraftCraftIndex) == "table" then
+		OmniCraftCraftIndex = KROmniCraftCraftIndex
+	end
+	if type(KR_SOLZREED_PRICE) == "table" then
+		SOLZREED_PRICE = KR_SOLZREED_PRICE
+		TWOCROWNS_PRICE = KR_TWOCROWNS_PRICE
+		CINDERSTONE_MOOR_PRICE = KR_CINDERSTONE_MOOR_PRICE
+		SOLIS_HEADLANDS_PRICE = KR_SOLIS_HEADLANDS_PRICE
+		VILLANELLE_PRICE = KR_VILLANELLE_PRICE
+		YNYSTERE_PRICE = KR_YNYSTERE_PRICE
+		HEEDMAR_PRICE = KR_HEEDMAR_PRICE
+	end
+end
 
 local WINDOW_WIDTH = 560
 local MIN_WINDOW_HEIGHT = 330
@@ -107,17 +129,17 @@ local TradeOriginZones = {
 }
 local TradeTargetZones = {
 	Nuia = {
-		{ name = "Solzreed", fullName = "Solzreed Peninsula", zone = 5 },
-		{ name = "Two Crowns", fullName = "Two Crowns", zone = 8 },
-		{ name = "Cinderstone", fullName = "Cinderstone Moor", zone = 20 },
+		{ name = "Solzreed", fullName = "Solzreed Peninsula", krName = "솔즈리드", krFullName = "솔즈리드 반도", zone = 5 },
+		{ name = "Two Crowns", fullName = "Two Crowns", krName = "두 왕관", krFullName = "두 왕관", zone = 8 },
+		{ name = "Cinderstone", fullName = "Cinderstone Moor", krName = "십자별", krFullName = "십자별 평원", zone = 20 },
 	},
 	Haranya = {
-		{ name = "Solis", fullName = "Solis Headlands", zone = 4 },
-		{ name = "Villanelle", fullName = "Villanelle", zone = 12 },
-		{ name = "Ynystere", fullName = "Ynystere", zone = 17 },
+		{ name = "Solis", fullName = "Solis Headlands", krName = "동틀녘", krFullName = "동틀녘 반도", zone = 4 },
+		{ name = "Villanelle", fullName = "Villanelle", krName = "노래의 땅", krFullName = "노래의 땅", zone = 12 },
+		{ name = "Ynystere", fullName = "Ynystere", krName = "이니스테르", krFullName = "이니스테르", zone = 17 },
 	},
 	Auroria = {
-		{ name = "Heedmar", fullName = "Heedmar", zone = 33 },
+		{ name = "Heedmar", fullName = "Heedmar", krName = "살피마리", krFullName = "살피마리", zone = 33 },
 	},
 }
 local TradeFreshnessMultipliers = {
@@ -1307,6 +1329,10 @@ local function DetectTradePack(recipeName)
 	if type(recipeName) ~= "string" then
 		return nil
 	end
+	local originLookupName = recipeName
+	if OmniCraftIsKoreanClient and type(KROmniCraftPackEnglishNames) == "table" then
+		originLookupName = KROmniCraftPackEnglishNames[recipeName] or recipeName
+	end
 	local isKnownTradePack = recipeName:find("Specialty", 1, true) ~= nil
 		or recipeName:find(" Pack", 1, true) ~= nil
 		or GetTradeBasePrice(5, recipeName) ~= nil
@@ -1320,7 +1346,7 @@ local function DetectTradePack(recipeName)
 		return nil
 	end
 	for _, zone in ipairs(TradeOriginZones) do
-		if StartsWith(recipeName, zone.prefix) then
+		if StartsWith(originLookupName, zone.prefix) then
 			return {
 				name = recipeName,
 				originName = zone.prefix,
@@ -1386,6 +1412,17 @@ local function DetectCommerceSkill()
 	if X2Ability == nil or type(X2Ability.GetAllMyActabilityInfos) ~= "function" then
 		return 0
 	end
+	local commerceType = nil
+	local localizedCommerceName = nil
+	if X2Craft ~= nil and type(X2Craft.GetCraftBaseInfo) == "function" then
+		local okCraft, craftInfo = pcall(function()
+			return X2Craft:GetCraftBaseInfo(6210)
+		end)
+		if okCraft and type(craftInfo) == "table" then
+			commerceType = tonumber(craftInfo.required_actability_type)
+			localizedCommerceName = craftInfo.required_actability_name
+		end
+	end
 	local ok, infos = pcall(function()
 		return X2Ability:GetAllMyActabilityInfos()
 	end)
@@ -1393,7 +1430,14 @@ local function DetectCommerceSkill()
 		return 0
 	end
 	for _, info in pairs(infos) do
-		if type(info) == "table" and info.name == "Commerce" then
+		local matchesCommerce = type(info) == "table"
+			and (
+				(commerceType ~= nil and tonumber(info.type) == commerceType)
+				or (localizedCommerceName ~= nil and info.name == localizedCommerceName)
+				or info.name == "Commerce"
+				or info.name == "장사"
+			)
+		if matchesCommerce then
 			return (tonumber(info.point) or 0) + (tonumber(info.modifyPoint) or 0)
 		end
 	end
@@ -1814,7 +1858,11 @@ RenderPlan = function()
 				"Target: %s   Route: %s -> %s",
 				tostring(selectedRecipe),
 				tostring(tradePackInfo.originName or "-"),
-				tostring((selectedTradeTarget and selectedTradeTarget.name) or "-")
+				tostring(
+					selectedTradeTarget
+						and ((OmniCraftIsKoreanClient and selectedTradeTarget.krName) or selectedTradeTarget.name)
+						or "-"
+				)
 			)
 		)
 	else
@@ -2625,7 +2673,9 @@ UpdateTradeTargetControl = function()
 		return
 	end
 	UpdateTradeCommerceControl()
-	local text = selectedTradeTarget and selectedTradeTarget.name or "-"
+	local text = selectedTradeTarget
+		and ((OmniCraftIsKoreanClient and selectedTradeTarget.krName) or selectedTradeTarget.name)
+		or "-"
 	tradeTargetButton:SetText("To: " .. text)
 	tradeTargetButton:Show(true)
 	local targets = GetAllowedTradeTargets(tradePackInfo)
@@ -2634,7 +2684,11 @@ UpdateTradeTargetControl = function()
 		local target = targets[index]
 		if row ~= nil and target ~= nil then
 			row.target = target
-			row:SetText(target.fullName or target.name)
+			row:SetText(
+				(OmniCraftIsKoreanClient and (target.krFullName or target.krName))
+					or target.fullName
+					or target.name
+			)
 			row:Show(true)
 			if selectedTradeTarget ~= nil and selectedTradeTarget.zone == target.zone then
 				row.style:SetColor(0.04, 0.50, 0.08, 1)
@@ -2694,6 +2748,14 @@ local function CreateMainWindow()
 		end
 		mainWindow:Show(false)
 	end)
+	if OmniCraftIsKoreanClient then
+		local koreanLabel = mainWindow:CreateChildWidget("label", "omniCraftKoreanLabel", 0, true)
+		koreanLabel:SetExtent(28, 20)
+		koreanLabel:AddAnchor("TOPRIGHT", mainWindow, -30, 10)
+		koreanLabel:SetText("KR")
+		StyleLabel(koreanLabel, 13, ALIGN_CENTER, "brown")
+		SetTextColorByKey(koreanLabel, "brown")
+	end
 
 	local recipeLabel = mainWindow:CreateChildWidget("label", "omniCraftRecipeLabel", 0, true)
 	recipeLabel:SetExtent(80, 22)
