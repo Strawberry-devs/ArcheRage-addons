@@ -106,6 +106,9 @@ naServerEvents = {
 	[eventsName[locale].Akasch] = {
 		{ times = { { hour = 8, minute = 30, duration = 41 }, { hour = 16, minute = 30, duration = 41 }, { hour = 21, minute = 30, duration = 41 } }, days = { 7, 2 } },
 	},
+	[eventsName[locale].Wonderland] = {
+		{ times = { { hour = 14, minute = 30, duration = 5 }, { hour = 22, minute = 30, duration = 5 } }, days = { 1, 2, 3, 4, 5, 6, 7 } },
+	},
 	[eventsName[locale].Scramble] = {
 		{ times = { { hour = 9, minute = 0, duration = 60 }, { hour = 21, minute = 0, duration = 60 } }, days = { 1, 3 } },
 	},
