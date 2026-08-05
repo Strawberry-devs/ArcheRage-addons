@@ -39,6 +39,12 @@ local refreshingSettings = false
 local pendingTitleId = nil
 local titleCheckElapsed = 0
 local ICON_SETTING_SAVE_KEY = "titleswap_show_icons"
+local customIconWindow = nil
+local customIconRows = {}
+local customIconEntries = nil
+local customIconFiltered = {}
+local customIconPage = 1
+local CUSTOM_ICON_ROWS = 12
 
 local MAIN_ICON_SIZE = 20
 local MAIN_ROW_HEIGHT = 24
@@ -54,6 +60,23 @@ local COLOR_ACTIVE = { 0.348, 0.609, 0.370, 1 }
 local COLOR_FAILED = { 0.9, 0.2, 0.2, 1 }
 local COLOR_SELECTED = { 1, 1, 1, 1 }
 local UNKNOWN_ICON = "icons/icon_unknown_item.dds"
+
+local function ToClientIconPath(iconPath)
+	local path = tostring(iconPath or ""):gsub("%.png$", "")
+	if path == "" then
+		return "ui/icon/icon_unknown_item.dds"
+	end
+	return path:gsub("^icons/", "ui/icon/")
+end
+
+local function SetIconTexture(drawable, iconPath)
+	if drawable == nil then
+		return
+	end
+	if drawable.SetTexture ~= nil then
+		drawable:SetTexture(ToClientIconPath(iconPath))
+	end
+end
 
 local function LoadShowIcons()
 	local saved = ADDON:LoadData(ICON_SETTING_SAVE_KEY)
@@ -133,7 +156,10 @@ local function GetTitleName(titleId)
 	return "Title " .. tostring(titleId)
 end
 
-local function GetTitleIcon(titleId, savedIcon)
+local function GetTitleIcon(titleId, savedIcon, customIcon)
+	if customIcon ~= nil and customIcon ~= "" then
+		return customIcon
+	end
 	local metadata = GetTitleMetadata(titleId)
 	if metadata ~= nil and metadata.icon ~= nil and metadata.icon ~= "" and metadata.icon ~= UNKNOWN_ICON then
 		return metadata.icon
@@ -187,9 +213,14 @@ local function initializeTitles()
 	titles = {}
 	local fileOrder = 0
 	for line in file:lines() do
-		local id, name, path, order = line:match(
-			'%["(%d+)"%]%s*=%s*{name%s*=%s*"(.-)",%s*icon%s*=%s*"(.-)",%s*order%s*=%s*(%d+)}'
+		local id, name, path, customIcon, order = line:match(
+			'%["(%d+)"%]%s*=%s*{name%s*=%s*"(.-)",%s*icon%s*=%s*"(.-)",%s*customIcon%s*=%s*"(.-)",%s*order%s*=%s*(%d+)}'
 		)
+		if id == nil then
+			id, name, path, order = line:match(
+			'%["(%d+)"%]%s*=%s*{name%s*=%s*"(.-)",%s*icon%s*=%s*"(.-)",%s*order%s*=%s*(%d+)}'
+			)
+		end
 		if id == nil then
 			id, name, path = line:match('%["(%d+)"%]%s*=%s*{name%s*=%s*"(.-)",%s*icon%s*=%s*"(.-)"}')
 		end
@@ -198,6 +229,7 @@ local function initializeTitles()
 			titles[id] = {
 				name = LuaUnescape(name),
 				icon = LuaUnescape(path),
+				customIcon = customIcon ~= nil and LuaUnescape(customIcon) or nil,
 				order = tonumber(order) or fileOrder,
 			}
 		end
@@ -216,10 +248,11 @@ local function WriteTitlesFile()
 	for _, id in ipairs(ids) do
 		local data = titles[id]
 		file:write(string.format(
-			'    ["%s"] = {name = "%s", icon = "%s", order = %d},\n',
+			'    ["%s"] = {name = "%s", icon = "%s", customIcon = "%s", order = %d},\n',
 			id,
 			LuaEscape(data.name),
 			LuaEscape(data.icon),
+			LuaEscape(data.customIcon),
 			tonumber(data.order) or 0
 		))
 	end
@@ -304,7 +337,7 @@ local function createTitleList()
 		row.button:SetText(data.name)
 		row.button:Show(true)
 		if showIcons then
-			row.icon:SetTexture(GetTitleIcon(id, data.icon))
+			SetIconTexture(row.icon, GetTitleIcon(id, data.icon, data.customIcon))
 			row.icon:Show(true)
 		else
 			row.icon:Show(false)
@@ -342,11 +375,14 @@ local function saveTitle(titleId, titleName, titleIconPath)
 	end
 	local id = tostring(titleId)
 	local existingOrder = titles[id] ~= nil and titles[id].order or nil
+	local existingCustomIcon = titles[id] ~= nil and titles[id].customIcon or nil
 	titles[id] = {
 		name = titleName ~= nil and titleName ~= "" and titleName or GetTitleName(id),
 		icon = GetTitleIcon(id, titleIconPath),
+		customIcon = existingCustomIcon,
 		order = existingOrder or GetNextTitleOrder(),
 	}
+	customIconEntries = nil
 	selectedTitleId = id
 	saveTitles()
 	return true
@@ -355,12 +391,14 @@ end
 local function deleteTitle(titleId, name)
 	if titleId ~= nil and titles[tostring(titleId)] ~= nil then
 		titles[tostring(titleId)] = nil
+		customIconEntries = nil
 		saveTitles()
 		return true
 	end
 	for id, data in pairs(titles) do
 		if data.name == name then
 			titles[id] = nil
+			customIconEntries = nil
 			saveTitles()
 			return true
 		end
@@ -384,6 +422,273 @@ local function CreateLocalEditBox(parent, id, width)
 end
 
 local RefreshSettingsWindow
+
+local function BuildCustomIconEntries()
+	if customIconEntries ~= nil then
+		return
+	end
+	customIconEntries = {}
+	for titleId, metadata in pairs(titleMetadata) do
+		local rawIconPath = metadata.icon
+		if rawIconPath ~= nil and rawIconPath ~= "" and rawIconPath ~= UNKNOWN_ICON then
+			local iconPath = ToClientIconPath(rawIconPath)
+			local titleName = metadata.name or ("Title " .. tostring(titleId))
+			local filename = iconPath:match("([^/]+)$") or iconPath
+			table.insert(customIconEntries, {
+				name = titleName,
+				icon = iconPath,
+				filename = filename,
+				search = string.lower(titleName .. " " .. filename .. " " .. iconPath),
+			})
+		end
+	end
+	for titleId, data in pairs(titles) do
+		local metadata = GetTitleMetadata(titleId)
+		local metadataIcon = metadata ~= nil and metadata.icon or nil
+		if metadataIcon == nil or metadataIcon == "" or metadataIcon == UNKNOWN_ICON then
+			local iconPath = data.icon
+			if iconPath ~= nil and iconPath ~= "" and iconPath ~= UNKNOWN_ICON then
+				local titleName = GetTitleName(titleId)
+				local clientPath = ToClientIconPath(iconPath)
+				local filename = clientPath:match("([^/]+)$") or clientPath
+				table.insert(customIconEntries, {
+					name = titleName,
+					icon = clientPath,
+					filename = filename,
+					search = string.lower(titleName .. " " .. filename .. " " .. clientPath),
+				})
+			end
+		end
+	end
+	table.sort(customIconEntries, function(left, right)
+		local leftName = string.lower(left.name)
+		local rightName = string.lower(right.name)
+		if leftName == rightName then
+			return left.icon < right.icon
+		end
+		return leftName < rightName
+	end)
+end
+
+local RefreshCustomIconWindow
+
+local function EnsureCustomIconRow(index)
+	if customIconRows[index] ~= nil then
+		return customIconRows[index]
+	end
+	local row = {}
+	local y = 102 + ((index - 1) * 27)
+	row.icon = customIconWindow:CreateImageDrawable(UNKNOWN_ICON, "artwork")
+	row.icon:AddAnchor("TOPLEFT", customIconWindow, 20, y + 2)
+	row.icon:SetExtent(22, 22)
+	row.button = customIconWindow:CreateChildWidget("button", "titleCustomIconRow" .. index, index, true)
+	row.button:AddAnchor("TOPLEFT", customIconWindow, 48, y)
+	row.button:SetStyle("text_default")
+	row.button:SetAutoResize(false)
+	row.button:SetExtent(552, 25)
+	row.button.style:SetEllipsis(true)
+	row.button:SetHandler("OnClick", function(self, arg)
+		if arg == "RightButton" or self.entry == nil then
+			return
+		end
+		local titleId = customIconWindow.titleId
+		if titleId == nil or titles[titleId] == nil then
+			return
+		end
+		titles[titleId].customIcon = self.entry.icon
+		saveTitles()
+		RefreshSettingsWindow()
+		customIconWindow:Show(false)
+	end)
+	row.button:SetHandler("OnEnter", function(self)
+		if self.tooltip ~= nil and SetTooltip ~= nil then
+			SetTooltip(self.tooltip, self)
+		end
+	end)
+	row.button:SetWidth(552)
+	customIconRows[index] = row
+	return row
+end
+
+local function CreateCustomIconWindow()
+	if customIconWindow ~= nil then
+		return
+	end
+	customIconWindow = CreateEmptyWindow("titleSwapCustomIconWindow", "UIParent")
+	customIconWindow:SetExtent(620, 470)
+	customIconWindow:AddAnchor("CENTER", "UIParent", 0, 0)
+	customIconWindow:SetCloseOnEscape(true)
+	customIconWindow:EnableDrag(true)
+	customIconWindow:Show(false)
+
+	local backgroundDrawable = customIconWindow:CreateDrawable("ui/common/default.dds", "main_bg", "background")
+	backgroundDrawable:AddAnchor("TOPLEFT", customIconWindow, -5, -5)
+	backgroundDrawable:AddAnchor("BOTTOMRIGHT", customIconWindow, 5, 5)
+
+	local title = customIconWindow:CreateChildWidget("label", "titleCustomIconTitle", 0, true)
+	title:AddAnchor("TOP", customIconWindow, 0, 11)
+	title:SetExtent(540, 24)
+	title:SetText("Choose Custom Title Icon")
+	title.style:SetAlign(ALIGN_CENTER)
+	title.style:SetFontSize(16)
+	title.style:SetColorByKey("title")
+
+	local closeButton = customIconWindow:CreateChildWidget("button", "titleCustomIconClose", 0, true)
+	closeButton:AddAnchor("TOPRIGHT", customIconWindow, 3, -3)
+	closeButton:SetStyle("btn_close_default")
+	closeButton:SetHandler("OnClick", function(_, arg)
+		if arg ~= "RightButton" then
+			customIconWindow:Show(false)
+		end
+	end)
+
+	customIconWindow.searchEdit = CreateLocalEditBox(customIconWindow, "titleCustomIconSearch", 480)
+	customIconWindow.searchEdit:AddAnchor("TOPLEFT", customIconWindow, 20, 48)
+	customIconWindow.searchEdit:SetGuideText("Search title name or title_icon.dds")
+	customIconWindow.searchEdit:SetHandler("OnTextChanged", function()
+		customIconPage = 1
+		RefreshCustomIconWindow()
+	end)
+	customIconWindow.searchEdit:SetHandler("OnEnterPressed", function()
+		customIconPage = 1
+		RefreshCustomIconWindow()
+	end)
+
+	local clearButton = customIconWindow:CreateChildWidget("button", "titleCustomIconClear", 0, true)
+	clearButton:AddAnchor("TOPLEFT", customIconWindow, 508, 47)
+	clearButton:SetStyle("text_default")
+	clearButton:SetAutoResize(false)
+	clearButton:SetExtent(92, 28)
+	clearButton:SetText("Clear")
+	clearButton:SetHandler("OnClick", function(_, arg)
+		if arg ~= "RightButton" then
+			customIconWindow.searchEdit:SetText("")
+			customIconPage = 1
+			RefreshCustomIconWindow()
+		end
+	end)
+	clearButton:SetWidth(92)
+
+	local header = customIconWindow:CreateChildWidget("label", "titleCustomIconHeader", 0, true)
+	header:AddAnchor("TOPLEFT", customIconWindow, 48, 80)
+	header:SetExtent(552, 20)
+	header:SetText("Title name                                           DDS filename")
+	header.style:SetAlign(ALIGN_LEFT)
+	header.style:SetColorByKey("default")
+
+	customIconWindow.prevButton = customIconWindow:CreateChildWidget("button", "titleCustomIconPrev", 0, true)
+	customIconWindow.prevButton:AddAnchor("BOTTOMLEFT", customIconWindow, 20, -18)
+	customIconWindow.prevButton:SetStyle("text_default")
+	customIconWindow.prevButton:SetAutoResize(false)
+	customIconWindow.prevButton:SetExtent(70, 28)
+	customIconWindow.prevButton:SetText("Prev")
+	customIconWindow.prevButton:SetHandler("OnClick", function(_, arg)
+		if arg ~= "RightButton" and customIconPage > 1 then
+			customIconPage = customIconPage - 1
+			RefreshCustomIconWindow()
+		end
+	end)
+	customIconWindow.prevButton:SetWidth(70)
+
+	customIconWindow.nextButton = customIconWindow:CreateChildWidget("button", "titleCustomIconNext", 0, true)
+	customIconWindow.nextButton:AddAnchor("LEFT", customIconWindow.prevButton, "RIGHT", 6, 0)
+	customIconWindow.nextButton:SetStyle("text_default")
+	customIconWindow.nextButton:SetAutoResize(false)
+	customIconWindow.nextButton:SetExtent(70, 28)
+	customIconWindow.nextButton:SetText("Next")
+	customIconWindow.nextButton:SetHandler("OnClick", function(_, arg)
+		local maxPage = math.max(1, math.ceil(#customIconFiltered / CUSTOM_ICON_ROWS))
+		if arg ~= "RightButton" and customIconPage < maxPage then
+			customIconPage = customIconPage + 1
+			RefreshCustomIconWindow()
+		end
+	end)
+	customIconWindow.nextButton:SetWidth(70)
+
+	customIconWindow.defaultButton = customIconWindow:CreateChildWidget("button", "titleCustomIconDefault", 0, true)
+	customIconWindow.defaultButton:AddAnchor("LEFT", customIconWindow.nextButton, "RIGHT", 6, 0)
+	customIconWindow.defaultButton:SetStyle("text_default")
+	customIconWindow.defaultButton:SetAutoResize(false)
+	customIconWindow.defaultButton:SetExtent(100, 28)
+	customIconWindow.defaultButton:SetText("Use default")
+	customIconWindow.defaultButton:SetHandler("OnClick", function(_, arg)
+		if arg == "RightButton" then
+			return
+		end
+		local titleId = customIconWindow.titleId
+		if titleId == nil or titles[titleId] == nil then
+			return
+		end
+		titles[titleId].customIcon = nil
+		saveTitles()
+		RefreshSettingsWindow()
+		customIconWindow:Show(false)
+	end)
+	customIconWindow.defaultButton:SetWidth(100)
+
+	customIconWindow.pageLabel = customIconWindow:CreateChildWidget("label", "titleCustomIconPage", 0, true)
+	customIconWindow.pageLabel:AddAnchor("BOTTOMRIGHT", customIconWindow, -20, -22)
+	customIconWindow.pageLabel:SetExtent(300, 20)
+	customIconWindow.pageLabel.style:SetAlign(ALIGN_RIGHT)
+	customIconWindow.pageLabel.style:SetColorByKey("default")
+
+	customIconWindow:SetHandler("OnDragStart", function(self)
+		self:StartMoving()
+		self.moving = true
+	end)
+	customIconWindow:SetHandler("OnDragStop", function(self)
+		self:StopMovingOrSizing()
+		self.moving = false
+	end)
+end
+
+RefreshCustomIconWindow = function()
+	CreateCustomIconWindow()
+	BuildCustomIconEntries()
+	local query = string.lower(tostring(customIconWindow.searchEdit:GetText() or "")):match("^%s*(.-)%s*$")
+	customIconFiltered = {}
+	for _, entry in ipairs(customIconEntries) do
+		if query == "" or string.find(entry.search, query, 1, true) ~= nil then
+			table.insert(customIconFiltered, entry)
+		end
+	end
+	local maxPage = math.max(1, math.ceil(#customIconFiltered / CUSTOM_ICON_ROWS))
+	customIconPage = math.max(1, math.min(customIconPage, maxPage))
+	for rowIndex = 1, CUSTOM_ICON_ROWS do
+		local row = EnsureCustomIconRow(rowIndex)
+		local entry = customIconFiltered[((customIconPage - 1) * CUSTOM_ICON_ROWS) + rowIndex]
+		if entry ~= nil then
+			row.button.entry = entry
+			row.button.tooltip = entry.name .. "\n" .. entry.icon
+			SetIconTexture(row.icon, entry.icon)
+			row.icon:Show(true)
+			row.button:SetText(entry.name .. "    [" .. entry.filename .. "]")
+			row.button:SetWidth(552)
+			row.button:Show(true)
+		else
+			row.button.entry = nil
+			row.icon:Show(false)
+			row.button:Show(false)
+		end
+	end
+	customIconWindow.pageLabel:SetText(
+		string.format("%d/%d   %d icons", customIconPage, maxPage, #customIconFiltered)
+	)
+end
+
+local function OpenCustomIconWindow()
+	if selectedTitleId == nil or titles[selectedTitleId] == nil then
+		aaprint("Select a title first.")
+		return
+	end
+	CreateCustomIconWindow()
+	customIconWindow.titleId = selectedTitleId
+	customIconPage = 1
+	customIconWindow.searchEdit:SetText("")
+	RefreshCustomIconWindow()
+	customIconWindow:Show(true)
+	customIconWindow.searchEdit:SetFocus()
+end
 
 local function MoveTitle(titleId, direction)
 	local ids = GetSortedTitleIds()
@@ -577,6 +882,18 @@ local function CreateSettingsWindow()
 		end
 	end)
 
+	settingsWindow.customIconButton = settingsWindow:CreateChildWidget("button", "titleSettingsCustomIcon", 0, true)
+	settingsWindow.customIconButton:SetStyle("text_default")
+	settingsWindow.customIconButton:SetAutoResize(false)
+	settingsWindow.customIconButton:SetExtent(100, 28)
+	settingsWindow.customIconButton:SetText("Custom icon")
+	settingsWindow.customIconButton:SetHandler("OnClick", function(_, arg)
+		if arg ~= "RightButton" then
+			OpenCustomIconWindow()
+		end
+	end)
+	settingsWindow.customIconButton:SetWidth(100)
+
 	settingsWindow.showIconsButton = settingsWindow:CreateChildWidget("button", "titleSettingsShowIcons", 0, true)
 	settingsWindow.showIconsButton:SetStyle("text_default")
 	settingsWindow.showIconsButton:SetAutoResize(false)
@@ -610,7 +927,7 @@ RefreshSettingsWindow = function()
 		row.moveUpButton.titleId = id
 		row.moveDownButton.titleId = id
 		row.nicknameEdit.titleId = id
-		row.icon:SetTexture(GetTitleIcon(id, data.icon))
+		SetIconTexture(row.icon, GetTitleIcon(id, data.icon, data.customIcon))
 		row.icon:Show(true)
 		row.titleButton:SetText(GetTitleName(id))
 		row.titleButton:SetWidth(145)
@@ -641,6 +958,8 @@ RefreshSettingsWindow = function()
 	settingsWindow.addButton:AddAnchor("TOPLEFT", settingsWindow, 20, footerY)
 	settingsWindow.removeButton:RemoveAllAnchors()
 	settingsWindow.removeButton:AddAnchor("LEFT", settingsWindow.addButton, "RIGHT", 6, 0)
+	settingsWindow.customIconButton:RemoveAllAnchors()
+	settingsWindow.customIconButton:AddAnchor("LEFT", settingsWindow.removeButton, "RIGHT", 6, 0)
 	settingsWindow.showIconsButton:RemoveAllAnchors()
 	settingsWindow.showIconsButton:AddAnchor("TOPRIGHT", settingsWindow, -20, footerY)
 	SetButtonFontOneColor(settingsWindow.showIconsButton, showIcons and COLOR_ACTIVE or COLOR_NORMAL)
