@@ -91,8 +91,8 @@ ruServerEvents = {
 		{
 			times = {
 				{ hour = 1, minute = 30, duration = 30 },
-				{ hour = 11, minute = 0, duration = 10 },
-				{ hour = 20, minute = 30, duration = 10 },
+				{ hour = 11, minute = 0, duration = 90 },
+				{ hour = 20, minute = 30, duration = 60 },
 			},
 			days = { 1, 2, 3, 4, 5, 6, 7 },
 		},
@@ -100,9 +100,9 @@ ruServerEvents = {
 	[eventsName[locale].RD] = {
 		{
 			times = {
-				{ hour = 2, minute = 0, duration = 15 },
-				{ hour = 10, minute = 30, duration = 15 },
-				{ hour = 20, minute = 0, duration = 15 },
+				{ hour = 2, minute = 0, duration = 30 },
+				{ hour = 10, minute = 30, duration = 30 },
+				{ hour = 20, minute = 0, duration = 30 },
 			},
 			days = { 1, 2, 4, 6 },
 		},
