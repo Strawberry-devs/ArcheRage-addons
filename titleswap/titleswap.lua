@@ -39,6 +39,8 @@ local refreshingSettings = false
 local pendingTitleId = nil
 local titleCheckElapsed = 0
 local ICON_SETTING_SAVE_KEY = "titleswap_show_icons"
+local BUTTON_CORNER_SAVE_KEY = "titleswap_settings_button_corner"
+local settingsButton = nil
 local customIconWindow = nil
 local customIconRows = {}
 local customIconEntries = nil
@@ -91,7 +93,22 @@ local function SaveShowIcons(enabled)
 	ADDON:SaveData(ICON_SETTING_SAVE_KEY, { enabled = enabled == true })
 end
 
+local function LoadSettingsButtonCorner()
+	local saved = ADDON:LoadData(BUTTON_CORNER_SAVE_KEY)
+	local corner = type(saved) == "table" and saved.corner or nil
+	if corner == "TOPRIGHT" or corner == "BOTTOMRIGHT" or corner == "BOTTOMLEFT" or corner == "TOPLEFT" then
+		return corner
+	end
+	return "TOPRIGHT"
+end
+
+local function SaveSettingsButtonCorner(corner)
+	ADDON:ClearData(BUTTON_CORNER_SAVE_KEY)
+	ADDON:SaveData(BUTTON_CORNER_SAVE_KEY, { corner = corner })
+end
+
 local showIcons = LoadShowIcons()
+local settingsButtonCorner = LoadSettingsButtonCorner()
 
 local titleListWindow = CreateEmptyWindow("titleListWindow", "UIParent")
 titleListWindow:SetExtent(MAIN_WINDOW_WIDTH, 35)
@@ -419,6 +436,36 @@ local function CreateLocalEditBox(parent, id, width)
 	bg:AddAnchor("TOPLEFT", edit, 0, 0)
 	bg:AddAnchor("BOTTOMRIGHT", edit, 0, 0)
 	return edit
+end
+
+local function ApplySettingsButtonCorner()
+	if settingsButton == nil then
+		return
+	end
+	settingsButton:RemoveAllAnchors()
+	if settingsButtonCorner == "BOTTOMRIGHT" then
+		settingsButton:AddAnchor("TOPRIGHT", titleListWindow, "BOTTOMRIGHT", 0, 0)
+	elseif settingsButtonCorner == "BOTTOMLEFT" then
+		settingsButton:AddAnchor("TOPLEFT", titleListWindow, "BOTTOMLEFT", 0, 0)
+	elseif settingsButtonCorner == "TOPLEFT" then
+		settingsButton:AddAnchor("BOTTOMLEFT", titleListWindow, "TOPLEFT", 0, 0)
+	else
+		settingsButton:AddAnchor("BOTTOMRIGHT", titleListWindow, "TOPRIGHT", 0, 0)
+	end
+end
+
+local function CycleSettingsButtonCorner()
+	if settingsButtonCorner == "TOPRIGHT" then
+		settingsButtonCorner = "BOTTOMRIGHT"
+	elseif settingsButtonCorner == "BOTTOMRIGHT" then
+		settingsButtonCorner = "BOTTOMLEFT"
+	elseif settingsButtonCorner == "BOTTOMLEFT" then
+		settingsButtonCorner = "TOPLEFT"
+	else
+		settingsButtonCorner = "TOPRIGHT"
+	end
+	SaveSettingsButtonCorner(settingsButtonCorner)
+	ApplySettingsButtonCorner()
 end
 
 local RefreshSettingsWindow
@@ -910,6 +957,18 @@ local function CreateSettingsWindow()
 	end)
 	settingsWindow.showIconsButton:SetWidth(95)
 
+	settingsWindow.buttonCornerButton = settingsWindow:CreateChildWidget("button", "titleSettingsButtonCorner", 0, true)
+	settingsWindow.buttonCornerButton:SetStyle("text_default")
+	settingsWindow.buttonCornerButton:SetAutoResize(false)
+	settingsWindow.buttonCornerButton:SetExtent(28, 28)
+	settingsWindow.buttonCornerButton:SetText("?")
+	settingsWindow.buttonCornerButton:SetHandler("OnClick", function(_, arg)
+		if arg ~= "RightButton" then
+			CycleSettingsButtonCorner()
+		end
+	end)
+	settingsWindow.buttonCornerButton:SetWidth(28)
+
 	function settingsWindow:OnClose()
 		saveTitles()
 	end
@@ -960,6 +1019,8 @@ RefreshSettingsWindow = function()
 	settingsWindow.removeButton:AddAnchor("LEFT", settingsWindow.addButton, "RIGHT", 6, 0)
 	settingsWindow.customIconButton:RemoveAllAnchors()
 	settingsWindow.customIconButton:AddAnchor("LEFT", settingsWindow.removeButton, "RIGHT", 6, 0)
+	settingsWindow.buttonCornerButton:RemoveAllAnchors()
+	settingsWindow.buttonCornerButton:AddAnchor("LEFT", settingsWindow.customIconButton, "RIGHT", 6, 0)
 	settingsWindow.showIconsButton:RemoveAllAnchors()
 	settingsWindow.showIconsButton:AddAnchor("TOPRIGHT", settingsWindow, -20, footerY)
 	SetButtonFontOneColor(settingsWindow.showIconsButton, showIcons and COLOR_ACTIVE or COLOR_NORMAL)
@@ -977,13 +1038,13 @@ local function ToggleSettingsWindow()
 	end
 end
 
-local settingsButton = titleListWindow:CreateChildWidget("button", "titleSwapSettingsButton", 0, true)
-settingsButton:AddAnchor("TOPRIGHT", titleListWindow, 0, -25)
+settingsButton = titleListWindow:CreateChildWidget("button", "titleSwapSettingsButton", 0, true)
 settingsButton:SetStyle("text_default")
 settingsButton:SetExtent(35, 25)
 settingsButton:SetText("?")
 settingsButton:SetHandler("OnClick", ToggleSettingsWindow)
 settingsButton:SetWidth(25)
+ApplySettingsButtonCorner()
 
 function titleListWindow:OnUpdate(dt)
 	if pendingTitleId == nil then

@@ -78,9 +78,11 @@ end
 local gearSettings = {
 	showIcons = true,
 	showContents = false,
+	settingsButtonCorner = "TOPRIGHT",
 	sets = {},
 }
 local settingsWindow = nil
+local settingsButton = nil
 local settingsRows = {}
 local contentRows = {}
 local selectedGearName = nil
@@ -98,6 +100,10 @@ local function LoadGearSettings()
 	if type(saved) == "table" then
 		gearSettings.showIcons = saved.showIcons ~= false
 		gearSettings.showContents = saved.showContents == true
+		local corner = saved.settingsButtonCorner
+		if corner == "TOPRIGHT" or corner == "BOTTOMRIGHT" or corner == "BOTTOMLEFT" or corner == "TOPLEFT" then
+			gearSettings.settingsButtonCorner = corner
+		end
 		gearSettings.sets = type(saved.sets) == "table" and saved.sets or {}
 	end
 end
@@ -138,6 +144,37 @@ gearListWindow:SetExtent(0, 0)
 --gearListWindow:AddAnchor("RIGHT", "UIParent", -100, -200)
 gearListWindow:EnableDrag(true)
 gearListWindow:Show(true)
+
+local function ApplySettingsButtonCorner()
+	if settingsButton == nil then
+		return
+	end
+	settingsButton:RemoveAllAnchors()
+	if gearSettings.settingsButtonCorner == "BOTTOMRIGHT" then
+		settingsButton:AddAnchor("TOPRIGHT", gearListWindow, "BOTTOMRIGHT", 0, 0)
+	elseif gearSettings.settingsButtonCorner == "BOTTOMLEFT" then
+		settingsButton:AddAnchor("TOPLEFT", gearListWindow, "BOTTOMLEFT", 0, 0)
+	elseif gearSettings.settingsButtonCorner == "TOPLEFT" then
+		settingsButton:AddAnchor("BOTTOMLEFT", gearListWindow, "TOPLEFT", 0, 0)
+	else
+		settingsButton:AddAnchor("BOTTOMRIGHT", gearListWindow, "TOPRIGHT", 0, 0)
+	end
+end
+
+local function CycleSettingsButtonCorner()
+	local corner = gearSettings.settingsButtonCorner
+	if corner == "TOPRIGHT" then
+		gearSettings.settingsButtonCorner = "BOTTOMRIGHT"
+	elseif corner == "BOTTOMRIGHT" then
+		gearSettings.settingsButtonCorner = "BOTTOMLEFT"
+	elseif corner == "BOTTOMLEFT" then
+		gearSettings.settingsButtonCorner = "TOPLEFT"
+	else
+		gearSettings.settingsButtonCorner = "TOPRIGHT"
+	end
+	SaveGearSettings()
+	ApplySettingsButtonCorner()
+end
 local function GetUIScaleFactor()
 	return UIParent:GetUIScale() or 1.0
 end
@@ -1156,6 +1193,18 @@ local function CreateSettingsWindow()
 	end)
 	settingsWindow.showIconsButton:SetWidth(95)
 
+	settingsWindow.buttonCornerButton = settingsWindow:CreateChildWidget("button", "gearSettingsButtonCorner", 0, true)
+	settingsWindow.buttonCornerButton:SetStyle("text_default")
+	settingsWindow.buttonCornerButton:SetAutoResize(false)
+	settingsWindow.buttonCornerButton:SetExtent(28, 28)
+	settingsWindow.buttonCornerButton:SetText("?")
+	settingsWindow.buttonCornerButton:SetHandler("OnClick", function(_, arg)
+		if arg ~= "RightButton" then
+			CycleSettingsButtonCorner()
+		end
+	end)
+	settingsWindow.buttonCornerButton:SetWidth(28)
+
 	settingsWindow:SetHandler("OnDragStart", function(self)
 		self:StartMoving()
 		self.moving = true
@@ -1268,6 +1317,8 @@ RefreshSettingsWindow = function()
 	local togglesY = footerY + 34
 	settingsWindow.showContentsButton:RemoveAllAnchors()
 	settingsWindow.showContentsButton:AddAnchor("TOPLEFT", settingsWindow, 20, togglesY)
+	settingsWindow.buttonCornerButton:RemoveAllAnchors()
+	settingsWindow.buttonCornerButton:AddAnchor("LEFT", settingsWindow.showContentsButton, "RIGHT", 6, 0)
 	settingsWindow.showIconsButton:RemoveAllAnchors()
 	settingsWindow.showIconsButton:AddAnchor("TOPRIGHT", settingsWindow, -20, togglesY)
 	SetButtonFontOneColor(
@@ -1288,13 +1339,13 @@ local function ToggleSettingsWindow()
 	end
 end
 
-local settingsButton = gearListWindow:CreateChildWidget("button", "gearSwapSettingsButton", 0, true)
-settingsButton:AddAnchor("TOPRIGHT", gearListWindow, 0, -25)
+settingsButton = gearListWindow:CreateChildWidget("button", "gearSwapSettingsButton", 0, true)
 settingsButton:SetStyle("text_default")
 settingsButton:SetExtent(35, 25)
 settingsButton:SetText("?")
 settingsButton:SetHandler("OnClick", ToggleSettingsWindow)
 settingsButton:SetWidth(25)
+ApplySettingsButtonCorner()
 
 ---- Handle chat events
 local chatAggroEventListenerEvents = {
@@ -1361,6 +1412,7 @@ end
 gearListWindow:SetHandler("OnDragStop", gearListWindow.OnDragStop)
 
 LoadGearSettings()
+ApplySettingsButtonCorner()
 loadGearSetsFromFile()
 SyncGearSettings()
 SaveGearSettings()
