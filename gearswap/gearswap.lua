@@ -95,6 +95,20 @@ local customIconFiltered = {}
 local customIconPage = 1
 local CUSTOM_ICON_ROWS = 12
 
+-- Values returned by the client can contain backslashes (for example, "\\nu_f").
+-- Writing those values directly into Lua source turns sequences such as "\\n"
+-- into a newline the next time the file is loaded.  Always normalize icon paths
+-- and quote every string written to gears.lua.
+local function NormalizeIconPath(iconPath)
+	local path = tostring(iconPath or "")
+	path = path:gsub("\r\n", "/n"):gsub("[\r\n]", "/n")
+	return path:gsub("\\", "/")
+end
+
+local function QuoteLuaString(value)
+	return string.format("%q", tostring(value or ""))
+end
+
 local function LoadGearSettings()
 	local saved = ADDON:LoadData(GEAR_SETTINGS_SAVE_KEY)
 	if type(saved) == "table" then
@@ -114,7 +128,7 @@ local function SaveGearSettings()
 end
 
 local function ToClientIconPath(iconPath)
-	local path = tostring(iconPath or ""):gsub("%.png$", "")
+	local path = NormalizeIconPath(iconPath):gsub("%.png$", "")
 	if path == "" then
 		return UNKNOWN_ICON
 	end
@@ -339,14 +353,16 @@ local function saveGearsToFile()
 
 	file:write("return {\n")
 	for setName, gearArray in pairs(gears) do
-		file:write(string.format('  ["%s"] = {\n', setName))
+		file:write(string.format("  [%s] = {\n", QuoteLuaString(setName)))
 		for _, item in ipairs(gearArray) do
 			local slotText = item.slot ~= nil and string.format(", slot = %d", item.slot) or ""
-			local iconText = item.icon ~= nil and string.format(', icon = "%s"', item.icon) or ""
+			local iconText = item.icon ~= nil
+				and string.format(", icon = %s", QuoteLuaString(NormalizeIconPath(item.icon)))
+				or ""
 			file:write(string.format(
-				'    {name = "%s", grade = %d, alternative = %s%s%s},\n',
-				item.name,
-				item.grade,
+				"    {name = %s, grade = %d, alternative = %s%s%s},\n",
+				QuoteLuaString(item.name),
+				tonumber(item.grade) or 0,
 				item.alternative and "true" or "false",
 				slotText,
 				iconText
