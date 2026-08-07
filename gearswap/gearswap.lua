@@ -48,6 +48,10 @@ local CONTENT_COLUMNS = 2
 local COLOR_NORMAL = { 0.2, 0.2, 0.2, 1 }
 local COLOR_ACTIVE = { 0.348, 0.609, 0.370, 1 }
 local COLOR_SELECTED = { 1, 1, 1, 1 }
+local COLOR_BUSY = { 0.45, 0.45, 0.45, 1 }
+local COLOR_FAILED = { 0.95, 0.5, 0.1, 1 }
+local EQUIP_DELAY = 200
+local MAX_EQUIP_ATTEMPTS = 3
 local GEAR_SLOT_NAMES = {
 	"Head",
 	"Chest",
@@ -194,6 +198,7 @@ local function GetUIScaleFactor()
 end
 
 local gearWidgets = {}
+local createGearList
 
 local filePath = "GearWindowPos.txt"
 local function SaveWindowPosition(x, y)
@@ -229,12 +234,103 @@ background:AddAnchor("BOTTOMRIGHT", gearListWindow, 0, 0)
 local fullSetToEquip = {}
 --gearToEquip shrinks as you equip items
 local gearToEquip = {}
+local activeGearName = nil
+local equipAttempt = 0
+local failedGearName = nil
+
+local function GetSetItemSlot(item, itemIndex, gearSet)
+	local savedSlot = tonumber(item.slot)
+	if savedSlot ~= nil then
+		return savedSlot
+	end
+
+	-- Legacy sets were saved as a compact list without slot IDs. When a
+	-- two-handed weapon left the off-hand empty, ranged/instrument/costume
+	-- moved forward one position in that list. An actual off-hand entry is
+	-- marked alternative, while the ranged entry that replaces it is not.
+	local firstItemAfterMainHand = gearSet ~= nil and gearSet[16] or nil
+	local legacySetHasEmptyOffHand = firstItemAfterMainHand ~= nil
+		and firstItemAfterMainHand.slot == nil
+		and firstItemAfterMainHand.alternative ~= true
+	if legacySetHasEmptyOffHand and itemIndex >= 16 then
+		return GEAR_SLOT_IDS[itemIndex + 1]
+	end
+	return GEAR_SLOT_IDS[itemIndex]
+end
+
+local function GetMissingSetItems(gearSet)
+	local missing = {}
+	for itemIndex, setItem in ipairs(gearSet or {}) do
+		local slot = GetSetItemSlot(setItem, itemIndex, gearSet)
+		local equippedItem = slot ~= nil and X2Equipment:GetEquippedItemTooltipInfo(slot, true) or nil
+		if equippedItem == nil or equippedItem.name ~= setItem.name then
+			table.insert(missing, { item = setItem, slot = slot })
+		end
+	end
+	return missing
+end
+
+local function QueueMissingSetItems(missing)
+	gearToEquip = {}
+	local usedBagSlots = {}
+	for _, wanted in ipairs(missing) do
+		for posInBag = 1, 150 do
+			if not usedBagSlots[posInBag] then
+				local bagItem = X2Bag:GetBagItemInfo(1, posInBag)
+				if bagItem ~= nil and bagItem.name == wanted.item.name then
+					usedBagSlots[posInBag] = true
+					table.insert(gearToEquip, {
+						posInBag = posInBag,
+						name = bagItem.name,
+						grade = bagItem.grade,
+						alternative = wanted.item.alternative == true,
+					})
+					break
+				end
+			end
+		end
+	end
+end
+
+local function SetMainButtonsBusy(busy)
+	for _, row in ipairs(gearWidgets) do
+		if row.gearName ~= nil then
+			row.button:Enable(not busy)
+			if busy then
+				row.button:SetStyle("text_default")
+				SetButtonFontOneColor(row.button, COLOR_BUSY)
+			end
+		end
+	end
+end
+
+local function FinishEquip(missing)
+	local completedGearName = activeGearName
+	failedGearName = #missing > 0 and completedGearName or nil
+	activeGearName = nil
+	equipAttempt = 0
+	fullSetToEquip = {}
+	gearToEquip = {}
+	SetMainButtonsBusy(false)
+	createGearList()
+
+	if #missing == 0 then
+		return
+	end
+
+	local missingNames = {}
+	for _, wanted in ipairs(missing) do
+		local slotName = GEAR_SLOT_NAMES_BY_ID[wanted.slot] or ("slot " .. tostring(wanted.slot or "?"))
+		table.insert(missingNames, slotName .. ": " .. tostring(wanted.item.name))
+	end
+	aaprint("GearSwap: failed to equip " .. tostring(failedGearName) .. ". Missing: " .. table.concat(missingNames, ", "))
+end
 
 --gear equip processor
 local delayCounter = 0
 local imBusy = false
 function gearListWindow:OnUpdate(dt)
-	if delayCounter > 200 and imBusy == false then
+	if activeGearName ~= nil and delayCounter > EQUIP_DELAY and imBusy == false then
 		--X2Chat:DispatchChatMessage(CMF_SYSTEM, dump(gearToEquip))
 		imBusy = true
 		if #gearToEquip > 0 then
@@ -243,6 +339,16 @@ function gearListWindow:OnUpdate(dt)
 			--X2Chat:DispatchChatMessage(CMF_SYSTEM, "Equipping: " .. dump(itemToEquip))
 			X2Bag:EquipBagItem(itemToEquip.posInBag, itemToEquip.alternative)
 			--X2Chat:DispatchChatMessage(CMF_SYSTEM, "Equipping: " .. dump(itemToEquip))
+		else
+			local missing = GetMissingSetItems(fullSetToEquip)
+			if #missing == 0 then
+				FinishEquip(missing)
+			elseif equipAttempt < MAX_EQUIP_ATTEMPTS then
+				equipAttempt = equipAttempt + 1
+				QueueMissingSetItems(missing)
+			else
+				FinishEquip(missing)
+			end
 		end
 		delayCounter = 0
 		imBusy = false
@@ -251,80 +357,23 @@ function gearListWindow:OnUpdate(dt)
 end
 gearListWindow:SetHandler("OnUpdate", gearListWindow.OnUpdate)
 
---welcome to race condition central
-
-local function isItemInSet(item)
-	--X2Chat:DispatchChatMessage(CMF_SYSTEM, dump(fullSetToEquip))
-	for _, setItem in ipairs(fullSetToEquip) do
-		if item.name == setItem.name then --and item.grade == setItem.grade then
-			return true, setItem.alternative or false
-		end
-	end
-	return false, false
-end
-
-local function markSecondAsAlternative(setIndex)
-	local equippedIndex
-	--setIndex does not correlate with real equipped gear
-	--this fixes that, under 14 is earring & ring, above 14 is weapon
-	if setIndex > 14 then
-		equippedIndex = setIndex + 1
-	else
-		equippedIndex = setIndex - 1
-	end
-	local nameToFind = fullSetToEquip[setIndex].name
-	if nameToFind ~= fullSetToEquip[setIndex + 1].name then
-		return
-	end
-
-	local itemInMainSlot = X2Equipment:GetEquippedItemTooltipInfo(equippedIndex, true)
-	local mainSlotItemName = itemInMainSlot.name
-	local forceAlt = false
-	if mainSlotItemName == nameToFind then
-		forceAlt = true
-	end
-
-	local foundOnce = false
-	for _, item in ipairs(gearToEquip) do
-		if item.name == nameToFind then
-			if not foundOnce then
-				foundOnce = true
-				if forceAlt == true then
-					item.alternative = true
-					return
-				end
-			else
-				item.alternative = true
-				return
-			end
-		end
-	end
-end
-
-local function getGearFromInventory()
-	for posInBag = 1, 150 do
-		local item = X2Bag:GetBagItemInfo(1, posInBag)
-		if item then
-			local found, alternative = isItemInSet(item)
-			if found then
-				--X2Chat:DispatchChatMessage(CMF_SYSTEM, "Found at " .. tostring(posInBag))
-				table.insert(
-					gearToEquip,
-					{ posInBag = posInBag, name = item.name, grade = item.grade, alternative = alternative }
-				)
-			end
-		end
-	end
-	markSecondAsAlternative(11) --earring
-	markSecondAsAlternative(13) --ring
-	markSecondAsAlternative(15) --weapon
-end
-
 local function equipGear(setName)
-	-- gearToEquip = get set from file
+	if activeGearName ~= nil or gears[setName] == nil then
+		return false
+	end
 	fullSetToEquip = gears[setName]
-	gearToEquip = {}
-	getGearFromInventory()
+	local missing = GetMissingSetItems(fullSetToEquip)
+	failedGearName = nil
+	if #missing == 0 then
+		fullSetToEquip = {}
+		createGearList()
+		return true
+	end
+	activeGearName = setName
+	equipAttempt = 1
+	QueueMissingSetItems(missing)
+	delayCounter = 0
+	SetMainButtonsBusy(true)
 	return true
 end
 local function getEquippedGearArray()
@@ -496,8 +545,8 @@ local function GetGearIcon(setName)
 	return GetItemIcon(itemName)
 end
 
-local function IsGearItemCurrentlyEquipped(item, itemIndex, currentGear)
-	local savedSlot = tonumber(item.slot) or GEAR_SLOT_IDS[itemIndex]
+local function IsGearItemCurrentlyEquipped(item, itemIndex, gearSet, currentGear)
+	local savedSlot = GetSetItemSlot(item, itemIndex, gearSet)
 	for _, equippedItem in ipairs(currentGear or {}) do
 		if tonumber(equippedItem.slot) == savedSlot and equippedItem.name == item.name then
 			return true
@@ -551,22 +600,16 @@ local function EnsureGearRow(index)
 	row.button:SetAutoResize(false)
 	row.button.style:SetEllipsis(true)
 	row.button:SetHandler("OnClick", function(self, arg)
-		if arg == "RightButton" or self.gearName == nil then
+		if arg == "RightButton" or self.gearName == nil or activeGearName ~= nil or #gearToEquip > 0 then
 			return
 		end
-		if equipGear(self.gearName) then
-			for _, otherRow in ipairs(gearWidgets) do
-				if otherRow.gearName ~= nil then
-					SetGearButtonState(otherRow.button, otherRow == row and COLOR_ACTIVE or COLOR_NORMAL)
-				end
-			end
-		end
+		equipGear(self.gearName)
 	end)
 	gearWidgets[index] = row
 	return row
 end
 
-local function createGearList()
+createGearList = function()
 	local names = GetOrderedGearNames()
 	local currentGear = getEquippedGearArray()
 	for index, setName in ipairs(names) do
@@ -584,7 +627,12 @@ local function createGearList()
 		else
 			row.icon:Show(false)
 		end
-		SetGearButtonState(row.button, isGearNameEqual(currentGear, gears[setName]) and COLOR_ACTIVE or COLOR_NORMAL)
+		local buttonColor = isGearNameEqual(currentGear, gears[setName]) and COLOR_ACTIVE or COLOR_NORMAL
+		if setName == failedGearName then
+			buttonColor = COLOR_FAILED
+		end
+		SetGearButtonState(row.button, buttonColor)
+		row.button:Enable(activeGearName == nil)
 	end
 	for index = #names + 1, #gearWidgets do
 		local row = gearWidgets[index]
@@ -1281,8 +1329,7 @@ RefreshSettingsWindow = function()
 			local line = math.floor((itemIndex - 1) / CONTENT_COLUMNS)
 			local x = 20 + (column * 225)
 			local y = contentStartY + (line * CONTENT_ROW_HEIGHT)
-			local slotName = GEAR_SLOT_NAMES_BY_ID[tonumber(item.slot)]
-				or GEAR_SLOT_NAMES[itemIndex]
+			local slotName = GEAR_SLOT_NAMES_BY_ID[GetSetItemSlot(item, itemIndex, gearArray)]
 				or ("Slot " .. itemIndex)
 			row.gearName = selectedGearName
 			row.itemName = item.name
@@ -1298,7 +1345,7 @@ RefreshSettingsWindow = function()
 			row.button:SetText(slotName .. ": " .. tostring(item.name))
 			row.button:SetWidth(191)
 			local itemColor = COLOR_NORMAL
-			if IsGearItemCurrentlyEquipped(item, itemIndex, currentGear) then
+			if IsGearItemCurrentlyEquipped(item, itemIndex, gearArray, currentGear) then
 				itemColor = COLOR_ACTIVE
 			elseif item.name == GetGearIconItem(selectedGearName) then
 				itemColor = COLOR_SELECTED
