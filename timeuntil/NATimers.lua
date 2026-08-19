@@ -97,6 +97,31 @@ naServerEvents = {
 	[eventsName[locale].RD] = {
 		{ times = { { hour = 7, minute = 30, duration = 60 }, { hour = 11, minute = 0, duration = 60 }, { hour = 20, minute = 0, duration = 60 } }, days = { 1, 2, 4, 6 } },
 	},
+	["Small Titan"] = {
+		{
+			times = {
+				{ hour = 1, minute = 0, duration = 15 },
+				{ hour = 4, minute = 0, duration = 15 },
+				{ hour = 7, minute = 0, duration = 15 },
+				{ hour = 10, minute = 0, duration = 15 },
+				{ hour = 13, minute = 0, duration = 15 },
+				{ hour = 16, minute = 0, duration = 15 },
+				{ hour = 19, minute = 0, duration = 15 },
+				{ hour = 22, minute = 0, duration = 15 },
+			},
+			days = { 3, 6 },
+		},
+	},
+	["Big Titan"] = {
+		{
+			times = {
+				{ hour = 7, minute = 0, duration = 15 },
+				{ hour = 14, minute = 0, duration = 15 },
+				{ hour = 22, minute = 0, duration = 15 },
+			},
+			days = { 4, 7 },
+		},
+	},
 	[eventsName[locale].Abyssal_Atk] = {
 		{ times = { { hour = 15, minute = 59, duration = 60 }, { hour = 20, minute = 29, duration = 60 } }, days = { 3, 5, 7 } },
 	},
