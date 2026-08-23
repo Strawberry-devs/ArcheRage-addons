@@ -50,7 +50,7 @@ function TranslateAndLog {
 			[string]$text,
 			[string]$target
 		)
-		$Uri = "https://translate.googleapis.com/translate_a/single?client=gtx&sl=$target&tl=$translate&dt=t&q=$text"
+		$Uri = "https://translate.googleapis.com/translate_a/single?client=dict-chrome-ex&sl=$target&tl=$translate&dt=t&q=$text"
 		$Response = Invoke-RestMethod -Uri $Uri -Method Get
 		return $Response[0].SyncRoot | ForEach-Object { $_[0] }
 	}
