@@ -268,6 +268,7 @@ local cdt = {
 	trackedTitleLabel = nil,
 	window = nil,
 	background = nil,
+	previewLabel = nil,
 	recentRows = {},
 	trackedRows = {},
 	timerRows = {},
@@ -2232,6 +2233,15 @@ cdt.background = cdt.window:CreateColorDrawable(0.12, 0.12, 0.12, 0.60, "backgro
 cdt.background:AddAnchor("TOPLEFT", cdt.window, 0, 0)
 cdt.background:AddAnchor("BOTTOMRIGHT", cdt.window, 0, 0)
 
+cdt.previewLabel = cdt.window:CreateChildWidget("label", "cooldownPreviewLabel", 0, true)
+cdt.previewLabel:SetExtent(300, 20)
+cdt.previewLabel:AddAnchor("BOTTOM", cdt.window, "TOP", 0, -4)
+ApplyLocalLabelStyle(cdt.previewLabel, 13, ALIGN_CENTER, 1, 0.85, 0.25)
+cdt.previewLabel.style:SetOutline(true)
+cdt.previewLabel:SetText("PREVIEW: press lock timer to hide preview")
+cdt.previewLabel:EnablePick(false)
+cdt.previewLabel:Show(false)
+
 for i = 1, 10 do
 	local row = CreateEmptyWindow("extendedPlatesCooldownTimerRow" .. tostring(i), cdt.window)
 	row:SetExtent(28, 28)
@@ -3878,6 +3888,7 @@ do
 		cdt.ApplyLockState()
 		cdt.SaveSettings()
 		cdt.RefreshSettingsWindow()
+		cdt.RefreshTimerWindow()
 	end)
 
 	local function makeTimerLayoutButton(id, text, x, y, kind, delta)
@@ -4466,6 +4477,9 @@ function cdt.RefreshTimerWindow()
 	end
 
 	if cdt.showWindow ~= true then
+		if cdt.previewLabel ~= nil then
+			cdt.previewLabel:Show(false)
+		end
 		cdt.window:Show(false)
 		return
 	end
@@ -4493,6 +4507,10 @@ function cdt.RefreshTimerWindow()
 		end
 		return a.remainingMs < b.remainingMs
 	end)
+	local showingPreview = not cdt.lockWindow and #active == 0
+	if cdt.previewLabel ~= nil then
+		cdt.previewLabel:Show(showingPreview)
+	end
 
 	for i = 1, #cdt.timerRows do
 		local row = cdt.timerRows[i]
@@ -4502,7 +4520,7 @@ function cdt.RefreshTimerWindow()
 			row.label:SetText(cdt.FormatRemainingTime(entry.remainingMs))
 			row.label:Show(true)
 			row:Show(true)
-		elseif not cdt.lockWindow and #active == 0 and cdt.previewTimers[i] ~= nil then
+		elseif showingPreview and cdt.previewTimers[i] ~= nil then
 			local preview = cdt.previewTimers[i]
 			SetRowIcon(row.icon, preview.icon)
 			row.label:SetText(preview.text)
