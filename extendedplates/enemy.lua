@@ -187,7 +187,8 @@ local function updateGearLabel(uiState)
 
 	local gearSettings = shared.GetGearSettings()
 
-	local targetGearScore = tonumber(X2Unit:UnitGearScore("target", true) or 0) or 0
+	local targetGearScore = tonumber(X2Unit:UnitGearScore("target", false) or 0) or 0
+	--aaprint(tostring(targetGearScore))
 	if targetGearScore <= 0 then
 		gearLabel:SetText("")
 		gearLabel:Show(false)
