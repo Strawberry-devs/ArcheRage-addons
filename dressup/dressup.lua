@@ -29,7 +29,7 @@ ADDON:ImportAPI(API_TYPE.ITEM.id)
 ADDON:ImportAPI(API_TYPE.EQUIPMENT.id)
 
 local dressUpWindow = CreateEmptyWindow("dressUpWindow", "UIParent")
-dressUpWindow:AddAnchor("RIGHT", -1000, 0)
+dressUpWindow:AddAnchor("CENTER", "UIParent", 0, 0)
 local turnLeft = false
 local turnRight = false
 local zoomOutBool = false
@@ -782,16 +782,64 @@ local itemBrowserButton = CreateButton(
 itemBrowserButton:SetExtent(55, 35)
 itemBrowserButton:SetWidth(55)
 
+-- Keep window controls outside the model viewer's camera-mode mouse handling.
+local moveWindowButton = CreateButton(dressUpWindow, "moveWindow", "TOPLEFT", 5, controlBarYOffset, "move window")
+moveWindowButton:SetExtent(110, 35)
+moveWindowButton:SetWidth(110)
+moveWindowButton:EnableDrag(true)
+moveWindowButton:SetHandler("OnDragStart", function()
+	dressUpWindow:StartMoving()
+	return true
+end)
+moveWindowButton:SetHandler("OnDragStop", function()
+	dressUpWindow:StopMovingOrSizing()
+end)
+
+local DRESSUP_SETTINGS_KEY = "dressup_settings"
+local windowScales = { 0.5, 0.75, 1, 1.25, 1.5 }
+local windowScaleIndex = 3
+local savedSettings = ADDON:LoadData(DRESSUP_SETTINGS_KEY)
+if savedSettings ~= nil then
+	local savedScale = tonumber(savedSettings.windowScale)
+	for i = 1, #windowScales do
+		if windowScales[i] == savedScale then
+			windowScaleIndex = i
+			break
+		end
+	end
+end
+
+local resizeWindowButton = CreateButton(
+	dressUpWindow, "resizeWindow", "TOPLEFT", 5, controlBarYOffset + 35, "resize window"
+)
+resizeWindowButton:SetExtent(175, 35)
+resizeWindowButton:SetWidth(175)
+
+local function ApplyDressupWindowScale()
+	local scale = windowScales[windowScaleIndex]
+	dressUpWindow:SetScale(UIParent:GetUIScale() * scale)
+	resizeWindowButton:SetText(string.format("resize window (%gx)", scale))
+end
+
+resizeWindowButton:SetHandler("OnClick", function()
+	windowScaleIndex = (windowScaleIndex % #windowScales) + 1
+	ApplyDressupWindowScale()
+	ADDON:ClearData(DRESSUP_SETTINGS_KEY)
+	ADDON:SaveData(DRESSUP_SETTINGS_KEY, { windowScale = windowScales[windowScaleIndex] })
+end)
+
 local dressUpModelViewerX = 800
 local dressUpModelViewerY = 800
 local thenumber = 4096
 local function IniitalizeDressup()
+	dressUpWindow:SetExtent(dressUpModelViewerX, dressUpModelViewerY)
 	modelViewer:SetExtent(dressUpModelViewerX, dressUpModelViewerY)
 	modelViewer:SetTextureSize(thenumber, thenumber)
 	local width = dressUpModelViewerX * thenumber / dressUpModelViewerY
 	modelViewer:SetModelViewExtent(width, thenumber)
 	modelViewer:SetModelViewCoords((thenumber - width) / 8, 0, width / 4, thenumber / 4)
-	modelViewer:AddAnchor("LEFT", dressUpWindow, 5, 20)
+	modelViewer:AddAnchor("TOPLEFT", dressUpWindow, 0, 0)
+	ApplyDressupWindowScale()
 	modelViewer:AdjustCameraPos(0, 0, 0)
 	dressUpWindow:Show(false)
 end
